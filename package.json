@@ -1,0 +1,23 @@
+{
+  "name": "travel-here",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LM-TeamProject/travel-here.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LM-TeamProject/travel-here/issues"
+  },
+  "homepage": "https://github.com/LM-TeamProject/travel-here#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

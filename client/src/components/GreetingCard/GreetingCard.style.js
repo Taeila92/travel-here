@@ -15,12 +15,18 @@ const H2 = styled.h2`
   font-size: 250px;
   color: white;
   text-align: center;
+  @media screen and (max-width: 770px) {
+    font-size: 150px;
+  }
 `;
 const P = styled.p`
   font-size: 36px;
   font-weight: 700;
   color: white;
   text-align: center;
+  @media screen and (max-width: 770px) {
+    font-size: 20px;
+  }
 `;
 
 export { Container, H2, P };

@@ -10,14 +10,20 @@ const Background = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-`;
+  ::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
 
-const bgBlur = styled.div`
-  height: 100vh;
-  background-color: rgb(0,0,0,0);
-  @media screen and (max-width: 900px) {
-    background-color: rgb(0,0,0,0.5);
+    background-color: rgb(0, 0, 0, 0);
+    @media screen and (max-width: 900px) {
+      background-color: rgb(0, 0, 0, 0.5);
+    }
   }
 `;
 
-export { Background, bgBlur };
+export { Background };

@@ -15,18 +15,16 @@ import NotFound from "./pages/NotFound";
 function App() {
   return (
     <S.Background className="App">
-      <S.bgBlur>
-        <GlobalStyle />
-        <BrowserRouter>
-          <Header />
-          <Switch>
-            <Route path="/categorylist" component={CategoryList} />
-            <Route path="/login" component={Login} />
-            <Route path="/" exact component={Home} />
-            <Route component={NotFound} />
-          </Switch>
-        </BrowserRouter>
-      </S.bgBlur>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route path="/categorylist" component={CategoryList} />
+          <Route path="/login" component={Login} />
+          <Route path="/" exact component={Home} />
+          <Route component={NotFound} />
+        </Switch>
+      </BrowserRouter>
     </S.Background>
   );
 }

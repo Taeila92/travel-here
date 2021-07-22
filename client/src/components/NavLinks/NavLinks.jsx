@@ -9,9 +9,9 @@ const StyledNav = styled(NavLink)`
 `;
 
 const activeStyle = { color: "red" };
-export default function NavLinks() {
+export default function NavLinks({ active }) {
   return (
-    <S.Container>
+    <S.Container active={active}>
       <S.Ul>
         <S.Li>
           <StyledNav to="/" activeStyle={activeStyle} exact>

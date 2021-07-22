@@ -6,13 +6,14 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   padding-top: 4px;
-
   @media screen and (max-width: 770px) {
     background-color: rgba(0, 0, 0, 0.5);
     padding-right: 20px;
     height: 100vh;
     display: inherit;
-    transform: translateX(430px);
+    transition: 0.3s;
+
+    transform: ${(props) => (props.active ? 0 : "translateX(430px)")};
   }
 `;
 const Ul = styled.ul`

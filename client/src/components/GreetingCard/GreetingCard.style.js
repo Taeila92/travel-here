@@ -23,17 +23,21 @@ const H2 = styled.h2`
   @media screen and (max-width: 550px) {
     font-size: 100px;
   }
-`;
-
-const P = styled.p`
+  `;
+  
+  const P = styled.p`
   font-size: 36px;
   font-weight: 700;
   color: white;
   text-align: center;
   caret-color: transparent;
-  margin-top: 30px;
+  margin-top: 4rem;
   @media screen and (max-width: 900px) {
+    margin-top: 3rem;
     font-size: 20px;
+  }
+  @media screen and (max-width: 550px) {
+    margin-top: 2rem;
   }
 `;
 

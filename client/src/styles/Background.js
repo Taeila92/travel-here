@@ -8,6 +8,7 @@ const Background = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   position: relative;
+  overflow: hidden;
 `;
 
 export { Background };

@@ -16,8 +16,12 @@ const H2 = styled.h2`
   font-size: 250px;
   color: white;
   text-align: center;
-  @media screen and (max-width: 770px) {
+  caret-color: transparent;
+  @media screen and (max-width: 900px) {
     font-size: 150px;
+  }
+  @media screen and (max-width: 550px) {
+    font-size: 100px;
   }
 `;
 
@@ -26,7 +30,9 @@ const P = styled.p`
   font-weight: 700;
   color: white;
   text-align: center;
-  @media screen and (max-width: 770px) {
+  caret-color: transparent;
+  margin-top: 30px;
+  @media screen and (max-width: 900px) {
     font-size: 20px;
   }
 `;

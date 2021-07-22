@@ -6,7 +6,7 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   padding-top: 4px;
-  @media screen and (max-width: 770px) {
+  @media screen and (max-width: 900px) {
     background-color: rgba(0, 0, 0, 0.5);
     width: 100vw;
     height: 150px;
@@ -21,7 +21,7 @@ const Ul = styled.ul`
   margin: auto;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width: 770px) {
+  @media screen and (max-width: 900px) {
     flex-direction: column;
   }
 `;

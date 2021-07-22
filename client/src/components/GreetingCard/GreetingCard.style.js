@@ -10,6 +10,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center; */
 `;
+
 const H2 = styled.h2`
   font-weight: 700;
   font-size: 250px;
@@ -19,6 +20,7 @@ const H2 = styled.h2`
     font-size: 150px;
   }
 `;
+
 const P = styled.p`
   font-size: 36px;
   font-weight: 700;

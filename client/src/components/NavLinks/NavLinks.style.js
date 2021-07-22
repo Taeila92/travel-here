@@ -8,20 +8,24 @@ const Container = styled.div`
   padding-top: 4px;
   @media screen and (max-width: 770px) {
     background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 150px;
     padding-right: 20px;
-    height: 100vh;
-    display: inherit;
     transition: 0.3s;
-
-    transform: ${(props) => (props.active ? 0 : "translateX(430px)")};
+    transform: ${(props) => (props.active ? 0 : "translateY(-150px)")};
   }
 `;
+
 const Ul = styled.ul`
   display: flex;
   margin: auto;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width: 770px) {
+    flex-direction: column;
+  }
 `;
+
 const Li = styled.li`
   font-size: 24px;
   font-weight: 700;

@@ -1,7 +1,7 @@
 import * as S from "./Logo.style";
 
 // logo Image
-import logo from "../../assets/images/logo.png";
+import logo from "assets/images/logo.png";
 export default function Logo() {
   return (
     <S.Container>

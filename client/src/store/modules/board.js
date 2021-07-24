@@ -1,14 +1,21 @@
-﻿// 게시판 관련
+﻿const { produce } = require('immer');
+// 게시판 관련
 
 // Actions
 const EXAMPLE = 'board/EXAMPLE';
 
-// Reducer
-const { produce } = require('immer');
+// Action 생성자
+export const boardExample = (data) => {
+    return {
+        type: 'EXAMPLE',
+        data,
+    }
+};
 
+// Reducer
 const initialState = {};
 
-const boardReducer = (prevState = initialState, action) => {
+const reducer = (prevState = initialState, action) => {
     return produce(prevState, (draft) => {
         switch (action.type) {
             case 'EXAMPLE':
@@ -19,12 +26,6 @@ const boardReducer = (prevState = initialState, action) => {
     });
 };
 
-export default boardReducer;
+export default reducer;
 
-// Action 생성자
-export const boardExample = (data) => {
-    return {
-        type: 'EXAMPLE',
-        data,
-    }
-};
+

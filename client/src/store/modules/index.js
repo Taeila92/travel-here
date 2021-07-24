@@ -1,10 +1,10 @@
-﻿const {combineReducers} = require('redux');
-const userReducer = require('./user');
-const boardReducer = require('./board');
+﻿import {combineReducers} from 'redux';
+import user from './user';
+import board from './board';
 
 const rootReducer = combineReducers({
-    user: userReducer,
-    post: boardReducer,
+    user,
+    board,
 });
 
 export default rootReducer;

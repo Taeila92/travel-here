@@ -1,9 +1,9 @@
-import Logo from "../Logo/Logo";
-import NavLinks from "../NavLinks/NavLinks";
-import NavBar from "../NavBar/NavBar";
+import Logo from "components/Logo/Logo";
+import NavLinks from "components/NavLinks/NavLinks";
+import NavBar from "components/NavBar/NavBar";
 import * as S from "./Header.style";
 import { useEffect, useState } from "react";
-import useWindowWidth from "../../hooks/useWindowWidth";
+import useWindowWidth from "hooks/useWindowWidth";
 export default function Header() {
   const width = useWindowWidth();
   const [active, setActive] = useState(false);

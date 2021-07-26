@@ -9,19 +9,22 @@ import * as S from "styles/Background";
 // router
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import CategoryList from "pages/CategoryList";
+import Board from 'pages/Board'
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-function App() {
+
+function App() {  
   return (
     <S.Background className="App">
       <GlobalStyle />
       <BrowserRouter>
         <Header />
         <Switch>
-          <Route path="/categorylist" component={CategoryList} />
+          <Route exact path="/categorylist" component={CategoryList} />
+          <Route path="/categorylist/:religion" component={Board} />
           <Route path="/login" component={Login} />
-          <Route path="/" exact component={Home} />
+          <Route exact path="/" component={Home} />
           <Route component={NotFound} />
         </Switch>
       </BrowserRouter>

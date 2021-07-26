@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/LM-TeamProject/travel-here#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "firebase": "^8.8.0"
+    "express": "^4.17.1"
   }
 }

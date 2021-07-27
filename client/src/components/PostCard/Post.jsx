@@ -17,13 +17,18 @@ const Post = ({data}) => {
   } = data;
 
   const [photo, setphoto] = useState();
+  const [profile, setProfile] = useState();
 
   // !!!이미지 업로드할 때, 어떤 값을 firestore에 넣어야하지??!!!
   // !!!async, await try catch!!!
   useEffect(()=>{
     const photoUrl = storageService.refFromURL('gs://travel-here-36a2e.appspot.com/post/desert-5720527_1280.jpg').getDownloadURL()
+    const profileUrl = storageService.refFromURL('gs://travel-here-36a2e.appspot.com/users/woman-6482214_640.jpg').getDownloadURL()
     photoUrl.then((url)=>{
       setphoto(url)
+    })
+    profileUrl.then((url)=>{
+      setProfile(url)
     })
   },[])
  
@@ -32,16 +37,22 @@ const Post = ({data}) => {
   return (
     <S.Container>
       <S.Profile>
-        <img src="" alt="profile" />
-        <h2>{post_title}</h2>
+        <img src={profile} alt="profile" />
+        <div>        
+          <h2>UserName</h2>
+          <h5>#{post_religion}</h5>
+        </div>
       </S.Profile>
       <S.Content>
+        <h2>{post_title}</h2>
         <p>{post_content}</p>
         <img src={photo} alt="travel site" />
+        <div>{getDate(post_date)}</div>
       </S.Content>
-      <div>{getDate(post_date)}</div>
-      <div>views : {post_views}</div>
-      <div>like : {post_like}</div>
+      <S.Button>
+        <button>Like</button>
+        <button>Comment</button>
+      </S.Button>
     </S.Container>
   )
 }

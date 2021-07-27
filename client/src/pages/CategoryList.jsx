@@ -1,14 +1,5 @@
 import React from "react";
 
-const CategoryList = () => {
-  
-  return (
-    <div>
-      
-    </div>
-  )
+export default function CategoryList() {
+  return <div>카테고리 리스트 시작</div>;
 }
-
-export default CategoryList;
-
-

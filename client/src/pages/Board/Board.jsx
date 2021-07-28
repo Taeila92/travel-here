@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react'
-import { dbService } from "firebase.js";
+import React, { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux';
 import Post from 'components/PostCard/Post';
+import { fetchPostList } from 'store/modules/board';
 import * as S from './Board.style'
 
+
 const Board = ({match, history, location}) => {
-  //console.log(match) // 상위 라우팅에서 넣어준 :religion이 match.params로 들어옵니다
-  const [ postData , setPostData ] = useState([]);
-  // !!!redux로 수정해주기!!!
-  
-  // !!!utils 함수로 빼주기!!!
+
+  const {postList,error, loading} = useSelector(state => ({
+    postList : state.board.data,
+    loading : state.board.loading,
+    error : state.board.error
+  }))
+  const dispatch = useDispatch();
+
   useEffect(()=>{
-    const getData = async () => {
-      const response = await dbService.collection("post").get();
-      response.forEach(doc => {
-        setPostData(prev => [doc.data(), ...prev])
-        console.log(doc.data())
-      })
-    }
-    getData();
 
-  },[])
+    dispatch(fetchPostList(match.params.religion))
 
-  // !!!redux에 loading 넣어주기!!!
+  },[dispatch, match.params.religion])
+
+  // !!!lazy loading 도입!!!
+  if (loading) return <div>로딩중</div>
+  if (error) return <div>Error</div>
+  if (!postList) return null
+  
   return (
     <S.Container>
-      {!(postData.length) ? (
-        console.log("loading")
-      ) : (
-        postData.map((post)=>{
+      { 
+        postList.map((post)=>{
           return <Post key={post.post_id} data={post}/>
         })
-      )}
+      }
     </S.Container>
   )
 }

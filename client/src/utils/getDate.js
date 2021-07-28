@@ -1,5 +1,7 @@
 const getDate = (timestamp) => {
+  console.log(timestamp)
   const post_date = timestamp.toDate()
+  console.log(post_date)
   
   const year = post_date.getFullYear()
   const month = post_date.getMonth()

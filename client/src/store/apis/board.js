@@ -1,10 +1,9 @@
 import { dbService } from "firebase.js";
 
-export const getPostsListAPI = async (religion) => {
+export const getPostListAPI = async (religion) => {
   const response = await dbService.collection("post").where("post_religion","==",religion).get()
-  response.forEach(doc=>{
-    console.log(doc.data())
-  })
+
+  return response;
 }
 
-// redux부터 구성하죠ㅣ ARS
+// onSnapShot이 실시간 업데이트 된다던데..

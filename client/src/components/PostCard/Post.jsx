@@ -4,6 +4,7 @@ import * as S from './Post.style'
 import getDate from 'utils/getDate';
 
 const Post = ({data}) => {
+  
   const { 
     post_id, 
     post_title, 
@@ -32,8 +33,6 @@ const Post = ({data}) => {
     })
   },[])
  
-
-
   return (
     <S.Container>
       <S.Profile>
@@ -47,7 +46,7 @@ const Post = ({data}) => {
         <h2>{post_title}</h2>
         <p>{post_content}</p>
         <img src={photo} alt="travel site" />
-        <div>{getDate(post_date)}</div>
+        {/*<div>{getDate(post_date)}</div>*/}
       </S.Content>
       <S.Button>
         <button>Like</button>

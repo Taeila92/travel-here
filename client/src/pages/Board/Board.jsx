@@ -32,6 +32,7 @@ const Board = ({match, history, location}) => {
           return <Post key={post.post_id} data={post}/>
         })
       }
+
     </S.Container>
   )
 }

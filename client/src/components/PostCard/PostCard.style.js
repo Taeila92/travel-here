@@ -9,6 +9,7 @@ const Container = styled.div`
   color : white;
   margin : 0.5rem;
   padding : 1.6rem 0.6rem;
+  z-index : 1;
 `;
 
 const Profile = styled.div`
@@ -16,12 +17,12 @@ const Profile = styled.div`
   display: flex;
   align-items: center;
   margin-bottom : 1rem;
-  & img {
+  img {
     width : 2rem;
     height : 2rem;
     border-radius: 50%;
   }
-  & div {
+  div {
     margin-left: 1rem;
   }
   
@@ -29,20 +30,20 @@ const Profile = styled.div`
 
 const Content = styled.div`
   width : 100%;
-  & h2 {
+  h2 {
     font-size : 1.3rem;
     margin-bottom : 0.5rem;
   }
-  & p {
+  p {
     margin-bottom: 0.5rem;
   }
-  & img {
+  img {
     width : 100%;
     height : 100%;
     border-radius: 0.3rem;
     margin-bottom : 0.5rem;
   }
-  & div {
+  div {
     font-size : 0.8rem;
     margin-top: 1rem;
   }
@@ -53,7 +54,7 @@ const Button = styled.div`
   justify-content: space-around;
   align-items: center;
   padding : 1rem 0 0 0;
-  & button {
+  button {
     background: transparent;
     color : white;
     border: none;

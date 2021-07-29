@@ -33,7 +33,7 @@ function LoginFooter({ authService }) {
           <S.Li>
             <S.Button onClick={onLogin}>
               <S.SignUpLogo>
-                <i class="fab fa-github"></i>
+                <i className="fab fa-github"></i>
               </S.SignUpLogo>
               <S.P>Github</S.P>
             </S.Button>

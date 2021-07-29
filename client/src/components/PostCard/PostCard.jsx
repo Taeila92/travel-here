@@ -79,6 +79,7 @@ const PostCard = ({data}) => {
         postId={post_id}
         profile={profile}
         photo={photo}
+        setPostClick={setPostClick}
       />}
     </>
   )

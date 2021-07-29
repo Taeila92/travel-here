@@ -1,11 +1,11 @@
 ﻿import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useRef } from 'react';
 import { useSelector } from 'react-redux';
 import * as S from "./Post.style";
 
 
-const Post = ({postId, profile, photo}) => {
+const Post = ({postId, profile, photo, setPostClick}) => {
+
 
   const [post_content, setPost_content] = useState("");
   const [post_date, setPost_date] = useState({});
@@ -19,14 +19,13 @@ const Post = ({postId, profile, photo}) => {
   const [post_profile_img, setPost_profile_img] = useState("");
 
   const allPost = useSelector(state => state.board.data);
-  useSelector(state => console.log(state.board.data));
+
   useEffect(()=>{
     for(let i=0; allPost.length-1; i++){
       if(i == allPost.length){
         break;
       }
       if(allPost[i].post_id == postId){
-        console.log(allPost[i]);
         setPost_content(allPost[i].post_content);
         setPost_date(allPost[i].post_date);
         setPost_id(allPost[i].post_id);
@@ -60,6 +59,10 @@ const Post = ({postId, profile, photo}) => {
     
   }
 
+  const onHideModal = () => {
+    setPostClick(false);
+  }
+
   return (
     <S.Container>
       <S.Content>
@@ -69,7 +72,7 @@ const Post = ({postId, profile, photo}) => {
               <span>영국</span>
               <p>#{post_religion}</p>
             </span>
-            <i class="fas fa-times"></i>
+            <i onClick={onHideModal} className="fas fa-times"></i>
           </S.Header>
           <S.Images
             ref={images}
@@ -92,8 +95,8 @@ const Post = ({postId, profile, photo}) => {
           <S.Like>
             <span>27 Likes</span>
             {post_likeNum ?
-            <i class="fas fa-thumbs-up"></i> :
-            <i class="far fa-thumbs-up"></i>}
+            <i className="fas fa-thumbs-up"></i> :
+            <i className="far fa-thumbs-up"></i>}
           </S.Like>
           <S.Comment>
             <textarea placeholder="댓글을 입력해주세요"></textarea>

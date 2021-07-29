@@ -20,7 +20,7 @@ const Content = styled.div`
   background-color: white;
   border-radius: 10px;
   ${flex};
-  & ul {
+  ul {
     width: 27rem;
     height: 30rem;
     overflow-x: hidden;
@@ -37,7 +37,7 @@ const Header = styled.li`
   ${flex};
   flex-direction: row;
   justify-content: space-between;
-  & span {
+  span {
     ${flex};
     flex-direction: row;
     justify-content: flex-start;
@@ -55,7 +55,7 @@ const Header = styled.li`
       margin-left: 0.5rem;
     }
   }
-  & i {
+  i {
     outline: none;
     border: none;
     background-color: transparent;
@@ -68,7 +68,7 @@ const Images = styled.li`
   margin: 1.5rem 0;
   ${flex};
   flex-direction: row;
-  & img {
+  img {
     width: 20rem;
     height: 20rem;
     background-color: black;
@@ -79,16 +79,16 @@ const Images = styled.li`
 const Profile = styled.li`
   ${flex};
   flex-direction: row;
-  & img {
+  img {
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
     background-color: pink;
   }
-  & p {
+  p {
     margin: 0 1rem;
   }
-  & span {
+  span {
     font-weight: bold;
     color: #dfe4ea;
   }
@@ -104,10 +104,10 @@ const Like = styled.li`
   ${flex};
   flex-direction: row;
   justify-content: space-between;
-  & span {
+  span {
     /* margin-left: 0.5rem; */
   }
-  & i {
+  i {
     ${fontSize}
     ${cursorPointer};
   }
@@ -120,7 +120,7 @@ const Comment = styled.li`
   /* margin-top: 2rem; */
   padding: 1rem 0;
   border-top: 1px solid #e3e3e3;
-  & textarea {
+  textarea {
     width: 100%;
     height: 3rem;
     caret-color: black;
@@ -131,18 +131,18 @@ const Comment = styled.li`
     resize: none;
     ${hideScrollbar};
   }
-  & div {
+  div {
     ${flex};
     ${marginTop};
     justify-content: flex-start;
     flex-direction: row;
-    & img {
+    img {
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
       background-color: pink;
     }
-    & p {
+    p {
       width: 90%;
       margin-left: 0.5rem;
     }

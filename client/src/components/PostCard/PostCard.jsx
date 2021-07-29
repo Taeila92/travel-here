@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { storageService } from 'firebase.js';
-import * as S from './Post.style'
+import * as S from './PostCard.style'
 import getDate from 'utils/getDate';
 
-const Post = ({data}) => {
+const PostCard = ({data}) => {
   
   const { 
     post_id, 
@@ -49,7 +49,11 @@ const Post = ({data}) => {
       <S.Content>
         <h2>{post_title}</h2>
         <p>{post_content}</p>
-        <img src={photo} alt="travel site" />
+        {(post_photo) ? (
+          <img src={photo} alt="" />
+        ) : (
+          null
+        )}
         <div>{getDate(post_date)}</div>
       </S.Content>
       <S.Button>
@@ -60,4 +64,4 @@ const Post = ({data}) => {
   )
 }
 
-export default Post
+export default PostCard

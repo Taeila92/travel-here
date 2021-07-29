@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
-import Post from 'components/PostCard/Post';
+import PostCard from 'components/PostCard/PostCard';
 import { fetchPostList } from 'store/modules/board';
 import * as S from './Board.style'
 
@@ -29,7 +29,7 @@ const Board = ({match, history, location}) => {
     <S.Container>
       { 
         postList.map((post)=>{
-          return <Post key={post.post_id} data={post}/>
+          return <PostCard key={post.post_id} data={post}/>
         })
       }
 

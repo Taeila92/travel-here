@@ -63,35 +63,35 @@ const PostCard = ({data}) => {
 
   // firestore storage에있는 image받아오기
   useEffect(()=>{
-      // 해당 카테고리에 게시글이 한개만 있을 경우
-      if(allPost.length == 1){
-        setTrip(allPost[0].post_photo);
+    // 해당 카테고리에 게시글이 한개만 있을 경우
+    if(allPost.length == 1){
+      setTrip(allPost[0].post_photo);
+      setTrip((img)=>{
+        getTripImg(img);
+      });
+      setProfile(allPost[0].post_profile_img);
+      setProfile((img)=>{
+        getProfileImg(img);
+      });
+      return;
+    }
+
+    // 게시글이 여러개 있을 경우
+    for(let i=0; allPost.length-1; i++){
+      if(i == allPost.length){
+        break;
+      }
+      if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
+        setTrip(allPost[i].post_photo);
         setTrip((img)=>{
           getTripImg(img);
         });
-        setProfile(allPost[0].post_profile_img);
+        setProfile(allPost[i].post_profile_img);
         setProfile((img)=>{
           getProfileImg(img);
         });
-        return;
       }
-
-      // 게시글이 여러개 있을 경우
-      for(let i=0; allPost.length-1; i++){
-        if(i == allPost.length){
-          break;
-        }
-        if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
-          setTrip(allPost[i].post_photo);
-          setTrip((img)=>{
-            getTripImg(img);
-          });
-          setProfile(allPost[i].post_profile_img);
-          setProfile((img)=>{
-            getProfileImg(img);
-          });
-        }
-      }
+    }
   },[])
 
 

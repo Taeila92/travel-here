@@ -172,7 +172,8 @@ const Comment = styled.li`
       border: none;
       resize: none;
       outline: none;
-      font-size: 1rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
     }
   }
 `;

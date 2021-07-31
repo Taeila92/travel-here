@@ -131,7 +131,7 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     let content = `
     <div>
       <img src=${profile} alt="프로필 이미지입니다"></img>
-      <textarea>${textarea.current.value}</textarea>
+      <textarea rows="${textarea.current.value.split('\n').length}">${textarea.current.value}</textarea>
     </div>
     `
     comment.current.insertAdjacentHTML('beforeend', content);

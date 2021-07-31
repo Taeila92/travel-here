@@ -21,12 +21,21 @@ const Form = styled.form`
   padding: 20px 0;
 `;
 
-const Input = styled.input`
+const InputEmail = styled.input`
   display: block;
   width: 100%;
   padding: 8px;
   height: 2rem;
-  margin-bottom: 1.5em;
+  border-radius: 12px;
+  outline: none;
+`;
+
+const InputPw = styled.input`
+  display: block;
+  width: 100%;
+  padding: 8px;
+  height: 2rem;
+  margin-top: 1.5em;
   border-radius: 12px;
   outline: none;
 `;
@@ -43,6 +52,7 @@ const Button = styled.button`
   background-color: #d8bfd8;
   cursor: pointer;
   font-size: 18px;
+  margin-top: 1rem;
 `;
 
 const Span = styled.button`
@@ -53,4 +63,23 @@ const Span = styled.button`
   font-size: 18px;
 `;
 
-export { Header, Ul, Form, Input, Li, H1, Button, Span };
+const errMSG = styled.p`
+  color: red;
+  font-size: 16px;
+`;
+
+const P = styled.p``;
+
+export {
+  Header,
+  Ul,
+  Form,
+  InputEmail,
+  InputPw,
+  Li,
+  H1,
+  Button,
+  Span,
+  errMSG,
+  P,
+};

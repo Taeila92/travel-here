@@ -1,5 +1,7 @@
+// import * as firebase from 'firebase/app';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -14,5 +16,5 @@ const firebaseConfig = {
 
 const firebaseService = firebase.initializeApp(firebaseConfig);
 export const dbService = firebase.firestore();
-
 export default firebaseService;
+export const authService = firebase.auth(); // 로그인 모듈

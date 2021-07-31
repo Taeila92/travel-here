@@ -11,7 +11,7 @@ function LoginModalOpen() {
     <>
       <S.LoginBg></S.LoginBg>
       <S.Logincontainer>
-        <LoginHeader />
+        <LoginHeader authService={authService} />
         <LoginFooter authService={authService} />
       </S.Logincontainer>
     </>

@@ -34,7 +34,6 @@ const PostCard = ({data}) => {
 
 
 
-
   const getTripImg = (name) => {
     // getImg(trip);
 
@@ -49,6 +48,7 @@ const PostCard = ({data}) => {
     });
   }
 
+
   const getProfileImg = (name) => {
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${name}`);
@@ -61,7 +61,7 @@ const PostCard = ({data}) => {
     });
   }
 
-
+  // firestore storage에있는 image받아오기
   useEffect(()=>{
       for(let i=0; allPost.length-1; i++){
         if(i == allPost.length){
@@ -78,16 +78,6 @@ const PostCard = ({data}) => {
           });
         }
       }
-  },[])
-
-
-
-
-
-
-  // firestore storage에있는 image받아오기
-  useEffect(() =>{
-    getTripImg();
   },[])
 
 

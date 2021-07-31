@@ -158,6 +158,7 @@ const Comment = styled.li`
     ${marginTop};
     justify-content: flex-start;
     flex-direction: row;
+    white-space: pre;
     img {
       width: 2rem;
       height: 2rem;
@@ -165,10 +166,13 @@ const Comment = styled.li`
       border-radius: 50%;
       background-color: pink;
     }
-    p {
+    textarea {
       width: 90%;
       margin-left: 0.5rem;
-      /* overflow: visible; */
+      border: none;
+      resize: none;
+      outline: none;
+      font-size: 1rem;
     }
   }
 `;

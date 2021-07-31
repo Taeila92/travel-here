@@ -107,7 +107,7 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   }
 
   const onEnter = (e) => {
-    if(e.key != 'Enter'){
+    if(e.key != 'Enter' | e.key === 'Enter' && e.shiftKey){
       return;
     }
     if(e.key === 'Enter'){
@@ -129,9 +129,9 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   const onAddComment = () => {
     let content = `
-    <div style="white-space:pre;">
+    <div>
       <img src=${profile} alt="프로필 이미지입니다"></img>
-      <p>${textarea.current.value}</p>
+      <textarea>${textarea.current.value}</textarea>
     </div>
     `
     comment.current.insertAdjacentHTML('beforeend', content);

@@ -5,8 +5,12 @@ import { useSelector } from 'react-redux';
 import * as S from "./Post.style";
 
 
-const Post = ({postId, profile, photo, setPostClick}) => {
+const Post = ({postId, profile, trip, setPostClick}) => {
 
+  const images = useRef();
+
+  let [post_likeNum, setPost_likeNum] = useState(false);
+  let [isMouseDown, setIsMouseDown] = useState(false);
 
   const [post_content, setPost_content] = useState("");
   const [post_date, setPost_date] = useState({});
@@ -21,8 +25,10 @@ const Post = ({postId, profile, photo, setPostClick}) => {
 
   const allPost = useSelector(state => state.board.data);
 
-  useEffect(()=>{
+  const onSetData = () => {
+    // console.log(post_content, post_religion);
     for(let i=0; allPost.length-1; i++){
+      // console.log(post_content, post_religion);
       if(i == allPost.length){
         break;
       }
@@ -31,18 +37,23 @@ const Post = ({postId, profile, photo, setPostClick}) => {
         setPost_date(allPost[i].post_date);
         setPost_id(allPost[i].post_id);
         setPost_like(allPost[i].post_like);
-        setPost_photo(allPost[i].post_photo);
+        setPost_photo(JSON.stringify(allPost[i].post_photo));
+        // setPost_photo(allPost[i].post_photo);
         setPost_religion(allPost[i].post_religion);
         setPost_title(allPost[i].post_title);
         setPost_views(allPost[i].post_views);
         setPost_writer(allPost[i].post_writer);
         setPost_profile_img(allPost[i].post_profile_img);
       };
+      // console.log(post_content, post_religion);
     }
+  }
+
+  useEffect(()=>{
+    onSetData();
   },[])
-  const images = useRef();
-  let [post_likeNum, setPost_likeNum] = useState(false);
-  let [isMouseDown, setIsMouseDown] = useState(false);
+
+  
 
   const onMouseDown = (e) => {
 
@@ -82,7 +93,7 @@ const Post = ({postId, profile, photo, setPostClick}) => {
             onMouseMove={e=>onMouseMove(e)}
             onMouseLeave={e=>onMouseLeave(e)}
           >
-            <img src={photo} alt="여행사진 이미지입니다"></img>
+            <img src={trip} alt="여행사진 이미지입니다"></img>
             <img></img>
             <img></img>
             <img></img>

@@ -18,6 +18,7 @@ const Background = styled.div`
     left: 0;
     right: 0;
     margin: auto;
+    z-index: -1;
 
     background-color: rgb(0, 0, 0, 0);
     @media screen and (max-width: 900px) {

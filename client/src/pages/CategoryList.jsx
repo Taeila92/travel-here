@@ -1,5 +1,6 @@
 import React from "react";
+import Category from "components/Category/Category";
 
 export default function CategoryList() {
-  return <div>카테고리 리스트 시작</div>;
+  return <Category />;
 }

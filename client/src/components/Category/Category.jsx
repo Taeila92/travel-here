@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { dbService } from "firebase.js";
-import { Link } from "react-router-dom";
-
+import * as S from "./Category.style";
 const Category = () => {
   const [cate, setCate] = useState([]);
   useEffect(() => {
@@ -23,22 +22,16 @@ const Category = () => {
     };
     getData();
   }, []);
-  const click = () => {
-    let abc = "ABC";
-    abc = abc.toLowerCase();
-    console.log(abc);
-  };
   return (
-    <div>
+    <S.Container>
       <ul>
         {cate.map((ca, index) => (
           <li key={index}>
-            <Link to={`/categorylist/${ca}`}>{ca}</Link>
+            <S.LinkStyle to={`/categorylist/${ca}`}>{ca}</S.LinkStyle>
           </li>
         ))}
       </ul>
-      <button onClick={click}>click</button>
-    </div>
+    </S.Container>
   );
 };
 

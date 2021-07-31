@@ -9,7 +9,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   const container = useRef();
   const images = useRef();
-  const comment =useRef();
+  const comment = useRef();
+  const postBtn = useRef();
   const textarea = useRef();
 
   let [post_likeNum, setPost_likeNum] = useState(false);
@@ -95,14 +96,35 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     }
   };
 
+  const notPost = () => {
+    postBtn.current.style.color = "black";
+    postBtn.current.style.fontWeight = "normal";
+  }
+
+  const doPost = () => {
+    postBtn.current.style.color = "blue";
+    postBtn.current.style.fontWeight = "bold";
+  }
+
   const onEnter = (e) => {
-    if(e.key != 'Enter' | e.key === 'Enter' && e.shiftKey){
+    if(e.key != 'Enter'){
       return;
     }
     if(e.key === 'Enter'){
       e.preventDefault();
+      if(!textarea.current.value){
+        return;
+      }
       onAddComment();
     }
+  }
+
+  const onChange = () => {
+    if(!textarea.current.value){
+      notPost();
+      return;
+    }
+    doPost();
   }
 
   const onAddComment = () => {
@@ -114,6 +136,7 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     `
     comment.current.insertAdjacentHTML('beforeend', content);
     comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
+    notPost();
     textarea.current.value = '';
   }
 
@@ -154,32 +177,14 @@ const Post = ({postId, profile, trip, setPostClick}) => {
           </S.Like>
           <S.Comment ref={comment}>
             <section>
-              <textarea ref={textarea} placeholder="댓글을 입력해주세요" onKeyPress={e=>onEnter(e)}></textarea>
-              <button type="submit" onClick={onAddComment}>게시</button>
+              <textarea
+                ref={textarea}
+                placeholder="댓글을 입력해주세요"
+                onKeyPress={e=>onEnter(e)}
+                onChange={onChange}>
+              </textarea>
+              <button ref={postBtn} type="submit" onClick={onAddComment}>게시</button>
             </section>
-            <div>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              <p>재밌었겠다</p>
-            </div>
-            <div>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              <p>신났겠다</p>
-            </div>
-            <div>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              <p>맛있었겠다</p>
-            </div>
-            <div>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              <p>나도 가고싶다</p>
-            </div>
-            <div>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              <p>이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다</p>
-            </div>
           </S.Comment>
         </ul>
       </S.Content>

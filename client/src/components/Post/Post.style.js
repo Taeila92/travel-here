@@ -124,11 +124,11 @@ const Like = styled.li`
 const Comment = styled.li`
   width: 100%;
   ${marginTop};
-  /* margin-top: 2rem; */
   padding: 1rem 0;
   border-top: 1px solid #e3e3e3;
   section {
     position: relative;
+    height: 3rem;
     textarea {
       position: absolute;
       width: 100%;
@@ -168,6 +168,7 @@ const Comment = styled.li`
     p {
       width: 90%;
       margin-left: 0.5rem;
+      /* overflow: visible; */
     }
   }
 `;

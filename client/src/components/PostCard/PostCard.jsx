@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { storageService } from 'firebase.js';
-import { getImg } from 'utils/getFirestoreImg';
 import { useSelector } from 'react-redux';
 import * as S from './PostCard.style'
 import getDate from 'utils/getDate';
@@ -26,29 +25,39 @@ const PostCard = ({data}) => {
   } = data;
 
 
-  const [tripPhoto, setTripPhoto] = useState();
-  const [profilePhoto, setProfilePhoto] = useState();
-  const [profile, setProfile] = useState();
-  const [trip, setTrip] = useState();
+  // post모달 띄우는 용도
   const [postClick, setPostClick] = useState(false);
 
+  // **trip 관련**
+  // 게시글 목록에서 보여질 딱 한개의 대표 여행사진
+  const [tripPhoto, setTripPhoto] = useState();
+  // Post컴포넌트에 넘기는 용도(모든 여행사진)
+  const [tripImgs, setTripImgs] = useState();
+  // getTripImg함수에서 사용하는 용도(여행사진 이름 넘기기)
+  const [trip, setTrip] = useState();
+
+  // **profile 관련**
+  // getProfileImg함수에서 사용하는 용도(프로필사진 이름 넘기기)
+  const [profile, setProfile] = useState();
+  // 렌더링에 사용되는 프로필사진
+  const [profilePhoto, setProfilePhoto] = useState();
 
 
+
+  // firestore storage에있는 image경로 받아오기
+  // 여행사진
   const getTripImg = (name) => {
-    // getImg(trip);
-
     let storageRef = storageService.ref();
-    let dynamicImg = storageRef.child(`post/${name}`);
+    let dynamicImg = storageRef.child(`post/${name[0]}`);
+    setTripImgs(name);
   
     dynamicImg.getMetadata().then(async function() {
       let downloadDynURL = await dynamicImg.getDownloadURL();
       setTripPhoto(downloadDynURL);
-    }).catch(function(error) {
-      // console.log(error);
-    });
-  }
-
-
+    }).catch(function(error) {});
+  };
+  
+  // 프로필 사진
   const getProfileImg = (name) => {
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${name}`);
@@ -56,23 +65,32 @@ const PostCard = ({data}) => {
     dynamicImg.getMetadata().then(async function() {
       let downloadDynURL = await dynamicImg.getDownloadURL();
       setProfilePhoto(downloadDynURL);
-    }).catch(function(error) {
-      // console.log(error);
-    });
-  }
+    }).catch(function(error) {});
+  };
 
-  // firestore storage에있는 image받아오기
+  const setImgName = (i) => {
+    setTrip(allPost[i].post_photo);
+    setTrip((img)=>{
+      getTripImg(img);
+    });
+    setProfile(allPost[i].post_profile_img);
+    setProfile((img)=>{
+      getProfileImg(img);
+    });
+  };
+
+
+  // 모달 띄우기
+  const onShowPostModal = () => {
+    setPostClick(true);
+  };
+
+
+  // firestore storage에있는 image name받아오기
   useEffect(()=>{
     // 해당 카테고리에 게시글이 한개만 있을 경우
     if(allPost.length == 1){
-      setTrip(allPost[0].post_photo);
-      setTrip((img)=>{
-        getTripImg(img);
-      });
-      setProfile(allPost[0].post_profile_img);
-      setProfile((img)=>{
-        getProfileImg(img);
-      });
+      setImgName(0);
       return;
     }
 
@@ -82,23 +100,10 @@ const PostCard = ({data}) => {
         break;
       }
       if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
-        setTrip(allPost[i].post_photo);
-        setTrip((img)=>{
-          getTripImg(img);
-        });
-        setProfile(allPost[i].post_profile_img);
-        setProfile((img)=>{
-          getProfileImg(img);
-        });
+        setImgName(i);
       }
     }
-  },[])
-
-
-  // 모달 띄우기
-  const onShowPostModal = () => {
-    setPostClick(true);
-  }
+  },[]);
 
 
 
@@ -128,7 +133,7 @@ const PostCard = ({data}) => {
       {postClick && <Post
         postId={post_id}
         profile={profilePhoto}
-        trip={tripPhoto}
+        trip={tripImgs}
         setPostClick={setPostClick}
       />}
     </>

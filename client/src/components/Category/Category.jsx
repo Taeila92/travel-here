@@ -16,7 +16,6 @@ const Category = () => {
 
   const click = () => {
     console.log(category);
-    console.log(getCategory);
   };
   return (
     <S.Container>

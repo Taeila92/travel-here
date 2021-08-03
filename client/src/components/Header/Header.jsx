@@ -4,12 +4,11 @@ import NavBar from "components/NavBar/NavBar";
 import * as S from "./Header.style";
 import { useEffect, useState } from "react";
 import useWindowWidth from "hooks/useWindowWidth";
-import { throttle } from "lodash";
+
 export default function Header() {
   const width = useWindowWidth();
   const [active, setActive] = useState(false);
   useEffect(() => {
-    console.log(width);
     if (width > 770) {
       setActive(false);
     }

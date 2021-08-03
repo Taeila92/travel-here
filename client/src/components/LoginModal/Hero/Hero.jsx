@@ -1,13 +1,13 @@
 import React from 'react';
+import * as S from './Hero.style';
 
 const Hero = ({ handleLogout }) => {
   return (
-    <section>
+    <S.Section>
       <nav>
-        <h2>Welcome</h2>
         <button onClick={handleLogout}>Logout</button>
       </nav>
-    </section>
+    </S.Section>
   );
 };
 

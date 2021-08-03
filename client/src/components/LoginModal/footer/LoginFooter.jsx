@@ -1,20 +1,33 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as S from './LoginFooter.style';
 
 function LoginFooter({ authService }) {
-  const onLogin = (event) => {
-    authService //
-      .login(event.currentTarget.textContent)
-      .then(console.log);
-  };
-
   const history = useHistory();
+
+  const goToLogin = (userId) => {
+    history.push({
+      pathname: '/logout',
+      state: { id: userId },
+    });
+  };
 
   const routeChange = () => {
     let path = '/';
     history.push(path);
   };
+
+  const onLogin = (event) => {
+    authService //
+      .login(event.currentTarget.textContent)
+      .then((data) => goToLogin(data.user.uid));
+  };
+
+  useEffect(() => {
+    authService.onAuthChange((user) => {
+      user && goToLogin(user.uid);
+    });
+  });
 
   return (
     <>

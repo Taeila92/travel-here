@@ -12,6 +12,7 @@ import CategoryList from 'pages/CategoryList';
 import Board from 'pages/Board';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
+import Logout from 'pages/Logout';
 import NotFound from 'pages/NotFound';
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
           <Route exact path="/categorylist" component={CategoryList} />
           <Route path="/categorylist/:religion" component={Board} />
           <Route path="/login" component={Login} />
+          <Route path="/logout">
+            <Logout />
+          </Route>
           <Route exact path="/" component={Home} />
           <Route component={NotFound} />
         </Switch>

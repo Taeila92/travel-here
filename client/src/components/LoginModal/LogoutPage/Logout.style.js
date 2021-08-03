@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 const Container = styled.div`
   position: absolute;
   right: 0;
@@ -12,7 +12,7 @@ const Container = styled.div`
     height: 150px;
     padding-right: 20px;
     transition: 0.3s;
-    transform: ${(props) => (props.active ? 0 : 'translateY(-150px)')};
+    transform: ${(props) => (props.active ? 0 : "translateY(-150px)")};
   }
 `;
 

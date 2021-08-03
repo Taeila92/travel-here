@@ -165,7 +165,7 @@ const Comment = styled.li`
   div {
     ${flex};
     ${marginTop};
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-direction: row;
     white-space: pre;
     img {
@@ -175,14 +175,17 @@ const Comment = styled.li`
       border-radius: 50%;
       background-color: pink;
     }
-    textarea {
-      width: 90%;
-      margin-left: 0.5rem;
+    p {
+      width: 85%;
       border: none;
       resize: none;
       outline: none;
       font-size: 0.9rem;
       line-height: 1.5;
+      white-space: pre-line;
+    }
+    i {
+      font-size: 1rem;
     }
   }
 `;

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import PostCard from 'components/PostCard/PostCard';
 import { fetchPostList } from 'store/modules/board';
+
 import * as S from './Board.style'
 
 
@@ -16,7 +17,7 @@ const Board = ({match, history, location}) => {
 
   useEffect(()=>{
 
-    dispatch(fetchPostList(match.params.religion))
+    dispatch(fetchPostList(match.params.religion));
 
   },[dispatch, match.params.religion])
 

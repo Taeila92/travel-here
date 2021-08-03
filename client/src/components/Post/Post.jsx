@@ -1,9 +1,11 @@
-﻿import React, { useState } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as S from "./Post.style";
 import { storageService } from 'firebase.js';
+import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
+import { commentMiddleware } from 'store/modules/comment';
 
 
 const Post = ({postId, profile, trip, setPostClick}) => {
@@ -13,6 +15,7 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const comment = useRef();
   const postBtn = useRef();
   const textarea = useRef();
+
 
   let [post_likeNum, setPost_likeNum] = useState(false);
   let [isMouseDown, setIsMouseDown] = useState(false);
@@ -29,6 +32,24 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const [post_profile_img, setPost_profile_img] = useState("");
 
   const allPost = useSelector(state => state.board.data);
+  let allComment = useSelector(state => state.comment.data);
+
+  const dispatch= useDispatch(); //dispatch함수를 가져옴
+  // const onAddCommentTest = useCallback(() => {
+  //     dispatch(commentAdd({
+  //       id: 'test',
+  //     }));
+  //     console.log(allComment);
+  // }, []);
+  const onAddCommentTest = () => {
+    console.log(allPost);
+    console.log(allComment);
+  }
+  const onDeleteComment = useCallback(() => {
+      dispatch(commentDelete());
+      console.log(allComment);
+  }, []);
+
 
   const onSetData = () => {
     // 해당 카테고리에 게시글이 한개일 경우
@@ -48,17 +69,17 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   const onSetDataFrame = (i) => {
     setPost_content(allPost[i].post_content);
-      setPost_date(allPost[i].post_date);
-      setPost_id(allPost[i].post_id);
-      setPost_like(allPost[i].post_like);
-      setPost_religion(allPost[i].post_religion);
-      setPost_title(allPost[i].post_title);
-      setPost_views(allPost[i].post_views);
-      setPost_writer(allPost[i].post_writer);
-      setPost_profile_img(allPost[i].post_profile_img);
+    setPost_date(allPost[i].post_date);
+    setPost_id(allPost[i].post_id);
+    setPost_like(allPost[i].post_like);
+    setPost_religion(allPost[i].post_religion);
+    setPost_title(allPost[i].post_title);
+    setPost_views(allPost[i].post_views);
+    setPost_writer(allPost[i].post_writer);
+    setPost_profile_img(allPost[i].post_profile_img);
   };
 
-  // firestore에서사진 받아오기
+  // firestore에서 사진 받아오기
   const onLoadImg = () => {
     // 게시글에 사진이 하나일 경우
     if(trip.length == 1){
@@ -86,12 +107,6 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     }).catch(function(error) {});
   };
 
-  useEffect(()=>{
-    onSetData();
-    onLoadImg();
-  },[]);
-
-  
 
   // 여행사진들 마우스 드래그로 좌우 넘기기
   const onMouseDown = (e) => {
@@ -157,13 +172,15 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     }
   };
 
+  
   const onAddComment = () => {
     let content = `
     <div>
       <img src=${profile} alt="프로필 이미지입니다"></img>
-      <textarea rows="${textarea.current.value.split('\n').length}">${textarea.current.value}</textarea>
+      <p>${textarea.current.value}</p>
+      <i class="fas fa-times"></i>
     </div>
-    `
+    `;
     comment.current.insertAdjacentHTML('beforeend', content);
     comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
     onNotPost();
@@ -177,6 +194,12 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     images.current.insertAdjacentHTML('beforeend', img);
   };
 
+  // useEffect
+  useEffect(()=>{
+    onSetData();
+    onLoadImg();
+    dispatch(commentMiddleware(postId));
+  },[]);
 
 
   return (
@@ -198,8 +221,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             onMouseLeave={e=>onMouseLeave(e)}>
           </S.Images>
           <S.Profile>
-            <img src={profile} alt="프로필 이미지입니다"></img>
-            <p>Park HyunJeong</p>
+            <img src={profile} alt="프로필 이미지입니다" onClick={onAddCommentTest}></img>
+            <p onClick={onDeleteComment}>Park HyunJeong</p>
             <span>15min</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>

@@ -79,7 +79,6 @@ const PostCard = ({data}) => {
     });
   };
 
-
   // 모달 띄우기
   const onShowPostModal = () => {
     setPostClick(true);
@@ -106,7 +105,31 @@ const PostCard = ({data}) => {
   },[]);
 
 
+  const lazyTarget = useRef()
 
+
+  useEffect(()=>{
+    let observer;
+    if(tripPhoto && lazyTarget.current){ // tripPhoto에 fetch해온 사진 담겨있는 상황에서
+      console.log(tripPhoto)
+      console.log(lazyTarget.current)
+      
+      observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){ // intersecting 되어 있으면
+            console.log(entry)
+            observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
+            // setState로 이미지 불러오기?
+          }
+        })
+      },{ threshold : 0.3 })
+      
+      observer.observe(lazyTarget.current)
+    } 
+
+    return () => observer && observer.disconnect();
+
+  }, [])
 
   return (
     <>
@@ -122,7 +145,7 @@ const PostCard = ({data}) => {
         <S.Content>
           <h2>{post_title}</h2>
           <p>{post_content}</p>
-          {tripPhoto && <img src={tripPhoto} alt="여행 사진" />}
+          {tripPhoto && <img ref={lazyTarget} src={tripPhoto} alt="여행 사진" />}
           <div>{getDate(post_date)}</div>
         </S.Content>
         <S.Button>

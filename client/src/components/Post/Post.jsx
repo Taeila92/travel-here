@@ -6,6 +6,7 @@ import * as S from "./Post.style";
 import { storageService } from 'firebase.js';
 import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
 import { commentMiddleware } from 'store/modules/comment';
+import Comment from 'components/Comment/Comment';
 
 
 const Post = ({postId, profile, trip, setPostClick}) => {
@@ -34,13 +35,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const allPost = useSelector(state => state.board.data);
   let allComment = useSelector(state => state.comment.data);
 
-  const dispatch= useDispatch(); //dispatch함수를 가져옴
-  // const onAddCommentTest = useCallback(() => {
-  //     dispatch(commentAdd({
-  //       id: 'test',
-  //     }));
-  //     console.log(allComment);
-  // }, []);
+  const dispatch= useDispatch(); 
+
   const onAddCommentTest = () => {
     console.log(allPost);
     console.log(allComment);
@@ -139,54 +135,6 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     }
   };
 
-  // comment쓰는 textarea의 값 null check에 따른 '게시'버튼 색깔 변화 
-  const onNotPost = () => {
-    postBtn.current.style.color = "black";
-    postBtn.current.style.fontWeight = "normal";
-  };
-
-  const onDoPost = () => {
-    postBtn.current.style.color = "blue";
-    postBtn.current.style.fontWeight = "bold";
-  };
-
-  const onChangePostBtn = () => {
-    if(!textarea.current.value){
-      onNotPost();
-      return;
-    }
-    onDoPost();
-  };
-
-  // 댓글 쓰고 엔터 눌렀을 때
-  const onEnter = (e) => {
-    if(e.key != 'Enter' | e.key === 'Enter' && e.shiftKey){
-      return;
-    }
-    if(e.key === 'Enter'){
-      e.preventDefault();
-      if(!textarea.current.value){
-        return;
-      }
-      onAddComment();
-    }
-  };
-
-  
-  const onAddComment = () => {
-    let content = `
-    <div>
-      <img src=${profile} alt="프로필 이미지입니다"></img>
-      <p>${textarea.current.value}</p>
-      <i class="fas fa-times"></i>
-    </div>
-    `;
-    comment.current.insertAdjacentHTML('beforeend', content);
-    comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
-    onNotPost();
-    textarea.current.value = '';
-  };
-
   const onAddImg = (image) => {
     let img = `
       <img src="${image}" alt="여행사진"></img>
@@ -233,17 +181,7 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          <S.Comment ref={comment}>
-            <section>
-              <textarea
-                ref={textarea}
-                placeholder="댓글을 입력해주세요"
-                onKeyPress={e=>onEnter(e)}
-                onChange={onChangePostBtn}>
-              </textarea>
-              <button ref={postBtn} type="submit" onClick={onAddComment}>게시</button>
-            </section>
-          </S.Comment>
+          <Comment profile={profile}/>
         </ul>
       </S.Contents>
     </S.Container>

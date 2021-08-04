@@ -34,14 +34,6 @@ export const commentDelete = () => {
 
 
 // thunk
-// export const commentMiddleware = (store) => (next) => (action) => {
-//     console.log('기능 추가1, 액션 실행', action);
-//     next(action);
-//     // 이 사이에 subscribe 동작
-//     console.log('기능 추가2, 액션 끝', action);
-// };
-
-// thunk
 export const commentMiddleware = (id) => async dispatch => {
     try{
         const response = await getCommentAPI(id);

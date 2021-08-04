@@ -6,7 +6,7 @@ import getDate from 'utils/getDate';
 import Post from 'components/Post/Post';
 import { useRef } from 'react';
 
-const PostCard = ({data}) => {
+const PostCard = ({data, test}) => {
 
   const postContainer = useRef();
   const allPost = useSelector(state => state.board.data);

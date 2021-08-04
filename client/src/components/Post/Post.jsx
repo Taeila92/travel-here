@@ -1,11 +1,9 @@
 ﻿import React, { useState, useCallback } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import * as S from "./Post.style";
 import { storageService } from 'firebase.js';
-import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
-import { commentMiddleware } from 'store/modules/comment';
 import Comment from 'components/Comment/Comment';
 
 
@@ -13,9 +11,9 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   const container = useRef();
   const images = useRef();
-  const comment = useRef();
-  const postBtn = useRef();
-  const textarea = useRef();
+  // const comment = useRef();
+  // const postBtn = useRef();
+  // const textarea = useRef();
 
 
   let [post_likeNum, setPost_likeNum] = useState(false);
@@ -32,20 +30,9 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const [post_writer, setPost_writer] = useState("");
   const [post_profile_img, setPost_profile_img] = useState("");
 
+  let [com, setCom] = useState("");
+
   const allPost = useSelector(state => state.board.data);
-  let allComment = useSelector(state => state.comment.data);
-
-  const dispatch= useDispatch(); 
-
-  const onAddCommentTest = () => {
-    console.log(allPost);
-    console.log(allComment);
-  }
-  const onDeleteComment = useCallback(() => {
-      dispatch(commentDelete());
-      console.log(allComment);
-  }, []);
-
 
   const onSetData = () => {
     // 해당 카테고리에 게시글이 한개일 경우
@@ -146,7 +133,6 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   useEffect(()=>{
     onSetData();
     onLoadImg();
-    dispatch(commentMiddleware(postId));
   },[]);
 
 
@@ -169,8 +155,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             onMouseLeave={e=>onMouseLeave(e)}>
           </S.Images>
           <S.Profile>
-            <img src={profile} alt="프로필 이미지입니다" onClick={onAddCommentTest}></img>
-            <p onClick={onDeleteComment}>Park HyunJeong</p>
+            <img src={profile} alt="프로필 이미지입니다"></img>
+            <p>Park HyunJeong</p>
             <span>15min</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
@@ -181,7 +167,10 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          <Comment profile={profile}/>
+          {/* {allComment.map((com) => {
+            return <Comment profile={profile} postId={postId} comments={com}/>
+          })} */}
+          <Comment profile={profile} postId={postId}/>
         </ul>
       </S.Contents>
     </S.Container>

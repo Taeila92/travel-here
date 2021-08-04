@@ -16,9 +16,7 @@ const Board = ({match, history, location}) => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-
     dispatch(fetchPostList(match.params.religion));
-
   },[dispatch, match.params.religion])
 
   // !!!lazy loading 도입!!!
@@ -30,7 +28,7 @@ const Board = ({match, history, location}) => {
     <S.Container>
       { 
         postList.map((post)=>{
-          return <PostCard key={post.post_id} data={post}/>
+          return <PostCard key={post.post_id} data={post} test={postList}/>
         })
       }
 

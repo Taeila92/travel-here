@@ -90,25 +90,56 @@ const PostCard = ({data, test}) => {
   };
 
 
+
+  const lazyTarget = useRef()
+  const [isView, setIsView] = useState(false);
+  //console.log(allPost)
   // firestore storage에있는 image name받아오기
   useEffect(()=>{
-    // 해당 카테고리에 게시글이 한개만 있을 경우
-    if(allPost.length == 1){
-      setImgName(0);
-      return;
-    }
-
-    // 게시글이 여러개 있을 경우
-    for(let i=0; allPost.length-1; i++){
-      if(i == allPost.length){
-        break;
+    const func = () => {
+      // 해당 카테고리에 게시글이 한개만 있을 경우
+      if(allPost.length == 1){
+        setImgName(0);
+        return;
       }
-      if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
-        setImgName(i);
-      }
-    }
 
+      // 게시글이 여러개 있을 경우
+      for(let i=0; allPost.length-1; i++){
+        if(i == allPost.length){
+          break;
+        }
+        if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
+          setImgName(i);
+        }
+      }
+    }  
+    
+    
     dispatch(commentMiddleware(post_id));
+    let observer;
+    
+    if(lazyTarget.current){ 
+      console.log(tripPhoto)
+      console.log(lazyTarget.current)
+
+      observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){ // intersecting 되어 있으면
+            observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
+            func()
+            setIsView(true);
+            console.log(isView)
+            // setState로 이미지 불러오기?
+          }
+        })
+      },{ threshold : 0.3 })
+      
+      observer.observe(lazyTarget.current)
+    } 
+
+    return () => observer && observer.disconnect();
+    
+
   },[]);
 
 
@@ -128,7 +159,9 @@ const PostCard = ({data, test}) => {
         <S.Content>
           <h2>{post_title}</h2>
           <p>{post_content}</p>
-          {tripPhoto && <img src={tripPhoto} alt="여행 사진" />}
+          <div ref={lazyTarget}>loading...</div>
+          {isView && <img  src={tripPhoto} alt="여행 사진" />}
+          {/*tripPhoto && <img ref={lazyTarget} src={tripPhoto} alt="여행 사진" />*/}
           <div>{getDate(post_date)}</div>
         </S.Content>
         <S.Button>

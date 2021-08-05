@@ -1,14 +1,14 @@
 ﻿import React, { useState, useCallback } from 'react';
 import { useRef } from 'react';
 import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import * as S from "./Post.style";
 import { storageService } from 'firebase.js';
 import Comment from 'components/Comment/Comment';
 
 
 const Post = ({postId, profile, trip, setPostClick}) => {
-
+  const dispatch = useDispatch();
   const container = useRef();
   const images = useRef();
   // const comment = useRef();

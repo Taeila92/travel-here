@@ -1,7 +1,6 @@
-﻿import React, { useRef } from 'react';
+﻿import React, { useCallback, useRef } from 'react';
 import * as S from "./Comment.style"; 
 import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
-import { commentMiddleware } from 'store/modules/comment';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { storageService } from 'firebase.js';
@@ -16,6 +15,7 @@ const Comment = ({profile, postId, comments}) => {
 
   let allComment = useSelector(state => state.comment.data);
   const [profilePhoto, setProfilePhoto] = useState('');
+  const [img, setImg] = useState(false);
 
   // comment쓰는 textarea의 값 null check에 따른 '게시'버튼 색깔 변화 
   const onNotPost = () => {
@@ -65,9 +65,10 @@ const Comment = ({profile, postId, comments}) => {
     textarea.current.value = '';
   };
 
+
   const onAddServerComment = (url, i) => {
     let content = `
-    <div>
+    <div class=${i}>
       <img src="${url}" alt="프로필 이미지입니다"></img>
       <p>${allComment[i].comment_content}</p>
       <i class="fas fa-times"></i>
@@ -75,8 +76,21 @@ const Comment = ({profile, postId, comments}) => {
     `;
     comment.current.insertAdjacentHTML('beforeend', content);
     onNotPost();
-    textarea.current.value = '';
   }
+
+
+  // function onAddServerComment(url, i){
+  //   // if(i == undefined){
+  //   //   return;
+  //   // }
+  //     let content = `
+  //       <img src="${url}" alt="프로필 이미지입니다"></img>
+  //       <p>${allComment[0].comment_content}</p>
+  //       <i class="fas fa-times"></i>
+  //     `;
+  //     // setImg(true);
+  //     return {__html :content};
+  // }
 
 
   const onLoadImg = () => {
@@ -88,11 +102,15 @@ const Comment = ({profile, postId, comments}) => {
       if(i == allComment.length){
         break;
       }
+      if(allComment[i].post_id != postId){
+        break;
+      }
       onSetImg(i);
     }
   };
 
   const onSetImg = (i) => {
+    console.log(allComment);
     let imgArr = [allComment[i].profile_img];
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${imgArr}`);
@@ -106,15 +124,28 @@ const Comment = ({profile, postId, comments}) => {
     }).catch(function(error) {});
   };
 
+  const onCommentClick = (e) => {
+    const target = e.target;
+    if(!target.classList.contains('fa-times')){
+      return;
+    }
+    // let i = target.parentElement.className;
+    // let imgArr = [allComment[i].profile_img];
+    // let storageRef = storageService.ref();
+    // let dynamicImg = storageRef.child(`post/${imgArr}`);
+    // dynamicImg.delete().then(function() {}).catch(function(error) {});
+    // db.collection('comment').doc('0fBhQbBqZZkHnT3FPlfP').delete();
+    // dispatch(commentDelete());
+  }
+
 
   useEffect(()=>{
-    dispatch(commentMiddleware(postId));
     onLoadImg();
   },[]);
-  
-  
+
+
   return (
-    <S.Comment ref={comment}>
+    <S.Comment ref={comment} onClick={e=>onCommentClick(e)}>
       <section>
         <textarea
           ref={textarea}
@@ -124,20 +155,29 @@ const Comment = ({profile, postId, comments}) => {
         </textarea>
         <button ref={postBtn} type="submit" onClick={onAddComment}>게시</button>
       </section>
-      {allComment ? allComment.map((com)=>{
-        <div>
-          <img src={com.profile_img} alt="프로필 이미지입니다"></img>
-          <p>{com.comment_content}</p>
-          <i class="fas fa-times"></i>
-        </div>
-        }) : <div>?</div>
-      }
+      {/* {allComment ?
+      allComment.map((com)=>{
+            <div>
+              <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
+              <p>{allComment[0].comment_content}</p>
+              <i class="fas fa-times"></i>
+            </div>
+        <div>{allComment[0].profile_img}</div>
+        })
+        : <div>?</div>} */}
       {/* {allComment &&
         <div>
-          <img src={profilePhoto} alt="프로필 이미지입니다"></img>
-          <p>{allComment.comment_content}</p>
+          <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
+          <p>{allComment[0].comment_content}</p>
           <i class="fas fa-times"></i>
         </div>} */}
+      {/* {allComment &&
+      <div>
+        <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
+        <p>{allComment[0].comment_content}</p>
+        <i class="fas fa-times"></i>
+      </div>} */}
+      {/* <div dangerouslySetInnerHTML={onAddServerComment()} /> */}
     </S.Comment>
   )
 }

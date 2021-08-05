@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { storageService } from 'firebase.js';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { commentMiddleware } from 'store/modules/comment';
 import * as S from './PostCard.style'
 import getDate from 'utils/getDate';
 import Post from 'components/Post/Post';
 import { useRef } from 'react';
 
-const PostCard = ({data, test}) => {
 
+const PostCard = ({data, test}) => {
+  
+  const dispatch = useDispatch();
   const postContainer = useRef();
   const allPost = useSelector(state => state.board.data);
   
@@ -23,8 +26,8 @@ const PostCard = ({data, test}) => {
     post_like,
     post_profile_img 
   } = data;
-
-
+  
+  
   // post모달 띄우는 용도
   const [postClick, setPostClick] = useState(false);
 
@@ -80,6 +83,7 @@ const PostCard = ({data, test}) => {
   };
 
 
+
   // 모달 띄우기
   const onShowPostModal = () => {
     setPostClick(true);
@@ -103,6 +107,8 @@ const PostCard = ({data, test}) => {
         setImgName(i);
       }
     }
+
+    dispatch(commentMiddleware(post_id));
   },[]);
 
 

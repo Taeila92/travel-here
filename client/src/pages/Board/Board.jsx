@@ -23,7 +23,7 @@ const Board = ({match, history, location}) => {
   if (loading) return <div>로딩중</div>
   if (error) return <div>Error</div>
   if (!postList) return null
-  
+
   return (
     <S.Container>
       { 

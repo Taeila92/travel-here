@@ -14,9 +14,6 @@ const Category = () => {
     getCategory();
   }, [getCategory]);
 
-  const click = () => {
-    console.log(category);
-  };
   return (
     <S.Container>
       <ul>
@@ -28,7 +25,6 @@ const Category = () => {
           </li>
         ))}
       </ul>
-      <button onClick={click}>click!</button>
     </S.Container>
   );
 };

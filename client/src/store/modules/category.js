@@ -20,13 +20,6 @@ export function getCategorySuccess(data) {
   };
 }
 
-export function getCateImageSuccess(photo) {
-  return {
-    type: GET_CATEIMAGE_SUCCESS,
-    photo,
-  };
-}
-
 export function getCategoryFail(error) {
   return {
     type: GET_CATEGORY_FAIL,

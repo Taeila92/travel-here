@@ -4,6 +4,7 @@ import NavBar from "components/NavBar/NavBar";
 import * as S from "./Header.style";
 import { useEffect, useState } from "react";
 import useWindowWidth from "hooks/useWindowWidth";
+
 export default function Header() {
   const width = useWindowWidth();
   const [active, setActive] = useState(false);

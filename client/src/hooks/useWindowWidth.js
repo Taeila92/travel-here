@@ -1,12 +1,12 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import { throttle } from "lodash";
+const useWindowWidth = () => {
+  const [width, setWidth] = useState(window.innerWidth);
 
-export default function useWindowWidth() {
-  const [width, setWidth] = React.useState(window.innerWidth);
-
-  React.useEffect(() => {
-    const resize = () => {
+  useEffect(() => {
+    const resize = throttle(() => {
       setWidth(window.innerWidth);
-    };
+    }, 500);
 
     window.addEventListener("resize", resize);
 
@@ -16,4 +16,6 @@ export default function useWindowWidth() {
   }, []);
 
   return width;
-}
+};
+
+export default useWindowWidth;

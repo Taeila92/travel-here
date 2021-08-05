@@ -1,14 +1,6 @@
 import React from "react";
+import Category from "components/Category/Category";
 
-const CategoryList = () => {
-  
-  return (
-    <div>
-      
-    </div>
-  )
+export default function CategoryList() {
+  return <Category />;
 }
-
-export default CategoryList;
-
-

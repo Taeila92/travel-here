@@ -1,5 +1,5 @@
-﻿import { produce } from 'immer'
-import { getPostListAPI } from 'store/apis/board'
+﻿import { produce } from 'immer';
+import { getPostListAPI } from 'store/apis/board';
 
 // Actions
 const FETCH_POSTLIST_REQUEST = 'board/FETCH_POSTLIST_REQUEST'

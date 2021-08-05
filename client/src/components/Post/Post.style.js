@@ -14,7 +14,7 @@ const Container = styled.section`
   z-index: 10;
   `;
 
-const Content = styled.div`
+const Contents = styled.div`
   width: 30rem;
   height: 35rem;
   background-color: white;
@@ -37,6 +37,12 @@ const Header = styled.li`
   ${flex};
   flex-direction: row;
   justify-content: space-between;
+  background-color: white;
+  position: sticky;
+  top: 0;
+  left: 0;
+  padding-bottom: 1.0rem;
+  z-index: 11;
   span {
     ${flex};
     flex-direction: row;
@@ -65,12 +71,13 @@ const Header = styled.li`
 
 const Images = styled.li`
   height: 20rem;
-  margin: 1.5rem 0;
+  margin: 0.5rem 0 1.5rem 0;
   ${flex};
   flex-direction: row;
   img {
     width: 20rem;
     height: 20rem;
+    object-fit: cover;
     background-color: black;
     margin: 0 0.2rem;
   }
@@ -82,6 +89,7 @@ const Profile = styled.li`
   img {
     width: 3rem;
     height: 3rem;
+    object-fit: cover;
     border-radius: 50%;
     background-color: pink;
   }
@@ -95,7 +103,15 @@ const Profile = styled.li`
 `;
 
 const Title = styled.li`
-  ${marginTop};
+  margin-top: 2rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+`;
+
+const Content = styled.li`
+  margin: 1rem 0 2rem 0;
+  font-size: 0.9rem;
+  line-height: 1.2;
 `;
 
 const Like = styled.li`
@@ -114,49 +130,14 @@ const Like = styled.li`
 `;
 
 
-const Comment = styled.li`
-  width: 100%;
-  ${marginTop};
-  /* margin-top: 2rem; */
-  padding: 1rem 0;
-  border-top: 1px solid #e3e3e3;
-  textarea {
-    width: 100%;
-    height: 3rem;
-    caret-color: black;
-    border: 2px solid #e3e3e3;
-    border-radius: 10px;
-    outline: none;
-    padding: 1rem;
-    resize: none;
-    ${hideScrollbar};
-  }
-  div {
-    ${flex};
-    ${marginTop};
-    justify-content: flex-start;
-    flex-direction: row;
-    img {
-      width: 2rem;
-      height: 2rem;
-      border-radius: 50%;
-      background-color: pink;
-    }
-    p {
-      width: 90%;
-      margin-left: 0.5rem;
-    }
-  }
-`;
-
 
 export {
   Container,
-  Content,
+  Contents,
   Header,
   Images, 
   Profile,
   Title, 
+  Content,
   Like,
-  Comment,
 };

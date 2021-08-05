@@ -1,12 +1,21 @@
-﻿import React, { useState } from 'react';
-import { useRef } from 'react';
-import { useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import * as S from "./Post.style";
+import { storageService } from 'firebase.js';
+import Comment from 'components/Comment/Comment';
 
 
-const Post = ({postId, profile, photo, setPostClick}) => {
+const Post = ({postId, profile, trip, setPostClick}) => {
+  const dispatch = useDispatch();
+  const container = useRef();
+  const images = useRef();
+  // const comment = useRef();
+  // const postBtn = useRef();
+  // const textarea = useRef();
 
+
+  let [post_likeNum, setPost_likeNum] = useState(false);
+  let [isMouseDown, setIsMouseDown] = useState(false);
 
   const [post_content, setPost_content] = useState("");
   const [post_date, setPost_date] = useState({});
@@ -19,54 +28,115 @@ const Post = ({postId, profile, photo, setPostClick}) => {
   const [post_writer, setPost_writer] = useState("");
   const [post_profile_img, setPost_profile_img] = useState("");
 
+  let [com, setCom] = useState("");
+
   const allPost = useSelector(state => state.board.data);
 
-  useEffect(()=>{
+  const onSetData = () => {
+    // 해당 카테고리에 게시글이 한개일 경우
+    if(allPost.length == 1){
+      onSetDataFrame(0);
+    }
+    // 여러개일 경우
     for(let i=0; allPost.length-1; i++){
       if(i == allPost.length){
         break;
       }
       if(allPost[i].post_id == postId){
-        setPost_content(allPost[i].post_content);
-        setPost_date(allPost[i].post_date);
-        setPost_id(allPost[i].post_id);
-        setPost_like(allPost[i].post_like);
-        setPost_photo(allPost[i].post_photo);
-        setPost_religion(allPost[i].post_religion);
-        setPost_title(allPost[i].post_title);
-        setPost_views(allPost[i].post_views);
-        setPost_writer(allPost[i].post_writer);
-        setPost_profile_img(allPost[i].post_profile_img);
+        onSetDataFrame(i);
       };
     }
-  },[])
-  const images = useRef();
-  let [post_likeNum, setPost_likeNum] = useState(false);
-  let [isMouseDown, setIsMouseDown] = useState(false);
+  };
 
+  const onSetDataFrame = (i) => {
+    setPost_content(allPost[i].post_content);
+    setPost_date(allPost[i].post_date);
+    setPost_id(allPost[i].post_id);
+    setPost_like(allPost[i].post_like);
+    setPost_religion(allPost[i].post_religion);
+    setPost_title(allPost[i].post_title);
+    setPost_views(allPost[i].post_views);
+    setPost_writer(allPost[i].post_writer);
+    setPost_profile_img(allPost[i].post_profile_img);
+  };
+
+  // firestore에서 사진 받아오기
+  const onLoadImg = () => {
+    // 게시글에 사진이 하나일 경우
+    if(trip.length == 1){
+      onSetImg(0);
+      return;
+    }
+    // 사진이 여러개일 경우
+    for(let i=0; trip.length-1; i++){
+      if(i == trip.length){
+        break;
+      }
+      onSetImg(i);
+    }
+  };
+
+  const onSetImg = (i) => {
+    let storageRef = storageService.ref();
+    let dynamicImg = storageRef.child(`post/${trip[i]}`);
+    dynamicImg.getMetadata().then(async function() {
+      let downloadDynURL = await dynamicImg.getDownloadURL();
+      setPost_photo(downloadDynURL);
+      setPost_photo((downloadDynURL)=>{
+        onAddImg(downloadDynURL);
+      })
+    }).catch(function(error) {});
+  };
+
+
+  // 여행사진들 마우스 드래그로 좌우 넘기기
   const onMouseDown = (e) => {
 
-  }
+  };
 
   const onMouseUp = (e) => {
     
-  }
+  };
 
   const onMouseMove = (e) => {
     
-  }
+  };
 
   const onMouseLeave = (e) => {
     
-  }
+  };
 
+  // 모달창 숨기기
   const onHideModal = () => {
     setPostClick(false);
-  }
+  };
+
+  // 좋아요 아이콘 토글
+  const onLikeToggle = () => {
+    if(post_likeNum){
+      setPost_likeNum(false);
+    }else{
+      setPost_likeNum(true);
+    }
+  };
+
+  const onAddImg = (image) => {
+    let img = `
+      <img src="${image}" alt="여행사진"></img>
+    `;
+    images.current.insertAdjacentHTML('beforeend', img);
+  };
+
+  // useEffect
+  useEffect(()=>{
+    onSetData();
+    onLoadImg();
+  },[]);
+
 
   return (
-    <S.Container>
-      <S.Content>
+    <S.Container ref={container}>
+      <S.Contents>
         <ul>
           <S.Header>
             <span>
@@ -80,53 +150,27 @@ const Post = ({postId, profile, photo, setPostClick}) => {
             onMouseDown={e=>onMouseDown(e)}
             onMouseUp={e=>onMouseUp(e)}
             onMouseMove={e=>onMouseMove(e)}
-            onMouseLeave={e=>onMouseLeave(e)}
-          >
-            <img src={photo} alt="여행사진 이미지입니다"></img>
-            <img></img>
-            <img></img>
-            <img></img>
+            onMouseLeave={e=>onMouseLeave(e)}>
           </S.Images>
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
             <p>Park HyunJeong</p>
             <span>15min</span>
           </S.Profile>
-          <S.Title>{post_content}</S.Title>
+          <S.Title>{post_title}</S.Title>
+          <S.Content>{post_content}</S.Content>
           <S.Like>
             <span>27 Likes</span>
             {post_likeNum ?
-            <i className="fas fa-thumbs-up"></i> :
-            <i className="far fa-thumbs-up"></i>}
+            <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
+            <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          <S.Comment>
-            <textarea placeholder="댓글을 입력해주세요"></textarea>
-            <div>
-              <img></img>
-              <p>재밌었겠다</p>
-            </div>
-            <div>
-              <img></img>
-              <p>신났겠다</p>
-            </div>
-            <div>
-              <img></img>
-              <p>맛있었겠다</p>
-            </div>
-            <div>
-              <img></img>
-              <p>나도 가고싶다</p>
-            </div>
-            <div>
-              <img></img>
-              <p>이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다
-              이것은 길이가 긴 댓글이다. 기이이이이이이이이이이이이이이이이이이일다</p>
-            </div>
-          </S.Comment>
+          {/* {allComment.map((com) => {
+            return <Comment profile={profile} postId={postId} comments={com}/>
+          })} */}
+          <Comment profile={profile} postId={postId}/>
         </ul>
-      </S.Content>
+      </S.Contents>
     </S.Container>
   )
 }

@@ -10,6 +10,9 @@ const Container = styled.div`
   margin : 0.5rem;
   padding : 1.6rem 0.6rem;
   z-index : 1;
+  p {
+    display: none;
+  }
 `;
 
 const Profile = styled.div`

@@ -9,12 +9,20 @@ const Container = styled.div`
     align-items: center;
     li {
       margin: 10px;
+      z-index: 1;
+      p {
+        color: white;
+        font-weight: 700;
+        font-size: 1.2rem;
+        margin: 0.5rem;
+      }
+      div {
+      }
     }
   }
 `;
 const LinkStyle = styled(Link)`
   text-decoration: none;
-  color: red;
   &:focus,
   &:hover,
   &:visited,

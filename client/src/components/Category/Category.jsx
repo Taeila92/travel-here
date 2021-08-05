@@ -20,10 +20,10 @@ const Category = () => {
   return (
     <S.Container>
       <ul>
-        {category.map((ca, index) => (
+        {category.map((cate, index) => (
           <li key={index}>
-            <S.LinkStyle to={`/categorylist/${ca}`}>
-              <p>{ca}</p>
+            <S.LinkStyle to={`/categorylist/${cate.religion}`}>
+              <p>{cate.religion.replace("_", " ")}</p>
             </S.LinkStyle>
           </li>
         ))}

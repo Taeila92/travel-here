@@ -10,7 +10,7 @@ const Background = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  ::before {
+  /* ::before {
     content: "";
     position: absolute;
     top: 0;
@@ -18,13 +18,12 @@ const Background = styled.div`
     left: 0;
     right: 0;
     margin: auto;
-    z-index: -1;
 
     background-color: rgb(0, 0, 0, 0);
     @media screen and (max-width: 900px) {
       background-color: rgb(0, 0, 0, 0.5);
     }
-  }
+  } */
 `;
 
 export { Background };

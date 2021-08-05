@@ -1,8 +1,9 @@
 import { dbService, storageService } from "firebase.js";
-
+import lodash from "lodash";
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
 const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";
+const GET_CATEIMAGE_SUCCESS = "category/GETCATEIMAGE_SUCCESS";
 const GET_CATEGORY_FAIL = "category/GET_CATEGORY_FAIL";
 
 //action constructor
@@ -19,12 +20,20 @@ export function getCategorySuccess(data) {
   };
 }
 
+export function getCateImageSuccess(photo) {
+  return {
+    type: GET_CATEIMAGE_SUCCESS,
+    photo,
+  };
+}
+
 export function getCategoryFail(error) {
   return {
     type: GET_CATEGORY_FAIL,
     error,
   };
 }
+
 // initial
 const initialState = {
   loading: false,
@@ -48,6 +57,12 @@ export default function reducer(state = initialState, action) {
         loading: false,
         data: action.data,
       };
+    case GET_CATEIMAGE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        photo: action.photo,
+      };
     case GET_CATEGORY_FAIL:
       return {
         ...state,
@@ -65,28 +80,26 @@ export function getCategoryThunk() {
     try {
       dispatch(getCategoryStart());
       const res = await dbService.collection("post").get();
-      const postArray = [];
-      const imageArray = [];
+      const resArray = [];
       res.forEach((res) => {
-        postArray.push(res.data().post_religion);
-        // if (res.data().post_photo.length > 0) {
-        //   const random = Math.floor(
-        //     Math.random() * res.data().post_photo.length
-        //   );
-        //   imageArray.push(res.data().post_photo[random]);
-        // }
-      });
-      postArray.forEach((data, index) => {
-        data = data.toLowerCase().trim();
-        if (data === undefined || data === null || data === "") {
-          postArray.splice(index, 1);
+        if (res.data().post_photo.length > 0) {
+          const random = Math.floor(
+            Math.random() * res.data().post_photo.length
+          );
+          resArray.push({
+            religion: res.data().post_religion.toLowerCase().trim(),
+            photo: res.data().post_photo[random],
+          });
+        } else {
+          resArray.push({
+            religion: res.data().post_religion.toLowerCase().trim(),
+            photo: "",
+          });
         }
       });
-      console.log(imageArray);
 
-      const set = new Set(postArray);
-      const setArray = [...set];
-      dispatch(getCategorySuccess(setArray));
+      const data = lodash.uniqBy(resArray, "religion");
+      dispatch(getCategorySuccess(data));
     } catch (e) {
       dispatch(getCategoryFail(e));
     }

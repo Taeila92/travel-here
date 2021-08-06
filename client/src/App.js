@@ -9,7 +9,7 @@ import * as S from 'styles/Background';
 // router
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import CategoryList from 'pages/CategoryList';
-import Board from 'pages/Board';
+import Board from 'pages/Board/Board';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Logout from 'pages/Logout';

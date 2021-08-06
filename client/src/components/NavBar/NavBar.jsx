@@ -1,5 +1,5 @@
-import React from "react";
-import * as S from "./NavBar.style";
+import React from 'react';
+import * as S from './NavBar.style';
 
 export default function NavBar({ setActive, active }) {
   function click() {

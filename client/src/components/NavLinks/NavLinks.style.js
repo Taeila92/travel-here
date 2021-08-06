@@ -1,5 +1,4 @@
-import styled from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled from 'styled-components';
 
 const Container = styled.div`
   position: absolute;
@@ -14,8 +13,14 @@ const Container = styled.div`
     height: 150px;
     padding-right: 20px;
     transition: 0.3s;
-    transform: ${(props) => (props.active ? 0 : "translateY(-150px)")};
+    transform: ${(props) => (props.active ? 0 : 'translateY(-150px)')};
   }
+`;
+
+const Header = styled.header`
+  position: relative;
+  background-color: transparent;
+  height: ${(props) => (props.active ? '150px' : '55px')};
 `;
 
 const Ul = styled.ul`
@@ -36,4 +41,15 @@ const Li = styled.li`
   align-items: center;
 `;
 
-export { Container, Ul, Li };
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+export { Container, Ul, Li, Button, Header };

@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { storageService } from 'firebase.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { commentMiddleware } from 'store/modules/comment';
 import * as S from './PostCard.style'
 import getDate from 'utils/getDate';
 import Post from 'components/Post/Post';
-import { useRef } from 'react';
-
 
 const PostCard = ({data, test}) => {
   
@@ -31,6 +29,8 @@ const PostCard = ({data, test}) => {
   // post모달 띄우는 용도
   const [postClick, setPostClick] = useState(false);
 
+ //!!중요!! 현재는 이렇게 저장되어있는 name 받아와서 하는데 나중에는 어차피 url로 저장되니깐 그걸로 바로 받아오면 됨
+
   // **trip 관련**
   // 게시글 목록에서 보여질 딱 한개의 대표 여행사진
   const [tripPhoto, setTripPhoto] = useState();
@@ -44,7 +44,6 @@ const PostCard = ({data, test}) => {
   const [profile, setProfile] = useState();
   // 렌더링에 사용되는 프로필사진
   const [profilePhoto, setProfilePhoto] = useState();
-
 
 
   // firestore storage에있는 image경로 받아오기
@@ -93,62 +92,48 @@ const PostCard = ({data, test}) => {
 
   const lazyTarget = useRef()
   const [isView, setIsView] = useState(false);
-  //console.log(allPost)
-  // firestore storage에있는 image name받아오기
+
   useEffect(()=>{
-    const func = () => {
+    const fetchTripImg = () => {
       // 해당 카테고리에 게시글이 한개만 있을 경우
-      if(allPost.length == 1){
+      if(allPost.length === 1){
         setImgName(0);
         return;
       }
 
       // 게시글이 여러개 있을 경우
       for(let i=0; allPost.length-1; i++){
-        if(i == allPost.length){
+        if(i === allPost.length){
           break;
         }
-        if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
+        if(allPost[i].post_id === postContainer.current.firstElementChild.textContent){
           setImgName(i);
         }
       }
-    }  
-    
-    
+    }      
     dispatch(commentMiddleware(post_id));
-    let observer;
     
+    let observer;
     if(lazyTarget.current){ 
-      console.log(tripPhoto)
-      console.log(lazyTarget.current)
-
       observer = new IntersectionObserver((entries)=>{
         entries.forEach((entry)=>{
           if(entry.isIntersecting){ // intersecting 되어 있으면
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
-            func()
+            fetchTripImg()
             setIsView(true);
-            console.log(isView)
-            // setState로 이미지 불러오기?
           }
         })
       },{ threshold : 0.3 })
-      
-      observer.observe(lazyTarget.current)
+      observer.observe(lazyTarget.current) // 맨처음에 등록시키고, 화면에 들어오면 unobserve
     } 
 
-    return () => observer && observer.disconnect();
-    
+    return () => observer && observer.disconnect(); // clean up
 
   },[]);
-
-
-
 
   return (
     <>
       <S.Container ref={postContainer} onClick={onShowPostModal}>
-        <p>{post_id}</p>
         <S.Profile>
           <img src={profilePhoto} alt="프로필 사진" />
           <div>        
@@ -161,7 +146,6 @@ const PostCard = ({data, test}) => {
           <p>{post_content}</p>
           <div ref={lazyTarget}>loading...</div>
           {isView && <img  src={tripPhoto} alt="여행 사진" />}
-          {/*tripPhoto && <img ref={lazyTarget} src={tripPhoto} alt="여행 사진" />*/}
           <div>{getDate(post_date)}</div>
         </S.Content>
         <S.Button>

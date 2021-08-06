@@ -114,13 +114,14 @@ const PostCard = ({data, test}) => {
       }
     }  
     
-    
-    dispatch(commentMiddleware(post_id));
+    // 게시물 모달창 띄우면 서버에 있는 댓글 바로 업로드 되어있게 하기
+    dispatch(commentMiddleware());
+
     let observer;
     
     if(lazyTarget.current){ 
-      console.log(tripPhoto)
-      console.log(lazyTarget.current)
+      // console.log(tripPhoto)
+      // console.log(lazyTarget.current)
 
       observer = new IntersectionObserver((entries)=>{
         entries.forEach((entry)=>{
@@ -128,7 +129,7 @@ const PostCard = ({data, test}) => {
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
             func()
             setIsView(true);
-            console.log(isView)
+            // console.log(isView)
             // setState로 이미지 불러오기?
           }
         })

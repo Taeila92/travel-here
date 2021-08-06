@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { storageService } from 'firebase.js';
 import { useState } from 'react';
+import { dbService } from "firebase.js";
+import { commentMiddleware } from 'store/modules/comment';
 
 const Comment = ({profile, postId, comments}) => {
   const textarea = useRef();
@@ -13,9 +15,13 @@ const Comment = ({profile, postId, comments}) => {
 
   const dispatch = useDispatch();
 
+
   let allComment = useSelector(state => state.comment.data);
   const [profilePhoto, setProfilePhoto] = useState('');
   const [img, setImg] = useState(false);
+
+  // 댓글 추가하고 모달창 내렸다가 다시 띄우면 추가한 댓글 떠있게 하기
+  dispatch(commentMiddleware());
 
   // comment쓰는 textarea의 값 null check에 따른 '게시'버튼 색깔 변화 
   const onNotPost = () => {
@@ -51,7 +57,17 @@ const Comment = ({profile, postId, comments}) => {
     }
   };
 
-  const onAddComment = () => {
+  const onAddComment = async() => {
+    // firestore에 데이터 올리기
+    await dbService.collection('comment').add({
+      post_id: postId,
+      profile_img: '아이유.jpg',
+      comment_id: 3,
+      comment_content: textarea.current.value,
+      comment_like: 0,
+      comment_writer: 'phjphj',
+    });
+
     let content = `
     <div>
       <img src=${profile} alt="프로필 이미지입니다"></img>
@@ -59,6 +75,7 @@ const Comment = ({profile, postId, comments}) => {
       <i class="fas fa-times"></i>
     </div>
     `;
+
     comment.current.insertAdjacentHTML('beforeend', content);
     comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
     onNotPost();
@@ -94,23 +111,24 @@ const Comment = ({profile, postId, comments}) => {
 
 
   const onLoadImg = () => {
-    if(allComment.length == 1){
-      onSetImg(0);
-      return;
-    }
-    for(let i=0; allComment.length-1; i++){
-      if(i == allComment.length){
-        break;
+    if(allComment != undefined){
+      if(allComment.length == 1){
+        onSetImg(0);
+        return;
       }
-      if(allComment[i].post_id != postId){
-        break;
+      for(let i=0; allComment.length-1; i++){
+        if(i == allComment.length){
+          break;
+        }
+        if(allComment[i].post_id == postId){
+          onSetImg(i);
+        }
       }
-      onSetImg(i);
     }
   };
 
   const onSetImg = (i) => {
-    console.log(allComment);
+    // console.log(allComment);
     let imgArr = [allComment[i].profile_img];
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${imgArr}`);
@@ -137,7 +155,6 @@ const Comment = ({profile, postId, comments}) => {
     // db.collection('comment').doc('0fBhQbBqZZkHnT3FPlfP').delete();
     // dispatch(commentDelete());
   }
-
 
   useEffect(()=>{
     onLoadImg();

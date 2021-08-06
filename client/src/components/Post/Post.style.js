@@ -5,7 +5,7 @@ import { flex, marginTop, fontSize, hideScrollbar, cursorPointer } from "./style
 const Container = styled.section`
   width: 100vw;
   height: 100vh;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   ${flex};

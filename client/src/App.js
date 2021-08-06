@@ -14,19 +14,22 @@ import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 
-function App() {  
+
+const App = () => {  
   return (
     <S.Background className="App">
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        <Switch>
-          <Route exact path="/categorylist" component={CategoryList} />
-          <Route path="/categorylist/:religion" component={Board} />
-          <Route path="/login" component={Login} />
-          <Route exact path="/" component={Home} />
-          <Route component={NotFound} />
-        </Switch>
+        <S.Content>
+          <Switch>
+            <Route exact path="/categorylist" component={CategoryList} />
+            <Route path="/categorylist/:religion" component={Board} />
+            <Route path="/login" component={Login} />
+            <Route exact path="/" component={Home} />
+            <Route component={NotFound} />
+          </Switch>
+        </S.Content>
       </BrowserRouter>
     </S.Background>
   );

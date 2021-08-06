@@ -11,4 +11,15 @@ const Background = styled.div`
   background-position: center;
 `;
 
-export { Background };
+const Content = styled.section`
+  width: 100vw;
+  height: calc(100vh - 55px);
+  position: absolute;
+  top: 55px;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+export { Background, Content };

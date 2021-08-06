@@ -11,6 +11,15 @@ class AuthService {
     firebase.auth().signOut();
   }
 
+  // loginCurrent() {
+  //   const loginCurrentUser = new firebase.auth().currentUser;
+  //   return firebaseService.auth().currentUser;
+  // }
+
+  loginCurrent() {
+    return firebaseService.auth();
+  }
+
   onAuthChange(onUserChanged) {
     firebase.auth().onAuthStateChanged((user) => {
       onUserChanged(user);

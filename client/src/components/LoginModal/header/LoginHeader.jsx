@@ -1,6 +1,6 @@
 import * as S from './LoginHeader.style';
-import LogoutPage from 'components/LoginModal/LogoutPage/LogoutPage';
 import { useHistory } from 'react-router-dom';
+import NavLinks from 'components/NavLinks/NavLinks';
 
 function LoginHeader(props) {
   const {
@@ -30,7 +30,7 @@ function LoginHeader(props) {
   return (
     <>
       {user ? (
-        <LogoutPage handleLogout={handleLogout} />
+        <NavLinks handleLogout={handleLogout} />
       ) : (
         <S.Header>
           <S.Ul>

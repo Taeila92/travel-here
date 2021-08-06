@@ -4,8 +4,8 @@ import LoginHeader from 'components/LoginModal/header/LoginHeader';
 import LoginFooter from 'components/LoginModal/footer/LoginFooter';
 import AuthService from 'auth_service';
 import firebaseService from 'firebase';
-import LogoutPage from './LogoutPage/LogoutPage';
-// import Hero from './Hero/Hero';
+import NavLinks from 'components/NavLinks/NavLinks';
+import Header from 'components/Header/Header';
 
 function LoginModalOpen() {
   const authService = new AuthService();
@@ -70,6 +70,7 @@ function LoginModalOpen() {
     firebaseService.auth().signOut();
   };
 
+  // 현재 로그인한 사용자 가져오기
   const authListener = () => {
     firebaseService.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -88,11 +89,9 @@ function LoginModalOpen() {
   return (
     <>
       {user ? (
-        <LogoutPage handleLogout={handleLogout} />
+        <NavLinks user={user} setUser={setUser} handleLogout={handleLogout} />
       ) : (
-        // <Hero handleLogout={handleLogout} />
-        // <LoginHeader routeChange={routeChange} handleLogout={handleLogout} />
-        // <Logout onClick={routeChange} handleLogout={handleLogout} />
+        // <NavLinks handleLogout={handleLogout} />
         <>
           <S.LoginBg></S.LoginBg>
           <S.Logincontainer>

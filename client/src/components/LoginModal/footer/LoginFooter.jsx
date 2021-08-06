@@ -5,6 +5,7 @@ import * as S from './LoginFooter.style';
 function LoginFooter({ authService }) {
   const history = useHistory();
 
+  // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({
       pathname: '/logout',
@@ -12,6 +13,7 @@ function LoginFooter({ authService }) {
     });
   };
 
+  // 로그인 페이지로 전환
   const routeChange = () => {
     let path = '/';
     history.push(path);

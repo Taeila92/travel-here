@@ -16,6 +16,12 @@ const Container = styled.div`
   }
 `;
 
+const Header = styled.header`
+  position: relative;
+  background-color: transparent;
+  height: ${(props) => (props.active ? '150px' : '55px')};
+`;
+
 const Ul = styled.ul`
   display: flex;
   margin: auto;
@@ -34,4 +40,15 @@ const Li = styled.li`
   align-items: center;
 `;
 
-export { Container, Ul, Li };
+const Button = styled.button`
+  border: none;
+  background-color: transparent;
+  color: white;
+  font-size: 24px;
+  font-weight: 700;
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+export { Container, Ul, Li, Button, Header };

@@ -89,13 +89,13 @@ const PostCard = ({data, test}) => {
   };
 
 
-
   const lazyTarget = useRef()
   const [isView, setIsView] = useState(false);
 
   useEffect(()=>{
     const fetchTripImg = () => {
       // 해당 카테고리에 게시글이 한개만 있을 경우
+
       if(allPost.length === 1){
         setImgName(0);
         return;
@@ -134,6 +134,8 @@ const PostCard = ({data, test}) => {
   return (
     <>
       <S.Container ref={postContainer} onClick={onShowPostModal}>
+        {/*이 post_id로 검색... 나중에 수정하는 것이 좋을듯 한데 방법은???*/}
+        <p>{post_id}</p>
         <S.Profile>
           <img src={profilePhoto} alt="프로필 사진" />
           <div>        

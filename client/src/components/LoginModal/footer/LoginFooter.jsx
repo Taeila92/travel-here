@@ -33,40 +33,40 @@ function LoginFooter({ authService }) {
 
   return (
     <>
-      <footer>
-        <S.Ul>
+      <S.Footer>
+        <ul>
           {/* Google button */}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-google"></i>
-              </S.SignUpLogo>
-              <S.P>Google</S.P>
-            </S.Button>
-          </S.Li>
+              </span>
+              <p>Google</p>
+            </button>
+          </li>
           {/* Github button*/}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-github"></i>
-              </S.SignUpLogo>
-              <S.P>Github</S.P>
-            </S.Button>
-          </S.Li>
+              </span>
+              <p>Github</p>
+            </button>
+          </li>
           {/* Facebook button */}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-facebook-square"></i>
-              </S.SignUpLogo>
-              <S.P>Facebook</S.P>
-            </S.Button>
-          </S.Li>
-        </S.Ul>
-        <S.Arrow onClick={routeChange}>
+              </span>
+              <p>Facebook</p>
+            </button>
+          </li>
+        </ul>
+        <button className="closeBtn" onClick={routeChange}>
           <i className="fas fa-arrow-left"></i>
-        </S.Arrow>
-      </footer>
+        </button>
+      </S.Footer>
     </>
   );
 }

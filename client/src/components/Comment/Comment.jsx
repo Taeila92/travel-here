@@ -73,6 +73,7 @@ const Comment = ({profile, postId, comments}) => {
     <div class=${time}>
       <img src=${profile} alt="프로필 이미지입니다"></img>
       <p>${textarea.current.value}</p>
+      <i class="fas fa-edit"></i>
       <i class="fas fa-times"></i>
     </div>
     `;
@@ -89,6 +90,7 @@ const Comment = ({profile, postId, comments}) => {
     <div class=${allComment[i].comment_id}>
       <img src="${url}" alt="프로필 이미지입니다"></img>
       <p>${allComment[i].comment_content}</p>
+      <i class="fas fa-edit"></i>
       <i class="fas fa-times"></i>
     </div>
     `;
@@ -96,15 +98,49 @@ const Comment = ({profile, postId, comments}) => {
     onNotPost();
   }
 
-  const onDelete = (e) => {
+  const onEditAndDelete = (e) => {
     const target = e.target;
-    if(!target.classList.contains('fa-times')){
-      return;
-    }
     let i = target.parentElement.className;
-    console.log(i);
-    dbService.collection('comment').doc(i).delete();
-    target.parentElement.remove();
+    if(target.classList.contains('fa-edit')){
+      onStartEdit(target);
+    }
+    if(target.classList.contains('fa-check')){
+      onCompleteEdit(target);
+    }
+    if(target.classList.contains('fa-times')){
+      dbService.collection('comment').doc(i).delete();
+      target.parentElement.remove();
+    }
+  }
+
+  const onStartEdit = (target) => {
+    const p = target.previousElementSibling;
+    const text = p.textContent;
+    p.remove();
+    const inputText = `<input placeholder=${text}></input>`;
+    target.insertAdjacentHTML('beforebegin', inputText);
+
+    const checkIcon = `<i class="fas fa-check"></i>`;
+    target.nextElementSibling.insertAdjacentHTML('beforebegin', checkIcon);
+    target.remove();
+  }
+
+  const onCompleteEdit = (target) => {
+    const i = target.parentElement.className;
+    const input = target.previousElementSibling;
+    const text = input.value;
+
+    const pText = `<p>${text}</p>`;
+    input.remove();
+    target.insertAdjacentHTML('beforebegin', pText);
+
+    const editIcon = `<i class="fas fa-edit"></i>`;
+    target.nextElementSibling.insertAdjacentHTML('beforebegin', editIcon);
+    target.remove();
+
+    dbService.collection('comment').doc(i).update({
+      comment_content: text
+    })
   }
 
 
@@ -145,7 +181,7 @@ const Comment = ({profile, postId, comments}) => {
 
 
   return (
-    <S.Comment ref={comment} onClick={e=>onDelete(e)}>
+    <S.Comment ref={comment} onClick={e=>onEditAndDelete(e)}>
       <section>
         <textarea
           ref={textarea}
@@ -155,29 +191,6 @@ const Comment = ({profile, postId, comments}) => {
         </textarea>
         <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
-      {/* {allComment ?
-      allComment.map((com)=>{
-            <div>
-              <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
-              <p>{allComment[0].comment_content}</p>
-              <i class="fas fa-times"></i>
-            </div>
-        <div>{allComment[0].profile_img}</div>
-        })
-        : <div>?</div>} */}
-      {/* {allComment &&
-        <div>
-          <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
-          <p>{allComment[0].comment_content}</p>
-          <i class="fas fa-times"></i>
-        </div>} */}
-      {/* {allComment &&
-      <div>
-        <img src={allComment[0].profile_img} alt="프로필 이미지입니다"></img>
-        <p>{allComment[0].comment_content}</p>
-        <i class="fas fa-times"></i>
-      </div>} */}
-      {/* <div dangerouslySetInnerHTML={onAddServer()} /> */}
     </S.Comment>
   )
 }

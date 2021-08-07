@@ -42,15 +42,15 @@ const Footer = styled.footer`
         }
       }
     }
-    .closeBtn {
-      position: absolute;
-      border: none;
-      background-color: transparent;
-      cursor: pointer;
-      font-size: 24px;
-      top: 1em;
-      left: 1em;
-    }
+  }
+  .closeBtn {
+    position: absolute;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 24px;
+    top: 1em;
+    left: 1em;
   }
 `;
 

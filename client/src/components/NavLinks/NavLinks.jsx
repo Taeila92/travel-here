@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import AuthService from 'auth_service';
 import Logo from 'components/Logo/Logo';
 import NavBar from 'components/NavBar/NavBar';
-import { useState } from 'react';
 import 'firebase/auth';
 
 const StyledNav = styled(NavLink)`
@@ -12,22 +11,6 @@ const StyledNav = styled(NavLink)`
   padding: 10px 40px 10px;
   color: white;
 `;
-
-// function setPersistenceSession() {
-//   const email = '...';
-//   const password = '...';
-
-//   firebase
-//     .auth()
-//     .setPersistence(firebase.auth.Auth.Persistence.SESSION)
-//     .then(() => {
-//       return firebase.auth().signInWithEmailAndPassword(email, password);
-//     })
-//     .catch((error) => {
-//       const errorCode = error.code;
-//       const errorMessage = error.message;
-//     });
-// }
 
 // 로그아웃
 const authService = new AuthService();
@@ -37,8 +20,6 @@ const onLogout = () => {
 
 const activeStyle = { color: 'red' };
 export default function NavLinks({ active, setActive, isLoggedIn }) {
-  // const [isLoggedIn, setIsLoggedIn] = useState(true);
-
   return (
     <>
       <S.Header active={active}>

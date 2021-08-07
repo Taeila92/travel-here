@@ -108,7 +108,7 @@ const PostCard = ({data, test}) => {
         if(i == allPost.length){
           break;
         }
-        if(allPost[i].post_id == postContainer.current.firstElementChild.textContent){
+        if(allPost[i].post_id == postContainer.current.id){
           setImgName(i);
         }
       }
@@ -148,8 +148,7 @@ const PostCard = ({data, test}) => {
 
   return (
     <>
-      <S.Container ref={postContainer} onClick={onShowPostModal}>
-        <p>{post_id}</p>
+      <S.Container ref={postContainer} onClick={onShowPostModal} id={post_id}>
         <S.Profile>
           <img src={profilePhoto} alt="프로필 사진" />
           <div>        
@@ -159,7 +158,6 @@ const PostCard = ({data, test}) => {
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>
-          <p>{post_content}</p>
           <div ref={lazyTarget}>loading...</div>
           {isView && <img  src={tripPhoto} alt="여행 사진" />}
           {/*tripPhoto && <img ref={lazyTarget} src={tripPhoto} alt="여행 사진" />*/}

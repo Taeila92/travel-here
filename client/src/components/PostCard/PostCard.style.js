@@ -10,9 +10,6 @@ const Container = styled.div`
   margin : 0.5rem;
   padding : 1.6rem 0.6rem;
   z-index : 1;
-  p {
-    display: none;
-  }
 `;
 
 const Profile = styled.div`
@@ -36,9 +33,6 @@ const Content = styled.div`
   h2 {
     font-size : 1.3rem;
     margin-bottom : 0.5rem;
-  }
-  p {
-    margin-bottom: 0.5rem;
   }
   img {
     width : 100%;

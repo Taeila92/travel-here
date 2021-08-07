@@ -9,6 +9,8 @@ import { dbService } from "firebase.js";
 import { commentMiddleware } from 'store/modules/comment';
 
 const Comment = ({profile, postId, comments}) => {
+  let time = Date.now().toString();
+
   const textarea = useRef();
   const postBtn = useRef();
   const comment = useRef();
@@ -53,23 +55,22 @@ const Comment = ({profile, postId, comments}) => {
       if(!textarea.current.value){
         return;
       }
-      onAddComment();
+      onAdd();
     }
   };
 
-  const onAddComment = async() => {
-    // firestore에 데이터 올리기
-    await dbService.collection('comment').add({
+  const onAdd = async() => {
+    await dbService.collection('comment').doc(time).set({
       post_id: postId,
       profile_img: '아이유.jpg',
-      comment_id: 3,
+      comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,
       comment_writer: 'phjphj',
-    });
+    })
 
     let content = `
-    <div>
+    <div class=${time}>
       <img src=${profile} alt="프로필 이미지입니다"></img>
       <p>${textarea.current.value}</p>
       <i class="fas fa-times"></i>
@@ -83,9 +84,9 @@ const Comment = ({profile, postId, comments}) => {
   };
 
 
-  const onAddServerComment = (url, i) => {
+  const onAddServer = (url, i) => {
     let content = `
-    <div class=${i}>
+    <div class=${allComment[i].comment_id}>
       <img src="${url}" alt="프로필 이미지입니다"></img>
       <p>${allComment[i].comment_content}</p>
       <i class="fas fa-times"></i>
@@ -95,19 +96,16 @@ const Comment = ({profile, postId, comments}) => {
     onNotPost();
   }
 
-
-  // function onAddServerComment(url, i){
-  //   // if(i == undefined){
-  //   //   return;
-  //   // }
-  //     let content = `
-  //       <img src="${url}" alt="프로필 이미지입니다"></img>
-  //       <p>${allComment[0].comment_content}</p>
-  //       <i class="fas fa-times"></i>
-  //     `;
-  //     // setImg(true);
-  //     return {__html :content};
-  // }
+  const onDelete = (e) => {
+    const target = e.target;
+    if(!target.classList.contains('fa-times')){
+      return;
+    }
+    let i = target.parentElement.className;
+    console.log(i);
+    dbService.collection('comment').doc(i).delete();
+    target.parentElement.remove();
+  }
 
 
   const onLoadImg = () => {
@@ -128,7 +126,6 @@ const Comment = ({profile, postId, comments}) => {
   };
 
   const onSetImg = (i) => {
-    // console.log(allComment);
     let imgArr = [allComment[i].profile_img];
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${imgArr}`);
@@ -137,24 +134,10 @@ const Comment = ({profile, postId, comments}) => {
       let downloadDynURL = await dynamicImg.getDownloadURL();
       setProfilePhoto(downloadDynURL);
       setProfilePhoto((downloadDynURL)=>{
-        onAddServerComment(downloadDynURL, i);
+        onAddServer(downloadDynURL, i);
       })
     }).catch(function(error) {});
   };
-
-  const onCommentClick = (e) => {
-    const target = e.target;
-    if(!target.classList.contains('fa-times')){
-      return;
-    }
-    // let i = target.parentElement.className;
-    // let imgArr = [allComment[i].profile_img];
-    // let storageRef = storageService.ref();
-    // let dynamicImg = storageRef.child(`post/${imgArr}`);
-    // dynamicImg.delete().then(function() {}).catch(function(error) {});
-    // db.collection('comment').doc('0fBhQbBqZZkHnT3FPlfP').delete();
-    // dispatch(commentDelete());
-  }
 
   useEffect(()=>{
     onLoadImg();
@@ -162,7 +145,7 @@ const Comment = ({profile, postId, comments}) => {
 
 
   return (
-    <S.Comment ref={comment} onClick={e=>onCommentClick(e)}>
+    <S.Comment ref={comment} onClick={e=>onDelete(e)}>
       <section>
         <textarea
           ref={textarea}
@@ -170,7 +153,7 @@ const Comment = ({profile, postId, comments}) => {
           onKeyPress={e=>onEnter(e)}
           onChange={onChangePostBtn}>
         </textarea>
-        <button ref={postBtn} type="submit" onClick={onAddComment}>게시</button>
+        <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
       {/* {allComment ?
       allComment.map((com)=>{
@@ -194,7 +177,7 @@ const Comment = ({profile, postId, comments}) => {
         <p>{allComment[0].comment_content}</p>
         <i class="fas fa-times"></i>
       </div>} */}
-      {/* <div dangerouslySetInnerHTML={onAddServerComment()} /> */}
+      {/* <div dangerouslySetInnerHTML={onAddServer()} /> */}
     </S.Comment>
   )
 }

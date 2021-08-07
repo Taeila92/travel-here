@@ -33,15 +33,16 @@ function LoginHeader(props) {
         <NavLinks handleLogout={handleLogout} />
       ) : (
         <S.Header>
-          <S.Ul>
+          <ul>
             {hasAccount ? (
               <>
-                <S.Li>
-                  <S.H1>로그인</S.H1>
-                </S.Li>
+                <li>
+                  <h1>로그인</h1>
+                </li>
 
-                <S.Li>
-                  <S.InputEmail
+                <li>
+                  <input
+                    className="inputEmail"
                     type="text"
                     autoFocus
                     required
@@ -49,34 +50,41 @@ function LoginHeader(props) {
                     placeholder="Email Address"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <S.errMSG className="errorMsg">{emailError}</S.errMSG>
-                  <S.InputPw
+                  <p className="errorMsg">{emailError}</p>
+                  <input
+                    className="inputPw"
                     type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                   />
-                  <S.errMSG className="errorMsg">{passwordError}</S.errMSG>
-                  <S.Li>
-                    <S.Button onClick={handleLogin}>Sign in</S.Button>
-                    <S.P>
+                  <p className="errorMsg">{passwordError}</p>
+                  <li>
+                    <button className="loginBtn" onClick={handleLogin}>
+                      Sign in
+                    </button>
+                    <p>
                       Don't have an account ?
-                      <S.Span onClick={() => setHasAccount(!hasAccount)}>
+                      <button
+                        className="logoutBtn"
+                        onClick={() => setHasAccount(!hasAccount)}
+                      >
                         Sign Up
-                      </S.Span>
-                    </S.P>
-                  </S.Li>
-                </S.Li>
+                      </button>
+                    </p>
+                  </li>
+                </li>
               </>
             ) : (
               <>
-                <S.Li>
-                  <S.H1>회원가입</S.H1>
-                </S.Li>
+                <li>
+                  <h1>회원가입</h1>
+                </li>
 
-                <S.Li>
-                  <S.InputEmail
+                <li>
+                  <input
+                    className="inputEmail"
                     type="text"
                     autoFocus
                     required
@@ -84,28 +92,34 @@ function LoginHeader(props) {
                     placeholder="Email Address"
                     onChange={(e) => setEmail(e.target.value)}
                   />
-                  <S.errMSG className="errorMsg">{emailError}</S.errMSG>
-                  <S.InputPw
+                  <p className="errorMsg">{emailError}</p>
+                  <input
+                    className="inputPw"
                     type="password"
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
                   />
-                  <S.errMSG className="errorMsg">{passwordError}</S.errMSG>
-                  <S.Li>
-                    <S.Button onClick={handleSignUP}>Sign up</S.Button>
-                    <S.P>
+                  <p className="errorMsg">{passwordError}</p>
+                  <li>
+                    <button className="loginBtn" onClick={handleSignUP}>
+                      Sign up
+                    </button>
+                    <p>
                       Have an account ?
-                      <S.Span onClick={() => setHasAccount(!hasAccount)}>
+                      <button
+                        className="logoutBtn"
+                        onClick={() => setHasAccount(!hasAccount)}
+                      >
                         Sign in
-                      </S.Span>
-                    </S.P>
-                  </S.Li>
-                </S.Li>
+                      </button>
+                    </p>
+                  </li>
+                </li>
               </>
             )}
-          </S.Ul>
+          </ul>
         </S.Header>
       )}
     </>

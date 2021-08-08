@@ -8,7 +8,7 @@ function LoginFooter({ authService }) {
   // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({
-      pathname: '/logout',
+      pathname: '/',
       state: { id: userId },
     });
   };
@@ -35,7 +35,7 @@ function LoginFooter({ authService }) {
     <>
       <S.Footer>
         <ul>
-          {/* Google button */}
+          {/* Google login button */}
           <li>
             <button onClick={onLogin}>
               <span>
@@ -44,7 +44,7 @@ function LoginFooter({ authService }) {
               <p>Google</p>
             </button>
           </li>
-          {/* Github button*/}
+          {/* Github login button*/}
           <li>
             <button onClick={onLogin}>
               <span>
@@ -53,7 +53,7 @@ function LoginFooter({ authService }) {
               <p>Github</p>
             </button>
           </li>
-          {/* Facebook button */}
+          {/* Facebook login button */}
           <li>
             <button onClick={onLogin}>
               <span>
@@ -63,6 +63,7 @@ function LoginFooter({ authService }) {
             </button>
           </li>
         </ul>
+        {/* Home return button */}
         <button className="closeBtn" onClick={routeChange}>
           <i className="fas fa-arrow-left"></i>
         </button>

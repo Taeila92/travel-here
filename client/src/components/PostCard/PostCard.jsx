@@ -139,6 +139,7 @@ const PostCard = ({ data, test }) => {
   return (
     <>
       <S.Container ref={postContainer} onClick={onShowPostModal}>
+        <p>{post_id}</p>
         <S.Profile>
           <img src={profilePhoto} alt="프로필 사진" />
           <div>

@@ -1,5 +1,5 @@
 import * as S from './LoginHeader.style';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import NavLinks from 'components/NavLinks/NavLinks';
 
 function LoginHeader(props) {
@@ -18,14 +18,14 @@ function LoginHeader(props) {
     handleLogout,
   } = props;
 
-  const history = useHistory();
+  // const history = useHistory();
 
-  const routeChange = (user) => {
-    history.push({
-      pathname: '/logout',
-      state: { id: user },
-    });
-  };
+  // const routeChange = (user) => {
+  //   history.push({
+  //     pathname: '/logout',
+  //     state: { id: user },
+  //   });
+  // };
 
   return (
     <>

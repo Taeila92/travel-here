@@ -163,7 +163,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          <Comment profile={profile} postId={postId}/>
+          {/*<Comment profile={profile} postId={postId}/>*/}
+          {/*comment는 잠시 보류*/}
         </ul>
       </S.Contents>
     </S.Container>

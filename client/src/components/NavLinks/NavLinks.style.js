@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 
 const Container = styled.div`
@@ -8,14 +8,19 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   padding-top: 4px;
-  @media screen and (max-width: 900px) {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100vw;
-    height: 150px;
-    padding-right: 20px;
-    transition: 0.3s;
-    transform: ${(props) => (props.active ? 0 : "translateY(-150px)")};
-  }
+  ${(props)=>{
+    if(!props.isPc){
+      return css`
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100vw;
+        height: 150px;
+        padding-right: 20px;
+        transition: 0.3s;
+        transform: ${(props) => props.isNavOpened ? '0' : 'translateY(-10rem)'};
+      `;
+    }
+  }}
+
 `;
 
 const Ul = styled.ul`
@@ -36,4 +41,10 @@ const Li = styled.li`
   align-items: center;
 `;
 
-export { Container, Ul, Li };
+const StyledNav = styled(NavLink)`
+  transition: 0.2s;
+  padding: 10px 40px 10px;
+  color: white;
+`;
+
+export { Container, Ul, Li, StyledNav };

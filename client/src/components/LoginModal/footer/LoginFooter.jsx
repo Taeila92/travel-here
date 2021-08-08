@@ -8,7 +8,7 @@ function LoginFooter({ authService }) {
   // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({
-      pathname: '/logout',
+      pathname: '/',
       state: { id: userId },
     });
   };
@@ -33,40 +33,41 @@ function LoginFooter({ authService }) {
 
   return (
     <>
-      <footer>
-        <S.Ul>
-          {/* Google button */}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+      <S.Footer>
+        <ul>
+          {/* Google login button */}
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-google"></i>
-              </S.SignUpLogo>
-              <S.P>Google</S.P>
-            </S.Button>
-          </S.Li>
-          {/* Github button*/}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+              </span>
+              <p>Google</p>
+            </button>
+          </li>
+          {/* Github login button*/}
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-github"></i>
-              </S.SignUpLogo>
-              <S.P>Github</S.P>
-            </S.Button>
-          </S.Li>
-          {/* Facebook button */}
-          <S.Li>
-            <S.Button onClick={onLogin}>
-              <S.SignUpLogo>
+              </span>
+              <p>Github</p>
+            </button>
+          </li>
+          {/* Facebook login button */}
+          <li>
+            <button onClick={onLogin}>
+              <span>
                 <i className="fab fa-facebook-square"></i>
-              </S.SignUpLogo>
-              <S.P>Facebook</S.P>
-            </S.Button>
-          </S.Li>
-        </S.Ul>
-        <S.Arrow onClick={routeChange}>
+              </span>
+              <p>Facebook</p>
+            </button>
+          </li>
+        </ul>
+        {/* Home return button */}
+        <button className="closeBtn" onClick={routeChange}>
           <i className="fas fa-arrow-left"></i>
-        </S.Arrow>
-      </footer>
+        </button>
+      </S.Footer>
     </>
   );
 }

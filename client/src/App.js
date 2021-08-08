@@ -23,6 +23,7 @@ function App() {
   const auth = firebase.auth();
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [active, setActive] = useState(false);
 
   // firebase가 onAuthStateChanged을 통해 프로그램을 초기화 하면(로그인이나 계정생성 등의 변화) isLoggedIn을 바꾼다
   useEffect(() => {
@@ -41,9 +42,15 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         {/* 사용자가 로그인 되었을 때*/}
-        {isLoggedIn && <NavLinks isLoggedIn={isLoggedIn} />}
+        {isLoggedIn && (
+          <NavLinks
+            setActive={setActive}
+            active={active}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
         {/* 사용자가 로그아웃된 페이지 */}
-        {isLoggedIn || <Header />}
+        {isLoggedIn || <Header active={active} isLoggedIn={isLoggedIn} />}
         <Switch>
           {init ? (
             // 로그인 전

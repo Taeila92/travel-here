@@ -9,9 +9,6 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const dispatch = useDispatch();
   const container = useRef();
   const images = useRef();
-  // const comment = useRef();
-  // const postBtn = useRef();
-  // const textarea = useRef();
 
 
   let [post_likeNum, setPost_likeNum] = useState(false);
@@ -150,7 +147,8 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             onMouseDown={e=>onMouseDown(e)}
             onMouseUp={e=>onMouseUp(e)}
             onMouseMove={e=>onMouseMove(e)}
-            onMouseLeave={e=>onMouseLeave(e)}>
+            onMouseLeave={e=>onMouseLeave(e)}
+            draggable="true">
           </S.Images>
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
@@ -165,9 +163,6 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          {/* {allComment.map((com) => {
-            return <Comment profile={profile} postId={postId} comments={com}/>
-          })} */}
           <Comment profile={profile} postId={postId}/>
         </ul>
       </S.Contents>

@@ -1,14 +1,13 @@
-﻿import React, { useCallback, useRef } from 'react';
+﻿import React, { memo, useCallback, useRef } from 'react';
 import * as S from "./Comment.style"; 
 import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { storageService } from 'firebase.js';
 import { useState } from 'react';
 import { dbService } from "firebase.js";
 import { commentMiddleware } from 'store/modules/comment';
 
-const Comment = ({profile, postId, comments}) => {
+const Comment = memo(({profile, postId}) => {
   let time = Date.now().toString();
 
   const textarea = useRef();
@@ -19,8 +18,8 @@ const Comment = ({profile, postId, comments}) => {
 
 
   let allComment = useSelector(state => state.comment.data);
-  const [profilePhoto, setProfilePhoto] = useState('');
-  const [img, setImg] = useState(false);
+
+  let [edit, setEdit] = useState(false);
 
   // 댓글 추가하고 모달창 내렸다가 다시 띄우면 추가한 댓글 떠있게 하기
   dispatch(commentMiddleware());
@@ -68,117 +67,38 @@ const Comment = ({profile, postId, comments}) => {
       comment_like: 0,
       comment_writer: 'phjphj',
     })
-
-    let content = `
-    <div class=${time}>
-      <img src=${profile} alt="프로필 이미지입니다"></img>
-      <p>${textarea.current.value}</p>
-      <i class="fas fa-edit"></i>
-      <i class="fas fa-times"></i>
-    </div>
-    `;
-
-    comment.current.insertAdjacentHTML('beforeend', content);
     comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
     onNotPost();
     textarea.current.value = '';
   };
 
 
-  const onAddServer = (url, i) => {
-    let content = `
-    <div class=${allComment[i].comment_id}>
-      <img src="${url}" alt="프로필 이미지입니다"></img>
-      <p>${allComment[i].comment_content}</p>
-      <i class="fas fa-edit"></i>
-      <i class="fas fa-times"></i>
-    </div>
-    `;
-    comment.current.insertAdjacentHTML('beforeend', content);
-    onNotPost();
-  }
-
   const onEditAndDelete = (e) => {
     const target = e.target;
     let i = target.parentElement.className;
+    console.log(i);
+    //edit
     if(target.classList.contains('fa-edit')){
-      onStartEdit(target);
+      setEdit(true);
     }
-    if(target.classList.contains('fa-check')){
-      onCompleteEdit(target);
-    }
+    // delete
     if(target.classList.contains('fa-times')){
+      dispatch(commentDelete());
       dbService.collection('comment').doc(i).delete();
       target.parentElement.remove();
     }
   }
 
-  const onStartEdit = (target) => {
-    const p = target.previousElementSibling;
-    const text = p.textContent;
-    p.remove();
-    const inputText = `<input placeholder=${text}></input>`;
-    target.insertAdjacentHTML('beforebegin', inputText);
 
-    const checkIcon = `<i class="fas fa-check"></i>`;
-    target.nextElementSibling.insertAdjacentHTML('beforebegin', checkIcon);
-    target.remove();
-  }
-
-  const onCompleteEdit = (target) => {
-    const i = target.parentElement.className;
-    const input = target.previousElementSibling;
-    const text = input.value;
-
-    const pText = `<p>${text}</p>`;
-    input.remove();
-    target.insertAdjacentHTML('beforebegin', pText);
-
-    const editIcon = `<i class="fas fa-edit"></i>`;
-    target.nextElementSibling.insertAdjacentHTML('beforebegin', editIcon);
-    target.remove();
-
+  const onEditClick = (e) => {
+    const target = e.target;
+    let i = target.parentElement.className;
+      
     dbService.collection('comment').doc(i).update({
-      comment_content: text
-    })
+      comment_content: target.previousElementSibling.value
+    });
+    setEdit(false);
   }
-
-
-  const onLoadImg = () => {
-    if(allComment != undefined){
-      if(allComment.length == 1){
-        onSetImg(0);
-        return;
-      }
-      for(let i=0; allComment.length-1; i++){
-        if(i == allComment.length){
-          break;
-        }
-        if(allComment[i].post_id == postId){
-          onSetImg(i);
-        }
-      }
-    }
-  };
-
-  const onSetImg = (i) => {
-    let imgArr = [allComment[i].profile_img];
-    let storageRef = storageService.ref();
-    let dynamicImg = storageRef.child(`post/${imgArr}`);
-
-    dynamicImg.getMetadata().then(async function() {
-      let downloadDynURL = await dynamicImg.getDownloadURL();
-      setProfilePhoto(downloadDynURL);
-      setProfilePhoto((downloadDynURL)=>{
-        onAddServer(downloadDynURL, i);
-      })
-    }).catch(function(error) {});
-  };
-
-  useEffect(()=>{
-    onLoadImg();
-  },[]);
-
 
   return (
     <S.Comment ref={comment} onClick={e=>onEditAndDelete(e)}>
@@ -191,8 +111,24 @@ const Comment = ({profile, postId, comments}) => {
         </textarea>
         <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
+      {allComment && allComment.map((com)=>{
+        if(com.post_id == postId){
+          return (
+            <div class={com.comment_id} key={com.comment_id}>
+              <img src={profile} alt="프로필 이미지입니다"></img>
+              {edit ?
+              (<input placeholder={com.comment_content}/>) :
+              (<p>{com.comment_content}</p>)}
+              {edit ?
+              (<i class="fas fa-check" onClick={e=>onEditClick(e)}></i>) :
+              (<i class="fas fa-edit"></i>)}
+              <i class="fas fa-times"></i>
+            </div>
+          )
+        }
+      })}
     </S.Comment>
   )
-}
+})
 
 export default Comment;

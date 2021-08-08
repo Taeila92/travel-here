@@ -80,6 +80,7 @@ const Images = styled.li`
     object-fit: cover;
     background-color: black;
     margin: 0 0.2rem;
+    transform: translateX(3.3rem);
   }
 `;
 

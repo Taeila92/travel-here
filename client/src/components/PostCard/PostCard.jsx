@@ -98,13 +98,13 @@ const PostCard = ({data, test}) => {
   useEffect(()=>{
     const func = () => {
       // 해당 카테고리에 게시글이 한개만 있을 경우
-      if(allPost.length == 1){
-        setImgName(0);
-        return;
-      }
+      // if(allPost.length == 1){
+      //   setImgName(0);
+      //   return;
+      // }
 
       // 게시글이 여러개 있을 경우
-      for(let i=0; allPost.length-1; i++){
+      for(let i=0; i < allPost.length; i++){
         if(i == allPost.length){
           break;
         }

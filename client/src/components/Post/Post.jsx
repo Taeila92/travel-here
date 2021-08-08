@@ -31,11 +31,11 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   const onSetData = () => {
     // 해당 카테고리에 게시글이 한개일 경우
-    if(allPost.length == 1){
-      onSetDataFrame(0);
-    }
+    // if(allPost.length == 1){
+    //   onSetDataFrame(0);
+    // }
     // 여러개일 경우
-    for(let i=0; allPost.length-1; i++){
+    for(let i=0; i < allPost.length; i++){
       if(i == allPost.length){
         break;
       }
@@ -60,12 +60,12 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   // firestore에서 사진 받아오기
   const onLoadImg = () => {
     // 게시글에 사진이 하나일 경우
-    if(trip.length == 1){
-      onSetImg(0);
-      return;
-    }
+    // if(trip.length == 1){
+    //   onSetImg(0);
+    //   return;
+    // }
     // 사진이 여러개일 경우
-    for(let i=0; trip.length-1; i++){
+    for(let i=0; i < trip.length; i++){
       if(i == trip.length){
         break;
       }

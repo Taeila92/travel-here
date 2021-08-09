@@ -13,7 +13,7 @@ import Board from 'pages/Board/Board';
 import Home from 'pages/Home';
 import Login from 'pages/Login';
 import Logout from 'pages/Logout';
-// import NotFound from 'pages/NotFound';
+import NotFound from 'pages/NotFound';
 import NavLinks from 'components/NavLinks/NavLinks';
 
 // firebase
@@ -51,27 +51,29 @@ function App() {
         )}
         {/* 사용자가 로그아웃된 페이지 */}
         {isLoggedIn || <Header active={active} isLoggedIn={isLoggedIn} />}
-        <Switch>
-          {init ? (
-            // 로그인 전
-            <>
+        {init ? (
+          // 로그인 전
+          <>
+            <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:religion" component={Board} />
-              {/* <Route from="*" path="/" component={NotFound} /> */}
-            </>
-          ) : (
-            // 로그인 후
-            <>
+              <Route from="*" path="/" component={NotFound} />
+            </Switch>
+          </>
+        ) : (
+          // 로그인 후
+          <>
+            <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/logout" component={Logout} />
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:religion" component={Board} />
-              {/* <Route from="*" path="/" component={NotFound} /> */}
-            </>
-          )}
-        </Switch>
+              <Route from="*" path="/" component={NotFound} />
+            </Switch>
+          </>
+        )}
       </BrowserRouter>
     </S.Background>
   );

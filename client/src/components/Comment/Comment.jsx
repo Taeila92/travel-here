@@ -105,7 +105,7 @@ const Comment = memo(({profile, postId}) => {
       {allComment && allComment.map((com)=>{
         if(com.post_id == postId){
           return (
-            <CommentList com={com} onEdit={onEdit} profile={profile} onDelete={onDelete}/>
+            <CommentList key={com.comment_id} com={com} onEdit={onEdit} profile={profile} onDelete={onDelete}/>
           )
         }
       })}

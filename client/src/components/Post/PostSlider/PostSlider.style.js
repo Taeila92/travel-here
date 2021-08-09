@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 const StyledSlider = styled(Slider)`
   width : 100%;
   height : 15rem;
+  margin: 1rem 0 2rem 0;
   .slick-list {
     width : 100%;
     height : 100%;

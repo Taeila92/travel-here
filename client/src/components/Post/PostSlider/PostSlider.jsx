@@ -3,6 +3,8 @@ import { storageService } from 'firebase.js';
 import * as S from './PostSlider.style'
 
 const PostSlider = ({postImages}) => {
+
+  const img = useRef();
   
   // post에 저장되어있던 image들의 url을 저장
   const [imageURL, setImageURL] = useState([])
@@ -29,6 +31,14 @@ const PostSlider = ({postImages}) => {
     setSliderReady(()=>(true)) // slider가 준비되면 (동기적으로)
   },[])
 
+  const onMouseDown = () => {
+    img.current.style.cursor = 'grab';
+  }
+
+  const onMouseUp = () => {
+    img.current.style.cursor = 'default';
+  }
+
   const setting = {
     dots: false,
     infinite: false,
@@ -39,16 +49,23 @@ const PostSlider = ({postImages}) => {
     lazyLoad : true,
   }
 
+  useEffect(()=>{
+    img.current.style.width = '27rem';
+    img.current.style.height = '100%';
+  }, []);
+
   return (
-    <S.StyledSlider {...setting}>
-      {sliderReady && imageURL.map((image)=>{
-        return (
-          <div key={image}>
-            <img src={image} alt="" />
-          </div>
-        );
-      })}
-    </S.StyledSlider>
+    <section ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      <S.StyledSlider {...setting} >
+        {sliderReady && imageURL.map((image)=>{
+          return (
+            <div key={image}>
+              <img src={image} alt="여행사진" />
+            </div>
+          );
+        })}
+      </S.StyledSlider>
+    </section>
   )
 }
 

@@ -34,7 +34,7 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
             </span>
             <i onClick={onHideModal} className="fas fa-times"></i>
           </S.Header>
-          <PostSlider postImages={post_photo} />
+          <PostSlider postImages={post_photo}/>
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
             <p>Park HyunJeong</p> {/* post_writer로 검색?*/}
@@ -49,7 +49,6 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
           <Comment profile={profile} postId={post_id}/>
-          {/*comment는 잠시 보류*/}
         </ul>
       </S.Contents>
     </S.Container>

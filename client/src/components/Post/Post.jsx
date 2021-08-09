@@ -4,7 +4,7 @@ import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
 
 const Post = ({postData, profile, setIsPostModalOpened}) => {
-  const { post_religion, post_title, post_content, post_like, post_photo } = postData
+  const { post_religion, post_title, post_content, post_like, post_photo, post_id } = postData
 
   // 내가 해당 게시글에 좋아요을 했나 안 했나 표시
   let [likePost, setLikePost] = useState(false);
@@ -48,7 +48,7 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>
-          {/*<Comment profile={profile} postId={postId}/>*/}
+          <Comment profile={profile} postId={post_id}/>
           {/*comment는 잠시 보류*/}
         </ul>
       </S.Contents>

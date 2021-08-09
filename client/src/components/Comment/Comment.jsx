@@ -1,4 +1,4 @@
-﻿import React, { memo, useCallback, useRef } from 'react';
+﻿import React, { memo, useCallback, useMemo, useRef } from 'react';
 import * as S from "./Comment.style"; 
 import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
 import { useEffect } from 'react';
@@ -20,9 +20,7 @@ const Comment = memo(({profile, postId}) => {
   let allComment = useSelector(state => state.comment.data);
 
   let [edit, setEdit] = useState(false);
-
-  // 댓글 추가하고 모달창 내렸다가 다시 띄우면 추가한 댓글 떠있게 하기
-  dispatch(commentMiddleware());
+  let [render, setRender] = useState(false);
 
   // comment쓰는 textarea의 값 null check에 따른 '게시'버튼 색깔 변화 
   const onNotPost = () => {
@@ -70,13 +68,12 @@ const Comment = memo(({profile, postId}) => {
     comment.current.lastElementChild.scrollIntoView({behavior: "smooth", block: "end"});
     onNotPost();
     textarea.current.value = '';
+    setRender(!render);
   };
-
 
   const onEditAndDelete = (e) => {
     const target = e.target;
     let i = target.parentElement.className;
-    console.log(i);
     //edit
     if(target.classList.contains('fa-edit')){
       setEdit(true);
@@ -86,8 +83,9 @@ const Comment = memo(({profile, postId}) => {
       dispatch(commentDelete());
       dbService.collection('comment').doc(i).delete();
       target.parentElement.remove();
+      setRender(!render);
     }
-  }
+  };
 
 
   const onEditClick = (e) => {
@@ -98,7 +96,13 @@ const Comment = memo(({profile, postId}) => {
       comment_content: target.previousElementSibling.value
     });
     setEdit(false);
-  }
+    setRender(!render);
+  };
+
+  useEffect(()=>{
+     // 댓글 추가하고 모달창 내렸다가 다시 띄우면 추가한 댓글 떠있게 하기
+    dispatch(commentMiddleware());
+  },[render]);
 
   return (
     <S.Comment ref={comment} onClick={e=>onEditAndDelete(e)}>

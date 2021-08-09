@@ -6,4 +6,4 @@ export const getPostListAPI = async (religion) => {
   return response;
 }
 
-// onSnapShot이 실시간 업데이트 된다던데..
+// onSnapShot이 실시간 업데이트 된다던데.. => 굳이 그럴 필요가 있을까?? onSnapShot()은 async await 사용 불가

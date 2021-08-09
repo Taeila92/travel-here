@@ -84,6 +84,7 @@ const Images = styled.li`
   }
 `;
 
+
 const Profile = styled.li`
   ${flex};
   flex-direction: row;

@@ -46,23 +46,15 @@ const Content = styled.div`
   }
 `;
 
-const Button = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding : 1rem 0 0 0;
-  button {
-    background: transparent;
-    color : white;
-    border: none;
-    outline: none;
-  }
+const SkeletonImage = styled.div`
+  width : 100%;
+  height : 5rem;
+  background-color: gray;
 `;
-
 
 export{
   Container,
   Profile,
   Content,
-  Button
+  SkeletonImage,
 }

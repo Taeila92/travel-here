@@ -1,19 +1,17 @@
-import React, { useState, useEffect } from 'react'
-import { storageService } from 'firebase.js';
+import React, { useState, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { storageService } from 'firebase.js';
+import Post from 'components/Post/Post';
 import { commentMiddleware } from 'store/modules/comment';
 import * as S from './PostCard.style'
 import getDate from 'utils/getDate';
-import Post from 'components/Post/Post';
-import { useRef } from 'react';
 
-
-const PostCard = ({data, test}) => {
+const PostCard = ({postData}) => {
   
+  const allPost = useSelector(state => state.board.data); // 해당 지역의 모든 게시글 -> 나중에 몇 개씩 끊어서해야!! (한 번에 다 가져오면 안되니깐)
   const dispatch = useDispatch();
   const postContainer = useRef();
-  const allPost = useSelector(state => state.board.data);
-  
+
   const { 
     post_id, 
     post_title, 
@@ -25,11 +23,10 @@ const PostCard = ({data, test}) => {
     post_views, 
     post_like,
     post_profile_img 
-  } = data;
-  
+  } = postData; // 개별 post
   
   // post모달 띄우는 용도
-  const [postClick, setPostClick] = useState(false);
+  const [isPostModalOpened, setIsPostModalOpened] = useState(false);
 
   // **trip 관련**
   // 게시글 목록에서 보여질 딱 한개의 대표 여행사진
@@ -86,14 +83,12 @@ const PostCard = ({data, test}) => {
 
   // 모달 띄우기
   const onShowPostModal = () => {
-    setPostClick(true);
+    setIsPostModalOpened(true);
   };
-
-
 
   const lazyTarget = useRef()
   const [isView, setIsView] = useState(false);
-  //console.log(allPost)
+
   // firestore storage에있는 image name받아오기
   useEffect(()=>{
     const func = () => {
@@ -105,10 +100,10 @@ const PostCard = ({data, test}) => {
 
       // 게시글이 여러개 있을 경우
       for(let i=0; i < allPost.length; i++){
-        if(i == allPost.length){
+        if(i === allPost.length){
           break;
         }
-        if(allPost[i].post_id == postContainer.current.id){
+        if(allPost[i].post_id === postContainer.current.id){
           setImgName(i);
         }
       }
@@ -120,8 +115,6 @@ const PostCard = ({data, test}) => {
     let observer;
     
     if(lazyTarget.current){ 
-      // console.log(tripPhoto)
-      // console.log(lazyTarget.current)
 
       observer = new IntersectionObserver((entries)=>{
         entries.forEach((entry)=>{
@@ -129,8 +122,6 @@ const PostCard = ({data, test}) => {
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
             func()
             setIsView(true);
-            // console.log(isView)
-            // setState로 이미지 불러오기?
           }
         })
       },{ threshold : 0.3 })
@@ -139,12 +130,7 @@ const PostCard = ({data, test}) => {
     } 
 
     return () => observer && observer.disconnect();
-    
-
   },[]);
-
-
-
 
   return (
     <>
@@ -158,21 +144,17 @@ const PostCard = ({data, test}) => {
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>
-          <div ref={lazyTarget}>loading...</div>
-          {isView && <img  src={tripPhoto} alt="여행 사진" />}
-          {/*tripPhoto && <img ref={lazyTarget} src={tripPhoto} alt="여행 사진" />*/}
+          {isView ? <img  src={tripPhoto} alt="여행 사진"/> : <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage> }
+          {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
           <div>{getDate(post_date)}</div>
         </S.Content>
-        <S.Button>
-          <button>Like</button>
-          <button>Comment</button>
-        </S.Button>
       </S.Container>
-      {postClick && <Post
+      {isPostModalOpened && <Post
         postId={post_id}
         profile={profilePhoto}
         trip={tripImgs}
-        setPostClick={setPostClick}
+        postData={postData}
+        setIsPostModalOpened={setIsPostModalOpened}
       />}
     </>
   )

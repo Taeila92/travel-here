@@ -3,30 +3,43 @@ import { useSelector, useDispatch } from 'react-redux';
 import * as S from "./Post.style";
 import { storageService } from 'firebase.js';
 import Comment from 'components/Comment/Comment';
+import PostSlider from './PostSlider/PostSlider';
 
 
-const Post = ({postId, profile, trip, setPostClick}) => {
-  const dispatch = useDispatch();
+const Post = ({postData, postId, profile, trip, setIsPostModalOpened}) => {
+
   const container = useRef();
-  const images = useRef();
+  console.log(postData)
+
+  const { post_religion, post_title, post_content, post_like, post_photo } = postData
 
 
-  let [post_likeNum, setPost_likeNum] = useState(false);
-  let [isMouseDown, setIsMouseDown] = useState(false);
+  // 내가 해당 게시글에 좋아요을 보냈나 안 보냇나 표시
+  let [likePost, setLikePost] = useState(false);
 
-  const [post_content, setPost_content] = useState("");
+  // 좋아요 아이콘 토글 -> 할 때마다 firestore에 저장 되어야 함
+  const onLikeToggle = () => {
+    if(likePost){
+      setLikePost(false);
+    }else{
+      setLikePost(true);
+    }
+  };
+  
+  // 모달창 숨기기
+  const onHideModal = () => {
+    setIsPostModalOpened(false);
+  };  
+
+
+  
   const [post_date, setPost_date] = useState({});
   const [post_id, setPost_id] = useState("");
-  const [post_like, setPost_like] = useState("");
-  const [post_photo, setPost_photo] = useState("");
-  const [post_religion, setPost_religion] = useState("");
-  const [post_title, setPost_title] = useState("");
+  const [post_photor, setPost_photor] = useState("");
   const [post_views, setPost_views] = useState("");
   const [post_writer, setPost_writer] = useState("");
   const [post_profile_img, setPost_profile_img] = useState("");
-
   let [com, setCom] = useState("");
-
   const allPost = useSelector(state => state.board.data);
 
   const onSetData = () => {
@@ -44,19 +57,15 @@ const Post = ({postId, profile, trip, setPostClick}) => {
       };
     }
   };
-
   const onSetDataFrame = (i) => {
-    setPost_content(allPost[i].post_content);
+
     setPost_date(allPost[i].post_date);
     setPost_id(allPost[i].post_id);
-    setPost_like(allPost[i].post_like);
-    setPost_religion(allPost[i].post_religion);
-    setPost_title(allPost[i].post_title);
+
     setPost_views(allPost[i].post_views);
     setPost_writer(allPost[i].post_writer);
     setPost_profile_img(allPost[i].post_profile_img);
   };
-
   // firestore에서 사진 받아오기
   const onLoadImg = () => {
     // 게시글에 사진이 하나일 경우
@@ -72,62 +81,22 @@ const Post = ({postId, profile, trip, setPostClick}) => {
       onSetImg(i);
     }
   };
-
   const onSetImg = (i) => {
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${trip[i]}`);
     dynamicImg.getMetadata().then(async function() {
       let downloadDynURL = await dynamicImg.getDownloadURL();
-      setPost_photo(downloadDynURL);
-      setPost_photo((downloadDynURL)=>{
-        onAddImg(downloadDynURL);
-      })
+      setPost_photor(downloadDynURL);
+      // setPost_photor((downloadDynURL)=>{
+      //   onAddImg(downloadDynURL);
+      // })
     }).catch(function(error) {});
-  };
-
-
-  // 여행사진들 마우스 드래그로 좌우 넘기기
-  const onMouseDown = (e) => {
-
-  };
-
-  const onMouseUp = (e) => {
-    
-  };
-
-  const onMouseMove = (e) => {
-    
-  };
-
-  const onMouseLeave = (e) => {
-    
-  };
-
-  // 모달창 숨기기
-  const onHideModal = () => {
-    setPostClick(false);
-  };
-
-  // 좋아요 아이콘 토글
-  const onLikeToggle = () => {
-    if(post_likeNum){
-      setPost_likeNum(false);
-    }else{
-      setPost_likeNum(true);
-    }
-  };
-
-  const onAddImg = (image) => {
-    let img = `
-      <img src="${image}" alt="여행사진"></img>
-    `;
-    images.current.insertAdjacentHTML('beforeend', img);
   };
 
   // useEffect
   useEffect(()=>{
     onSetData();
-    onLoadImg();
+    //onLoadImg();
   },[]);
 
 
@@ -142,24 +111,17 @@ const Post = ({postId, profile, trip, setPostClick}) => {
             </span>
             <i onClick={onHideModal} className="fas fa-times"></i>
           </S.Header>
-          <S.Images
-            ref={images}
-            onMouseDown={e=>onMouseDown(e)}
-            onMouseUp={e=>onMouseUp(e)}
-            onMouseMove={e=>onMouseMove(e)}
-            onMouseLeave={e=>onMouseLeave(e)}
-            draggable="true">
-          </S.Images>
+          <PostSlider postImages={post_photo} />
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
-            <p>Park HyunJeong</p>
+            <p>Park HyunJeong</p> {/* post_writer로 검색?*/}
             <span>15min</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
           <S.Content>{post_content}</S.Content>
           <S.Like>
-            <span>27 Likes</span>
-            {post_likeNum ?
+            <span>♥{post_like}</span>
+            {likePost ?
             <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
             <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
           </S.Like>

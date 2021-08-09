@@ -1,4 +1,4 @@
-﻿import React, { memo, useCallback, useMemo, useRef } from 'react';
+﻿import React, { memo, useRef } from 'react';
 import * as S from "./Comment.style"; 
 import { commentAdd, commentEdit, commentDelete } from 'store/modules/comment';
 import { useEffect } from 'react';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
 import { dbService } from "firebase.js";
 import { commentMiddleware } from 'store/modules/comment';
+import CommentList from './CommentList';
 
 const Comment = memo(({profile, postId}) => {
   let time = Date.now().toString();
@@ -19,7 +20,6 @@ const Comment = memo(({profile, postId}) => {
 
   let allComment = useSelector(state => state.comment.data);
 
-  let [edit, setEdit] = useState(false);
   let [render, setRender] = useState(false);
 
   // comment쓰는 textarea의 값 null check에 따른 '게시'버튼 색깔 변화 
@@ -71,31 +71,28 @@ const Comment = memo(({profile, postId}) => {
     setRender(!render);
   };
 
-  const onEditAndDelete = (e) => {
+  const onDelete = (e) => {
     const target = e.target;
     let i = target.parentElement.className;
-    //edit
-    if(target.classList.contains('fa-edit')){
-      setEdit(true);
+    
+    if(!target.classList.contains('fa-times')){
+      return;
     }
-    // delete
-    if(target.classList.contains('fa-times')){
-      dispatch(commentDelete());
-      dbService.collection('comment').doc(i).delete();
-      target.parentElement.remove();
-      setRender(!render);
-    }
+
+    dispatch(commentDelete());
+    dbService.collection('comment').doc(i).delete();
+    target.parentElement.remove();
+    setRender(!render);
   };
 
 
-  const onEditClick = (e) => {
+  const onEdit = (e) => {
     const target = e.target;
     let i = target.parentElement.className;
       
     dbService.collection('comment').doc(i).update({
       comment_content: target.previousElementSibling.value
     });
-    setEdit(false);
     setRender(!render);
   };
 
@@ -105,7 +102,7 @@ const Comment = memo(({profile, postId}) => {
   },[render]);
 
   return (
-    <S.Comment ref={comment} onClick={e=>onEditAndDelete(e)}>
+    <S.Comment ref={comment} onClick={e=>onDelete(e)}>
       <section>
         <textarea
           ref={textarea}
@@ -118,16 +115,7 @@ const Comment = memo(({profile, postId}) => {
       {allComment && allComment.map((com)=>{
         if(com.post_id == postId){
           return (
-            <div class={com.comment_id} key={com.comment_id}>
-              <img src={profile} alt="프로필 이미지입니다"></img>
-              {edit ?
-              (<input placeholder={com.comment_content}/>) :
-              (<p>{com.comment_content}</p>)}
-              {edit ?
-              (<i class="fas fa-check" onClick={e=>onEditClick(e)}></i>) :
-              (<i class="fas fa-edit"></i>)}
-              <i class="fas fa-times"></i>
-            </div>
+            <CommentList com={com} onEdit={onEdit} profile={profile}/>
           )
         }
       })}

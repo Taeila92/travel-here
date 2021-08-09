@@ -4,13 +4,11 @@ import { Provider } from 'react-redux';
 import store from 'store';
 import App from 'App';
 import '@fortawesome/fontawesome-free/js/all.js';
-import AuthService from 'auth_service';
 
-const authService = new AuthService();
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App authService={authService} />
+      <App />
     </Provider>
     ,
   </React.StrictMode>,

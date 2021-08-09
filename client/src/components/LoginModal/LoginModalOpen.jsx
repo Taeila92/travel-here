@@ -5,7 +5,6 @@ import LoginFooter from 'components/LoginModal/footer/LoginFooter';
 import AuthService from 'auth_service';
 import firebaseService from 'firebase';
 import NavLinks from 'components/NavLinks/NavLinks';
-import Header from 'components/Header/Header';
 
 function LoginModalOpen() {
   const authService = new AuthService();
@@ -91,7 +90,6 @@ function LoginModalOpen() {
       {user ? (
         <NavLinks user={user} setUser={setUser} handleLogout={handleLogout} />
       ) : (
-        // <NavLinks handleLogout={handleLogout} />
         <>
           <S.LoginBg></S.LoginBg>
           <S.Logincontainer>

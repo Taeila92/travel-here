@@ -1,5 +1,4 @@
 import * as S from './LoginHeader.style';
-// import { useHistory } from 'react-router-dom';
 import NavLinks from 'components/NavLinks/NavLinks';
 
 function LoginHeader(props) {
@@ -17,15 +16,6 @@ function LoginHeader(props) {
     passwordError,
     handleLogout,
   } = props;
-
-  // const history = useHistory();
-
-  // const routeChange = (user) => {
-  //   history.push({
-  //     pathname: '/logout',
-  //     state: { id: user },
-  //   });
-  // };
 
   return (
     <>

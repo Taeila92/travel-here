@@ -5,21 +5,28 @@ import * as S from './PostSlider.style'
 const PostSlider = ({postImages}) => {
   
   // post에 저장되어있던 image들의 url을 저장
-  const imageURL = useRef([]); 
+  const [imageURL, setImageURL] = useState([])
   const [sliderReady, setSliderReady] = useState(false)
-  const storageRef = storageService.ref();  
-  
+
   useEffect(()=>{
-    for(let image of postImages){
-      const imageURLCheck = async ()=> {
+    const storageRef = storageService.ref(); 
+    // 현재 post가 가지고 있는 것들을 url로 받아옴 -> 나중에 post올릴 때, url로 저장하면 바꿔주면 됨
+    const imageURLCheck = async () => {
+      const result = []
+      for(let image of postImages){
         let imageLocation = storageRef.child(`post/${image}`)
         let url = await imageLocation.getDownloadURL()
-        console.log(url)
-        imageURL.current.push(url)
+        result.push(url)
       }
-      imageURLCheck()
-      setSliderReady(true)
+      return result;
     }
+    imageURLCheck()
+      .then((value)=>{
+      setImageURL(value) // url check하고서 동기적으로 imageUrl에 넣어줌
+    }).catch((error)=>{
+      console.error(error)
+    })
+    setSliderReady(()=>(true)) // slider가 준비되면 (동기적으로)
   },[])
 
   const setting = {
@@ -29,15 +36,14 @@ const PostSlider = ({postImages}) => {
     slidesToShow: 1,
     slidesToScroll: 1,
     swipToSlide : true,
+    lazyLoad : true,
   }
 
-  console.log(sliderReady)
-  console.log(imageURL)
   return (
     <S.StyledSlider {...setting}>
-      {sliderReady && imageURL.current.map((image)=>{
+      {sliderReady && imageURL.map((image)=>{
         return (
-          <div>
+          <div key={image}>
             <img src={image} alt="" />
           </div>
         );

@@ -71,20 +71,10 @@ const Comment = memo(({profile, postId}) => {
     setRender(!render);
   };
 
-  const onDelete = (e) => {
-    const target = e.target;
-    let i = target.parentElement.className;
-    
-    if(!target.classList.contains('fa-times')){
-      return;
-    }
-
-    dispatch(commentDelete());
+  const onDelete = (i) => {
     dbService.collection('comment').doc(i).delete();
-    target.parentElement.remove();
     setRender(!render);
   };
-
 
   const onEdit = (e) => {
     const target = e.target;
@@ -102,7 +92,7 @@ const Comment = memo(({profile, postId}) => {
   },[render]);
 
   return (
-    <S.Comment ref={comment} onClick={e=>onDelete(e)}>
+    <S.Comment ref={comment}>
       <section>
         <textarea
           ref={textarea}
@@ -115,7 +105,7 @@ const Comment = memo(({profile, postId}) => {
       {allComment && allComment.map((com)=>{
         if(com.post_id == postId){
           return (
-            <CommentList com={com} onEdit={onEdit} profile={profile}/>
+            <CommentList com={com} onEdit={onEdit} profile={profile} onDelete={onDelete}/>
           )
         }
       })}

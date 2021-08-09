@@ -1,6 +1,6 @@
 ﻿import React, { useState } from 'react';
 
-const CommentList = ({ com, onEdit, profile }) =>{
+const CommentList = ({ com, onEdit, profile, onDelete }) =>{
   let [edit, setEdit] = useState(false);
 
   const onDoneEdit = (e) => {
@@ -8,9 +8,15 @@ const CommentList = ({ com, onEdit, profile }) =>{
     setEdit(false);
   };
 
-  const onStartEdit = (e) => {
+  const onStartEdit = () => {
     setEdit(true);
   };
+
+  const onDeleteList = (e) => {
+    const target = e.target;
+    let i = target.parentElement.className;
+    onDelete(i);
+  }
 
   return (
     <div class={com.comment_id} key={com.comment_id}>
@@ -20,8 +26,8 @@ const CommentList = ({ com, onEdit, profile }) =>{
       (<p>{com.comment_content}</p>)}
       {edit ?
       (<i class="fas fa-check" onClick={e=>onDoneEdit(e)}></i>) :
-      (<i class="fas fa-edit" onClick={e=>onStartEdit(e)}></i>)}
-      <i class="fas fa-times"></i>
+      (<i class="fas fa-edit" onClick={onStartEdit}></i>)}
+      <i class="fas fa-times" onClick={e=>onDeleteList(e)}></i>
     </div>
   )
 }

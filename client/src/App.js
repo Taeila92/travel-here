@@ -1,29 +1,34 @@
 // react
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // style
-import GlobalStyle from 'styles/GlobalStyle';
-import Header from 'components/Header/Header';
-import * as S from 'styles/Background';
+import GlobalStyle from "styles/GlobalStyle";
+import Header from "components/Header/Header";
+import * as S from "styles/Background";
 
 // router
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import CategoryList from 'pages/CategoryList';
-import Board from 'pages/Board/Board';
-import Home from 'pages/Home';
-import Login from 'pages/Login';
-import Logout from 'pages/Logout';
-import NotFound from 'pages/NotFound';
-import NavLinks from 'components/NavLinks/NavLinks';
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+import CategoryList from "pages/CategoryList";
+import Board from "pages/Board/Board";
+import Home from "pages/Home";
+import Login from "pages/Login";
+import NotFound from "pages/NotFound";
+
+import WriteBtn from "components/Write/WriteBtn/WriteBtn";
 
 // firebase
-import firebase from 'firebase';
+import firebase from "firebase";
+import WriteModal from "components/Write/WriteModal/WriteModal";
 
 function App() {
   const auth = firebase.auth();
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isWriteModal, setIsWriteModal] = useState(false);
   const [active, setActive] = useState(false);
+  function isWrite() {
+    setIsWriteModal(true);
+  }
 
   // firebase가 onAuthStateChanged을 통해 프로그램을 초기화 하면(로그인이나 계정생성 등의 변화) isLoggedIn을 바꾼다
   useEffect(() => {
@@ -42,39 +47,44 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         {/* 사용자가 로그인 되었을 때*/}
-        {isLoggedIn && (
-          <NavLinks
+        {isLoggedIn ? (
+          <Header
+            setActive={setActive}
+            active={active}
+            isLoggedIn={isLoggedIn}
+          />
+        ) : (
+          <Header
             setActive={setActive}
             active={active}
             isLoggedIn={isLoggedIn}
           />
         )}
-        {/* 사용자가 로그아웃된 페이지 */}
-        {isLoggedIn || <Header active={active} isLoggedIn={isLoggedIn} />}
         {init ? (
           // 로그인 전
-          <>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/login" component={Login} />
-              <Route exact path="/categorylist" component={CategoryList} />
-              <Route path="/categorylist/:religion" component={Board} />
-              <Route from="*" path="/" component={NotFound} />
-            </Switch>
-          </>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route exact path="/categorylist" component={CategoryList} />
+            <Route path="/categorylist/:religion" component={Board} />
+            <Route component={NotFound} />
+          </Switch>
         ) : (
           // 로그인 후
-          <>
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route path="/logout" component={Logout} />
-              <Route exact path="/categorylist" component={CategoryList} />
-              <Route path="/categorylist/:religion" component={Board} />
-              <Route from="*" path="/" component={NotFound} />
-            </Switch>
-          </>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/categorylist" component={CategoryList} />
+            <Route path="/categorylist/:religion" component={Board} />
+            <Route component={NotFound} />
+          </Switch>
         )}
       </BrowserRouter>
+      {isLoggedIn && (
+        <>
+          <WriteBtn onClick={isWrite} />
+          <WriteModal isWriteModal={isWriteModal} />
+        </>
+      )}
     </S.Background>
   );
 }

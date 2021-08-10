@@ -24,11 +24,13 @@ function App() {
   const auth = firebase.auth();
   const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isWriteModal, setIsWriteModal] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
-  function isWrite() {
-    setIsWriteModal(true);
-  }
+
+  const isVisible = () => {
+    setVisible(!visible);
+    console.log(visible);
+  };
 
   // firebase가 onAuthStateChanged을 통해 프로그램을 초기화 하면(로그인이나 계정생성 등의 변화) isLoggedIn을 바꾼다
   useEffect(() => {
@@ -81,8 +83,8 @@ function App() {
       </BrowserRouter>
       {isLoggedIn && (
         <>
-          <WriteBtn onClick={isWrite} />
-          <WriteModal isWriteModal={isWriteModal} />
+          <WriteBtn isVisible={isVisible} />
+          <WriteModal visible={visible} isVisible={isVisible} />
         </>
       )}
     </S.Background>

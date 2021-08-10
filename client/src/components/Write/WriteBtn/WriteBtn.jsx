@@ -1,5 +1,5 @@
 import * as S from "./WriteBtn.style";
 
-export default function Write() {
-  return <S.Button />;
+export default function WriteBtn({ isVisible }) {
+  return <S.Button onClick={isVisible} />;
 }

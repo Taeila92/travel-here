@@ -10,7 +10,7 @@ export default function Header() {
   const isPc = useMediaQuery({
     query : `(min-width : 1024px) and (max-width :1920px)`
   })
-  console.log(isPc)
+  // console.log(isPc);
 
   return (
     <S.Header isPc={isPc}>

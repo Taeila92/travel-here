@@ -16,13 +16,13 @@ const Container = styled.section`
 
 const Contents = styled.div`
   width: 30rem;
-  height: 35rem;
+  height: 45rem;
   background-color: white;
   border-radius: 10px;
   ${flex};
   ul {
     width: 27rem;
-    height: 30rem;
+    height: 40rem;
     overflow-x: hidden;
     ${flex}
     align-items: flex-start;
@@ -123,10 +123,26 @@ const Like = styled.li`
   flex-direction: row;
   justify-content: space-between;
   span {
-    /* margin-left: 0.5rem; */
+    ${flex};
+    flex-direction: row;
+    font-size: 0.8rem;
+    span {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-bottom: 0.1rem;
+    }
+    p {
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    i{
+      font-size: 1rem;
+      margin-right: 0.3rem;
+      color: #ED4956;
+    }
   }
   i {
-    ${fontSize}
+    font-size: 1.2rem;
     ${cursorPointer};
   }
 `;

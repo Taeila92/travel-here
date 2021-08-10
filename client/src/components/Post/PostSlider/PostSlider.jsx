@@ -52,10 +52,11 @@ const PostSlider = ({postImages}) => {
   useEffect(()=>{
     img.current.style.width = '27rem';
     img.current.style.height = '100%';
+    img.current.style.margin = '1rem 0 2rem 0';
   }, []);
 
   return (
-    <section ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+    <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
       <S.StyledSlider {...setting} >
         {sliderReady && imageURL.map((image)=>{
           return (
@@ -65,7 +66,7 @@ const PostSlider = ({postImages}) => {
           );
         })}
       </S.StyledSlider>
-    </section>
+    </li>
   )
 }
 

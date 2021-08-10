@@ -49,7 +49,7 @@ const PostCard = ({postData}) => {
         entries.forEach((entry)=>{
           if(entry.isIntersecting){ // intersecting 되어 있으면
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
-            console.log(entry)
+            // console.log(entry)
             fetchRepImage(repImageName.current)
             fetchProfileImage(profileImageName.current)
             setIsView(true);

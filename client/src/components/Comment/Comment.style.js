@@ -1,5 +1,5 @@
 ﻿import styled from "styled-components";
-import { flex, marginTop, hideScrollbar } from "./styleConstants.js";
+import { flex, marginTop, hideScrollbar, cursorPointer } from "./styleConstants.js";
 
 const Comment = styled.li`
   width: 100%;
@@ -31,6 +31,9 @@ const Comment = styled.li`
       :hover {
         cursor: pointer;
       }
+    }
+    p {
+      display: none;
     }
   }
   div {
@@ -66,6 +69,7 @@ const Comment = styled.li`
     i {
       font-size: 1rem;
       margin-left: 0.5rem;
+      ${cursorPointer};
     }
   }
 `;

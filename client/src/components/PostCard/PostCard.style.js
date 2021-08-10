@@ -36,7 +36,8 @@ const Content = styled.div`
   }
   img {
     width : 100%;
-    height : 100%;
+    height : 15rem;
+    object-fit: cover;
     border-radius: 0.3rem;
     margin-bottom : 0.5rem;
   }

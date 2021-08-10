@@ -5,8 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 const StyledSlider = styled(Slider)`
   width : 100%;
-  height : 15rem;
-  margin: 1rem 0 2rem 0;
+  height : 25rem;
   .slick-list {
     width : 100%;
     height : 100%;
@@ -20,8 +19,8 @@ const StyledSlider = styled(Slider)`
   .slick-slide {
     img {
       width: 100%;
-      height : 100%;
-      background-size: contain;
+      height : 25rem;
+      object-fit: cover;
     }
   }
 `;

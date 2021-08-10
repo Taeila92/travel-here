@@ -16,3 +16,9 @@ export const hideScrollbar = css`
     display: none;
   }
 `;
+
+export const cursorPointer = css`
+  :hover {
+    cursor: pointer;
+  }
+`;

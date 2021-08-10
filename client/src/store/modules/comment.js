@@ -37,7 +37,6 @@ export const commentDelete = () => {
 export const commentMiddleware = () => async dispatch => {
   try{
     const response = await getCommentAPI();
-    // console.log(response.data());
     const payload = [];
     response.forEach(doc => {
       payload.push(doc.data());

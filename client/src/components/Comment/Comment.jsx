@@ -119,7 +119,6 @@ const Comment = memo(({profile, postId}) => {
           )
         }
       })}
-      <p></p>
     </S.Comment>
   )
 })

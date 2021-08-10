@@ -32,9 +32,6 @@ const Comment = styled.li`
         cursor: pointer;
       }
     }
-    p {
-      display: none;
-    }
   }
   div {
     ${flex};

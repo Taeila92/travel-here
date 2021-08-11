@@ -34,15 +34,14 @@ export const commentDelete = () => {
 
 
 // thunk
-export const commentMiddleware = () => async dispatch => {
+export const commentMiddleware = (id) => async dispatch => {
   try{
-    const response = await getCommentAPI();
+    const response = await getCommentAPI(id);
     const payload = [];
     response.forEach(doc => {
       payload.push(doc.data());
     })
     dispatch(commentAdd(payload));
-    console.log(payload);
   }catch(error){
     dispatch(commentError(error));
     console.log(error);

@@ -63,11 +63,7 @@ const PostCard = ({postData}) => {
     return () => observer && observer.disconnect();
   },[]);
 
-  useEffect(()=>{
-    // 게시물 모달창 띄우면 서버에 있는 댓글 바로 업로드 되어있게 하기
-    dispatch(commentMiddleware());
-  },[])
-  
+
   // 모달 띄우기
   const onShowPostModal = () => {
     setIsPostModalOpened(true);

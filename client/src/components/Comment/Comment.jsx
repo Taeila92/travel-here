@@ -88,9 +88,7 @@ const Comment = memo(({profile, postId}) => {
   };
 
   useEffect(()=>{
-     // 댓글 추가하고 모달창 내렸다가 다시 띄우면 추가한 댓글 떠있게 하기
-    dispatch(commentMiddleware());
-    // console.log(render);
+    dispatch(commentMiddleware(postId));
   },[render]);
 
   return (
@@ -105,7 +103,7 @@ const Comment = memo(({profile, postId}) => {
         <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
       {allComment && allComment.map((com)=>{
-        if(com.post_id == postId){
+        // if(com.post_id == postId){
           return (
             <CommentList
             key={com.comment_id}
@@ -117,7 +115,7 @@ const Comment = memo(({profile, postId}) => {
             onScroll={onScroll}
             render={render}/>
           )
-        }
+        // }
       })}
     </S.Comment>
   )

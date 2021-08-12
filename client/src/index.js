@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import store from 'store';
 import App from 'App';
-import '@fortawesome/fontawesome-free/js/all.js';
 
 ReactDOM.render(
   <React.StrictMode>

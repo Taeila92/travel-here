@@ -1,18 +1,16 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useRef, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./Post.style";
-import { storageService } from 'firebase.js';
-import Comment from 'components/Comment/Comment';
+import { storageService } from "firebase.js";
+import Comment from "components/Comment/Comment";
 
-
-const Post = ({postId, profile, trip, setPostClick}) => {
+const Post = ({ postId, profile, trip, setPostClick }) => {
   const dispatch = useDispatch();
   const container = useRef();
   const images = useRef();
   // const comment = useRef();
   // const postBtn = useRef();
   // const textarea = useRef();
-
 
   let [post_likeNum, setPost_likeNum] = useState(false);
   let [isMouseDown, setIsMouseDown] = useState(false);
@@ -30,21 +28,21 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   let [com, setCom] = useState("");
 
-  const allPost = useSelector(state => state.board.data);
+  const allPost = useSelector((state) => state.board.data);
 
   const onSetData = () => {
     // 해당 카테고리에 게시글이 한개일 경우
-    if(allPost.length == 1){
+    if (allPost.length == 1) {
       onSetDataFrame(0);
     }
     // 여러개일 경우
-    for(let i=0; allPost.length-1; i++){
-      if(i == allPost.length){
+    for (let i = 0; allPost.length - 1; i++) {
+      if (i == allPost.length) {
         break;
       }
-      if(allPost[i].post_id == postId){
+      if (allPost[i].post_id == postId) {
         onSetDataFrame(i);
-      };
+      }
     }
   };
 
@@ -63,13 +61,13 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   // firestore에서 사진 받아오기
   const onLoadImg = () => {
     // 게시글에 사진이 하나일 경우
-    if(trip.length == 1){
+    if (trip.length == 1) {
       onSetImg(0);
       return;
     }
     // 사진이 여러개일 경우
-    for(let i=0; trip.length-1; i++){
-      if(i == trip.length){
+    for (let i = 0; i < trip.length - 1; i++) {
+      if (i == trip.length) {
         break;
       }
       onSetImg(i);
@@ -79,32 +77,26 @@ const Post = ({postId, profile, trip, setPostClick}) => {
   const onSetImg = (i) => {
     let storageRef = storageService.ref();
     let dynamicImg = storageRef.child(`post/${trip[i]}`);
-    dynamicImg.getMetadata().then(async function() {
-      let downloadDynURL = await dynamicImg.getDownloadURL();
-      setPost_photo(downloadDynURL);
-      setPost_photo((downloadDynURL)=>{
-        onAddImg(downloadDynURL);
+    dynamicImg
+      .getMetadata()
+      .then(async function () {
+        let downloadDynURL = await dynamicImg.getDownloadURL();
+        setPost_photo(downloadDynURL);
+        setPost_photo((downloadDynURL) => {
+          onAddImg(downloadDynURL);
+        });
       })
-    }).catch(function(error) {});
+      .catch(function (error) {});
   };
-
 
   // 여행사진들 마우스 드래그로 좌우 넘기기
-  const onMouseDown = (e) => {
+  const onMouseDown = (e) => {};
 
-  };
+  const onMouseUp = (e) => {};
 
-  const onMouseUp = (e) => {
-    
-  };
+  const onMouseMove = (e) => {};
 
-  const onMouseMove = (e) => {
-    
-  };
-
-  const onMouseLeave = (e) => {
-    
-  };
+  const onMouseLeave = (e) => {};
 
   // 모달창 숨기기
   const onHideModal = () => {
@@ -113,9 +105,9 @@ const Post = ({postId, profile, trip, setPostClick}) => {
 
   // 좋아요 아이콘 토글
   const onLikeToggle = () => {
-    if(post_likeNum){
+    if (post_likeNum) {
       setPost_likeNum(false);
-    }else{
+    } else {
       setPost_likeNum(true);
     }
   };
@@ -124,15 +116,14 @@ const Post = ({postId, profile, trip, setPostClick}) => {
     let img = `
       <img src="${image}" alt="여행사진"></img>
     `;
-    images.current.insertAdjacentHTML('beforeend', img);
+    images.current.insertAdjacentHTML("beforeend", img);
   };
 
   // useEffect
-  useEffect(()=>{
+  useEffect(() => {
     onSetData();
     onLoadImg();
-  },[]);
-
+  }, []);
 
   return (
     <S.Container ref={container}>
@@ -147,11 +138,11 @@ const Post = ({postId, profile, trip, setPostClick}) => {
           </S.Header>
           <S.Images
             ref={images}
-            onMouseDown={e=>onMouseDown(e)}
-            onMouseUp={e=>onMouseUp(e)}
-            onMouseMove={e=>onMouseMove(e)}
-            onMouseLeave={e=>onMouseLeave(e)}>
-          </S.Images>
+            onMouseDown={(e) => onMouseDown(e)}
+            onMouseUp={(e) => onMouseUp(e)}
+            onMouseMove={(e) => onMouseMove(e)}
+            onMouseLeave={(e) => onMouseLeave(e)}
+          ></S.Images>
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
             <p>Park HyunJeong</p>
@@ -161,18 +152,20 @@ const Post = ({postId, profile, trip, setPostClick}) => {
           <S.Content>{post_content}</S.Content>
           <S.Like>
             <span>27 Likes</span>
-            {post_likeNum ?
-            <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i> :
-            <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>}
+            {post_likeNum ? (
+              <i onClick={onLikeToggle} className="fas fa-thumbs-up"></i>
+            ) : (
+              <i onClick={onLikeToggle} className="far fa-thumbs-up"></i>
+            )}
           </S.Like>
           {/* {allComment.map((com) => {
             return <Comment profile={profile} postId={postId} comments={com}/>
           })} */}
-          <Comment profile={profile} postId={postId}/>
+          <Comment profile={profile} postId={postId} />
         </ul>
       </S.Contents>
     </S.Container>
-  )
-}
+  );
+};
 
 export default Post;

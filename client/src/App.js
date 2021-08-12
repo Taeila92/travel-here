@@ -26,6 +26,7 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
+  const [userObj, setUserObj] = useState(null);
 
   const isVisible = () => {
     setVisible(!visible);
@@ -37,6 +38,7 @@ function App() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
+        setUserObj(user);
       } else {
         setIsLoggedIn(false);
       }
@@ -84,7 +86,11 @@ function App() {
       {isLoggedIn && (
         <>
           <WriteBtn isVisible={isVisible} />
-          <WriteModal visible={visible} isVisible={isVisible} />
+          <WriteModal
+            visible={visible}
+            isVisible={isVisible}
+            userObj={userObj}
+          />
         </>
       )}
     </S.Background>

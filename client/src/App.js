@@ -13,7 +13,6 @@ import Board from "pages/Board/Board";
 import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
-
 import WriteBtn from "components/Write/WriteBtn/WriteBtn";
 
 // firebase
@@ -64,6 +63,7 @@ function App() {
             isLoggedIn={isLoggedIn}
           />
         )}
+        <S.Content>
         {init ? (
           // 로그인 전
           <Switch>
@@ -82,6 +82,7 @@ function App() {
             <Route component={NotFound} />
           </Switch>
         )}
+        </S.Content>
       </BrowserRouter>
       {isLoggedIn && (
         <>

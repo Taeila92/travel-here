@@ -2,8 +2,12 @@ import React, { useCallback, useEffect } from "react";
 import * as S from "./Category.style";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryThunk } from "../../store/modules/category";
+
 const Category = () => {
   const category = useSelector((state) => state.category.data);
+
+
+
   const dispatch = useDispatch();
 
   const getCategory = useCallback(() => {

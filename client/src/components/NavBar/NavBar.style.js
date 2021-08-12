@@ -12,7 +12,7 @@ const Container = styled.div`
   cursor: pointer;
   display: none;
   z-index: 9;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1024px) {
     display: flex;
   }
 `;

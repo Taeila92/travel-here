@@ -1,5 +1,5 @@
 ﻿import styled from "styled-components";
-import { flex, marginTop, hideScrollbar } from "./styleConstants.js";
+import { flex, marginTop, hideScrollbar, cursorPointer } from "./styleConstants.js";
 
 const Comment = styled.li`
   width: 100%;
@@ -46,17 +46,27 @@ const Comment = styled.li`
       border-radius: 50%;
       background-color: pink;
     }
-    p {
-      width: 85%;
+    p, input {
+      width: 75%;
       border: none;
       resize: none;
       outline: none;
       font-size: 0.9rem;
       line-height: 1.5;
       white-space: pre-line;
+      margin-left: 0.5rem;
+    }
+    input {
+      border: 1px solid black;
+      caret-color: black;
+    }
+    input::placeholder{
+      color: darkgray;
     }
     i {
       font-size: 1rem;
+      margin-left: 0.5rem;
+      ${cursorPointer};
     }
   }
 `;

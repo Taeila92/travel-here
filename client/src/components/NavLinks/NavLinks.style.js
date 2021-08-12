@@ -1,4 +1,5 @@
-import styled from 'styled-components';
+import styled, { css } from "styled-components";
+import { NavLink } from "react-router-dom";
 
 const Container = styled.div`
   position: absolute;
@@ -7,20 +8,25 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   padding-top: 4px;
-  @media screen and (max-width: 900px) {
-    background-color: rgba(0, 0, 0, 0.5);
-    width: 100vw;
-    height: 150px;
-    padding-right: 20px;
-    transition: 0.3s;
-    transform: ${(props) => (props.active ? 0 : 'translateY(-150px)')};
-  }
+  ${(props)=>{
+    if(!props.isPc){
+      return css`
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100vw;
+        height: 150px;
+        padding-right: 20px;
+        transition: 0.3s;
+        transform: ${(props) => props.isNavOpened ? '0' : 'translateY(-150px)'};
+      `;
+    }
+  }}
+  //height: ${(props) => (props.isPc ? '150px' : '55px')};
 `;
 
 const Header = styled.header`
   position: relative;
   background-color: transparent;
-  height: ${(props) => (props.active ? '150px' : '55px')};
+  height: ${(props) => (props.isPc ? '150px' : '55px')};
 `;
 
 const Ul = styled.ul`
@@ -28,7 +34,7 @@ const Ul = styled.ul`
   margin: auto;
   justify-content: center;
   align-items: center;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1024px) {
     flex-direction: column;
   }
 `;
@@ -52,4 +58,10 @@ const Button = styled.button`
   }
 `;
 
-export { Container, Ul, Li, Button, Header };
+const StyledNav = styled(NavLink)`
+  transition: 0.2s;
+  padding: 10px 40px 10px;
+  color: white;
+`;
+
+export { Container, Ul, Li, Button,Header, StyledNav };

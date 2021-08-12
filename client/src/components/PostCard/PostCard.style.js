@@ -10,9 +10,6 @@ const Container = styled.div`
   margin : 0.5rem;
   padding : 1.6rem 0.6rem;
   z-index : 1;
-  p {
-    display: none;
-  }
 `;
 
 const Profile = styled.div`
@@ -37,12 +34,10 @@ const Content = styled.div`
     font-size : 1.3rem;
     margin-bottom : 0.5rem;
   }
-  p {
-    margin-bottom: 0.5rem;
-  }
   img {
     width : 100%;
-    height : 100%;
+    height : 15rem;
+    object-fit: cover;
     border-radius: 0.3rem;
     margin-bottom : 0.5rem;
   }
@@ -52,23 +47,15 @@ const Content = styled.div`
   }
 `;
 
-const Button = styled.div`
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding : 1rem 0 0 0;
-  button {
-    background: transparent;
-    color : white;
-    border: none;
-    outline: none;
-  }
+const SkeletonImage = styled.div`
+  width : 100%;
+  height : 5rem;
+  background-color: gray;
 `;
-
 
 export{
   Container,
   Profile,
   Content,
-  Button
+  SkeletonImage,
 }

@@ -1,23 +1,20 @@
+import React from "react";
+import { useMediaQuery } from "react-responsive";
 import NavLinks from "components/NavLinks/NavLinks";
 import NavBar from "components/NavBar/NavBar";
 import * as S from "./Header.style";
-import { useEffect, useState } from "react";
-import useWindowWidth from "hooks/useWindowWidth";
+
 
 export default function Header({ isLoggedIn }) {
-  const width = useWindowWidth();
-  const [active, setActive] = useState(false);
-
-  useEffect(() => {
-    if (width > 770) {
-      setActive(false);
-    }
-  }, [width]);
+  const isPc = useMediaQuery({
+    query : `(min-width : 1024px) and (max-width :1920px)`
+  })
+  console.log(isPc);
 
   return (
-    <S.Header active={active}>
-      <NavLinks isLoggedIn={isLoggedIn} active={active} />
-      <NavBar setActive={setActive} active={active} />
+    <S.Header isPc={isPc}>
+      <NavLinks isLoggedIn={isLoggedIn} isPc={isPc} />
+      <NavBar isPc={isPc}/>
     </S.Header>
   );
 }

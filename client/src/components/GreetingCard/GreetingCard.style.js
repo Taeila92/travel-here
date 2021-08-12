@@ -5,10 +5,6 @@ const Container = styled.div`
   width: 100%;
   top: 50%;
   margin-top: calc(-286px / 2);
-  /* display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center; */
 `;
 
 const H2 = styled.h2`
@@ -23,9 +19,9 @@ const H2 = styled.h2`
   @media screen and (max-width: 550px) {
     font-size: 100px;
   }
-  `;
-  
-  const P = styled.p`
+`;
+
+const P = styled.p`
   font-size: 36px;
   font-weight: 700;
   color: white;

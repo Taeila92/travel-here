@@ -1,7 +1,7 @@
-import firebase from 'firebase';
-import 'firebase/firestore';
-import 'firebase/storage';
-import 'firebase/auth';
+import firebase from "firebase";
+import "firebase/firestore";
+import "firebase/storage";
+import "firebase/auth";
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -14,9 +14,7 @@ const firebaseConfig = {
   databaseURL: process.env.REACT_APP_DB_URL,
 };
 
-const firebaseService = firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
 export const dbService = firebase.firestore();
 export const storageService = firebase.storage();
-
 export const authService = firebase.auth(); // 로그인 모듈
-export default firebaseService;

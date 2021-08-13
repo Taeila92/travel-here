@@ -1,10 +1,11 @@
 ﻿import { combineReducers } from "redux";
-import user from "./user";
+import user from "./userLike";
 import board from "./board";
 import comment from "./comment";
 import category from "./category";
 import nav from './nav';
-import like from './like';
+import postLike from './postLike';
+import userLike from './userLike';
 
 const rootReducer = combineReducers({
   user,
@@ -12,7 +13,8 @@ const rootReducer = combineReducers({
   comment,
   category,
   nav,
-  like,
+  postLike,
+  userLike,
 });
 
 export default rootReducer;

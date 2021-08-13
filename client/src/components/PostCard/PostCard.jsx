@@ -2,8 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
-import { userMiddleware } from 'store/modules/user';
-import { likeMiddleware } from 'store/modules/like';
+import { userMiddleware } from 'store/modules/userLike';
+import { likeMiddleware } from 'store/modules/postLike';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
 import getDate from 'utils/getDate';
@@ -12,7 +12,7 @@ const PostCard = ({postData}) => {
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
-  let userDB = useSelector(state => state.user.data);
+  let userDB = useSelector(state => state.userLike.data);
 
   // 해당 유저가 좋아요한 post의 post_id 배열
   let likePost = userDB.user_like_posts;

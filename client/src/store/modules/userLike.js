@@ -1,13 +1,13 @@
-﻿import { getUserAPI } from 'store/apis/user';
+﻿import { getUserAPI } from 'store/apis/userLike';
 import { dbService } from 'firebase.js';
 import firebase from "firebase";
 const { produce } = require('immer');
 
 
 // Actions
-const GET_USER = 'user/GET_USER';
-const LIKE_USER  = 'user/LIKE_USER';
-const NONELIKE_USER = 'user/NONELIKE_USER';
+const GET_USER = 'userLike/GET_USER';
+const LIKE_USER  = 'userLike/LIKE_USER';
+const NONELIKE_USER = 'userLike/NONELIKE_USER';
 
 // Action 생성자
 export const getUser = (payload) => {

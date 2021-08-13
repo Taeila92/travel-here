@@ -1,12 +1,12 @@
-﻿import { getLikeAPI } from 'store/apis/like';
+﻿import { getLikeAPI } from 'store/apis/postLike';
 import { dbService } from 'firebase.js';
 const { produce } = require('immer');
 
 
 // Actions
-const GET_LIKE = 'like/GET_LIKE';
-const LIKE_LIKE  = 'like/LIKE_LIKE';
-const LIKE_NONLIKE = 'like/LIKE_NONLIKE'
+const GET_LIKE = 'postLike/GET_LIKE';
+const LIKE_LIKE  = 'postLike/LIKE_LIKE';
+const LIKE_NONLIKE = 'postLike/LIKE_NONLIKE'
 
 // Action 생성자
 export const getLike = (payload) => {

@@ -4,10 +4,18 @@ const { produce } = require('immer');
 
 
 // Actions
+const GET_LIKE = 'like/GET_LIKE';
 const LIKE_LIKE  = 'like/LIKE_LIKE';
 const LIKE_NONLIKE = 'like/LIKE_NONLIKE'
 
 // Action 생성자
+export const getLike = (payload) => {
+  return {
+    type: GET_LIKE,
+    payload,
+  }
+};
+
 export const onLike = (payload) => {
   return {
     type: LIKE_LIKE,
@@ -30,11 +38,11 @@ const initialState = {
 const reducer = (prevState = initialState, action) => {
   return produce(prevState, (draft) => {
     switch (action.type) {
+      case GET_LIKE:
+        draft.likeNum = action.payload.num;
+        break;
       case LIKE_LIKE:
-        // console.log('action.payload', action.payload);
-        // console.log('action.payload.num', action.payload.num);
         draft.likeNum = action.payload.num+1;
-        // console.log('action.payload.id', action.payload.id);
         dbService.collection('post').doc(action.payload.id).update({
           post_like: draft.likeNum,
         });
@@ -55,20 +63,18 @@ const reducer = (prevState = initialState, action) => {
 export const likeMiddleware = (id, type) => async dispatch => {
   try{
     const response = await getLikeAPI(id);
-    if(type === 'render'){
-      // console.log('render');
-      return;
-    }
     let arr = {num: 0, id: ''};
     response.forEach(doc => {
       arr.num = doc.data().post_like;
       arr.id = id;
     })
+    if(type === 'init'){
+      dispatch(getLike(arr));
+      return;
+    }
     if(type === 'like'){
-      // console.log('like');
       dispatch(onLike(arr));
     } else {
-      // console.log('nonelike');
       dispatch(onNoneLike(arr));
     }
   }catch(error){

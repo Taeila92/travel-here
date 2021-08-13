@@ -3,42 +3,36 @@ import * as S from "./Post.style";
 import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
 import { useDispatch, useSelector } from 'react-redux';
-import { likeMiddleware, onLike, onNoneLike } from 'store/modules/like';
+import { likeMiddleware } from 'store/modules/like';
 import { userMiddleware } from 'store/modules/user';
-import { dbService } from "firebase.js";
 import firebase from "firebase";
 
 
-const Post = ({postData, profile, setIsPostModalOpened}) => {
-  const { post_religion, post_title, post_content, post_like, post_photo, post_id, user_id } = postData
+const Post = ({postData, profile, setIsPostModalOpened, like}) => {
+  const { post_religion, post_title, post_content, post_like, post_photo, post_id, post_writer } = postData;
 
   const auth = firebase.auth();
 
   const dispatch = useDispatch();
 
-  let [likeRender, setLikeRender] = useState('init');
+  // 좋아요 숫자 받아오기
+  let { likeNum } = useSelector(state => state.like);
 
   // 내가 해당 게시글에 좋아요을 했나 안 했나 표시
-  let [likePost, setLikePost] = useState(false);
+  let [likePost, setLikePost] = useState(like.includes(post_id));
   // 내가 해당 게시글에 찜을 했나 안 했나 표시
   let [bookmarkPost, setBookmarkPost] = useState(false);
   
   const comment = useRef();
 
-  let { likeNum } = useSelector(state => state.like);
-  let userRedux = useSelector(state => state.user.data);
-
-  
   // 좋아요 아이콘 토글 -> 할 때마다 firestore에 저장 되어야 함
   const onLikeToggle = async() => {
     auth.onAuthStateChanged((user) => {
       if(likePost){
-        setLikeRender('noneLike');
         setLikePost(false);
         dispatch(likeMiddleware(post_id, 'noneLike')); 
         dispatch(userMiddleware(user.email, post_id, 'noneLike'));
       }else{
-        setLikeRender('like');
         setLikePost(true);
         dispatch(likeMiddleware(post_id, 'like')); 
         dispatch(userMiddleware(user.email, post_id, 'like'));
@@ -60,6 +54,9 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
     setIsPostModalOpened(false);
   };  
 
+  useEffect(() => {
+    dispatch(likeMiddleware(post_id, 'init'));
+  }, []);
 
   return (
     <S.Container>
@@ -75,7 +72,7 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
           <PostSlider postImages={post_photo}/>
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
-            <p>Park HyunJeong</p> {/* post_writer로 검색?*/}
+            <p>{post_writer}</p> {/* post_writer로 검색?*/}
             <span>15min</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
@@ -85,7 +82,8 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
               {likePost ?
               <i onClick={onLikeToggle} className="fas fa-heart"></i> :
               <i onClick={onLikeToggle} className="far fa-heart"></i>}
-              {likeRender === 'init' ? <span>{post_like}</span> : <span>{likeNum}</span>}<p>명</p>이 좋아합니다
+              {/* {likeRender === 'init' ? <span>{post_like}</span> : <span>{likeNum}</span>}<p>명</p>이 좋아합니다 */}
+              <span>{likeNum}</span><p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ?
             <i onClick={onBookmarkToggle} className="fas fa-bookmark"></i> :

@@ -2,9 +2,20 @@ import React, { useState, useEffect, useRef } from 'react'
 import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
+import { userMiddleware } from 'store/modules/user';
+import { likeMiddleware } from 'store/modules/like';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from "firebase";
 import getDate from 'utils/getDate';
 
 const PostCard = ({postData}) => {
+
+  const auth = firebase.auth();
+  const dispatch = useDispatch();
+  let userDB = useSelector(state => state.user.data);
+
+  // 해당 유저가 좋아요한 post의 post_id 배열
+  let likePost = userDB.user_like_posts;
 
   const {post_id, post_title, post_religion, post_date} = postData; // 개별 post
   
@@ -59,11 +70,23 @@ const PostCard = ({postData}) => {
     return () => observer && observer.disconnect();
   },[]);
 
-
   // 모달 띄우기
   const onShowPostModal = () => {
     setIsPostModalOpened(true);
   };
+
+  // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
+  // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움
+  // useEffect의 용도 --> 4.할 때 2.에서 한 것이 바로 적용되어있게 하기
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        dispatch(userMiddleware(user.email, post_id, 'init'));
+      }
+    });
+    dispatch(likeMiddleware(post_id, 'init'));
+  }, [isPostModalOpened]);
+
 
   return (
     <>
@@ -82,10 +105,12 @@ const PostCard = ({postData}) => {
           {/* <div>{getDate(post_date)}</div> */}
         </S.Content>
       </S.Container>
+      {/* {(isPostModalOpened && likePost) && <Post */}
       {isPostModalOpened && <Post
         profile={profileImage}
         postData={postData}
         setIsPostModalOpened={setIsPostModalOpened}
+        like={likePost}
       />}
     </>
   );

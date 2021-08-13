@@ -79,7 +79,7 @@ const PostCard = ({postData}) => {
           <h2>{post_title}</h2>
           {isView ? <img  src={repImage} alt="여행 사진"/> : <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage> }
           {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
-          <div>{getDate(post_date)}</div>
+          {/* <div>{getDate(post_date)}</div> */}
         </S.Content>
       </S.Container>
       {isPostModalOpened && <Post

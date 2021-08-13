@@ -3,7 +3,8 @@ import user from "./user";
 import board from "./board";
 import comment from "./comment";
 import category from "./category";
-import nav from './nav'
+import nav from './nav';
+import like from './like';
 
 const rootReducer = combineReducers({
   user,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   comment,
   category,
   nav,
+  like,
 });
 
 export default rootReducer;

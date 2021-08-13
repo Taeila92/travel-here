@@ -1,11 +1,22 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import * as S from "./Post.style";
 import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
+import { useDispatch, useSelector } from 'react-redux';
+import { likeMiddleware, onLike, onNoneLike } from 'store/modules/like';
+import { userMiddleware } from 'store/modules/user';
+import { dbService } from "firebase.js";
+import firebase from "firebase";
 
 
 const Post = ({postData, profile, setIsPostModalOpened}) => {
-  const { post_religion, post_title, post_content, post_like, post_photo, post_id } = postData
+  const { post_religion, post_title, post_content, post_like, post_photo, post_id, user_id } = postData
+
+  const auth = firebase.auth();
+
+  const dispatch = useDispatch();
+
+  let [likeRender, setLikeRender] = useState('init');
 
   // 내가 해당 게시글에 좋아요을 했나 안 했나 표시
   let [likePost, setLikePost] = useState(false);
@@ -14,13 +25,25 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
   
   const comment = useRef();
 
+  let { likeNum } = useSelector(state => state.like);
+  let userRedux = useSelector(state => state.user.data);
+
+  
   // 좋아요 아이콘 토글 -> 할 때마다 firestore에 저장 되어야 함
-  const onLikeToggle = () => {
-    if(likePost){
-      setLikePost(false);
-    }else{
-      setLikePost(true);
-    }
+  const onLikeToggle = async() => {
+    auth.onAuthStateChanged((user) => {
+      if(likePost){
+        setLikeRender('noneLike');
+        setLikePost(false);
+        dispatch(likeMiddleware(post_id, 'noneLike')); 
+        dispatch(userMiddleware(user.email, post_id, 'noneLike'));
+      }else{
+        setLikeRender('like');
+        setLikePost(true);
+        dispatch(likeMiddleware(post_id, 'like')); 
+        dispatch(userMiddleware(user.email, post_id, 'like'));
+      }
+    })
   };
 
   // 찜 아이콘 토글
@@ -62,7 +85,7 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
               {likePost ?
               <i onClick={onLikeToggle} className="fas fa-heart"></i> :
               <i onClick={onLikeToggle} className="far fa-heart"></i>}
-              <span>{post_like}</span><p>명</p>이 좋아합니다
+              {likeRender === 'init' ? <span>{post_like}</span> : <span>{likeNum}</span>}<p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ?
             <i onClick={onBookmarkToggle} className="fas fa-bookmark"></i> :

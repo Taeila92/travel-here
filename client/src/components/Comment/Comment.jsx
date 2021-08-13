@@ -103,7 +103,6 @@ const Comment = memo(({profile, postId}) => {
         <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
       {allComment && allComment.map((com)=>{
-        // if(com.post_id == postId){
           return (
             <CommentList
             key={com.comment_id}
@@ -115,7 +114,6 @@ const Comment = memo(({profile, postId}) => {
             onScroll={onScroll}
             render={render}/>
           )
-        // }
       })}
     </S.Comment>
   )

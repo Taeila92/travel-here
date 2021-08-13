@@ -13,15 +13,14 @@ const PostCard = ({postData}) => {
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
-  let userDB = useSelector(state => state.userLike.data);
-  let bookmarkDB = useSelector(state => state.bookmark.data);
 
-  // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
-  let likePost = userDB.user_like_posts;
-  // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
-  let bookmark = bookmarkDB.user_bookmark_posts;
+  // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
+  let likePost = useSelector((state) => state.userLike.data);
+  // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
+  let bookmark = useSelector((state) => state.userLike.data);
 
-  const {post_id, post_title, post_religion, post_date} = postData; // 개별 post
+  // 개별 post
+  const {post_id, post_title, post_religion, post_date} = postData;
   
   // post모달 띄우는 용도
   const [isPostModalOpened, setIsPostModalOpened] = useState(false);
@@ -46,6 +45,12 @@ const PostCard = ({postData}) => {
     await storageRef.child(`post/${profileImageName}`).getDownloadURL().then((value)=>{
       setProfileImage(value)
     })
+  };
+
+  
+  // 모달 띄우기
+  const onShowPostModal = () => {
+    setIsPostModalOpened(true);
   };
 
   // Lazy Loading
@@ -74,10 +79,6 @@ const PostCard = ({postData}) => {
     return () => observer && observer.disconnect();
   },[]);
 
-  // 모달 띄우기
-  const onShowPostModal = () => {
-    setIsPostModalOpened(true);
-  };
 
   // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
   // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움
@@ -115,8 +116,8 @@ const PostCard = ({postData}) => {
         profile={profileImage}
         postData={postData}
         setIsPostModalOpened={setIsPostModalOpened}
-        like={likePost}
-        bookmark={bookmark}
+        like={likePost.user_like_posts}
+        bookmark={bookmark.user_bookmark_posts}
       />}
     </>
   );

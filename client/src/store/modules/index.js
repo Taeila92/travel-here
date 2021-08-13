@@ -6,6 +6,7 @@ import category from "./category";
 import nav from './nav';
 import postLike from './postLike';
 import userLike from './userLike';
+import bookmark from './bookmark';
 
 const rootReducer = combineReducers({
   user,
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   nav,
   postLike,
   userLike,
+  bookmark,
 });
 
 export default rootReducer;

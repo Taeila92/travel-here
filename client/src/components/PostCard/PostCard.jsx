@@ -4,6 +4,7 @@ import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
 import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
+import { bookmarkMiddleware } from 'store/modules/bookmark';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
 import getDate from 'utils/getDate';
@@ -13,9 +14,12 @@ const PostCard = ({postData}) => {
   const auth = firebase.auth();
   const dispatch = useDispatch();
   let userDB = useSelector(state => state.userLike.data);
+  let bookmarkDB = useSelector(state => state.bookmark.data);
 
-  // 해당 유저가 좋아요한 post의 post_id 배열
+  // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = userDB.user_like_posts;
+  // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
+  let bookmark = bookmarkDB.user_bookmark_posts;
 
   const {post_id, post_title, post_religion, post_date} = postData; // 개별 post
   
@@ -82,6 +86,7 @@ const PostCard = ({postData}) => {
     auth.onAuthStateChanged((user) => {
       if(user){
         dispatch(userMiddleware(user.email, post_id, 'init'));
+        dispatch(bookmarkMiddleware(user.email, post_id, 'init'));
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
@@ -111,6 +116,7 @@ const PostCard = ({postData}) => {
         postData={postData}
         setIsPostModalOpened={setIsPostModalOpened}
         like={likePost}
+        bookmark={bookmark}
       />}
     </>
   );

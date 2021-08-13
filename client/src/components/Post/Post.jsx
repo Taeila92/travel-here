@@ -5,10 +5,11 @@ import PostSlider from './PostSlider/PostSlider';
 import { useDispatch, useSelector } from 'react-redux';
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
+import { bookmarkMiddleware } from 'store/modules/bookmark';
 import firebase from "firebase";
 
 
-const Post = ({postData, profile, setIsPostModalOpened, like}) => {
+const Post = ({postData, profile, setIsPostModalOpened, like, bookmark}) => {
   const { post_religion, post_title, post_content, post_photo, post_id, post_writer } = postData;
 
   const auth = firebase.auth();
@@ -21,7 +22,7 @@ const Post = ({postData, profile, setIsPostModalOpened, like}) => {
   // 내가 해당 게시글에 좋아요을 했나 안 했나 표시
   let [likePost, setLikePost] = useState(like.includes(post_id));
   // 내가 해당 게시글에 찜을 했나 안 했나 표시
-  let [bookmarkPost, setBookmarkPost] = useState(false);
+  let [bookmarkPost, setBookmarkPost] = useState(bookmark.includes(post_id));
   
   const comment = useRef();
 
@@ -42,11 +43,15 @@ const Post = ({postData, profile, setIsPostModalOpened, like}) => {
 
   // 찜 아이콘 토글
   const onBookmarkToggle = () => {
-    if(bookmarkPost){
-      setBookmarkPost(false);
-    }else{
-      setBookmarkPost(true);
-    }
+    auth.onAuthStateChanged((user) => {
+      if(bookmarkPost){
+        setBookmarkPost(false);
+        dispatch(bookmarkMiddleware(user.email, post_id, 'noneBookmark'));
+      }else{
+        setBookmarkPost(true);
+        dispatch(bookmarkMiddleware(user.email, post_id, 'bookmark'));
+      }
+    });
   };
   
   // 모달창 닫기

@@ -16,8 +16,7 @@ const PostCard = ({postData}) => {
   const [repImage, setRepImage] = useState(); 
 
   const fetchRepImage = async (repImageName) => {
-    const storageRef = storageService.ref();
-    await storageRef.child(`post/${repImageName}`).getDownloadURL().then((value)=>{
+    await storageService.refFromURL(repImageName).getDownloadURL().then((value)=>{
       setRepImage(value)
     })
   }
@@ -31,6 +30,11 @@ const PostCard = ({postData}) => {
     await storageRef.child(`post/${profileImageName}`).getDownloadURL().then((value)=>{
       setProfileImage(value)
     })
+    /*
+    프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
+    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
+      setProfileImage(value)
+    */
   };
 
   // Lazy Loading
@@ -64,6 +68,8 @@ const PostCard = ({postData}) => {
   const onShowPostModal = () => {
     setIsPostModalOpened(true);
   };
+
+  console.log(post_date)
 
   return (
     <>

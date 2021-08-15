@@ -2,11 +2,25 @@ import React, { useState, useEffect, useRef } from 'react'
 import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
+import { userMiddleware } from 'store/modules/userLike';
+import { likeMiddleware } from 'store/modules/postLike';
+import { bookmarkMiddleware } from 'store/modules/bookmark';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from "firebase";
 import getDate from 'utils/getDate';
 
 const PostCard = ({postData}) => {
 
-  const {post_id, post_title, post_religion, post_date} = postData; // 개별 post
+  const auth = firebase.auth();
+  const dispatch = useDispatch();
+
+  // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
+  let likePost = useSelector((state) => state.userLike.data);
+  // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
+  let bookmark = useSelector((state) => state.userLike.data);
+
+  // 개별 post
+  const {post_id, post_title, post_religion, post_date} = postData;
   
   // post모달 띄우는 용도
   const [isPostModalOpened, setIsPostModalOpened] = useState(false);
@@ -37,6 +51,12 @@ const PostCard = ({postData}) => {
     */
   };
 
+  
+  // 모달 띄우기
+  const onShowPostModal = () => {
+    setIsPostModalOpened(true);
+  };
+
   // Lazy Loading
   const lazyTarget = useRef()
   const [isView, setIsView] = useState(false);
@@ -64,10 +84,19 @@ const PostCard = ({postData}) => {
   },[]);
 
 
-  // 모달 띄우기
-  const onShowPostModal = () => {
-    setIsPostModalOpened(true);
-  };
+  // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
+  // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움
+  // useEffect의 용도 --> 4.할 때 2.에서 한 것이 바로 적용되어있게 하기
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      if(user){
+        dispatch(userMiddleware(user.email, post_id, 'init'));
+        dispatch(bookmarkMiddleware(user.email, post_id, 'init'));
+      }
+    });
+    dispatch(likeMiddleware(post_id, 'init'));
+  }, [isPostModalOpened]);
+
 
   console.log(post_date)
 
@@ -85,13 +114,16 @@ const PostCard = ({postData}) => {
           <h2>{post_title}</h2>
           {isView ? <img  src={repImage} alt="여행 사진"/> : <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage> }
           {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
-          <div>{getDate(post_date)}</div>
+          {/* <div>{getDate(post_date)}</div> */}
         </S.Content>
       </S.Container>
+      {/* {(isPostModalOpened && likePost) && <Post */}
       {isPostModalOpened && <Post
         profile={profileImage}
         postData={postData}
         setIsPostModalOpened={setIsPostModalOpened}
+        like={likePost.user_like_posts}
+        bookmark={bookmark.user_bookmark_posts}
       />}
     </>
   );

@@ -14,6 +14,7 @@ import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import WriteBtn from "components/Write/WriteBtn/WriteBtn";
+import MyPage from "pages/MyPage";
 
 // firebase
 import firebase from "firebase";
@@ -99,24 +100,14 @@ function App() {
           />
         )}
         <S.Content>
-        {init ? (
-          // 로그인 전
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
+            {init && <Route path="/login" component={Login} />}
+            {isLoggedIn && <Route exact path="/mypage" component={MyPage} />}
             <Route exact path="/categorylist" component={CategoryList} />
             <Route path="/categorylist/:religion" component={Board} />
             <Route component={NotFound} />
           </Switch>
-        ) : (
-          // 로그인 후
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/categorylist" component={CategoryList} />
-            <Route path="/categorylist/:religion" component={Board} />
-            <Route component={NotFound} />
-          </Switch>
-        )}
         </S.Content>
       </BrowserRouter>
       {isLoggedIn && (

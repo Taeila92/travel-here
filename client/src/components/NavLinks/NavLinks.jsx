@@ -46,6 +46,11 @@ export default function NavLinks({ isLoggedIn, isPc }) {
           {isLoggedIn ? (
             <>
               <S.Li>
+                <S.StyledNav to="/mypage" activeStyle={activeStyle} exact>
+                  <S.Button>MyPage</S.Button>
+                </S.StyledNav>
+              </S.Li>
+              <S.Li>
                 <S.StyledNav to="/" activeStyle={activeStyle} exact>
                   <S.Button onClick={onLogout}>Logout</S.Button>
                 </S.StyledNav>

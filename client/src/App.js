@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 // style
 import GlobalStyle from "styles/GlobalStyle";
 import Header from "components/Header/Header";
-import * as S from "styles/Background";
+import { Background, Content } from "styles/Background";
 
 // router
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -81,7 +81,7 @@ function App() {
   console.log(userObj)
 
   return (
-    <S.Background className="App">
+    <Background>
       <GlobalStyle />
       <BrowserRouter>
         {/* 사용자가 로그인 되었을 때*/}
@@ -98,7 +98,7 @@ function App() {
             isLoggedIn={isLoggedIn}
           />
         )}
-        <S.Content>
+        <Content>
         {init ? (
           // 로그인 전
           <Switch>
@@ -117,7 +117,7 @@ function App() {
             <Route component={NotFound} />
           </Switch>
         )}
-        </S.Content>
+        </Content>
       </BrowserRouter>
       {isLoggedIn && (
         <>
@@ -129,7 +129,7 @@ function App() {
           />
         </>
       )}
-    </S.Background>
+    </Background>
   );
 }
 

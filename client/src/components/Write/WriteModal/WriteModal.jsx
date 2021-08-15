@@ -38,7 +38,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       }
     }
 
-    const ID = userObj.uid;
+    let ID = Date.now().toString();
 
     // users collection의 user_write_posts에 post_id 추가
     await dbService.collection('users').doc(userObj.email).update({
@@ -49,7 +49,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_title: title,
       post_content: post,
       post_writer: userObj.displayName,
-      post_date: Date.now(),
+      post_user_email: userObj.email,
+      post_date: ID,
       post_id: ID,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,

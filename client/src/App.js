@@ -45,6 +45,8 @@ function App() {
     });
   }, []);
 
+  console.log(userObj)
+
   return (
     <S.Background className="App">
       <GlobalStyle />

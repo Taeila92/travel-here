@@ -37,7 +37,7 @@ const Post = ({postData, profile, setIsPostModalOpened}) => {
     setIsPostModalOpened(false);
   };  
 
-
+  console.log(post_photo)
   return (
     <S.Container>
       <S.Contents>

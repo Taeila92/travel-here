@@ -14,9 +14,8 @@ const Mypage = (props) => {
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
 
-  const user = useSelector(state => state.userLike);
+  const user = useSelector(state => state.userLike.data);
   const dispatch = useDispatch();
-  console.log(user);
 
   const onInfo = () => {
     setPost(false);
@@ -67,19 +66,25 @@ const Mypage = (props) => {
         </S.Content>
         {info &&
         <S.Content>
-          내 정보
+          <p>내 정보</p>
+          <p>{user.user_id}</p>
+          <p>{user.user_name}</p>
+          <p>{user.user_image}</p>
         </S.Content>}
         {post &&
         <S.Content>
-          내가 쓴 글
+          <p>내가 쓴 글</p>
+          <p>{user.user_write_posts}</p>
         </S.Content>}
         {comment &&
         <S.Content>
-          내가 쓴 댓글
+          <p>내가 쓴 댓글</p>
+          <p>{user.user_write_comments}</p>
         </S.Content>}
         {bookmark &&
         <S.Content>
-          찜
+          <p>찜</p>
+          <p>{user.user_bookmark_posts}</p>
         </S.Content>}
       </S.Container>
     </>

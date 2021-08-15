@@ -4,19 +4,19 @@ import { NavLink } from "react-router-dom";
 const Container = styled.div`
   position: absolute;
   right: 0;
-  top: -5rem;
+  top: -2rem;
   bottom: 0;
   display: flex;
-  padding-top: 4px;
+  height: 120px;
   ${(props)=>{
     if(!props.isPc){
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
-        height: 100px;
+        height: 120px;
         padding-right: 20px;
         transition: 0.3s;
-        transform: ${(props) => props.isNavOpened ? 'translateY(80px)' : 'translateY(-80px)'};
+        transform: ${(props) => props.isNavOpened ? 'translateY(35px)' : 'translateY(-90px)'};
       `;
     }
   }}
@@ -26,12 +26,12 @@ const Container = styled.div`
 const Header = styled.div`
   position: relative;
   background-color: transparent;
-  height: ${(props) => (props.isPc ? '150px' : '55px')};
+  height: ${(props) => (props.isPc ? '100px' : '55px')};
 `;
 
 const Ul = styled.ul`
   display: flex;
-  margin: auto;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 1024px) {

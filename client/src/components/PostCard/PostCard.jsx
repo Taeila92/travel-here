@@ -97,9 +97,6 @@ const PostCard = ({postData}) => {
     dispatch(likeMiddleware(post_id, 'init'));
   }, [isPostModalOpened]);
 
-
-  console.log(post_date)
-
   return (
     <>
       <S.Container onClick={onShowPostModal} id={post_id}>

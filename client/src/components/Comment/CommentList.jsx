@@ -1,8 +1,9 @@
 ﻿import React, { useState, useEffect } from 'react';
 import { dbService } from "firebase.js";
+import firebase from "firebase";
 
 
-const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render }) =>{
+const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render, user }) =>{
   let [edit, setEdit] = useState(false);
 
   const onEnter = (e) => {
@@ -25,8 +26,8 @@ const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render }) 
     onEditFrame(target.previousElementSibling.value, i);
   };
 
-  const onEditFrame = (value, i) => {
-    dbService.collection('comment').doc(i).update({
+  const onEditFrame = async(value, i) => {
+    await dbService.collection('comment').doc(i).update({
       comment_content: value
     });
     onEdit();
@@ -37,10 +38,13 @@ const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render }) 
     setEdit(true);
   };
 
-  const onDeleteList = (e) => {
+  const onDeleteList = async(e) => {
     const target = e.target;
     let i = target.parentElement.className;
-    dbService.collection('comment').doc(i).delete();
+    await dbService.collection('comment').doc(i).delete();
+    await dbService.collection('users').doc(user.email).update({
+      user_write_comments: firebase.firestore.FieldValue.arrayRemove(i),
+    });
     onDelete();
   }
 

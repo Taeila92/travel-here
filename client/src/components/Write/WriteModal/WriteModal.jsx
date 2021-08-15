@@ -41,7 +41,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     const ID = userObj.uid;
 
     // users collection의 user_write_posts에 post_id 추가
-    dbService.collection('users').doc(userObj.email).update({
+    await dbService.collection('users').doc(userObj.email).update({
       user_write_posts: firebase.firestore.FieldValue.arrayUnion(ID),      
     });
 

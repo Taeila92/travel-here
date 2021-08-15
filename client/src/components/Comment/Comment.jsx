@@ -5,9 +5,13 @@ import { dbService } from "firebase.js";
 import { useDispatch, useSelector } from 'react-redux';
 import { commentMiddleware } from 'store/modules/comment';
 import CommentList from './CommentList';
+import firebase from "firebase";
 
 
 const Comment = memo(({profile, postId}) => {
+
+  const auth = firebase.auth();
+
   let time = Date.now().toString();
 
   const textarea = useRef();
@@ -20,6 +24,7 @@ const Comment = memo(({profile, postId}) => {
   let allComment = useSelector(state => state.comment.data);
 
   let [render, setRender] = useState(false);
+  const [user, setUser] = useState('');
 
   // 댓글 추가 시 스크롤 내리기 용도
   let [add, setAdd] = useState('');
@@ -59,14 +64,19 @@ const Comment = memo(({profile, postId}) => {
     if(!textarea.current.value){
       return;
     }
+
     await dbService.collection('comment').doc(time).set({
       post_id: postId,
       profile_img: '아이유.jpg',
       comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,
-      comment_writer: 'phjphj',
     })
+
+    await dbService.collection('users').doc(user.email).update({
+      user_write_comments: firebase.firestore.FieldValue.arrayUnion(time),      
+    });
+
     onNotPost();
     setAdd('add');
     setRender(!render);
@@ -91,6 +101,12 @@ const Comment = memo(({profile, postId}) => {
     dispatch(commentMiddleware(postId));
   },[render]);
 
+  useEffect(()=>{
+    auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  },[]);
+
   return (
     <S.Comment ref={comment}>
       <section>
@@ -112,7 +128,8 @@ const Comment = memo(({profile, postId}) => {
             profile={profile}
             onDelete={onDelete}
             onScroll={onScroll}
-            render={render}/>
+            render={render}
+            user={user}/>
           )
       })}
     </S.Comment>

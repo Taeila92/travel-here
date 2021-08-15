@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
+import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
 
 export default function WriteModal({ visible, isVisible, userObj }) {
@@ -38,6 +39,12 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     }
 
     const ID = userObj.uid;
+
+    // users collection의 user_write_posts에 post_id 추가
+    dbService.collection('users').doc(userObj.email).update({
+      user_write_posts: firebase.firestore.FieldValue.arrayUnion(ID),      
+    });
+
     await dbService.collection('post').doc(ID).set({
       post_title: title,
       post_content: post,

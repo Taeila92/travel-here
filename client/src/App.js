@@ -47,7 +47,6 @@ function App() {
       id.push(user.id);
     });
 
-    console.log(user.password);
     
     // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장 
     const includeId = id.includes(user.email);
@@ -81,7 +80,6 @@ function App() {
     });
   }, []);
 
-  console.log(userObj)
 
   return (
     <S.Background className="App">

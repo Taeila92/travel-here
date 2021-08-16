@@ -10,50 +10,21 @@ import Comment from './comment/Comment';
 import Bookmark from './bookmark/Bookmark';
 
 
+
 const Mypage = (props) => {
 
   const auth = firebase.auth();
 
+  
   const [info, setInfo] = useState(false);
   const [post, setPost] = useState(false);
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
-
+  
   const user = useSelector(state => state.userLike.data);
   const posts = useSelector(state => state.board.data);
   const dispatch = useDispatch();
-  
-  // let posts = []; 
-  // let comments = [];
-  // let bookmarks = [];
 
-  // const onGetPost = async(user) => {
-  //   user.user_write_posts.map(async(post) => {
-  //     let allpost = await dbService.collection('post').doc(post).get();
-  //     return allpost;
-  //   });
-  // };
-
-  const onSetPost = async(user) => {
-    console.log(user);
-    // let allpost = await onGetPost(user);
-    // let test = [];
-    // if(allpost){
-    //   allpost.forEach(elem => {
-    //     test.push(elem);
-    //   });
-    
-    //   console.log(test);
-    // }
-  }
-  // user.user_write_comments.map((comment) => {
-  //   comments = dbService.collection('comment').doc(comment).get();
-  // });
-  // user.user_bookmark_posts.map(async(bookmark) => {
-  //   bookmarks = await dbService.collection('post').doc(bookmark).get();
-  // });
-
-  // console.log(bookmarks);
 
   const onInfo = () => {
     setPost(false);
@@ -83,10 +54,10 @@ const Mypage = (props) => {
     setBookmark(true);
   }
 
+
   useEffect(()=>{
     auth.onAuthStateChanged((user) => {
       dispatch(userMiddleware(user.email, '', 'init'));
-      onSetPost(user);
     });
   },[]);
 
@@ -94,10 +65,6 @@ const Mypage = (props) => {
     <>
       <S.Container>
         <S.Content>
-          {/* <S.Info onClick={onInfo}>내 정보</S.Info>
-          <S.Post onClick={onPost}>내가 쓴 글</S.Post>
-          <S.Comment onClick={onComment}>내가 쓴 댓글</S.Comment>
-          <S.Bookmark onClick={onBookmark}>찜</S.Bookmark> */}
           <li onClick={onInfo}>내 정보</li>
           <li onClick={onPost}>내가 쓴 글</li>
           <li onClick={onComment}>내가 쓴 댓글</li>
@@ -114,24 +81,21 @@ const Mypage = (props) => {
         <S.Content>
           <li>내가 쓴 글</li>
           {user.user_write_posts.map((post) => {
-            // return <li>{post}</li>;
-            return <Post key={post} post={post} user={user} posts={user.user_write_posts}/>
+            return <Post key={post} post={post} user={user}/>
           })}
         </S.Content>}
         {comment &&
         <S.Content>
           <li>내가 쓴 댓글</li>
           {user.user_write_comments.map((com) => {
-            // return <li>{com}</li>;
-            return <Comment key={com} com={com} user={user}/>
+            return <Comment key={com} com={com} user={user} comments={user.user_write_comments}/>
           })}
         </S.Content>}
         {bookmark &&
         <S.Content>
           <li>찜</li>
           {user.user_bookmark_posts.map((bookmark) => {
-            // return <li>{bookmark}</li>;
-            return <Bookmark key={bookmark} bookmark={bookmark} user={user}/>
+            return <Bookmark key={bookmark} bookmarks={user.user_bookmark_posts} />
           })}
         </S.Content>}
       </S.Container>

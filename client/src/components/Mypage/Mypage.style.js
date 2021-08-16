@@ -1,7 +1,6 @@
 ﻿import styled from 'styled-components';
 
 const Container = styled.section`
-  /* background-color: black; */
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -20,20 +19,5 @@ const Content = styled.ul`
   flex-direction: column;
 `;
 
-const Info = styled.div`
 
-`;
-
-const Post = styled.div`
-
-`;
-
-const Comment = styled.div`
-
-`;
-
-const Bookmark = styled.div`
-
-`;
-
-export { Container, Content, Info, Post, Comment, Bookmark };
+export { Container, Content };

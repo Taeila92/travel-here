@@ -7,7 +7,8 @@ import nav from './nav';
 import postLike from './postLike';
 import userLike from './userLike';
 import bookmark from './bookmark';
-import post from './post';
+import mypagePost from './mypagePost';
+import mypageBookmark from './mypageBookmark';
 
 const rootReducer = combineReducers({
   user,
@@ -18,7 +19,8 @@ const rootReducer = combineReducers({
   postLike,
   userLike,
   bookmark,
-  post
+  mypagePost,
+  mypageBookmark
 });
 
 export default rootReducer;

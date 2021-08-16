@@ -1,7 +1,7 @@
 ﻿import React from 'react';
 import * as S from "./Comment.style";
 
-const Comment = ({com, user}) => {
+const Comment = ({com, user, comments}) => {
     return (
         <li>{com}</li>
     )

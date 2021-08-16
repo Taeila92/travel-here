@@ -16,8 +16,6 @@ const Bookmark = ({bookmarks}) => {
     }
   },[]);
 
-  console.log(bookmarkDB);
-
   return (
     <>
       {bookmarkDB.map((bm) => {

@@ -23,7 +23,6 @@ export const mypageCommentMiddleware = (id) => async dispatch => {
       arr.push(doc.data());
     })
     let array = Object.assign([], arr);
-    console.log('bookmark', array);
     dispatch(getComment(array));
   }catch(error){
     console.log(error);

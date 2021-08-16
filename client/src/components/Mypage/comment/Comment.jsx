@@ -3,10 +3,11 @@ import * as S from "./Comment.style";
 import { useDispatch, useSelector } from 'react-redux';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 
-const Comment = ({com, user, comments}) => {
+const Comment = ({comments}) => {
 
   const commentDB = useSelector(state => state.mypageComment.data);
   const dispatch = useDispatch();
+
 
   useEffect(()=>{
     for(let i=0; i<comments.length; i++){
@@ -14,7 +15,6 @@ const Comment = ({com, user, comments}) => {
     }
   },[]);
 
-  console.log(commentDB);
 
   return(
     <>

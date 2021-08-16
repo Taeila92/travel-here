@@ -43,13 +43,11 @@ export const mypageBookmarkMiddleware = (id) => async dispatch => {
       arr.push(doc.data());
     })
     let array = Object.assign([], arr);
-    console.log('bookmark', array);
     dispatch(getBookmark(array));
   }catch(error){
     console.log(error);
   }
 }
-arr = [];
 
 export default reducer;
 

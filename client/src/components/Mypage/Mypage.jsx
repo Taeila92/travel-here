@@ -80,23 +80,17 @@ const Mypage = (props) => {
         {post &&
         <S.Content>
           <li>내가 쓴 글</li>
-          {user.user_write_posts.map((post) => {
-            return <Post key={post} post={post} user={user}/>
-          })}
+          <Post post={post} user={user}/>
         </S.Content>}
         {comment &&
         <S.Content>
           <li>내가 쓴 댓글</li>
-          {user.user_write_comments.map((com) => {
-            return <Comment key={com} com={com} user={user} comments={user.user_write_comments}/>
-          })}
+          <Comment comments={user.user_write_comments}/>
         </S.Content>}
         {bookmark &&
         <S.Content>
           <li>찜</li>
-          {user.user_bookmark_posts.map((bookmark) => {
-            return <Bookmark key={bookmark} bookmarks={user.user_bookmark_posts} />
-          })}
+          <Bookmark bookmarks={user.user_bookmark_posts} />
         </S.Content>}
       </S.Container>
     </>

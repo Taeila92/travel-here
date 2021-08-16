@@ -14,8 +14,7 @@ const Post = ({user}) => {
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.user_id));
   },[])
-  
-  console.log(postDB);
+
 
   return (
     <>

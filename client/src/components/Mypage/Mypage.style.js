@@ -12,7 +12,7 @@ const Container = styled.section`
 const Content = styled.ul`
   background-color: white;
   width: 30rem;
-  height: 40rem;
+  height: 30rem;
   margin: 0 1rem;
   border-radius: 10px;
   display: flex;

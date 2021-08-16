@@ -16,7 +16,6 @@ export const getPost = (payload) => {
 // Reducer
 const initialState = {
   data: [],
-  loading: false,
 };
 
 const reducer = (prevState = initialState, action) => {
@@ -39,7 +38,6 @@ export const mypagePostMiddleware = (email) => async dispatch => {
     response.forEach(doc => {
       arr.push(doc.data());
     })
-    console.log(arr);
     dispatch(getPost(arr));
   }catch(error){
     console.log(error);

@@ -21,6 +21,8 @@ import { dbService } from 'firebase.js';
 import WriteModal from 'components/Write/WriteModal/WriteModal';
 
 function App() {
+  const auth = firebase.auth();
+  const [init, setInit] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
@@ -62,7 +64,7 @@ function App() {
 
   // firebase가 onAuthStateChanged을 통해 프로그램을 초기화 하면(로그인이나 계정생성 등의 변화) isLoggedIn을 바꾼다
   useEffect(() => {
-    authService.onAuthStateChanged((user) => {
+    auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggedIn(true);
         setUserObj(user);
@@ -71,6 +73,7 @@ function App() {
       } else {
         setIsLoggedIn(false);
       }
+      setInit(true); //setInit이 false라면 router를 숨겨서 true로 함
     });
   }, []);
 
@@ -80,15 +83,39 @@ function App() {
     <S.Background className="App">
       <GlobalStyle />
       <BrowserRouter>
-        <Header setActive={setActive} active={active} isLoggedIn={isLoggedIn} />
+        {/* 사용자가 로그인 되었을 때*/}
+        {isLoggedIn ? (
+          <Header
+            setActive={setActive}
+            active={active}
+            isLoggedIn={isLoggedIn}
+          />
+        ) : (
+          <Header
+            setActive={setActive}
+            active={active}
+            isLoggedIn={isLoggedIn}
+          />
+        )}
         <S.Content>
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route exact path="/categorylist" component={CategoryList} />
-            <Route path="/categorylist/:religion" component={Board} />
-            <Route component={NotFound} />
-          </Switch>
+          {init ? (
+            // 로그인 전
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/login" component={Login} />
+              <Route exact path="/categorylist" component={CategoryList} />
+              <Route path="/categorylist/:religion" component={Board} />
+              <Route component={NotFound} />
+            </Switch>
+          ) : (
+            // 로그인 후
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route exact path="/categorylist" component={CategoryList} />
+              <Route path="/categorylist/:religion" component={Board} />
+              <Route component={NotFound} />
+            </Switch>
+          )}
         </S.Content>
       </BrowserRouter>
       {isLoggedIn && (

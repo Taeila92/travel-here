@@ -37,20 +37,19 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       }
     }
 
-    const postObj = {
+    const ID = userObj.uid;
+    await dbService.collection('post').doc(ID).set({
       post_title: title,
       post_content: post,
       post_writer: userObj.displayName,
       post_date: Date.now(),
-      post_id: userObj.uid,
+      post_id: ID,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,
       post_religion: religion,
       post_view: 0,
       post_like: 0,
-    };
-    console.log(postObj);
-    await dbService.collection("post").add(postObj);
+    });
     setPost("");
     setTitle("");
     setReligion("");

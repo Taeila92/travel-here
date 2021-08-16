@@ -11,13 +11,12 @@ const PostSlider = ({postImages}) => {
   const [sliderReady, setSliderReady] = useState(false)
 
   useEffect(()=>{
-    const storageRef = storageService.ref(); 
-    // 현재 post가 가지고 있는 것들을 url로 받아옴 -> 나중에 post올릴 때, url로 저장하면 바꿔주면 됨
+    // 현재 post가 가지고 있는 것들을 url로 받아옴
     const imageURLCheck = async () => {
       const result = []
-      for(let image of postImages){
-        let imageLocation = storageRef.child(`post/${image}`)
-        let url = await imageLocation.getDownloadURL()
+      for(let imageURL of postImages){
+        let imageRef = storageService.refFromURL(imageURL)
+        let url = await imageRef.getDownloadURL()
         result.push(url)
       }
       return result;

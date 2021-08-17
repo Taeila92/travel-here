@@ -98,7 +98,7 @@ const PostCard = ({postData}) => {
   }, [isPostModalOpened]);
 
 
-  console.log(post_date)
+  //console.log(post_date)
 
   return (
     <>

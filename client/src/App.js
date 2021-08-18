@@ -27,7 +27,6 @@ function App() {
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
   const [userObj, setUserObj] = useState(null);
-
   const isVisible = () => {
     setVisible(!visible);
     console.log(visible);
@@ -76,8 +75,6 @@ function App() {
       setInit(true); //setInit이 false라면 router를 숨겨서 true로 함
     });
   }, []);
-
-  console.log(userObj);
 
   return (
     <S.Background className="App">

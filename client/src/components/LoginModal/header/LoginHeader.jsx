@@ -16,7 +16,6 @@ function LoginHeader(props) {
     passwordError,
     handleLogout,
   } = props;
-
   return (
     <>
       {user ? (

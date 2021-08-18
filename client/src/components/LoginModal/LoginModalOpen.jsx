@@ -26,7 +26,7 @@ function LoginModalOpen() {
   };
 
   // 로그인
-  const handleLogin = () => {
+  const handleLogin = async () => {
     clearErrors();
     firebaseService
       .auth()
@@ -46,7 +46,7 @@ function LoginModalOpen() {
   };
 
   // 회원가입
-  const handleSignUP = () => {
+  const handleSignUP = async () => {
     clearErrors();
     firebaseService
       .auth()

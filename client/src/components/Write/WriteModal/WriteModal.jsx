@@ -1,23 +1,22 @@
-import { useRef, useState } from "react";
-import * as S from "./WriteModal.style";
-import { dbService, storageService } from "firebase.js";
-import { v4 as uuidv4 } from "uuid";
+import { useRef, useState } from 'react';
+import * as S from './WriteModal.style';
+import { dbService, storageService } from 'firebase.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function WriteModal({ visible, isVisible, userObj }) {
-  const [post, setPost] = useState("");
-  const [title, setTitle] = useState("");
-  const [religion, setReligion] = useState("");
+  const [post, setPost] = useState('');
+  const [title, setTitle] = useState('');
+  const [religion, setReligion] = useState('');
   const [attachment, setAttachment] = useState([]);
-
   const postRef = useRef();
   const titleRef = useRef();
   const onChange = (e) => {
     const { value, name } = e.target;
-    if (name === "textarea") {
+    if (name === 'textarea') {
       setPost(value);
-    } else if (name === "religion") {
+    } else if (name === 'religion') {
       setReligion(value);
-    } else if (name === "title") {
+    } else if (name === 'title') {
       setTitle(value);
     }
   };
@@ -31,7 +30,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
           .child(`${userObj.uid}/${uuidv4()}`);
         const response = await attachmentRef.putString(
           attachment[i],
-          "data_url"
+          'data_url'
         );
         attachmentUrl.push(await response.ref.getDownloadURL());
       }
@@ -50,9 +49,9 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_view: 0,
       post_like: 0,
     });
-    setPost("");
-    setTitle("");
-    setReligion("");
+    setPost('');
+    setTitle('');
+    setReligion('');
     setAttachment([]);
   };
 

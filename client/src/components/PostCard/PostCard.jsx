@@ -40,8 +40,7 @@ const PostCard = ({postData}) => {
   const [profileImage, setProfileImage] = useState();
 
   const fetchProfileImage = async (profileImageName) => {
-    const storageRef = storageService.ref();
-    await storageRef.child(`post/${profileImageName}`).getDownloadURL().then((value)=>{
+    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
       setProfileImage(value)
     })
     /*

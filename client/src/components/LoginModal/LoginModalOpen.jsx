@@ -60,8 +60,10 @@ function LoginModalOpen() {
           case 'auth/weak-password':
             setPasswordError(err.message);
             break;
+          default :
+            return;
         }
-      });
+      })
   };
 
   // 로그아웃

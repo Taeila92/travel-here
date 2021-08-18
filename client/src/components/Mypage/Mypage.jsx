@@ -85,12 +85,12 @@ const Mypage = (props) => {
         {comment &&
         <S.Content>
           <li>내가 쓴 댓글</li>
-          <Comment comments={user.user_write_comments}/>
+          <Comment comments={user.user_write_comments} user={user}/>
         </S.Content>}
         {bookmark &&
         <S.Content>
           <li>찜</li>
-          <Bookmark bookmarks={user.user_bookmark_posts} />
+          <Bookmark bookmarks={user.user_bookmark_posts} user={user}/>
         </S.Content>}
       </S.Container>
     </>

@@ -8,7 +8,7 @@ import CommentList from './CommentList';
 import firebase from "firebase";
 
 
-const Comment = memo(({profile, postId}) => {
+const Comment = memo(({profile, postId, postReligion}) => {
 
   const auth = firebase.auth();
 
@@ -68,6 +68,7 @@ const Comment = memo(({profile, postId}) => {
     await dbService.collection('comment').doc(time).set({
       post_id: postId,
       profile_img: '아이유.jpg',
+      post_religion: postReligion,
       comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,

@@ -2,12 +2,28 @@
 import * as S from "./Comment.style";
 import { useDispatch, useSelector } from 'react-redux';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
+import { useHistory } from 'react-router-dom';
 
-const Comment = ({comments}) => {
+
+const Comment = ({ comments, user }) => {
 
   const commentDB = useSelector(state => state.mypageComment.data);
   const dispatch = useDispatch();
 
+  const history = useHistory();
+
+  const onMovePage =(post) => {
+    history.push({
+      pathname: `/categorylist/${post.post_religion}`,
+      search: `?id=${post.post_id}`,
+      state: {
+        like: user.user_like_posts,
+        bookmark: user.user_bookmark_posts,
+        postData: post,
+        profile: user.user_image,
+      }
+    });
+  }
 
   useEffect(()=>{
     for(let i=0; i<comments.length; i++){
@@ -20,9 +36,9 @@ const Comment = ({comments}) => {
     <>
       {commentDB.map((com) => {
         return(
-        <li key={com.comment_id}>
+        <S.List key={com.comment_id} onClick={()=>{onMovePage(com)}}>
           <h1>{com.comment_content}</h1>
-        </li>
+        </S.List>
         )
       })}
     </>

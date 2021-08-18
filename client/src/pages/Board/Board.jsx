@@ -18,7 +18,6 @@ const Board = ({ match, location }) => {
   // categorylist에서 religion에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(()=>{
     dispatch(fetchPostList(match.params.religion));
-    console.log(location);
   },[dispatch, match.params.religion])
 
   if (loading) return <div>로딩중</div>

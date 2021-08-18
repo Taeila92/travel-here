@@ -102,7 +102,6 @@ const PostCard = ({postData, location}) => {
       observer.observe(lazyTarget.current)
     } 
 
-    console.log(query.id);
 
     return () => observer && observer.disconnect();
   },[]);

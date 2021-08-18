@@ -2,6 +2,7 @@
 import * as S from "./Post.style";
 import { useDispatch, useSelector } from 'react-redux';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
+import { useHistory } from 'react-router-dom';
 
 
 
@@ -9,6 +10,21 @@ const Post = ({user}) => {
 
   const postDB = useSelector(state => state.mypagePost.data);
   const dispatch = useDispatch();
+
+  const history = useHistory();
+
+  const onMovePage =(post) => {
+    history.push({
+      pathname: `/categorylist/${post.post_religion}`,
+      search: `?id=${post.post_id}`,
+      state: {
+        like: user.user_like_posts,
+        bookmark: user.user_bookmark_posts,
+        postData: post,
+        profile: user.user_image,
+      }
+    });
+  }
   
 
   useEffect(()=>{
@@ -20,10 +36,10 @@ const Post = ({user}) => {
     <>
       {postDB.map((post) => {
         return(
-        <li key={post.post_id}>
+        <S.List key={post.post_id} onClick={() => onMovePage(post)}>
           <h1>{post.post_title}</h1>
           <h2>{post.post_content}</h2>
-        </li>
+        </S.List>
         )
       })}
     </>

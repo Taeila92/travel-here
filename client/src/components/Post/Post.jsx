@@ -3,26 +3,37 @@ import * as S from "./Post.style";
 import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory, useLocation } from "react-router-dom";
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import firebase from "firebase";
 
 
-const Post = ({postData, profile, setIsPostModalOpened, like, bookmark}) => {
+const Post = ({postData, profile, setIsPostModalOpened, like, bookmark }) => {
   const { post_religion, post_title, post_content, post_photo, post_id, post_writer } = postData;
+
+  const location = useLocation();
 
   const auth = firebase.auth();
 
   const dispatch = useDispatch();
 
+  let history = useHistory();
+
   // 좋아요 숫자 받아오기
   let { likeNum } = useSelector(state => state.postLike);
 
   // 내가 해당 게시글에 좋아요을 했나 안 했나 표시
-  let [likePost, setLikePost] = useState(like.includes(post_id));
+  // let [likePost, setLikePost] = useState(like.includes(post_id));
+  let [likePost, setLikePost] = useState(location.state.like.includes(post_id));
+  // let [likePost, setLikePost] = useState(false);
   // 내가 해당 게시글에 찜을 했나 안 했나 표시
-  let [bookmarkPost, setBookmarkPost] = useState(bookmark.includes(post_id));
+  // let [bookmarkPost, setBookmarkPost] = useState(bookmark.includes(post_id));
+  let [bookmarkPost, setBookmarkPost] = useState(location.state.bookmark.includes(post_id));
+  // let [bookmarkPost, setBookmarkPost] = useState(false);
+  console.log(location.state);
+  console.log(location.state.like.includes(post_id), location.state.bookmark.includes(post_id));
   
   const comment = useRef();
 
@@ -56,7 +67,10 @@ const Post = ({postData, profile, setIsPostModalOpened, like, bookmark}) => {
   
   // 모달창 닫기
   const onHideModal = () => {
-    setIsPostModalOpened(false);
+    // setIsPostModalOpened(false);
+    history.push({
+      search: '',
+    });
   };  
 
   // useEffect(() => {

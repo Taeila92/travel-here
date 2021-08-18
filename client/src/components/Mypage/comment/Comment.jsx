@@ -20,7 +20,7 @@ const Comment = ({comments}) => {
     <>
       {commentDB.map((com) => {
         return(
-        <li>
+        <li key={com.comment_id}>
           <h1>{com.comment_content}</h1>
         </li>
         )

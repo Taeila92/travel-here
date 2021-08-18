@@ -7,7 +7,7 @@ import Header from "components/Header/Header";
 import * as S from "styles/Background";
 
 // router
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
 import CategoryList from "pages/CategoryList";
 import Board from "pages/Board/Board";
 import Home from "pages/Home";
@@ -100,6 +100,7 @@ function App() {
           />
         )}
         <S.Content>
+        <Link to="/categorylist/:religion" /> 
           <Switch>
             <Route exact path="/" component={Home} />
             {init && <Route path="/login" component={Login} />}

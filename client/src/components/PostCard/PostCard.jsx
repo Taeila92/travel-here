@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
@@ -7,9 +8,13 @@ import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
+import qs from 'qs';
 import getDate from 'utils/getDate';
 
-const PostCard = ({postData}) => {
+
+
+const PostCard = ({postData, location}) => {
+
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
@@ -28,6 +33,15 @@ const PostCard = ({postData}) => {
   // representative image 지정 후 가져오기
   const repImageName = useRef(`${postData.post_photo[0]}`)
   const [repImage, setRepImage] = useState(); 
+
+
+  let history = useHistory();
+
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true
+  });
+
+  const qsID = query.id === post_id;
 
   const fetchRepImage = async (repImageName) => {
     await storageService.refFromURL(repImageName).getDownloadURL().then((value)=>{
@@ -54,7 +68,15 @@ const PostCard = ({postData}) => {
   
   // 모달 띄우기
   const onShowPostModal = () => {
-    setIsPostModalOpened(true);
+    history.push({
+      search: `?id=${post_id}`,
+      state: {
+        like: likePost.user_like_posts,
+        bookmark: bookmark.user_bookmark_posts,
+        postData,
+        profile: profileImage
+      }
+    });
   };
 
   // Lazy Loading
@@ -79,6 +101,8 @@ const PostCard = ({postData}) => {
       
       observer.observe(lazyTarget.current)
     } 
+
+    console.log(query.id);
 
     return () => observer && observer.disconnect();
   },[]);
@@ -115,7 +139,8 @@ const PostCard = ({postData}) => {
         </S.Content>
       </S.Container>
       {/* {(isPostModalOpened && likePost) && <Post */}
-      {isPostModalOpened && <Post
+      {/* {isPostModalOpened && <Post */}
+      {qsID && <Post
         profile={profileImage}
         postData={postData}
         setIsPostModalOpened={setIsPostModalOpened}

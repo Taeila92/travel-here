@@ -5,7 +5,7 @@ import { fetchPostList } from 'store/modules/board';
 import * as S from './Board.style'
 
 
-const Board = ({ match }) => {
+const Board = ({ match, location }) => {
 
   // redux에서 데이터 fetch한 결과(성공하면 data에 배열로 담김)
   const {postList, error, loading} = useSelector(state => ({
@@ -18,6 +18,7 @@ const Board = ({ match }) => {
   // categorylist에서 religion에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(()=>{
     dispatch(fetchPostList(match.params.religion));
+    console.log(location);
   },[dispatch, match.params.religion])
 
   if (loading) return <div>로딩중</div>
@@ -28,7 +29,7 @@ const Board = ({ match }) => {
     <S.Container>
       { 
         postList.map((post)=>{
-          return <PostCard key={post.post_id} postData={post}/>
+          return <PostCard key={post.post_id} postData={post} location={location}/>
         })
       }
     </S.Container>

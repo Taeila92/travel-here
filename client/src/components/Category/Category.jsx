@@ -6,8 +6,6 @@ import { getCategoryThunk } from "../../store/modules/category";
 const Category = () => {
   const category = useSelector((state) => state.category.data);
 
-
-
   const dispatch = useDispatch();
 
   const getCategory = useCallback(() => {

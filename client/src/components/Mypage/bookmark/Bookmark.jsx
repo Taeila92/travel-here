@@ -20,7 +20,7 @@ const Bookmark = ({bookmarks}) => {
     <>
       {bookmarkDB.map((bm) => {
         return (
-          <li>
+          <li key={bm.post_id}>
             <h1>{bm.post_title}</h1>
             <h2>{bm.post_content}</h2>
           </li>

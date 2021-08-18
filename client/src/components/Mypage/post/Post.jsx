@@ -20,7 +20,7 @@ const Post = ({user}) => {
     <>
       {postDB.map((post) => {
         return(
-        <li>
+        <li key={post.post_id}>
           <h1>{post.post_title}</h1>
           <h2>{post.post_content}</h2>
         </li>

@@ -19,6 +19,8 @@ const Post = ({postData, profile, setIsPostModalOpened, like, bookmark }) => {
 
   const dispatch = useDispatch();
 
+  const [bar, setBar] = useState(false);
+
   let history = useHistory();
 
   // 좋아요 숫자 받아오기
@@ -67,6 +69,10 @@ const Post = ({postData, profile, setIsPostModalOpened, like, bookmark }) => {
       }
     });
   };
+
+  const onEditDelete = () => {
+    setBar(!bar);
+  }
   
   // 모달창 닫기
   const onHideModal = () => {
@@ -89,9 +95,16 @@ const Post = ({postData, profile, setIsPostModalOpened, like, bookmark }) => {
               <span>영국</span>
               <p>#{post_religion}</p>
             </span>
-            <i onClick={onHideModal} className="fas fa-times"></i>
+            <div>
+              <i onClick={onEditDelete} className="fas fa-ellipsis-v"></i>
+              <i onClick={onHideModal} className="fas fa-times-circle"></i>
+              {bar && <div>
+                <p>수정</p>
+                <p>삭제</p>
+              </div>}
+            </div>
           </S.Header>
-          <PostSlider postImages={post_photo}/>
+          {post_photo && <PostSlider postImages={post_photo}/>}
           <S.Profile>
             <img src={profile} alt="프로필 이미지입니다"></img>
             <p>{post_writer}</p> {/* post_writer로 검색?*/}

@@ -72,6 +72,7 @@ const Comment = memo(({profile, postId, postReligion}) => {
       comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,
+      user_email: user.email,
     })
 
     await dbService.collection('users').doc(user.email).update({

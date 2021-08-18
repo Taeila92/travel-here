@@ -5,6 +5,7 @@ import firebase from "firebase";
 
 const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render, user }) =>{
   let [edit, setEdit] = useState(false);
+  let userCheck = com.user_email === user.email;
 
   const onEnter = (e) => {
     if(e.key != 'Enter' | e.key === 'Enter' && e.shiftKey){
@@ -64,10 +65,12 @@ const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render, us
       {edit ?
       (<input placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
       (<p>{com.comment_content}</p>)}
-      {edit ?
-      (<i className="fas fa-check" onClick={e=>onDoneEdit(e)}></i>) :
-      (<i className="fas fa-edit" onClick={onStartEdit}></i>)}
-      <i className="fas fa-times" onClick={e=>onDeleteList(e)}></i>
+      {userCheck &&
+        (edit ?
+        (<i className="fas fa-check" onClick={e=>onDoneEdit(e)}></i>) :
+        (<i className="fas fa-edit" onClick={onStartEdit}></i>))
+      }
+      {userCheck && <i className="fas fa-times" onClick={e=>onDeleteList(e)}></i>}
     </div>
   )
 }

@@ -16,14 +16,14 @@ const Container = styled.section`
 
 const Contents = styled.div`
   width: 30rem;
-  height: 45rem;
   background-color: white;
   border-radius: 10px;
+  padding: 3rem 0;
   ${flex};
   ul {
     width: 27rem;
-    height: 40rem;
-    overflow-x: hidden;
+    max-height: 40rem;
+    overflow-y: scroll;
     ${flex}
     align-items: flex-start;
     justify-content: flex-start;
@@ -41,7 +41,7 @@ const Header = styled.li`
   position: sticky;
   top: 0;
   left: 0;
-  padding-bottom: 1.0rem;
+  padding-bottom: 1rem;
   z-index: 11;
   span {
     ${flex};
@@ -60,29 +60,43 @@ const Header = styled.li`
       border-radius: 20px;
       margin-left: 0.5rem;
     }
+    i {
+      margin-left: 1rem;
+      ${cursorPointer};
+    }
   }
-  i {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    ${cursorPointer};
+  div{
+    i {
+      outline: none;
+      border: none;
+      background-color: transparent;
+      margin-left: 1rem;
+      ${cursorPointer};
+    }
+    div {
+      position: absolute;
+    }
+    /* i:nth-child(2){
+      position: absolute;
+      transform: translate(-0.75rem, -2rem);
+    } */
   }
 `;
 
-const Images = styled.li`
-  height: 20rem;
-  margin: 0.5rem 0 1.5rem 0;
-  ${flex};
-  flex-direction: row;
-  img {
-    width: 20rem;
-    height: 20rem;
-    object-fit: cover;
-    background-color: black;
-    margin: 0 0.2rem;
-    transform: translateX(3.3rem);
-  }
-`;
+// const Images = styled.li`
+//   height: 20rem;
+//   margin: 0.5rem 0 1.5rem 0;
+//   ${flex};
+//   flex-direction: row;
+//   img {
+//     width: 20rem;
+//     height: 20rem;
+//     object-fit: cover;
+//     background-color: black;
+//     margin: 0 0.2rem;
+//     transform: translateX(3.3rem);
+//   }
+// `;
 
 
 const Profile = styled.li`
@@ -153,7 +167,7 @@ export {
   Container,
   Contents,
   Header,
-  Images, 
+  // Images, 
   Profile,
   Title, 
   Content,

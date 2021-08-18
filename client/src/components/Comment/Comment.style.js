@@ -36,7 +36,7 @@ const Comment = styled.li`
   div {
     ${flex};
     ${marginTop};
-    justify-content: space-between;
+    justify-content: flex-start;
     flex-direction: row;
     white-space: pre;
     img {
@@ -54,7 +54,7 @@ const Comment = styled.li`
       font-size: 0.9rem;
       line-height: 1.5;
       white-space: pre-line;
-      margin-left: 0.5rem;
+      margin: 0 0.5rem;
     }
     input {
       border: 1px solid black;
@@ -64,6 +64,8 @@ const Comment = styled.li`
       color: darkgray;
     }
     i {
+      width: 5%;
+      text-align: end;
       font-size: 1rem;
       margin-left: 0.5rem;
       ${cursorPointer};

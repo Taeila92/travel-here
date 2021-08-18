@@ -40,8 +40,7 @@ const PostCard = ({postData}) => {
   const [profileImage, setProfileImage] = useState();
 
   const fetchProfileImage = async (profileImageName) => {
-    const storageRef = storageService.ref();
-    await storageRef.child(`post/${profileImageName}`).getDownloadURL().then((value)=>{
+    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
       setProfileImage(value)
     })
     /*
@@ -97,9 +96,6 @@ const PostCard = ({postData}) => {
     dispatch(likeMiddleware(post_id, 'init'));
   }, [isPostModalOpened]);
 
-
-  //console.log(post_date)
-
   return (
     <>
       <S.Container onClick={onShowPostModal} id={post_id}>
@@ -114,7 +110,7 @@ const PostCard = ({postData}) => {
           <h2>{post_title}</h2>
           {isView ? <img  src={repImage} alt="여행 사진"/> : <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage> }
           {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
-          {/* <div>{getDate(post_date)}</div> */}
+          <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
       {/* {(isPostModalOpened && likePost) && <Post */}

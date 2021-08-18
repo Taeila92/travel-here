@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import firebase from "firebase";
+import { loginUserInfo, logoutUserInfo } from "store/modules/user";
 import { dbService } from "firebase.js";
 
 const useAuth = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(null);
-  const [user, setUser] = useState();
+  const { isLoggedIn, userInfo } = useSelector((state) => ({
+    isLoggedIn: state.user.isLoggedIn,
+    userInfo: state.user.userInfo,
+  }));
+  const dispatch = useDispatch();
+  //console.log(isLoggedIn, userInfo);
 
   const login = (providerName) => {
     const authProvider = new firebase.auth[`${providerName}AuthProvider`]();
     return firebase.auth().signInWithPopup(authProvider);
   };
 
-  const signout = () => {
+  const logout = () => {
     firebase
       .auth()
       .signOut()
       .then(() => {
-        setIsLoggedIn(false);
+        dispatch(logoutUserInfo());
       });
+  };
+
+  const onAuthChange = (onUserChanged) => {
+    firebase.auth().onAuthStateChanged((user) => {
+      onUserChanged(user);
+    });
   };
 
   useEffect(() => {
@@ -28,7 +40,7 @@ const useAuth = () => {
         // 유저 정보가 db에 저장되어 있다면
         if (userDB.exists) {
           userDB.get().then((value) => {
-            setUser(value.data());
+            dispatch(loginUserInfo(value.data));
           });
           // 아니면 새로 저장해야
         } else {
@@ -44,18 +56,16 @@ const useAuth = () => {
             user_write_posts: [],
           };
           userDB.set(value);
-          setUser(value);
+          dispatch(loginUserInfo(value));
         }
-        setIsLoggedIn(true);
         // 로그인한 유저가 없다면
       } else {
-        setIsLoggedIn(false);
-        setUser({});
+        dispatch(logoutUserInfo());
       }
     });
   }, []);
 
-  return [isLoggedIn, user];
+  return [isLoggedIn, userInfo, login, logout, onAuthChange];
 };
 
 export default useAuth;

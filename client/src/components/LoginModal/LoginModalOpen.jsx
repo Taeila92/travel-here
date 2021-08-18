@@ -41,6 +41,8 @@ function LoginModalOpen() {
           case 'auth/wrong-password':
             setPasswordError(err.message);
             break;
+          default :
+            return;
         }
       });
   };

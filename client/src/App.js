@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // style
 import GlobalStyle from "styles/GlobalStyle";
@@ -23,8 +23,7 @@ function App() {
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
 
-  const [isLoggedIn, user] = useAuth();
-  console.log(isLoggedIn, user);
+  const [isLoggedIn, userInfo] = useAuth();
 
   const isVisible = () => {
     setVisible(!visible);
@@ -73,7 +72,11 @@ function App() {
       {isLoggedIn && (
         <>
           <WriteBtn isVisible={isVisible} />
-          <WriteModal visible={visible} isVisible={isVisible} userObj={user} />
+          <WriteModal
+            visible={visible}
+            isVisible={isVisible}
+            userObj={userInfo}
+          />
         </>
       )}
     </Background>

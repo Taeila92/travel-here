@@ -5,6 +5,7 @@ import * as S from './LoginFooter.style';
 function LoginFooter({ authService }) {
   const history = useHistory();
 
+
   // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({

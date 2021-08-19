@@ -10,6 +10,8 @@ const Comment = ({ user }) => {
 
   const history = useHistory();
 
+  const check = commentDB.length === 0;
+
   const onMovePage =(post) => {
     history.push({
       pathname: `/categorylist/${post.post_region}`,
@@ -26,13 +28,16 @@ const Comment = ({ user }) => {
 
   return(
     <>
-      {commentDB.map((com) => {
+      {!check && commentDB.map((com) => {
         return(
         <S.List key={com.comment_id} onClick={()=>{onMovePage(com)}}>
           <h1>{com.comment_content}</h1>
         </S.List>
         )
       })}
+      {check &&
+        <h1>daksldfads</h1>
+      }
     </>
   )
 }

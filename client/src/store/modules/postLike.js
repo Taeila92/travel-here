@@ -48,6 +48,9 @@ const reducer = (prevState = initialState, action) => {
         });
         break;
       case LIKE_NONLIKE:
+        if(draft.likeNum === 0){
+          return;
+        }
         draft.likeNum = action.payload.num-1;
         dbService.collection('post').doc(action.payload.id).update({
           post_like: draft.likeNum,

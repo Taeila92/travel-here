@@ -53,7 +53,7 @@ function App() {
     if(!includeId){
       dbService.collection('users').doc(user.email).set({
         user_id: user.email,
-        user_image: '아이유.jpg',
+        user_image: user.photoURL,
         user_name: user.displayName,
         user_like_comments: [],
         user_like_posts: [],

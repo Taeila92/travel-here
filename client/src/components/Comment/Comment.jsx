@@ -8,7 +8,7 @@ import CommentList from './CommentList';
 import firebase from "firebase";
 
 
-const Comment = memo(({profile, postId, postregion}) => {
+const Comment = memo(({ postId, postregion, userDB}) => {
 
   const auth = firebase.auth();
 
@@ -67,13 +67,14 @@ const Comment = memo(({profile, postId, postregion}) => {
 
     await dbService.collection('comment').doc(time).set({
       post_id: postId,
-      profile_img: '아이유.jpg',
       post_region: postregion,
       comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,
       user_email: user.email,
+      user_image: userDB.user_image,
     })
+
 
     await dbService.collection('users').doc(user.email).update({
       user_write_comments: firebase.firestore.FieldValue.arrayUnion(time),      
@@ -127,7 +128,6 @@ const Comment = memo(({profile, postId, postregion}) => {
             com={com}
             add={add}
             onEdit={onEdit}
-            profile={profile}
             onDelete={onDelete}
             onScroll={onScroll}
             render={render}

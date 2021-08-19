@@ -6,15 +6,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
+import { commentMiddleware } from 'store/modules/comment';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import firebase from "firebase";
 import { dbService } from "firebase.js";
 
 
-const Post = ({postData, profile, setIsPostOpened, setLikeRender }) => {
+const Post = ({postData, setIsPostOpened, setLikeRender }) => {
   const { post_region, post_title, post_content, post_photo, post_id, post_writer, post_user_email, post_profile_img } = postData;
 
   const location = useLocation();
+
+  const userDB = useSelector(state => state.userLike.data);
 
   const auth = firebase.auth();
 
@@ -105,10 +108,12 @@ const Post = ({postData, profile, setIsPostOpened, setLikeRender }) => {
   useEffect(() =>{
     auth.onAuthStateChanged((user) => {
       setUser(user);
+      dispatch(userMiddleware(user.email, '', 'init'));
     });
-    console.log(user);
     dispatch(likeMiddleware(post_id, 'init'));
   }, []);
+
+
 
   return (
     <S.Container>
@@ -149,7 +154,7 @@ const Post = ({postData, profile, setIsPostOpened, setLikeRender }) => {
             <i onClick={onBookmarkToggle} className="fas fa-bookmark"></i> :
             <i onClick={onBookmarkToggle} className="far fa-bookmark"></i>}
           </S.Like>
-          <Comment profile={post_profile_img} postId={post_id} postregion={post_region}/>
+          <Comment postId={post_id} postregion={post_region} userDB={userDB}/>
         </ul>
       </S.Contents>
     </S.Container>

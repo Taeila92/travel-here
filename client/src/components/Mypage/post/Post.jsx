@@ -10,6 +10,8 @@ const Post = ({user}) => {
 
   const history = useHistory();
 
+  const check = postDB.length === 0;
+
   const onMovePage =(post) => {
     history.push({
       pathname: `/categorylist/${post.post_region}`,
@@ -26,7 +28,7 @@ const Post = ({user}) => {
 
   return (
     <>
-      {postDB.map((post) => {
+      {!check && postDB.map((post) => {
         return(
         <S.List key={post.post_id} onClick={() => onMovePage(post)}>
           <h1>{post.post_title}</h1>
@@ -34,6 +36,9 @@ const Post = ({user}) => {
         </S.List>
         )
       })}
+      {check &&
+        <h1>daksldfads</h1>
+      }
     </>
   )
 }

@@ -3,7 +3,7 @@ import { dbService } from "firebase.js";
 import firebase from "firebase";
 
 
-const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render, user }) =>{
+const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   let [edit, setEdit] = useState(false);
   let userCheck = com.user_email === user.email;
 
@@ -61,7 +61,7 @@ const CommentList = ({ com, add, onEdit, onDelete, profile, onScroll, render, us
 
   return (
     <div className={com.comment_id} key={com.comment_id}>
-      <img src={profile} alt="프로필 이미지입니다"></img>
+      <img src={com.user_image} alt="프로필 이미지입니다"></img>
       {edit ?
       (<input placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
       (<p>{com.comment_content}</p>)}

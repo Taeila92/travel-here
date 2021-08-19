@@ -10,6 +10,8 @@ const Bookmark = ({ user }) => {
 
   const history = useHistory();
 
+  const check = bookmarkDB.length === 0;
+
   const onMovePage =(post) => {
     history.push({
       pathname: `/categorylist/${post.post_region}`,
@@ -26,7 +28,7 @@ const Bookmark = ({ user }) => {
 
   return (
     <>
-      {bookmarkDB.map((bm) => {
+      {!check && bookmarkDB.map((bm) => {
         return (
           <S.List key={bm.post_id} onClick={()=>onMovePage(bm)}>
             <h1>{bm.post_title}</h1>
@@ -34,6 +36,9 @@ const Bookmark = ({ user }) => {
           </S.List>
         )
       })}
+      {check &&
+        <h1>daksldfads</h1>
+      }
     </>
   )
 }

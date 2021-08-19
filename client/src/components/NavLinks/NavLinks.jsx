@@ -60,7 +60,7 @@ export default function NavLinks({ isLoggedIn, isPc }) {
               <S.Li>
                 <S.StyledNav to={{
                   pathname:"/mypage",
-                  state: { user: user }}} 
+                  state: { user }}} 
                   activeStyle={activeStyle} exact>
                   <S.Button>MyPage</S.Button>
                 </S.StyledNav>

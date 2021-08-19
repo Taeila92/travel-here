@@ -26,15 +26,12 @@ const PostCard = ({postData, location}) => {
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
-  // let likeNum = useSelector((state) => state.postLike.likeNum);
-
-  // console.log(likeNum);
 
   // 개별 post
-  const {post_id, post_title, post_region, post_date} = postData;
+  const {post_id, post_title, post_region, post_date, post_profile_img} = postData;
   
   // post모달 띄우는 용도
-  // const [isPostModalOpened, setIsPostModalOpened] = useState(false);
+  const [isPostOpened, setIsPostOpened] = useState(false);
 
   // representative image 지정 후 가져오기
   const repImageName = useRef(`${postData.post_photo[0]}`)
@@ -74,6 +71,7 @@ const PostCard = ({postData, location}) => {
   
   // 모달 띄우기
   const onShowPostModal = () => {
+    setIsPostOpened(true);
     setLikeRender('init');
     history.push({
       search: `?id=${post_id}`,
@@ -81,8 +79,6 @@ const PostCard = ({postData, location}) => {
         like: likePost.user_like_posts,
         bookmark: bookmark.user_bookmark_posts,
         postData,
-        profile: profileImage,
-        // likeNum,
       }
     });
   };
@@ -126,13 +122,13 @@ const PostCard = ({postData, location}) => {
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
-  }, [likeRender]);
+  }, [isPostOpened]);
 
   return (
     <>
       <S.Container onClick={onShowPostModal} id={post_id}>
         <S.Profile>
-          <img src={profileImage} alt="프로필 사진" />
+          <img src={post_profile_img} alt="프로필 사진" />
           <div>        
             <h2>UserName</h2>
             <h5>#{post_region}</h5>
@@ -148,13 +144,12 @@ const PostCard = ({postData, location}) => {
       {/* {(isPostModalOpened && likePost) && <Post */}
       {/* {isPostModalOpened && <Post */}
       {qsID && <Post
-        profile={profileImage}
+        profile={post_profile_img}
         postData={postData}
-        // setIsPostModalOpened={setIsPostModalOpened}
+        setIsPostOpened={setIsPostOpened}
+        setLikeRender={setLikeRender}
         // like={likePost.user_like_posts}
         // bookmark={bookmark.user_bookmark_posts}
-        likeRender={likeRender}
-        setLikeRender={setLikeRender}
       />}
     </>
   );

@@ -1,14 +1,12 @@
-﻿import React, { useEffect } from 'react';
+﻿import React from 'react';
 import * as S from "./Comment.style";
-import { useDispatch, useSelector } from 'react-redux';
-import { mypageCommentMiddleware } from 'store/modules/mypageComment';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
-const Comment = ({ comments, user }) => {
+const Comment = ({ user }) => {
 
   const commentDB = useSelector(state => state.mypageComment.data);
-  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -24,12 +22,6 @@ const Comment = ({ comments, user }) => {
       }
     });
   }
-
-  useEffect(()=>{
-    for(let i=0; i<comments.length; i++){
-      dispatch(mypageCommentMiddleware(comments[i]));
-    }
-  },[]);
 
 
   return(

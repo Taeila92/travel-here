@@ -1,15 +1,12 @@
-﻿import React, { useEffect } from 'react';
+﻿import React from 'react';
 import * as S from "./Post.style";
-import { useDispatch, useSelector } from 'react-redux';
-import { mypagePostMiddleware } from 'store/modules/mypagePost';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-
 
 
 const Post = ({user}) => {
 
   const postDB = useSelector(state => state.mypagePost.data);
-  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -25,11 +22,6 @@ const Post = ({user}) => {
       }
     });
   }
-  
-
-  useEffect(()=>{
-    dispatch(mypagePostMiddleware(user.user_id));
-  },[])
 
 
   return (

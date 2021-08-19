@@ -1,14 +1,12 @@
-﻿import React, { useEffect } from 'react';
+﻿import React from 'react';
 import * as S from "./Bookmark.style";
-import { useDispatch, useSelector } from 'react-redux';
-import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 
-const Bookmark = ({ bookmarks, user }) => {
+const Bookmark = ({ user }) => {
 
   const bookmarkDB = useSelector(state => state.mypageBookmark.data);
-  const dispatch = useDispatch();
 
   const history = useHistory();
 
@@ -25,11 +23,6 @@ const Bookmark = ({ bookmarks, user }) => {
     });
   }
   
-  useEffect(()=>{
-    for(let i=0; i<bookmarks.length; i++){
-      dispatch(mypageBookmarkMiddleware(bookmarks[i]));
-    }
-  },[]);
 
   return (
     <>

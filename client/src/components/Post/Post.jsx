@@ -106,6 +106,7 @@ const Post = ({postData, profile, setIsPostOpened, setLikeRender }) => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
+    console.log(user);
     dispatch(likeMiddleware(post_id, 'init'));
   }, []);
 

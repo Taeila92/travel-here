@@ -1,8 +1,6 @@
 ﻿import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { userMiddleware } from 'store/modules/userLike';
-import firebase from "firebase";
+import { useDispatch } from 'react-redux';
 import * as S from "./Mypage.style";
 import Post from './post/Post';
 import Comment from './comment/Comment';
@@ -10,19 +8,19 @@ import Bookmark from './bookmark/Bookmark';
 import img from "assets/images/mypage_back_Img1.png";
 import profileImg from "assets/images/profile_img.png";
 
+import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
+import { mypageCommentMiddleware } from 'store/modules/mypageComment';
+import { mypagePostMiddleware } from 'store/modules/mypagePost';
 
 
-const Mypage = (props) => {
 
-  const auth = firebase.auth();
+const Mypage = ({user}) => {
 
   const [info, setInfo] = useState(false);
   const [post, setPost] = useState(false);
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
-  
-  const user = useSelector(state => state.userLike.data);
-  // const posts = useSelector(state => state.board.data);
+
   const dispatch = useDispatch();
 
   const onClose = () => {
@@ -70,9 +68,13 @@ const Mypage = (props) => {
 
 
   useEffect(()=>{
-    auth.onAuthStateChanged((user) => {
-      dispatch(userMiddleware(user.email, '', 'init'));
-    });
+    dispatch(mypagePostMiddleware(user.user_id));
+    for(let i=0; i<user.user_write_comments.length; i++){
+      dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
+    }
+    for(let i=0; i<user.user_bookmark_posts.length; i++){
+      dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
+    }
   },[]);
 
   return (
@@ -114,21 +116,21 @@ const Mypage = (props) => {
         <S.Content>
           <ul>
             <li>내가 쓴 글</li>
-            <Post post={post} user={user}/>
+            <Post user={user}/>
           </ul>
         </S.Content>}
         {comment &&
         <S.Content>
           <ul>
             <li>내가 쓴 댓글</li>
-            <Comment comments={user.user_write_comments} user={user}/>
+            <Comment user={user}/>
           </ul>
         </S.Content>}
         {bookmark &&
         <S.Content>
           <ul>  
             <li>찜</li>
-            <Bookmark bookmarks={user.user_bookmark_posts} user={user}/>
+            <Bookmark user={user}/>
           </ul>
         </S.Content>}
       </S.Container>

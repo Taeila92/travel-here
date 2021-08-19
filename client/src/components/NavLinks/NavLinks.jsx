@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { openNav, closeNav } from 'store/modules/nav';
 import * as S from "./NavLinks.style";
 import AuthService from "auth_service";
 import "firebase/auth";
 import Logo from 'components/Logo/Logo';
+import firebase from "firebase";
+import { userMiddleware } from 'store/modules/userLike';
 
 
 // 로그아웃
@@ -16,9 +18,13 @@ const onLogout = () => {
 const activeStyle = { color: "red" };
 
 export default function NavLinks({ isLoggedIn, isPc }) {
-  
-  const {isNavOpened} = useSelector(state => state.nav);
+  const auth = firebase.auth();
+
   const dispatch = useDispatch();
+
+  const user = useSelector(state => state.userLike.data);
+
+  const {isNavOpened} = useSelector(state => state.nav);
   
   const navToggle = () => {
     if(isNavOpened){
@@ -27,6 +33,12 @@ export default function NavLinks({ isLoggedIn, isPc }) {
       dispatch(openNav())
     }
   }
+
+  useEffect(()=>{
+    auth.onAuthStateChanged((user) => {
+      dispatch(userMiddleware(user.email, '', 'init'));
+    });
+  },[]);
 
   return (
     <S.Header isPc={isPc} isNavOpened={isNavOpened}>
@@ -46,7 +58,10 @@ export default function NavLinks({ isLoggedIn, isPc }) {
           {isLoggedIn ? (
             <>
               <S.Li>
-                <S.StyledNav to="/mypage" activeStyle={activeStyle} exact>
+                <S.StyledNav to={{
+                  pathname:"/mypage",
+                  state: { user: user }}} 
+                  activeStyle={activeStyle} exact>
                   <S.Button>MyPage</S.Button>
                 </S.StyledNav>
               </S.Li>

@@ -100,13 +100,13 @@ function App() {
           />
         )}
         <S.Content>
-        <Link to="/categorylist/:religion" /> 
+        <Link to="/categorylist/:region" /> 
           <Switch>
             <Route exact path="/" component={Home} />
             {init && <Route path="/login" component={Login} />}
             {isLoggedIn && <Route exact path="/mypage" component={MyPage} />}
             <Route exact path="/categorylist" component={CategoryList} />
-            <Route path="/categorylist/:religion" component={Board} />
+            <Route path="/categorylist/:region" component={Board} />
             <Route component={NotFound} />
           </Switch>
         </S.Content>

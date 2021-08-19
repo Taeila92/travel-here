@@ -1,7 +1,7 @@
 import { dbService } from "firebase.js";
 
-export const getPostListAPI = async (religion) => {
-  const response = await dbService.collection("post").where("post_religion","==",religion).get()
+export const getPostListAPI = async (region) => {
+  const response = await dbService.collection("post").where("post_region","==",region).get()
 
   return response;
 }

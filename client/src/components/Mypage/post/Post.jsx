@@ -15,7 +15,7 @@ const Post = ({user}) => {
 
   const onMovePage =(post) => {
     history.push({
-      pathname: `/categorylist/${post.post_religion}`,
+      pathname: `/categorylist/${post.post_region}`,
       search: `?id=${post.post_id}`,
       state: {
         like: user.user_like_posts,

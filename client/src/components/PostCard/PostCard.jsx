@@ -19,16 +19,22 @@ const PostCard = ({postData, location}) => {
   const auth = firebase.auth();
   const dispatch = useDispatch();
 
+  let [likeRender, setLikeRender] = useState('init');
+
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
+  // let likeNum = useSelector((state) => state.postLike.likeNum);
+
+  // console.log(likeNum);
+
   // 개별 post
-  const {post_id, post_title, post_religion, post_date} = postData;
+  const {post_id, post_title, post_region, post_date} = postData;
   
   // post모달 띄우는 용도
-  const [isPostModalOpened, setIsPostModalOpened] = useState(false);
+  // const [isPostModalOpened, setIsPostModalOpened] = useState(false);
 
   // representative image 지정 후 가져오기
   const repImageName = useRef(`${postData.post_photo[0]}`)
@@ -68,13 +74,15 @@ const PostCard = ({postData, location}) => {
   
   // 모달 띄우기
   const onShowPostModal = () => {
+    setLikeRender('init');
     history.push({
       search: `?id=${post_id}`,
       state: {
         like: likePost.user_like_posts,
         bookmark: bookmark.user_bookmark_posts,
         postData,
-        profile: profileImage
+        profile: profileImage,
+        // likeNum,
       }
     });
   };
@@ -118,7 +126,7 @@ const PostCard = ({postData, location}) => {
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
-  }, [isPostModalOpened]);
+  }, [likeRender]);
 
   return (
     <>
@@ -127,7 +135,7 @@ const PostCard = ({postData, location}) => {
           <img src={profileImage} alt="프로필 사진" />
           <div>        
             <h2>UserName</h2>
-            <h5>#{post_religion}</h5>
+            <h5>#{post_region}</h5>
           </div>
         </S.Profile>
         <S.Content>
@@ -142,9 +150,11 @@ const PostCard = ({postData, location}) => {
       {qsID && <Post
         profile={profileImage}
         postData={postData}
-        setIsPostModalOpened={setIsPostModalOpened}
-        like={likePost.user_like_posts}
-        bookmark={bookmark.user_bookmark_posts}
+        // setIsPostModalOpened={setIsPostModalOpened}
+        // like={likePost.user_like_posts}
+        // bookmark={bookmark.user_bookmark_posts}
+        likeRender={likeRender}
+        setLikeRender={setLikeRender}
       />}
     </>
   );

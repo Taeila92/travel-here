@@ -26,10 +26,10 @@ export const fetchPostListError = error => {
 }
 
 // thunk
-export const fetchPostList = religion => async dispatch => {
+export const fetchPostList = region => async dispatch => {
     dispatch(fetchPostListRequest());
     try{
-        const response = await getPostListAPI(religion);
+        const response = await getPostListAPI(region);
         const payload = [];
         response.forEach(doc => {
             payload.push(doc.data());

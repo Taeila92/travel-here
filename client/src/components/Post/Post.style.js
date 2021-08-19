@@ -83,6 +83,22 @@ const Header = styled.li`
   }
 `;
 
+const editDelToggle = styled.div`
+  ${flex};
+  ${cursorPointer};
+  width: 5rem;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid #E3E3E3;
+  transform: translate(-1.6rem, 0.8rem);
+  p {
+    padding: 0.5rem 1rem;
+  }
+  p:nth-child(1){
+    border-bottom: 1px solid #E3E3E3;
+  }
+`;
+
 // const Images = styled.li`
 //   height: 20rem;
 //   margin: 0.5rem 0 1.5rem 0;
@@ -167,6 +183,7 @@ export {
   Container,
   Contents,
   Header,
+  editDelToggle,
   // Images, 
   Profile,
   Title, 

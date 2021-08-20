@@ -22,6 +22,7 @@ export default function NavLinks({ isLoggedIn, isPc }) {
 
   const dispatch = useDispatch();
 
+  // 마이페이지에 유저정보 넘기는 목적
   const user = useSelector(state => state.userLike.data);
 
   const {isNavOpened} = useSelector(state => state.nav);

@@ -126,7 +126,7 @@ const Profile = styled.li`
     background-color: pink;
   }
   p {
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
   span {
     font-weight: bold;

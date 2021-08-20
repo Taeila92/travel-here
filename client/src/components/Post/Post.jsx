@@ -23,6 +23,8 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
 
   const dispatch = useDispatch();
 
+  let [time, setTime] = useState('');
+
   let [bar, setBar] = useState(false);
 
   let [user, setUser] = useState('');
@@ -95,6 +97,25 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
   const onEditDelete = () => {
     setBar(!bar);
   }
+
+  function timeNotice(time) {
+    const milliSeconds = new Date() - time
+    const seconds = milliSeconds / 1000
+    if (seconds < 60){setTime(`방금 전`); return;};
+    const minutes = seconds / 60
+    if (minutes < 60){setTime(`${Math.floor(minutes)}분 전`); return;}
+    const hours = minutes / 60
+    if (hours < 24){setTime(`${Math.floor(hours)}시간 전`); return;}
+    const days = hours / 24
+    if (days < 7){setTime(`${Math.floor(days)}일 전`); return;}
+    const weeks = days / 7
+    if (weeks < 5){setTime(`${Math.floor(weeks)}주 전`); return;}
+    const months = days / 30
+    if (months < 12){setTime(`${Math.floor(months)}개월 전`); return;}
+    const years = days / 365
+    setTime(`${Math.floor(years)}년 전`)
+  }
+
   
   // 모달창 닫기
   const onHideModal = () => {
@@ -111,6 +132,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
       dispatch(userMiddleware(user.email, '', 'init'));
     });
     dispatch(likeMiddleware(post_id, 'init'));
+    timeNotice(post_id);
   }, []);
 
 
@@ -138,7 +160,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
           <S.Profile>
             <img src={post_profile_img} alt="프로필 이미지입니다"></img>
             <p>{post_writer}</p> {/* post_writer로 검색?*/}
-            <span>15min</span>
+            <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
           <S.Content>{post_content}</S.Content>

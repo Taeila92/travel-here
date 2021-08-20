@@ -151,6 +151,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
               <i onClick={onHideModal} className="fas fa-times-circle"></i>
               {bar &&
               <S.editDelToggle>
+                <div></div>
                 <p onClick={postEdit}>수정</p>
                 <p onClick={postDelete}>삭제</p>
               </S.editDelToggle>}

@@ -52,7 +52,7 @@ const PostSlider = ({postImages}) => {
     if(postImages.length != 0){
       img.current.style.width = '27rem';
       img.current.style.height = '100%';
-      img.current.style.margin = '1rem 0 2rem 0';
+      img.current.style.margin = '1rem 0 1rem 0';
     }
   }, []);
 

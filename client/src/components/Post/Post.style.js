@@ -76,48 +76,48 @@ const Header = styled.li`
     div {
       position: absolute;
     }
-    /* i:nth-child(2){
-      position: absolute;
-      transform: translate(-0.75rem, -2rem);
-    } */
   }
 `;
 
 const editDelToggle = styled.div`
   ${flex};
   ${cursorPointer};
-  width: 5rem;
+  width: 4rem;
   border-radius: 10px;
   background-color: white;
   border: 1px solid #E3E3E3;
-  transform: translate(-1.6rem, 0.8rem);
-  p {
-    padding: 0.5rem 1rem;
+  transform: translate(-0.8rem, 1rem);
+  box-shadow: 0 0 4px #E3E3E3;
+  div {
+    position: absolute;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    border-top: 1px solid #E3E3E3;
+    border-left: 1px solid #E3E3E3;
+    transform: translate(0rem, -0.55rem) rotate(0.125turn);
+    box-shadow: 0 0 4px #E3E3E3;
   }
-  p:nth-child(1){
+  p {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  p:nth-child(2){
     border-bottom: 1px solid #E3E3E3;
+    background-color: white;
+    z-index: 10;
+    color: #409BF0;
+  }
+  p:nth-child(3){
+    color: #ED4956;
   }
 `;
-
-// const Images = styled.li`
-//   height: 20rem;
-//   margin: 0.5rem 0 1.5rem 0;
-//   ${flex};
-//   flex-direction: row;
-//   img {
-//     width: 20rem;
-//     height: 20rem;
-//     object-fit: cover;
-//     background-color: black;
-//     margin: 0 0.2rem;
-//     transform: translateX(3.3rem);
-//   }
-// `;
-
 
 const Profile = styled.li`
   ${flex};
   flex-direction: row;
+  ${marginTop};
   img {
     width: 3rem;
     height: 3rem;
@@ -130,7 +130,8 @@ const Profile = styled.li`
   }
   span {
     font-weight: bold;
-    color: #dfe4ea;
+    font-size: 0.8rem;
+    color: lightgray;
   }
 `;
 

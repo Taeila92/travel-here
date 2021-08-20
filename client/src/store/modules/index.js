@@ -10,6 +10,7 @@ import bookmark from './bookmark';
 import mypagePost from './mypagePost';
 import mypageBookmark from './mypageBookmark';
 import mypageComment from './mypageComment';
+import view from './view';
 
 const rootReducer = combineReducers({
   user,
@@ -22,7 +23,8 @@ const rootReducer = combineReducers({
   bookmark,
   mypagePost,
   mypageBookmark,
-  mypageComment
+  mypageComment,
+  view,
 });
 
 export default rootReducer;

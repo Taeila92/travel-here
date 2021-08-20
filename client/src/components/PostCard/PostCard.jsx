@@ -6,6 +6,7 @@ import * as S from './PostCard.style';
 import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
+import { viewMiddleware } from 'store/modules/view';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
 import qs from 'qs';
@@ -13,7 +14,7 @@ import getDate from 'utils/getDate';
 
 
 
-const PostCard = ({postData, location}) => {
+const PostCard = ({ postData, location }) => {
 
 
   const auth = firebase.auth();
@@ -21,14 +22,18 @@ const PostCard = ({postData, location}) => {
 
   let [likeRender, setLikeRender] = useState('init');
 
+  let [viewRender, setViewRender] = useState(false);
+
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
+  let view = useSelector((state)=>state.view.view);
+
 
   // 개별 post
-  const {post_id, post_title, post_region, post_date, post_profile_img} = postData;
+  const {post_id, post_title, post_region, post_view, post_profile_img} = postData;
   
   // post모달 띄우는 용도
   const [isPostOpened, setIsPostOpened] = useState(false);
@@ -36,7 +41,6 @@ const PostCard = ({postData, location}) => {
   // representative image 지정 후 가져오기
   const repImageName = useRef(`${postData.post_photo[0]}`)
   const [repImage, setRepImage] = useState(); 
-
 
   let history = useHistory();
 
@@ -83,6 +87,16 @@ const PostCard = ({postData, location}) => {
     });
   };
 
+  const onView = () => {
+    dispatch(viewMiddleware(post_id, 'view'));
+  }
+
+
+  const onContainerClick = () => {
+    onShowPostModal();
+    onView();
+  }
+
   // Lazy Loading
   const lazyTarget = useRef()
   const [isView, setIsView] = useState(false);
@@ -124,15 +138,20 @@ const PostCard = ({postData, location}) => {
     dispatch(likeMiddleware(post_id, 'init'));
   }, [isPostOpened]);
 
+  useEffect(()=>{
+    dispatch(viewMiddleware(post_id, 'init'));
+  },[viewRender]);
+
   return (
     <>
-      <S.Container onClick={onShowPostModal} id={post_id}>
+      <S.Container onClick={onContainerClick} id={post_id}>
         <S.Profile>
           <img src={post_profile_img} alt="프로필 사진" />
           <div>        
             <h2>UserName</h2>
             <h5>#{post_region}</h5>
           </div>
+          <p>{post_view}</p>
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>
@@ -148,6 +167,9 @@ const PostCard = ({postData, location}) => {
         postData={postData}
         setIsPostOpened={setIsPostOpened}
         setLikeRender={setLikeRender}
+        setViewRender={setViewRender}
+        viewRender={viewRender}
+        postView={view}
         // like={likePost.user_like_posts}
         // bookmark={bookmark.user_bookmark_posts}
       />}

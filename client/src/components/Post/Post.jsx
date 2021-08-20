@@ -6,13 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useLocation } from "react-router-dom";
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
-import { commentMiddleware } from 'store/modules/comment';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import firebase from "firebase";
 import { dbService } from "firebase.js";
 
 
-const Post = ({postData, setIsPostOpened, setLikeRender }) => {
+const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRender, postView }) => {
   const { post_region, post_title, post_content, post_photo, post_id, post_writer, post_user_email, post_profile_img } = postData;
 
   const location = useLocation();
@@ -120,6 +119,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
   // 모달창 닫기
   const onHideModal = () => {
     setIsPostOpened(false);
+    setViewRender(!viewRender);
     history.push({
       search: '',
     });
@@ -145,6 +145,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender }) => {
             <span>
               <span>영국</span>
               <p>#{post_region}</p>
+              <p>{postView}</p>
             </span>
             <div>
               {userCheck && <i onClick={onEditDelete} className="fas fa-ellipsis-v"></i>}

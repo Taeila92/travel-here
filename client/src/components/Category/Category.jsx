@@ -6,6 +6,8 @@ import { getCategoryThunk } from "../../store/modules/category";
 const Category = () => {
   const category = useSelector((state) => state.category.data);
 
+  // let view = useSelector((state)=>state.view.view);
+
   const dispatch = useDispatch();
 
   const getCategory = useCallback(() => {
@@ -21,6 +23,9 @@ const Category = () => {
       <ul>
         {category.map((cate, index) => (
           <li key={index}>
+            {/* <S.LinkStyle to={{
+              pathname: `/categorylist/${cate.region}`,
+              state: {view}}}> */}
             <S.LinkStyle to={`/categorylist/${cate.region}`}>
               <p>{cate.region.replace("_", " ")}</p>
             </S.LinkStyle>

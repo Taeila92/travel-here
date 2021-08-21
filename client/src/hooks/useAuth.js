@@ -33,15 +33,13 @@ const useAuth = () => {
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged(async (user) => {
       // 로그인한 유저가 있다면
       if (user) {
-        const userDB = dbService.collection("users").doc(user.uid);
+        const userDB = await dbService.collection("users").doc(user.uid).get();
         // 유저 정보가 db에 저장되어 있다면
         if (userDB.exists) {
-          userDB.get().then((value) => {
-            dispatch(loginUserInfo(value.data));
-          });
+            dispatch(loginUserInfo(userDB.data()));
           // 아니면 새로 저장해야
         } else {
           const value = {
@@ -55,7 +53,7 @@ const useAuth = () => {
             user_write_comments: [],
             user_write_posts: [],
           };
-          userDB.set(value);
+          dbService.collection("users").doc(user.uid).set(value);
           dispatch(loginUserInfo(value));
         }
         // 로그인한 유저가 없다면

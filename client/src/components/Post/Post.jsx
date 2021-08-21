@@ -7,6 +7,10 @@ import { useHistory, useLocation } from "react-router-dom";
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
+import { commentDelThunk, userComDelThunk, userLikeDelThunk, userBookmarkDelThunk, getComId } from 'store/modules/delete';
+// import { userComDelThunk } from 'store/modules/delete';
+// import { userLikeDelThunk } from 'store/modules/delete';
+// import { userBookmarkDelThunk, getComId } from 'store/modules/delete';
 import firebase from "firebase";
 import { dbService } from "firebase.js";
 
@@ -90,7 +94,18 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     await dbService.collection('users').doc(user.email).update({
       user_write_posts: firebase.firestore.FieldValue.arrayRemove(post_id),
     });
+    dispatch(commentDelThunk(post_id));
+    dispatch(userLikeDelThunk(post_id));
+    dispatch(userBookmarkDelThunk(post_id));
     onHideModal();
+    setTimeout(() =>{
+      console.log('---------------------');
+      let test = getComId();
+      for(let i=0; i<test[0].length; i++){
+        dispatch(userComDelThunk(test[0][i]));
+        console.log(test[0][i]);
+      }
+    }, 2000);
   }
 
   const onEditDelete = () => {

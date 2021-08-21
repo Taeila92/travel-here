@@ -1,5 +1,5 @@
-﻿import { produce } from 'immer';
-import { getMypageCommentAPI } from 'store/apis/comment';
+﻿import { getMypageCommentAPI } from 'store/apis/comment';
+const { produce } = require('immer');
 
 // Actions
 const GET_COMMENT = 'mypageComment/GET_COMMENT';

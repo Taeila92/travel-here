@@ -36,7 +36,7 @@ const reducer = (prevState = initialState, action) => {
 
 let arr = [];
 // thunk
-export const mypageBookmarkMiddleware = (id) => async dispatch => {
+export const mypageBookmarkMiddleware = (id, type) => async dispatch => {
   try{
     const response = await getBookmarkAPI(id);
     response.forEach(doc => {
@@ -44,6 +44,9 @@ export const mypageBookmarkMiddleware = (id) => async dispatch => {
     })
     let array = Object.assign([], arr);
     dispatch(getBookmark(array));
+    if(type === 'finish'){
+      arr = [];
+    }
   }catch(error){
     console.log(error);
   }

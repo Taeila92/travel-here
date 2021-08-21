@@ -16,7 +16,7 @@ export const getComment = payload => {
 
 let arr = [];
 //thunk
-export const mypageCommentMiddleware = (id) => async dispatch => {
+export const mypageCommentMiddleware = (id, type) => async dispatch => {
   try{
     const response = await getMypageCommentAPI(id);
     response.forEach(doc => {
@@ -24,6 +24,9 @@ export const mypageCommentMiddleware = (id) => async dispatch => {
     })
     let array = Object.assign([], arr);
     dispatch(getComment(array));
+    if(type === 'finish'){
+      arr = [];
+    }
   }catch(error){
     console.log(error);
   }

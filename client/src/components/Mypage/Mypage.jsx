@@ -70,10 +70,20 @@ const Mypage = ({user}) => {
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.user_id));
     for(let i=0; i<user.user_write_comments.length; i++){
-      dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
+      if(i === user.user_write_comments.length-1){
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
+      }
+      if(i !== user.user_write_comments.length-1){
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
+      }
     }
     for(let i=0; i<user.user_bookmark_posts.length; i++){
-      dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
+      if(i === user.user_bookmark_posts.length-1){
+        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish'));
+      }
+      if(i !== user.user_bookmark_posts.length-1){
+        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
+      }
     }
   },[]);
 

@@ -50,7 +50,6 @@ export const commentDelThunk = (id) => async dispatch => {
     const response = await commentDelAPI(id);
     const payload = [];
     response.forEach(doc => {
-      console.log(doc.data());
       payload.push(doc.data());
     })
     dispatch(commentDelete(payload));
@@ -71,11 +70,8 @@ export const userComDelThunk = (id) => async dispatch => {
     response.forEach(doc => {
       com.data.push(doc.data());
     })
-    console.log('뀨1',com);
     let array = Object.assign([], com.data);
-    console.log('뀨2',array);
     com.data = array;
-    console.log('뀨3',com);
     dispatch(userComDelete(com));
   }catch(error){
     console.log(error);
@@ -123,6 +119,7 @@ export const getComId = (arr) => {
   return getCom;
 }
 
+let count = -1;
 let arr = [];
 const reducer = (prevState=initialState, action) => {
   return produce(prevState, (draft) => {
@@ -134,21 +131,20 @@ const reducer = (prevState=initialState, action) => {
           arr.push(draft.data[i].comment_id);
         }
         getComId(arr);
-        // return arr;
-        // for(let i=0; i<arr.length; i++){
-        //   dispatch(userComDelThunk(arr[i]));
-        // }
         break;
       case USERCOMMENT_DEL :
+        count+=1;
         draft.id = action.payload.id;
-        draft.data = action.payload.data[0];
-        draft.data.user_id = action.payload.data[0].user_id;
-        // for(let i=0; i<action.payload.data.length;i++){
-          console.log('리듀서', draft.data.user_id, action.payload.id, action.payload.id[0], action.payload, action.payload.data[0].user_id);
-          dbService.collection('users').doc(action.payload.data[0].user_id).update({
-            user_write_comments: firebase.firestore.FieldValue.arrayRemove(draft.id),
-          });
-        // }
+        draft.data = action.payload.data[count];
+        draft.data.user_id = action.payload.data[count].user_id;
+
+        dbService.collection('users').doc(draft.data.user_id).update({
+          user_write_comments: firebase.firestore.FieldValue.arrayRemove(draft.id),
+        });
+
+        if(count === draft.data.length-1){
+          count = -1;
+        }
         break;
       case USERLIKE_DEL :
         draft.id = action.payload.id;

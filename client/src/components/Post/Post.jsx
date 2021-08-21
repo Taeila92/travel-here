@@ -99,11 +99,9 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     dispatch(userBookmarkDelThunk(post_id));
     onHideModal();
     setTimeout(() =>{
-      console.log('---------------------');
-      let test = getComId();
-      for(let i=0; i<test[0].length; i++){
-        dispatch(userComDelThunk(test[0][i]));
-        console.log(test[0][i]);
+      let com = getComId();
+      for(let i=0; i<com[0].length; i++){
+        dispatch(userComDelThunk(com[0][i]));
       }
     }, 2000);
   }

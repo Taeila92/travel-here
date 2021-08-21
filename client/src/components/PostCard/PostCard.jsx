@@ -29,7 +29,7 @@ const PostCard = ({postData}) => {
   const repImageName = useRef(`${postData.post_photo[0]}`)
   const [repImage, setRepImage] = useState(); 
 
-  const fetchRepImage = async (repImageName) => {
+  const getRepImage = async (repImageName) => {
     await storageService.refFromURL(repImageName).getDownloadURL().then((value)=>{
       setRepImage(value)
     })
@@ -39,10 +39,9 @@ const PostCard = ({postData}) => {
   const profileImageName = useRef(`${postData.post_profile_img}`)
   const [profileImage, setProfileImage] = useState();
 
-  const fetchProfileImage = async (profileImageName) => {
-    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
-      setProfileImage(value)
-    })
+  const getProfileImage = async (profileImageName) => {
+      setProfileImage(profileImageName)
+
     /*
     프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
     await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
@@ -69,8 +68,8 @@ const PostCard = ({postData}) => {
           if(entry.isIntersecting){ // intersecting 되어 있으면
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
             // console.log(entry)
-            fetchRepImage(repImageName.current)
-            fetchProfileImage(profileImageName.current)
+            getRepImage(repImageName.current)
+            getProfileImage(profileImageName.current)
             setIsView(true);
           }
         })

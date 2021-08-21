@@ -55,7 +55,7 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
               <Route exact path="/categorylist" component={CategoryList} />
-              <Route path="/categorylist/:religion" component={Board} />
+              <Route path="/categorylist/:region" component={Board} />
               <Route component={NotFound} />
             </Switch>
           ) : (
@@ -63,7 +63,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/categorylist" component={CategoryList} />
-              <Route path="/categorylist/:religion" component={Board} />
+              <Route path="/categorylist/:region" component={Board} />
               <Route component={NotFound} />
             </Switch>
           )}

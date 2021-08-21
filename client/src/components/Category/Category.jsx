@@ -21,8 +21,8 @@ const Category = () => {
       <ul>
         {category.map((cate, index) => (
           <li key={index}>
-            <S.LinkStyle to={`/categorylist/${cate.religion}`}>
-              <p>{cate.religion.replace("_", " ")}</p>
+            <S.LinkStyle to={`/categorylist/${cate.region}`}>
+              <p>{cate.region.replace("_", " ")}</p>
             </S.LinkStyle>
           </li>
         ))}

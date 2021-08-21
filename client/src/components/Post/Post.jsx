@@ -10,7 +10,7 @@ import firebase from "firebase";
 
 
 const Post = ({postData, profile, setIsPostModalOpened, like, bookmark}) => {
-  const { post_religion, post_title, post_content, post_photo, post_id, post_writer } = postData;
+  const { post_region, post_title, post_content, post_photo, post_id, post_writer } = postData;
 
   const auth = firebase.auth();
 
@@ -70,7 +70,7 @@ const Post = ({postData, profile, setIsPostModalOpened, like, bookmark}) => {
           <S.Header>
             <span>
               <span>영국</span>
-              <p>#{post_religion}</p>
+              <p>#{post_region}</p>
             </span>
             <i onClick={onHideModal} className="fas fa-times"></i>
           </S.Header>

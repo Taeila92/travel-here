@@ -20,7 +20,7 @@ const PostCard = ({postData}) => {
   let bookmark = useSelector((state) => state.userLike.data);
 
   // 개별 post
-  const {post_id, post_title, post_religion, post_date} = postData;
+  const {post_id, post_title, post_region, post_date} = postData;
   
   // post모달 띄우는 용도
   const [isPostModalOpened, setIsPostModalOpened] = useState(false);
@@ -103,7 +103,7 @@ const PostCard = ({postData}) => {
           <img src={profileImage} alt="프로필 사진" />
           <div>        
             <h2>UserName</h2>
-            <h5>#{post_religion}</h5>
+            <h5>#{post_region}</h5>
           </div>
         </S.Profile>
         <S.Content>

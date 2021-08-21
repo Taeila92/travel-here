@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 export default function WriteModal({ visible, isVisible, userObj }) {
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
-  const [religion, setReligion] = useState("");
+  const [region, setregion] = useState("");
   const [attachment, setAttachment] = useState([]);
 
   const postRef = useRef();
@@ -15,8 +15,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     const { value, name } = e.target;
     if (name === "textarea") {
       setPost(value);
-    } else if (name === "religion") {
-      setReligion(value);
+    } else if (name === "region") {
+      setregion(value);
     } else if (name === "title") {
       setTitle(value);
     }
@@ -46,13 +46,13 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_id: ID,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,
-      post_religion: religion,
+      post_region: region,
       post_view: 0,
       post_like: 0,
     });
     setPost("");
     setTitle("");
-    setReligion("");
+    setregion("");
     setAttachment([]);
   };
 
@@ -80,12 +80,12 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       <S.Container visible={visible}>
         {userObj && <p>작성자 : {userObj.displayName}</p>}
         <p>{post}</p>
-        <p>{religion}</p>
+        <p>{region}</p>
         <form onSubmit={onSubmit}>
           제목 :
           <input name="title" type="text" ref={titleRef} onChange={onChange} />
           내용 : <textarea name="textarea" ref={postRef} onChange={onChange} />
-          지역 : <input name="religion" type="text" onChange={onChange} />
+          지역 : <input name="region" type="text" onChange={onChange} />
           <input
             multiple
             accept="image/*"

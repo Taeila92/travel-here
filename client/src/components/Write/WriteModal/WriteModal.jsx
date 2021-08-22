@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
+import { useHistory } from "react-router";
 
 export default function WriteModal({ visible, isVisible, userObj }) {
   const [post, setPost] = useState("");
@@ -10,6 +11,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const [attachment, setAttachment] = useState([]);
   const postRef = useRef();
   const titleRef = useRef();
+  const history = useHistory();
+
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -52,8 +55,10 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     setTitle("");
     setRegion("");
     setAttachment([]);
+    isVisible();
+    history.push(`/categorylist/${region}`);
   };
-
+  useEffect(() => {}, []);
   const onFileChange = (e) => {
     const { files } = e.target;
     let file;
@@ -84,7 +89,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
         {userObj && (
           <S.Wrapper>
             <img src={userObj.photoURL} />
-            <span> {userObj.displayName}</span>
+            <S.Name> {userObj.displayName}</S.Name>
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>

@@ -40,7 +40,7 @@ const CategoryBox = styled.div`
         `;
       } else {
         return css`
-          max-height: 30vh;
+          max-height: 20vh;
         `;
       }
     }}

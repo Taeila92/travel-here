@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const width = "80vw";
-const height = "65vh";
+const height = "70vh";
 
 const Container = styled.div`
   width: ${width};
@@ -15,12 +15,12 @@ const Container = styled.div`
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
   z-index: 100;
-  overflow: auto;
+  overflow: hidden;
 
   i {
     position: absolute;
-    top: 0.3rem;
-    right: 0.3rem;
+    top: 0.5rem;
+    right: 0.5rem;
   }
   p {
     margin-top: 1rem;
@@ -47,7 +47,10 @@ const Container = styled.div`
     }
   }
 `;
-
+const Input = styled.input`
+  position: absolute;
+  bottom: 2rem;
+`;
 const Wrapper = styled.span`
   width: 100%;
   display: flex;
@@ -63,7 +66,9 @@ const Wrapper = styled.span`
     margin-left: 0.2rem;
   }
 `;
-
+const Name = styled.span`
+  color: rgba(0, 0, 0, 0.6);
+`;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
   position: fixed;
@@ -75,4 +80,4 @@ const Overlay = styled.div`
   z-index: 99;
 `;
 
-export { Container, Overlay, Wrapper };
+export { Container, Overlay, Wrapper, Name };

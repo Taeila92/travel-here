@@ -4,16 +4,15 @@ import NavLinks from "components/NavLinks/NavLinks";
 import NavBar from "components/NavBar/NavBar";
 import * as S from "./Header.style";
 
-
 export default function Header({ isLoggedIn }) {
   const isPc = useMediaQuery({
-    query : `(min-width : 1024px) and (max-width :1920px)`
+    query: `(min-width : 1024px) and (max-width :3840px)`,
   });
 
   return (
     <S.Header isPc={isPc}>
       <NavLinks isLoggedIn={isLoggedIn} isPc={isPc} />
-      <NavBar isPc={isPc}/>
+      <NavBar isPc={isPc} />
     </S.Header>
   );
 }

@@ -35,7 +35,7 @@ function SamplePrevArrow(props) {
 const Category = () => {
   const category = useSelector((state) => state.category.data);
   const isPc = useMediaQuery({
-    query: `(min-width : 820px) and (max-width :1920px)`,
+    query: `(min-width : 820px) and (max-width :3840px)`,
   });
 
   const settings = {
@@ -56,7 +56,6 @@ const Category = () => {
 
   useEffect(() => {
     getCategory();
-    console.log(`category = ${category}`);
   }, [getCategory]);
 
   return (

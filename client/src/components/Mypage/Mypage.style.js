@@ -34,6 +34,7 @@ const BackImage = styled.div`
   img {
     width: 5rem;
     height: 5rem;
+    object-fit: cover;
     border-radius: 50%;
     transform: translateY(2rem);
   }
@@ -101,7 +102,7 @@ const ListArea = styled.div`
   }
 `;
 
-const Content = styled.div`
+const Content = styled.ul`
   background-color: white;
   width: 30rem;
   height: 30rem;

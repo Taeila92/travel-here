@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
@@ -6,17 +6,16 @@ import { v4 as uuidv4 } from "uuid";
 export default function WriteModal({ visible, isVisible, userObj }) {
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
-  const [religion, setReligion] = useState("");
+  const [region, setRegion] = useState("");
   const [attachment, setAttachment] = useState([]);
-
   const postRef = useRef();
   const titleRef = useRef();
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
       setPost(value);
-    } else if (name === "religion") {
-      setReligion(value);
+    } else if (name === "region") {
+      setRegion(value);
     } else if (name === "title") {
       setTitle(value);
     }
@@ -36,9 +35,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
         attachmentUrl.push(await response.ref.getDownloadURL());
       }
     }
-
     const ID = userObj.uid;
-    await dbService.collection('post').doc(ID).set({
+    await dbService.collection("post").doc(ID).set({
       post_title: title,
       post_content: post,
       post_writer: userObj.displayName,
@@ -46,13 +44,13 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_id: ID,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,
-      post_religion: religion,
+      post_region: region,
       post_view: 0,
       post_like: 0,
     });
     setPost("");
     setTitle("");
-    setReligion("");
+    setRegion("");
     setAttachment([]);
   };
 
@@ -74,18 +72,48 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const onClearAttachmentClick = () => {
     setAttachment(null);
   };
+  const removeAttachment = (e) => {
+    setAttachment((prev, index) => {});
+  };
   return (
     <>
       <S.Overlay visible={visible} onClick={isVisible} />
       <S.Container visible={visible}>
-        {userObj && <p>작성자 : {userObj.displayName}</p>}
-        <p>{post}</p>
-        <p>{religion}</p>
+        <i onClick={isVisible} className="fas fa-times" />
+
+        {userObj && (
+          <S.Wrapper>
+            <img src={userObj.photoURL} />
+            <span> {userObj.displayName}</span>
+          </S.Wrapper>
+        )}
         <form onSubmit={onSubmit}>
-          제목 :
-          <input name="title" type="text" ref={titleRef} onChange={onChange} />
-          내용 : <textarea name="textarea" ref={postRef} onChange={onChange} />
-          지역 : <input name="religion" type="text" onChange={onChange} />
+          <input
+            name="title"
+            type="text"
+            ref={titleRef}
+            onChange={onChange}
+            placeholder="제목을 입력해 주세요."
+          />
+          <textarea
+            name="textarea"
+            ref={postRef}
+            onChange={onChange}
+            placeholder="내용을 입력해주세요."
+            rows="10"
+          />
+          <select name="region" onChange={onChange}>
+            <option selected value="">
+              지역을 선택해 주세요.
+            </option>
+            <option value="asia">Asia</option>
+            <option value="north_america">North America</option>
+            <option value="south_america">South America</option>
+            <option value="africa">Africa</option>
+            <option value="europe">Europe</option>
+            <option value="australia">Australia</option>
+            <option value="antarctica">Antarctica</option>
+          </select>
           <input
             multiple
             accept="image/*"
@@ -93,14 +121,17 @@ export default function WriteModal({ visible, isVisible, userObj }) {
             onChange={onFileChange}
             name="fileNames[]"
           />
-          {attachment && (
-            <div>
-              {attachment.map((atta, i) => (
-                <img key={i} src={atta} width="50px" height="50px" />
+          <div>
+            {attachment &&
+              attachment.map((atta, i) => (
+                <img key={i} src={atta} width="70px" height="70px" />
               ))}
-            </div>
-          )}
-          <button onClick={onClearAttachmentClick}>모두 삭제</button>
+          </div>
+          <input
+            type="button"
+            value="이미지 모두 삭제"
+            onClick={onClearAttachmentClick}
+          />
           <input type="submit" value="등록" />
         </form>
       </S.Container>

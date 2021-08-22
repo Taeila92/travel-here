@@ -73,26 +73,53 @@ export function getCategoryThunk() {
     try {
       dispatch(getCategoryStart());
       const res = await dbService.collection("post").get();
-      const resArray = [];
+      let resArray = [
+        {
+          region: "asia",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+        {
+          region: "north_america",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+        {
+          region: "south_america",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+        {
+          region: "africa",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+        {
+          region: "europe",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+        {
+          region: "australia",
+          photo:
+            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+        },
+      ];
       res.forEach((res) => {
-        if (res.data().post_photo.length > 0) {
+        if (res.data().post_region !== "" && res.data().post_photo.length > 0) {
           const random = Math.floor(
             Math.random() * res.data().post_photo.length
           );
-          resArray.push({
-            religion: res.data().post_religion.toLowerCase().trim(),
-            photo: res.data().post_photo[random],
-          });
-        } else {
-          resArray.push({
-            religion: res.data().post_religion.toLowerCase().trim(),
-            photo: "",
-          });
+          for (let i = 0; i < resArray.length; i++) {
+            if (resArray[i].region === res.data().post_region) {
+              resArray[i].photo = res.data().post_photo[random];
+            }
+          }
         }
       });
 
-      const data = lodash.uniqBy(resArray, "religion");
-      dispatch(getCategorySuccess(data));
+      // const data = lodash.uniqBy(resArray, "region");
+      dispatch(getCategorySuccess(resArray));
     } catch (e) {
       dispatch(getCategoryFail(e));
     }

@@ -8,25 +8,24 @@ const Container = styled.div`
   bottom: 0;
   display: flex;
   padding-top: 4px;
-  ${(props)=>{
-    if(!props.isPc){
+  ${(props) => {
+    if (!props.isPc) {
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
         height: 150px;
         padding-right: 20px;
         transition: 0.3s;
-        transform: ${(props) => props.isNavOpened ? '0' : 'translateY(-150px)'};
+        transform: ${(props) =>
+          props.isNavOpened ? "0" : "translateY(-150px)"};
       `;
     }
   }}
-  //height: ${(props) => (props.isPc ? '150px' : '55px')};
 `;
 
 const Header = styled.header`
   position: relative;
   background-color: transparent;
-  height: ${(props) => (props.isPc ? '150px' : '55px')};
 `;
 
 const Ul = styled.ul`
@@ -64,4 +63,4 @@ const StyledNav = styled(NavLink)`
   color: white;
 `;
 
-export { Container, Ul, Li, Button,Header, StyledNav };
+export { Container, Ul, Li, Button, Header, StyledNav };

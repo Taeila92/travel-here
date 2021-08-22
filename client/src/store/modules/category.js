@@ -1,5 +1,6 @@
-import { dbService, storageService } from "firebase.js";
+import { dbService } from "firebase.js";
 import lodash from "lodash";
+
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
 const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";
@@ -80,18 +81,18 @@ export function getCategoryThunk() {
             Math.random() * res.data().post_photo.length
           );
           resArray.push({
-            religion: res.data().post_religion.toLowerCase().trim(),
+            region: res.data().post_region.toLowerCase().trim(),
             photo: res.data().post_photo[random],
           });
         } else {
           resArray.push({
-            religion: res.data().post_religion.toLowerCase().trim(),
+            region: res.data().post_region.toLowerCase().trim(),
             photo: "",
           });
         }
       });
 
-      const data = lodash.uniqBy(resArray, "religion");
+      const data = lodash.uniqBy(resArray, "region");
       dispatch(getCategorySuccess(data));
     } catch (e) {
       dispatch(getCategoryFail(e));

@@ -5,6 +5,7 @@ import * as S from './LoginFooter.style';
 function LoginFooter({ authService }) {
   const history = useHistory();
 
+
   // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({
@@ -22,7 +23,9 @@ function LoginFooter({ authService }) {
   const onLogin = (event) => {
     authService //
       .login(event.currentTarget.textContent)
-      .then((data) => goToLogin(data.user.uid));
+      .then(data => {
+        goToLogin(data.user.uid)
+      })
   };
 
   useEffect(() => {

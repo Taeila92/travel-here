@@ -20,13 +20,14 @@ import firebase from 'firebase';
 import { dbService } from 'firebase.js';
 import WriteModal from 'components/Write/WriteModal/WriteModal';
 
+// hook
+import useAuth from 'hooks/useAuth';
+
 function App() {
-  const auth = firebase.auth();
-  const [init, setInit] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
-  const [userObj, setUserObj] = useState(null);
+
+  const [isLoggedIn, userInfo] = useAuth();
 
   const isVisible = () => {
     setVisible(!visible);
@@ -80,7 +81,7 @@ function App() {
   console.log(userObj);
 
   return (
-    <S.Background className="App">
+    <Background>
       <GlobalStyle />
       <BrowserRouter>
         {/* 사용자가 로그인 되었을 때*/}
@@ -124,11 +125,11 @@ function App() {
           <WriteModal
             visible={visible}
             isVisible={isVisible}
-            userObj={userObj}
+            userObj={userInfo}
           />
         </>
       )}
-    </S.Background>
+    </Background>
   );
 }
 

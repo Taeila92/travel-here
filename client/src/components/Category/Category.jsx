@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from "react";
 import * as S from "./Category.style";
 import { useDispatch, useSelector } from "react-redux";
-import reducer, { getCategoryThunk } from "../../store/modules/category";
+import { getCategoryThunk } from "../../store/modules/category";
 import Slider from "react-slick";
+import { useMediaQuery } from "react-responsive";
 
 function SampleNextArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <S.ArrowStyle onClick={onClick} right>
       <i className="fas fa-arrow-right" />
@@ -14,25 +15,38 @@ function SampleNextArrow(props) {
 }
 
 function SamplePrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <S.ArrowStyle onClick={onClick}>
       <i className="fas fa-arrow-left" fontSize="300px" />
     </S.ArrowStyle>
   );
 }
-const settings = {
-  dots: false,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  slidesToScroll: 1,
-  nextArrow: <SampleNextArrow />,
-  prevArrow: <SamplePrevArrow />,
-};
+// const settings = {
+//   dots: false,
+//   infinite: true,
+//   speed: 500,
+//   slidesToShow: 3,
+//   slidesToScroll: 1,
+//   nextArrow: <SampleNextArrow />,
+//   prevArrow: <SamplePrevArrow />,
+// };
 
 const Category = () => {
   const category = useSelector((state) => state.category.data);
+  const isPc = useMediaQuery({
+    query: `(min-width : 820px) and (max-width :1920px)`,
+  });
+
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: isPc ? 3 : 1,
+    slidesToScroll: 1,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+  };
 
   const dispatch = useDispatch();
 
@@ -49,14 +63,14 @@ const Category = () => {
     <S.Container>
       <Slider {...settings}>
         {category.map((cate, index) => (
-          <span key={index}>
+          <S.CategoryBox key={index} isPc={isPc}>
             <S.LinkStyle to={`/categorylist/${cate.region}`}>
               <h3>{cate.region.replace("_", " ").toUpperCase()}</h3>
               <div>
                 <img src={cate.photo} />
               </div>
             </S.LinkStyle>
-          </span>
+          </S.CategoryBox>
         ))}
       </Slider>
     </S.Container>

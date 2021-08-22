@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { commentMiddleware } from 'store/modules/comment';
 import CommentList from './CommentList';
 import firebase from "firebase";
+import { v4 as uuidv4 } from "uuid";
 
 
 const Comment = memo(({ postId, postregion, userDB}) => {
@@ -13,6 +14,8 @@ const Comment = memo(({ postId, postregion, userDB}) => {
   const auth = firebase.auth();
 
   let time = Date.now().toString();
+
+  const uuid = uuidv4();
 
   const textarea = useRef();
   const postBtn = useRef();
@@ -65,10 +68,10 @@ const Comment = memo(({ postId, postregion, userDB}) => {
       return;
     }
 
-    await dbService.collection('comment').doc(time).set({
+    await dbService.collection('comment').doc(uuid).set({
       post_id: postId,
       post_region: postregion,
-      comment_id: time,
+      comment_id: uuid,
       comment_content: textarea.current.value,
       comment_like: 0,
       user_uid: user.uid,
@@ -78,7 +81,7 @@ const Comment = memo(({ postId, postregion, userDB}) => {
 
 
     await dbService.collection('users').doc(user.uid).update({
-      user_write_comments: firebase.firestore.FieldValue.arrayUnion(time),      
+      user_write_comments: firebase.firestore.FieldValue.arrayUnion(uuid),      
     });
 
     onNotPost();

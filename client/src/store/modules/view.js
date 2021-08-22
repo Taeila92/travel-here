@@ -58,12 +58,10 @@ export const viewMiddleware = (id, type) => async dispatch => {
     })
     if(type === 'view'){
       dispatch(plusView(obj));
-      console.log('view');
       return;
     }
     if(type === 'init'){
       dispatch(getView(obj));
-      console.log('init');
     }
   }catch(error){
     console.log(error);

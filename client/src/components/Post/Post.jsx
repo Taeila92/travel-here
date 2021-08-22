@@ -43,12 +43,13 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
   // let [likePost, setLikePost] = useState(like.includes(post_id));
   let [likePost, setLikePost] = useState(location.state.like.includes(post_id));
   // let [likePost, setLikePost] = useState(false);
+  
 
   // 내가 해당 게시글에 찜을 했나 안 했나 표시
   // let [bookmarkPost, setBookmarkPost] = useState(bookmark.includes(post_id));
   let [bookmarkPost, setBookmarkPost] = useState(location.state.bookmark.includes(post_id));
   // let [bookmarkPost, setBookmarkPost] = useState(false);
-
+  
   // console.log(location.state);
   // console.log(likeNum);
   // console.log(location.state.like.includes(post_id), location.state.bookmark.includes(post_id));
@@ -87,8 +88,13 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     // await dbService.collection('post').doc(post_id).update({
     //   post_content: firebase.firestore.FieldValue.arrayUnion(),      
     // });
+    
   }
 
+  // 게시글 삭제 시 삭제되는 것들
+  // post collection : post 문서 자체
+  // users collection : user_write_posts, user_write_comments, user_like_posts, user_bookmark_posts
+  // comment collection : comment 문서 자체
   const postDelete = async() => {
     await dbService.collection('post').doc(post_id).delete();
     await dbService.collection('users').doc(user.email).update({
@@ -97,13 +103,16 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     dispatch(commentDelThunk(post_id));
     dispatch(userLikeDelThunk(post_id));
     dispatch(userBookmarkDelThunk(post_id));
-    onHideModal();
+    // getComId함수를 통해 comment_id를 얻는데
+    // dispatch(commentDelThunk(post_id))가 실행된 후에 그 comment_id 정보가 들어옴
+    // dispatch를 비동기처리할 방법을 찾지 못해 setTimeout으로 처리
     setTimeout(() =>{
       let com = getComId();
       for(let i=0; i<com[0].length; i++){
         dispatch(userComDelThunk(com[0][i]));
       }
-    }, 2000);
+    }, 1000);
+    onHideModal();
   }
 
   const onEditDelete = () => {
@@ -138,7 +147,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     });
   };  
 
-  
+
   useEffect(() =>{
     auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -147,6 +156,19 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     dispatch(likeMiddleware(post_id, 'init'));
     timeNotice(post_id);
   }, []);
+
+
+  // 새로고침하면 좋아요, 찜 변경사항이 반영안됨
+  // 그래서 일단 경고창 띄우는 걸로 처리
+  useEffect(() => {
+    window.onbeforeunload = (e) => {
+      e.preventDefault()
+      return true;
+    };
+    return () => {
+      window.onbeforeunload = null;
+    };
+  },[window.onbeforeunload]);
 
 
 

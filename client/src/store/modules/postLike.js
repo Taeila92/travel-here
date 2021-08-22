@@ -42,6 +42,7 @@ const reducer = (prevState = initialState, action) => {
         draft.likeNum = action.payload.num;
         break;
       case LIKE_LIKE:
+        console.log('컄', action.payload.num);
         draft.likeNum = action.payload.num+1;
         dbService.collection('post').doc(action.payload.id).update({
           post_like: draft.likeNum,
@@ -76,6 +77,7 @@ export const likeMiddleware = (id, type) => async dispatch => {
       return;
     }
     if(type === 'like'){
+      console.log('미치게하네');
       dispatch(onLike(arr));
       return;
     }

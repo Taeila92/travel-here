@@ -23,6 +23,9 @@ const Post = ({ postData, profile, setIsPostModalOpened, like, bookmark }) => {
 
   const dispatch = useDispatch();
 
+  const haha = useSelector(state => state.user)
+  console.log(haha)
+
   // 좋아요 숫자 받아오기
   let { likeNum } = useSelector((state) => state.postLike);
 

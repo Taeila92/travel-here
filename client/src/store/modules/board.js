@@ -26,19 +26,19 @@ export const fetchPostListError = (error) => {
 };
 
 // thunk
-export const fetchPostList = (region) => async (dispatch) => {
-  dispatch(fetchPostListRequest());
-  try {
-    const response = await getPostListAPI(region);
-    const payload = [];
-    response.forEach((doc) => {
-      payload.push(doc.data());
-    });
-    dispatch(fetchPostListSuccess(payload));
-  } catch (error) {
-    dispatch(fetchPostListError(error));
-  }
-};
+export const fetchPostList = region => async dispatch => {
+    dispatch(fetchPostListRequest());
+    try{
+        const response = await getPostListAPI(region);
+        const payload = [];
+        response.forEach(doc => {
+            payload.push(doc.data());
+        })
+        dispatch(fetchPostListSuccess(payload));
+    }catch(error){
+        dispatch(fetchPostListError(error))
+    }
+}
 
 // Reducer
 const initialState = {

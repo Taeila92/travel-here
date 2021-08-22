@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 const Container = styled.div`
   position: absolute;
   right: 0;
-  top: 0;
+  top: -2rem;
   bottom: 0;
   display: flex;
   padding-top: 4px;
@@ -13,7 +13,7 @@ const Container = styled.div`
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
-        height: 150px;
+        height: 120px;
         padding-right: 20px;
         transition: 0.3s;
         transform: ${(props) =>
@@ -23,14 +23,14 @@ const Container = styled.div`
   }}
 `;
 
-const Header = styled.header`
+const Header = styled.div`
   position: relative;
   background-color: transparent;
 `;
 
 const Ul = styled.ul`
   display: flex;
-  margin: auto;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   @media screen and (max-width: 1024px) {

@@ -29,27 +29,19 @@ const PostCard = ({ postData }) => {
   const repImageName = useRef(`${postData.post_photo[0]}`);
   const [repImage, setRepImage] = useState();
 
-  const fetchRepImage = async (repImageName) => {
-    await storageService
-      .refFromURL(repImageName)
-      .getDownloadURL()
-      .then((value) => {
-        setRepImage(value);
-      });
-  };
+  const getRepImage = async (repImageName) => {
+    await storageService.refFromURL(repImageName).getDownloadURL().then((value)=>{
+      setRepImage(value)
+    })
+  }
 
   // profile image 가져오기
   const profileImageName = useRef(`${postData.post_profile_img}`);
   const [profileImage, setProfileImage] = useState();
 
-  const fetchProfileImage = async (profileImageName) => {
-    const storageRef = storageService.ref();
-    await storageRef
-      .child(`post/${profileImageName}`)
-      .getDownloadURL()
-      .then((value) => {
-        setProfileImage(value);
-      });
+  const getProfileImage = async (profileImageName) => {
+      setProfileImage(profileImageName)
+
     /*
     프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
     await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
@@ -69,25 +61,21 @@ const PostCard = ({ postData }) => {
   useEffect(() => {
     let observer;
 
-    if (lazyTarget.current) {
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // intersecting 되어 있으면
-              observer.unobserve(entry.target); // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target
-              // console.log(entry)
-              fetchRepImage(repImageName.current);
-              fetchProfileImage(profileImageName.current);
-              setIsView(true);
-            }
-          });
-        },
-        { threshold: 0.3 }
-      );
-
-      observer.observe(lazyTarget.current);
-    }
+    if(lazyTarget.current){ 
+      observer = new IntersectionObserver((entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){ // intersecting 되어 있으면
+            observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
+            // console.log(entry)
+            getRepImage(repImageName.current)
+            getProfileImage(profileImageName.current)
+            setIsView(true);
+          }
+        })
+      },{ threshold : 0.3 })
+      
+      observer.observe(lazyTarget.current)
+    } 
 
     return () => observer && observer.disconnect();
   }, []);
@@ -123,7 +111,7 @@ const PostCard = ({ postData }) => {
             <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage>
           )}
           {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
-          {/* <div>{getDate(post_date)}</div> */}
+          <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
       {/* {(isPostModalOpened && likePost) && <Post */}

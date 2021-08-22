@@ -1,9 +1,9 @@
 import React, { useCallback, useEffect } from "react";
-import * as S from "./Category.style";
 import { useDispatch, useSelector } from "react-redux";
 import { getCategoryThunk } from "../../store/modules/category";
 import Slider from "react-slick";
 import { useMediaQuery } from "react-responsive";
+import * as S from './Category.style'
 
 function SampleNextArrow(props) {
   const { onClick } = props;
@@ -49,6 +49,7 @@ const Category = () => {
   };
 
   const dispatch = useDispatch();
+  
 
   const getCategory = useCallback(() => {
     dispatch(getCategoryThunk());

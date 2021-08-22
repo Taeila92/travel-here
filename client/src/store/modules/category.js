@@ -1,5 +1,6 @@
-import { dbService, storageService } from "firebase.js";
+import { dbService } from "firebase.js";
 import lodash from "lodash";
+
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
 const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";

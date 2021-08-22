@@ -12,6 +12,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const postRef = useRef();
   const titleRef = useRef();
   const history = useHistory();
+  console.log(userObj)
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -87,8 +88,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
 
         {userObj && (
           <S.Wrapper>
-            <img src={userObj.photoURL} />
-            <S.Name> {userObj.displayName}</S.Name>
+            <img src={userObj.user_image} alt=""/>
+            <S.Name> {userObj.name}</S.Name>
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>
@@ -128,7 +129,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
           <div>
             {attachment &&
               attachment.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" />
+                <img key={i} src={atta} width="70px" height="70px" alt=""/>
               ))}
           </div>
           <input

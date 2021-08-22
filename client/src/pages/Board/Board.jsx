@@ -15,10 +15,10 @@ const Board = ({ match }) => {
   }))
   const dispatch = useDispatch();
 
-  // categorylist에서 religion에 따라서 놓여져있고 클릭하면 그에 맞게 검색
+  // categorylist에서 region에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(()=>{
-    dispatch(fetchPostList(match.params.religion));
-  },[dispatch, match.params.religion])
+    dispatch(fetchPostList(match.params.region));
+  },[dispatch, match.params.region])
 
   if (loading) return <div>로딩중</div>
   if (error) return <div>Error</div>

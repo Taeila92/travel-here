@@ -45,6 +45,8 @@ function LoginModalOpen() {
           case 'auth/wrong-password':
             setPasswordError(err.message);
             break;
+          default :
+            return;
         }
       });
   };
@@ -64,8 +66,10 @@ function LoginModalOpen() {
           case 'auth/weak-password':
             setPasswordError(err.message);
             break;
+          default :
+            return;
         }
-      });
+      })
   };
 
   // 로그아웃

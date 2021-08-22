@@ -21,7 +21,9 @@ function LoginFooter({ authService }) {
   const onLogin = (event) => {
     authService //
       .login(event.currentTarget.textContent)
-      .then((data) => goToLogin(data.user.uid));
+      .then((data) => {
+        goToLogin(data.user.uid);
+      });
   };
 
   useEffect(() => {

@@ -40,19 +40,20 @@ export default function WriteModal({ visible, isVisible, userObj }) {
 
     // let ID = Date.now().toString();
     let ID = userObj.uid;
+    const uuid = uuidv4();
 
     // users collection의 user_write_posts에 post_id 추가
     await dbService.collection('users').doc(ID).update({
-      user_write_posts: firebase.firestore.FieldValue.arrayUnion(ID),      
+      user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),      
     });
 
-    await dbService.collection('post').doc(ID).set({
+    await dbService.collection('post').doc(uuid).set({
       post_title: title,
       post_content: post,
       post_writer: userObj.displayName,
       post_uid: userObj.uid,
       post_date: Date.now(),
-      post_id: ID,
+      post_id: uuid,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,
       post_region: region,

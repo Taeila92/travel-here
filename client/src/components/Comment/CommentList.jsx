@@ -7,7 +7,7 @@ import * as S from "./Comment.style";
 const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   let [editDelete, setEditDelete] = useState(false);
   let [edit, setEdit] = useState(false);
-  let userCheck = com.user_email === user.email;
+  let userCheck = com.user_uid === user.uid;
 
   const container = useRef();
   const input = useRef();
@@ -46,7 +46,7 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
     const target = e.target;
     let i = target.parentElement.className;
     await dbService.collection('comment').doc(i).delete();
-    await dbService.collection('users').doc(user.email).update({
+    await dbService.collection('users').doc(user.uid).update({
       user_write_comments: firebase.firestore.FieldValue.arrayRemove(i),
     });
     onDelete();

@@ -136,9 +136,9 @@ const reducer = (prevState=initialState, action) => {
         count+=1;
         draft.id = action.payload.id;
         draft.data = action.payload.data[count];
-        draft.data.user_id = action.payload.data[count].user_id;
+        draft.data.uid = action.payload.data[count].uid;
 
-        dbService.collection('users').doc(draft.data.user_id).update({
+        dbService.collection('users').doc(draft.data.uid).update({
           user_write_comments: firebase.firestore.FieldValue.arrayRemove(draft.id),
         });
 
@@ -150,7 +150,7 @@ const reducer = (prevState=initialState, action) => {
         draft.id = action.payload.id;
         for(let i=0; i<action.payload.data.length;i++){
           draft.data = action.payload.data[i];
-          dbService.collection('users').doc(draft.data.user_id).update({
+          dbService.collection('users').doc(draft.data.uid).update({
             user_like_posts: firebase.firestore.FieldValue.arrayRemove(draft.id),
           });
         }
@@ -159,7 +159,7 @@ const reducer = (prevState=initialState, action) => {
         draft.id = action.payload.id;
         for(let i=0; i<action.payload.data.length;i++){
           draft.data = action.payload.data[i];
-          dbService.collection('users').doc(draft.data.user_id).update({
+          dbService.collection('users').doc(draft.data.uid).update({
             user_bookmark_posts: firebase.firestore.FieldValue.arrayRemove(draft.id),
           });
         }

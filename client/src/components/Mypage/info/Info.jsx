@@ -21,10 +21,10 @@ const Info = ({ uid, user, userDB }) => {
 
 
   const onUsername = (value) => {
-    dbService.collection('users').doc(user.user_id).update({
-      user_name: value,      
+    dbService.collection('users').doc(user.uid).update({
+      name: value,      
     });
-    dispatch(userMiddleware(user.user_id, '', 'init'));
+    dispatch(userMiddleware(user.uid, '', 'init'));
     setNickName(false);
   };
 
@@ -72,11 +72,11 @@ const Info = ({ uid, user, userDB }) => {
       attachmentUrl.push(await response.ref.getDownloadURL());
     };
 
-    await dbService.collection('users').doc(user.user_id).update({
+    await dbService.collection('users').doc(user.uid).update({
       user_image: attachmentUrl,
     });
     setAttachment([]);
-    dispatch(userMiddleware(user.user_id, '', 'init'));
+    dispatch(userMiddleware(user.uid, '', 'init'));
     setImg(false);
   };
 
@@ -92,7 +92,7 @@ const Info = ({ uid, user, userDB }) => {
     <>
       <S.Id>
         <S.Title>아이디</S.Title>
-        <p>{user.user_id}</p>
+        <p>{user.email}</p>
       </S.Id>
       <S.NickName>
         <S.Title>닉네임</S.Title>
@@ -101,7 +101,7 @@ const Info = ({ uid, user, userDB }) => {
           <input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
           <button onClick={onSubmitBtn}>제출</button>
         </li>) :
-        (userDB.user_name ? <p>{userDB.user_name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
+        (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
         <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
       </S.NickName>
       <S.Profile>

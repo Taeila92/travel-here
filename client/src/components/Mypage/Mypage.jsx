@@ -80,7 +80,7 @@ const Mypage = ({user}) => {
 
 
   useEffect(()=>{
-    dispatch(mypagePostMiddleware(user.user_id));
+    dispatch(mypagePostMiddleware(user.uid));
     for(let i=0; i<user.user_write_comments.length; i++){
       if(i === user.user_write_comments.length-1){
         dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));

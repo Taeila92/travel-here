@@ -71,13 +71,13 @@ const Comment = memo(({ postId, postregion, userDB}) => {
       comment_id: time,
       comment_content: textarea.current.value,
       comment_like: 0,
-      user_email: user.email,
+      user_uid: user.uid,
       user_image: userDB.user_image,
       comment_writer: user.displayName,
     })
 
 
-    await dbService.collection('users').doc(user.email).update({
+    await dbService.collection('users').doc(user.uid).update({
       user_write_comments: firebase.firestore.FieldValue.arrayUnion(time),      
     });
 

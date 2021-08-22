@@ -131,8 +131,8 @@ const PostCard = ({ postData, location }) => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if(user){
-        dispatch(userMiddleware(user.email, post_id, 'init'));
-        dispatch(bookmarkMiddleware(user.email, post_id, 'init'));
+        dispatch(userMiddleware(user.uid, post_id, 'init'));
+        dispatch(bookmarkMiddleware(user.uid, post_id, 'init'));
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));

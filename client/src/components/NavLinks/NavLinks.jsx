@@ -37,7 +37,7 @@ export default function NavLinks({ isLoggedIn, isPc }) {
 
   useEffect(()=>{
     auth.onAuthStateChanged((user) => {
-      dispatch(userMiddleware(user.email, '', 'init'));
+      dispatch(userMiddleware(user.uid, '', 'init'));
     });
   },[]);
 

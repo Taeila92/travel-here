@@ -38,10 +38,11 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       }
     }
 
-    let ID = Date.now().toString();
+    // let ID = Date.now().toString();
+    let ID = userObj.uid;
 
     // users collection의 user_write_posts에 post_id 추가
-    await dbService.collection('users').doc(userObj.email).update({
+    await dbService.collection('users').doc(ID).update({
       user_write_posts: firebase.firestore.FieldValue.arrayUnion(ID),      
     });
 
@@ -49,8 +50,8 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_title: title,
       post_content: post,
       post_writer: userObj.displayName,
-      post_user_email: userObj.email,
-      post_date: ID,
+      post_uid: userObj.uid,
+      post_date: Date.now(),
       post_id: ID,
       post_photo: attachmentUrl,
       post_profile_img: userObj.photoURL,

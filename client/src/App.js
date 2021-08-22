@@ -49,12 +49,22 @@ function App() {
 
     
     // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장 
-    const includeId = id.includes(user.email);
+    const includeId = id.includes(user.uid);
     if(!includeId){
-      dbService.collection('users').doc(user.email).set({
-        user_id: user.email,
+      dbService.collection('users').doc(user.uid).set({
+        // email: user.email,
+        // user_image: user.photoURL,
+        // name: user.displayName,
+        // user_like_comments: [],
+        // user_like_posts: [],
+        // user_bookmark_posts: [],
+        // user_write_comments: [],
+        // user_write_posts: [],
+
+        uid: user.uid,
+        email: user.email,
+        name: user.displayName,
         user_image: user.photoURL,
-        user_name: user.displayName,
         user_like_comments: [],
         user_like_posts: [],
         user_bookmark_posts: [],

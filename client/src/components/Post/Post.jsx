@@ -16,7 +16,7 @@ import { dbService } from "firebase.js";
 
 
 const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRender, postView }) => {
-  const { post_region, post_title, post_content, post_photo, post_id, post_writer, post_user_email, post_profile_img } = postData;
+  const { post_date, post_region, post_title, post_content, post_photo, post_id, post_writer, post_uid, post_profile_img } = postData;
 
   const location = useLocation();
 
@@ -54,7 +54,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
   // console.log(likeNum);
   // console.log(location.state.like.includes(post_id), location.state.bookmark.includes(post_id));
   
-  const userCheck = user.email === post_user_email;
+  const userCheck = user.uid === post_uid;
 
   const comment = useRef();
 
@@ -64,12 +64,12 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
       setLikePost(false);
       setLikeRender('noneLike');
       dispatch(likeMiddleware(post_id, 'noneLike')); 
-      dispatch(userMiddleware(user.email, post_id, 'noneLike'));
+      dispatch(userMiddleware(user.uid, post_id, 'noneLike'));
     }else{
       setLikePost(true);
       setLikeRender('like');
       dispatch(likeMiddleware(post_id, 'like')); 
-      dispatch(userMiddleware(user.email, post_id, 'like'));
+      dispatch(userMiddleware(user.uid, post_id, 'like'));
     }
   };
 
@@ -77,10 +77,10 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
   const onBookmarkToggle = () => {
     if(bookmarkPost){
       setBookmarkPost(false);
-      dispatch(bookmarkMiddleware(user.email, post_id, 'noneBookmark'));
+      dispatch(bookmarkMiddleware(user.uid, post_id, 'noneBookmark'));
     }else{
       setBookmarkPost(true);
-      dispatch(bookmarkMiddleware(user.email, post_id, 'bookmark'));
+      dispatch(bookmarkMiddleware(user.uid, post_id, 'bookmark'));
     }
   };
 
@@ -97,7 +97,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
   // comment collection : comment 문서 자체
   const postDelete = async() => {
     await dbService.collection('post').doc(post_id).delete();
-    await dbService.collection('users').doc(user.email).update({
+    await dbService.collection('users').doc(user.uid).update({
       user_write_posts: firebase.firestore.FieldValue.arrayRemove(post_id),
     });
     dispatch(commentDelThunk(post_id));
@@ -151,10 +151,10 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
   useEffect(() =>{
     auth.onAuthStateChanged((user) => {
       setUser(user);
-      dispatch(userMiddleware(user.email, '', 'init'));
+      dispatch(userMiddleware(user.uid, '', 'init'));
     });
     dispatch(likeMiddleware(post_id, 'init'));
-    timeNotice(post_id);
+    timeNotice(post_date);
   }, []);
 
 

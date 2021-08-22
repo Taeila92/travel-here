@@ -56,7 +56,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     setRegion("");
     setAttachment([]);
     isVisible();
-    history.push(`/categorylist/${region}`);
   };
   useEffect(() => {}, []);
   const onFileChange = (e) => {

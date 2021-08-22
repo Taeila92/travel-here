@@ -14,7 +14,7 @@ import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import WriteBtn from "components/Write/WriteBtn/WriteBtn";
-
+import history from "./history";
 // firebase
 import firebase from "firebase";
 import { dbService } from "firebase.js";

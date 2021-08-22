@@ -1,15 +1,18 @@
 import styled from 'styled-components';
 
 const Footer = styled.footer`
+  height: 100%;
   ul {
+    position: relative;
     display: flex;
     justify-content: space-around;
-    @media screen and (max-width: 740px) {
+    transform: translateY(300px);
+    /* @media screen and (max-width: 740px) {
       flex-direction: column;
-    }
+    } */
     li {
       display: flex;
-      @media screen and (max-width: 740px) {
+      /* @media screen and (max-width: 740px) {
         width: 55%;
         height: 2.5em;
         border: 1px solid;
@@ -17,7 +20,7 @@ const Footer = styled.footer`
         margin-bottom: 1.5em;
         border-radius: 12px;
         background-color: whitesmoke;
-      }
+      } */
       button {
         display: flex;
         flex-direction: column;
@@ -27,13 +30,13 @@ const Footer = styled.footer`
         background-color: transparent;
         cursor: pointer;
         width: 100%;
-        @media screen and (max-width: 740px) {
+        /* @media screen and (max-width: 740px) {
           display: flex;
           flex-direction: row;
           justify-content: space-around;
           align-items: center;
           font-size: 24px;
-        }
+        } */
         span {
           font-size: 32px;
         }

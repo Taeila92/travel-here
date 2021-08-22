@@ -1,52 +1,68 @@
 import React from 'react';
 import * as S from './LoginModalToggle.style';
 
-const LoginModalToggle = ({ toggleClass }) => {
+const LoginModalToggle = ({ toggleClass, isActive }) => {
   return (
-    <>
-      <S.ContainerInfo>
-        <S.InfoItem>
-          <S.Table>
-            <S.TableCell>
-              <S.P> Have an account? </S.P>
-              <S.Btn> Log in </S.Btn>
-            </S.TableCell>
-          </S.Table>
-        </S.InfoItem>
-        <S.InfoItem>
-          <S.Table>
-            <S.TableCell>
-              <S.P> Don't have an account? </S.P>
-              <S.Btn onClick={toggleClass}> Sign up </S.Btn>
-            </S.TableCell>
-          </S.Table>
-        </S.InfoItem>
-      </S.ContainerInfo>
+    <S.ContainerCss>
+      <div className={isActive ? 'container log-in' : 'container'}>
+        <div className="box"></div>
+        <div className="container-forms">
+          <div className="container-info">
+            <div className="info-item">
+              <div className="table">
+                <div className="table-cell">
+                  <p>Have an account?</p>
+                  <div onClick={toggleClass} className="btn">
+                    Log in
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="info-item">
+              <div className="table">
+                <div className="table-cell">
+                  <p>Don't have an account?</p>
+                  <div onClick={toggleClass} className="btn">
+                    Sign up
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-      <S.ContainerForm>
-        <div className="formItem logIn">
-          <div className="table">
-            <div className="tableCell">
-              <input name="Username" placeholder="Username" type="text" />
-              <input name="Password" placeholder="Password" type="Password" />
-              <button className="loginBtn"> Log in</button>
+          <div className="container-form">
+            <div className="form-item log-in">
+              <div className="table">
+                <div className="table-cell">
+                  <input name="Username" placeholder="Username" type="text" />
+                  <input
+                    name="Password"
+                    placeholder="Password"
+                    type="Password"
+                  />
+                  <div className="btn">Log in</div>
+                </div>
+              </div>
+            </div>
+            <div className="form-item sign-up">
+              <div className="table">
+                <div className="table-cell">
+                  <input name="email" placeholder="Email" type="text" />
+                  <input name="fullName" placeholder="Full Name" type="text" />
+                  <input name="Username" placeholder="Username" type="text" />
+                  <input
+                    name="Password"
+                    placeholder="Password"
+                    type="Password"
+                  />
+                  <div className="btn">Sign up</div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-
-        <div className="formItem signUp">
-          <div className="table">
-            <div className="tableCell">
-              <input name="email" placeholder="Email" type="text" />
-              <input name="fullName" placeholder="fullName" type="text" />
-              <input name="Username" placeholder="Username" type="text" />
-              <input name="Password" placeholder="Password" type="Password" />
-              <button className="signBtn">Sign up</button>
-            </div>
-          </div>
-        </div>
-      </S.ContainerForm>
-    </>
+      </div>
+    </S.ContainerCss>
   );
 };
 

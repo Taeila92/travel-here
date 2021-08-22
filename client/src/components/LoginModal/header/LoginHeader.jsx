@@ -1,7 +1,10 @@
 import * as S from './LoginHeader.style';
 import NavLinks from 'components/NavLinks/NavLinks';
+import LoginFooter from 'components/LoginModal/footer/LoginFooter';
+import AuthService from 'auth_service';
 
 function LoginHeader(props) {
+  const authService = new AuthService();
   const {
     user,
     email,
@@ -15,100 +18,104 @@ function LoginHeader(props) {
     emailError,
     passwordError,
     handleLogout,
+    toggleClass,
   } = props;
+
   return (
     <>
       {user ? (
         <NavLinks handleLogout={handleLogout} />
       ) : (
         <S.Header>
-          <ul>
-            {hasAccount ? (
-              <>
-                <li>
-                  <h1>로그인</h1>
-                </li>
-
-                <li>
-                  <input
-                    className="inputEmail"
-                    type="text"
-                    autoFocus
-                    required
-                    value={email}
-                    placeholder="Email Address"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <p className="errorMsg">{emailError}</p>
-                  <input
-                    className="inputPw"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                  />
-                  <p className="errorMsg">{passwordError}</p>
-                  <li>
-                    <button className="loginBtn" onClick={handleLogin}>
-                      Sign in
-                    </button>
-                    <p>
-                      Don't have an account ?
-                      <button
-                        className="logoutBtn"
-                        onClick={() => setHasAccount(!hasAccount)}
-                      >
-                        Sign Up
+          <main className={hasAccount ? 'container log-in' : 'container'}>
+            <article className="box"></article>
+            <article className="container-forms">
+              <section className="container-info">
+                <div className="info-item">
+                  <div className="table">
+                    <div className="table-cell">
+                      <p>Have an account?</p>
+                      <button onClick={toggleClass} className="btn">
+                        Log in
                       </button>
-                    </p>
-                  </li>
-                </li>
-              </>
-            ) : (
-              <>
-                <li>
-                  <h1>회원가입</h1>
-                </li>
-
-                <li>
-                  <input
-                    className="inputEmail"
-                    type="text"
-                    autoFocus
-                    required
-                    value={email}
-                    placeholder="Email Address"
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <p className="errorMsg">{emailError}</p>
-                  <input
-                    className="inputPw"
-                    type="password"
-                    required
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Password"
-                  />
-                  <p className="errorMsg">{passwordError}</p>
-                  <li>
-                    <button className="loginBtn" onClick={handleSignUP}>
-                      Sign up
-                    </button>
-                    <p>
-                      Have an account ?
-                      <button
-                        className="logoutBtn"
-                        onClick={() => setHasAccount(!hasAccount)}
-                      >
-                        Sign in
+                    </div>
+                  </div>
+                </div>
+                <div className="info-item">
+                  <div className="table">
+                    <div className="table-cell">
+                      <p>Don't have an account?</p>
+                      <button onClick={toggleClass} className="btn">
+                        Sign up
                       </button>
-                    </p>
-                  </li>
-                </li>
-              </>
-            )}
-          </ul>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <section className="container-form">
+                <div className="form-item log-in">
+                  <div className="table">
+                    <div className="table-cell">
+                      <input
+                        className="inputEmail"
+                        type="text"
+                        autoFocus
+                        required
+                        value={email}
+                        placeholder="Email Address"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <p className="errorMsg">{emailError}</p>
+
+                      <input
+                        className="inputPw"
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                      />
+                      <p className="errorMsg">{passwordError}</p>
+                      <button onClick={handleLogin} className="btn">
+                        Log in
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="form-item sign-up">
+                  <div className="table">
+                    <div className="table-cell">
+                      <input
+                        className="inputEmail"
+                        type="text"
+                        autoFocus
+                        required
+                        value={email}
+                        placeholder="Email Address"
+                        onChange={(e) => setEmail(e.target.value)}
+                      />
+                      <p className="errorMsg">{emailError}</p>
+                      <input
+                        className="inputPw"
+                        type="password"
+                        required
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Password"
+                      />
+                      <p className="errorMsg">{passwordError}</p>
+                      <button onClick={handleSignUP} className="btn">
+                        Sign up
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <LoginFooter authService={authService} />
+              </section>
+            </article>
+          </main>
         </S.Header>
       )}
     </>

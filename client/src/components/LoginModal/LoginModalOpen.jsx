@@ -15,6 +15,10 @@ function LoginModalOpen() {
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
 
+  const toggleClass = () => {
+    setHasAccount(!hasAccount);
+  };
+
   const clearInputs = () => {
     setEmail('');
     setPassword('');
@@ -91,7 +95,7 @@ function LoginModalOpen() {
         <NavLinks user={user} setUser={setUser} handleLogout={handleLogout} />
       ) : (
         <>
-          <S.LoginBg></S.LoginBg>
+          <S.LoginBg />
           <S.Logincontainer>
             <LoginHeader
               authService={authService}
@@ -107,8 +111,9 @@ function LoginModalOpen() {
               setHasAccount={setHasAccount}
               emailError={emailError}
               passwordError={passwordError}
+              toggleClass={toggleClass}
             />
-            <LoginFooter authService={authService} />
+            {/* <LoginFooter authService={authService} /> */}
           </S.Logincontainer>
         </>
       )}

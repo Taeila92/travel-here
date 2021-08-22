@@ -4,7 +4,6 @@ import * as S from './LoginFooter.style';
 
 function LoginFooter({ authService }) {
   const history = useHistory();
-
   // 로그아웃 페이지 전환
   const goToLogin = (userId) => {
     history.push({
@@ -53,13 +52,13 @@ function LoginFooter({ authService }) {
               <p>Github</p>
             </button>
           </li>
-          {/* Facebook login button */}
+          {/* Twitter login button */}
           <li>
             <button onClick={onLogin}>
               <span>
-                <i className="fab fa-facebook-square"></i>
+                <i className="fab fa-twitter"></i>
               </span>
-              <p>Facebook</p>
+              <p>Twitter</p>
             </button>
           </li>
         </ul>

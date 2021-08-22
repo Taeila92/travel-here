@@ -22,6 +22,10 @@ const ProfileImg = styled.img`
   border-radius: 50%;
 `;
 
+const Title = styled.p`
+  color: blue;
+`;
+
 const Icon = styled.i`
   :hover {
     cursor: pointer;
@@ -34,5 +38,6 @@ export {
   NickName,
   Profile,
   ProfileImg,
+  Title,
   Icon,
 };

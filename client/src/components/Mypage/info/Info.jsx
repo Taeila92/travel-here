@@ -91,22 +91,22 @@ const Info = ({ uid, user, userDB }) => {
   return (
     <>
       <S.Id>
-        <p>아이디</p>
+        <S.Title>아이디</S.Title>
         <p>{user.user_id}</p>
       </S.Id>
       <S.NickName>
-        <p>닉네임</p>
+        <S.Title>닉네임</S.Title>
         {nickName ?
         (<li>
           <input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
           <button onClick={onSubmitBtn}>제출</button>
         </li>) :
-        (user.user_name ? <p>{userDB.user_name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
+        (userDB.user_name ? <p>{userDB.user_name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
         <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
       </S.NickName>
       <S.Profile>
-        <p>프로필 사진</p>
-        {user.user_image ? <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p> : <p>사진 추가할래?</p>}
+        <S.Title>프로필 사진</S.Title>
+        {userDB.user_image ? <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p> : <p>사진 추가할래?</p>}
         <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
         {img && <li>
           <form onSubmit={onSubmit}>

@@ -1,5 +1,6 @@
 const getDate = (timeStamp) => {
   
+  timeStamp = Number(timeStamp)
   const post_date = new Date(timeStamp);
 
   const year = post_date.getFullYear()

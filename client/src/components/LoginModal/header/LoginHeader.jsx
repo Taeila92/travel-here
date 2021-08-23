@@ -14,7 +14,6 @@ function LoginHeader(props) {
     handleLogin,
     handleSignUP,
     hasAccount,
-    setHasAccount,
     emailError,
     passwordError,
     handleLogout,

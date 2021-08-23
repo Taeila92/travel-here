@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 
-const Header = styled.header`
+const ContainerCss = styled.div`
+  /* body {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  font-family: "Roboto", sans-serif;
+  background-color: #5356ad;
+  overflow: hidden;
+} */
   height: 100%;
   .table {
     display: table;
@@ -12,7 +22,6 @@ const Header = styled.header`
     display: table-cell;
     vertical-align: middle;
     transition: all 0.5s;
-    text-align: center;
   }
 
   .container {
@@ -100,7 +109,6 @@ const Header = styled.header`
   .container .container-forms .container-info .info-item .btn {
     background-color: transparent;
     border: 1px solid #fff;
-    padding: 12px 6px;
   }
   .container .container-forms .container-info .info-item .table-cell {
     padding-right: 35px;
@@ -138,8 +146,6 @@ const Header = styled.header`
     position: relative;
     box-shadow: 0 0 10px 1px #ff73b3;
     margin-top: 30px;
-    width: 70%;
-    border-radius: 12px;
   }
   .container .form-item {
     position: absolute;
@@ -180,4 +186,4 @@ const Header = styled.header`
   }
 `;
 
-export { Header };
+export { ContainerCss };

@@ -15,6 +15,10 @@ function LoginModalOpen() {
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
 
+  const toggleClass = () => {
+    setHasAccount(!hasAccount);
+  };
+
   const clearInputs = () => {
     setEmail('');
     setPassword('');
@@ -26,7 +30,7 @@ function LoginModalOpen() {
   };
 
   // 로그인
-  const handleLogin = () => {
+  const handleLogin = async () => {
     clearErrors();
     firebaseService
       .auth()
@@ -48,7 +52,7 @@ function LoginModalOpen() {
   };
 
   // 회원가입
-  const handleSignUP = () => {
+  const handleSignUP = async () => {
     clearErrors();
     firebaseService
       .auth()
@@ -95,7 +99,7 @@ function LoginModalOpen() {
         <NavLinks user={user} setUser={setUser} handleLogout={handleLogout} />
       ) : (
         <>
-          <S.LoginBg></S.LoginBg>
+          <S.LoginBg />
           <S.Logincontainer>
             <LoginHeader
               authService={authService}
@@ -111,8 +115,9 @@ function LoginModalOpen() {
               setHasAccount={setHasAccount}
               emailError={emailError}
               passwordError={passwordError}
+              toggleClass={toggleClass}
             />
-            <LoginFooter authService={authService} />
+            {/* <LoginFooter authService={authService} /> */}
           </S.Logincontainer>
         </>
       )}

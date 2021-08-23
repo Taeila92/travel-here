@@ -17,7 +17,7 @@ import WriteBtn from 'components/Write/WriteBtn/WriteBtn';
 import WriteModal from 'components/Write/WriteModal/WriteModal';
 
 // hook
-import useAuth from 'hooks/useAuth';
+import useAuth from "hooks/useAuth";
 
 function App() {
   const [visible, setVisible] = useState(false);

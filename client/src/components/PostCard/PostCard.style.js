@@ -47,15 +47,16 @@ const Content = styled.div`
   }
 `;
 
-const SkeletonImage = styled.div`
-  width : 100%;
-  height : 5rem;
-  background-color: gray;
+const SkeletonContainer = styled.div`
+  box-shadow : 0 0 4px #f40057;
+  margin : 0.5rem;
+  padding : 1.6rem 0.6rem;
+  border-radius: 1.5rem;
 `;
 
 export{
   Container,
   Profile,
   Content,
-  SkeletonImage,
+  SkeletonContainer
 }

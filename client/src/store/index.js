@@ -2,18 +2,18 @@
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import board from "store/modules/board";
-import comment from "store/modules/comment";
-import category from "store/modules/category";
-import nav from "store/modules/nav";
-import postLike from "store/modules/postLike";
-import userLike from "store/modules/userLike";
 import bookmark from "store/modules/bookmark";
-import user from "store/modules/user";
-import mypagePost from "store/modules/mypagePost";
+import category from "store/modules/category";
+import comment from "store/modules/comment";
+import del from "store/modules/delete";
 import mypageBookmark from "store/modules/mypageBookmark";
 import mypageComment from "store/modules/mypageComment";
+import mypagePost from "store/modules/mypagePost";
+import nav from "store/modules/nav";
+import postLike from "store/modules/postLike";
+import user from "store/modules/user";
+import userLike from "store/modules/userLike";
 import view from "store/modules/view";
-import del from "store/modules/delete";
 
 const reducer = combineReducers({
   user,

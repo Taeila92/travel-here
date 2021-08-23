@@ -13,11 +13,12 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   const input = useRef();
 
   const onEnter = (e) => {
-    if(e.key != 'Enter' | e.key === 'Enter' && e.shiftKey){
+    if(e.key !== 'Enter' | e.key === 'Enter' && e.shiftKey){
       return;
     }
     if(e.key === 'Enter'){
       e.preventDefault();
+      console.log(e.target.parentElement);
       onEditFrame(e.target.value, e.target.parentElement.id);
     }
   }
@@ -44,7 +45,8 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
 
   const onDeleteList = async(e) => {
     const target = e.target;
-    let i = target.parentElement.className;
+    let i = target.parentElement.parentElement.parentElement.id;
+
     await dbService.collection('comment').doc(i).delete();
     await dbService.collection('users').doc(user.uid).update({
       user_write_comments: firebase.firestore.FieldValue.arrayRemove(i),

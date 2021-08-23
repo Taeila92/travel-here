@@ -16,14 +16,14 @@ const Container = styled.section`
 
 const Contents = styled.div`
   width: 30rem;
-  height: 45rem;
   background-color: white;
   border-radius: 10px;
+  padding: 3rem 0;
   ${flex};
   ul {
     width: 27rem;
-    height: 40rem;
-    overflow-x: hidden;
+    max-height: 40rem;
+    overflow-y: scroll;
     ${flex}
     align-items: flex-start;
     justify-content: flex-start;
@@ -41,7 +41,7 @@ const Header = styled.li`
   position: sticky;
   top: 0;
   left: 0;
-  padding-bottom: 1.0rem;
+  padding-bottom: 1rem;
   z-index: 11;
   span {
     ${flex};
@@ -60,34 +60,64 @@ const Header = styled.li`
       border-radius: 20px;
       margin-left: 0.5rem;
     }
+    i {
+      margin-left: 1rem;
+      ${cursorPointer};
+    }
   }
-  i {
-    outline: none;
-    border: none;
-    background-color: transparent;
-    ${cursorPointer};
+  div{
+    i {
+      outline: none;
+      border: none;
+      background-color: transparent;
+      margin-left: 1rem;
+      ${cursorPointer};
+    }
+    div {
+      position: absolute;
+    }
   }
 `;
 
-const Images = styled.li`
-  height: 20rem;
-  margin: 0.5rem 0 1.5rem 0;
+const editDelToggle = styled.div`
   ${flex};
-  flex-direction: row;
-  img {
-    width: 20rem;
-    height: 20rem;
-    object-fit: cover;
-    background-color: black;
-    margin: 0 0.2rem;
-    transform: translateX(3.3rem);
+  ${cursorPointer};
+  width: 4rem;
+  border-radius: 10px;
+  background-color: white;
+  border: 1px solid #E3E3E3;
+  transform: translate(-0.8rem, 1rem);
+  box-shadow: 0 0 4px #E3E3E3;
+  div {
+    position: absolute;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    border-top: 1px solid #E3E3E3;
+    border-left: 1px solid #E3E3E3;
+    transform: translate(0rem, -0.55rem) rotate(0.125turn);
+    box-shadow: 0 0 4px #E3E3E3;
+  }
+  p {
+    padding: 0.5rem 0.5rem;
+    font-size: 0.8rem;
+  }
+  p:nth-child(2){
+    border-bottom: 1px solid #E3E3E3;
+    background-color: white;
+    z-index: 10;
+    color: #409BF0;
+  }
+  p:nth-child(3){
+    color: #ED4956;
   }
 `;
-
 
 const Profile = styled.li`
   ${flex};
   flex-direction: row;
+  ${marginTop};
   img {
     width: 3rem;
     height: 3rem;
@@ -96,11 +126,12 @@ const Profile = styled.li`
     background-color: pink;
   }
   p {
-    margin: 0 1rem;
+    margin: 0 0.5rem;
   }
   span {
     font-weight: bold;
-    color: #dfe4ea;
+    font-size: 0.8rem;
+    color: lightgray;
   }
 `;
 
@@ -153,7 +184,8 @@ export {
   Container,
   Contents,
   Header,
-  Images, 
+  editDelToggle,
+  // Images, 
   Profile,
   Title, 
   Content,

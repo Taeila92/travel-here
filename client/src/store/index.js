@@ -9,6 +9,11 @@ import postLike from "store/modules/postLike";
 import userLike from "store/modules/userLike";
 import bookmark from "store/modules/bookmark";
 import user from "store/modules/user";
+import mypagePost from "store/modules/mypagePost";
+import mypageBookmark from "store/modules/mypageBookmark";
+import mypageComment from "store/modules/mypageComment";
+import view from "store/modules/view";
+import del from "store/modules/delete";
 
 const reducer = combineReducers({
   user,
@@ -19,6 +24,11 @@ const reducer = combineReducers({
   postLike,
   userLike,
   bookmark,
+  mypagePost,
+  mypageBookmark,
+  mypageComment,
+  view,
+  del,
 });
 
 const enhancer =

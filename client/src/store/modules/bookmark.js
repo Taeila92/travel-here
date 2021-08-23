@@ -50,14 +50,14 @@ const reducer = (prevState = initialState, action) => {
         draft.post = action.payload.postId;
         let postIds = '';
         postIds = draft.post;
-        dbService.collection('users').doc(draft.data.user_id).update({
+        dbService.collection('users').doc(draft.data.uid).update({
           user_bookmark_posts: firebase.firestore.FieldValue.arrayUnion(postIds),      
         });
         break;
       case NONE_BOOKMARK:
         draft.data = action.payload.user[0];
         draft.post = action.payload.postId;
-        dbService.collection('users').doc(draft.data.user_id).update({
+        dbService.collection('users').doc(draft.data.uid).update({
           user_bookmark_posts: draft.data.user_bookmark_posts.filter((elem) => elem !== draft.post),      
         });
         break;

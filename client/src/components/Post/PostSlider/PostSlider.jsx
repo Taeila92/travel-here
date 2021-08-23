@@ -49,23 +49,28 @@ const PostSlider = ({postImages}) => {
   }
 
   useEffect(()=>{
-    img.current.style.width = '27rem';
-    img.current.style.height = '100%';
-    img.current.style.margin = '1rem 0 2rem 0';
+    if(postImages.length != 0){
+      img.current.style.width = '27rem';
+      img.current.style.height = '100%';
+      img.current.style.margin = '1rem 0 1rem 0';
+    }
   }, []);
 
   return (
-    <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
-      <S.StyledSlider {...setting} >
-        {sliderReady && imageURL.map((image)=>{
-          return (
-            <div key={image}>
-              <img src={image} alt="여행사진" />
-            </div>
-          );
-        })}
-      </S.StyledSlider>
-    </li>
+    <>
+      {(postImages.length != 0) &&
+      <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+        <S.StyledSlider {...setting} >
+          {sliderReady && imageURL.map((image)=>{
+            return (
+              <div key={image}>
+                <img src={image} alt="여행사진" />
+              </div>
+            );
+          })}
+        </S.StyledSlider>
+      </li>}
+    </>
   )
 }
 

@@ -50,14 +50,14 @@ const reducer = (prevState = initialState, action) => {
         draft.post = action.payload.postId;
         let postIds = '';
         postIds = draft.post;
-        dbService.collection('users').doc(draft.data.user_id).update({
+        dbService.collection('users').doc(draft.data.uid).update({
           user_like_posts: firebase.firestore.FieldValue.arrayUnion(postIds),      
         });
         break;
       case NONELIKE_USER:
         draft.data = action.payload.user[0];
         draft.post = action.payload.postId;
-        dbService.collection('users').doc(draft.data.user_id).update({
+        dbService.collection('users').doc(draft.data.uid).update({
           user_like_posts: draft.data.user_like_posts.filter((elem) => elem !== draft.post),      
         });
         break;

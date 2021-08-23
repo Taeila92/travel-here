@@ -1,5 +1,5 @@
-import styled, { css } from "styled-components";
-import { NavLink } from "react-router-dom";
+import styled, { css } from 'styled-components';
+import { NavLink } from 'react-router-dom';
 
 const Container = styled.div`
   position: absolute;
@@ -7,26 +7,25 @@ const Container = styled.div`
   top: -2rem;
   bottom: 0;
   display: flex;
-  height: 120px;
-  ${(props)=>{
-    if(!props.isPc){
+  padding-top: 4px;
+  ${(props) => {
+    if (!props.isPc) {
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
         height: 120px;
         padding-right: 20px;
         transition: 0.3s;
-        transform: ${(props) => props.isNavOpened ? 'translateY(35px)' : 'translateY(-90px)'};
+        transform: ${(props) =>
+          props.isNavOpened ? '0' : 'translateY(-150px)'};
       `;
     }
   }}
-  //height: ${(props) => (props.isPc ? '150px' : '55px')};
 `;
 
 const Header = styled.div`
   position: relative;
   background-color: transparent;
-  height: ${(props) => (props.isPc ? '100px' : '55px')};
 `;
 
 const Ul = styled.ul`
@@ -64,4 +63,4 @@ const StyledNav = styled(NavLink)`
   color: white;
 `;
 
-export { Container, Ul, Li, Button,Header, StyledNav };
+export { Container, Ul, Li, Button, Header, StyledNav };

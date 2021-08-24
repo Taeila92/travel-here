@@ -11,8 +11,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const [attachment, setAttachment] = useState([]);
   const postRef = useRef();
   const titleRef = useRef();
-  const history = useHistory();
-  console.log(userObj);
 
   const onChange = (e) => {
     const { value, name } = e.target;

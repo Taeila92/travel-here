@@ -18,6 +18,7 @@ function LoginHeader(props) {
     passwordError,
     handleLogout,
     toggleClass,
+    goToPassword,
   } = props;
 
   return (
@@ -76,6 +77,7 @@ function LoginHeader(props) {
                         placeholder="Password"
                       />
                       <p className="errorMsg">{passwordError}</p>
+                      <button onClick={goToPassword}>비밀번호 찾기</button>
                       <button onClick={handleLogin} className="btn">
                         Log in
                       </button>
@@ -105,6 +107,7 @@ function LoginHeader(props) {
                         placeholder="Password"
                       />
                       <p className="errorMsg">{passwordError}</p>
+                      <button onClick={goToPassword}>비밀번호 찾기</button>
                       <button onClick={handleSignUP} className="btn">
                         Sign up
                       </button>

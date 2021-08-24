@@ -4,6 +4,7 @@ import LoginHeader from 'components/LoginModal/header/LoginHeader';
 import AuthService from 'auth_service';
 import firebaseService from 'firebase';
 import NavLinks from 'components/NavLinks/NavLinks';
+import { useHistory } from 'react-router-dom';
 
 function LoginModalOpen() {
   const authService = new AuthService();
@@ -13,6 +14,12 @@ function LoginModalOpen() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
+  const history = useHistory();
+
+  const goToPassword = () => {
+    let path = '/LoginHelp';
+    history.push(path);
+  };
 
   const toggleClass = () => {
     setHasAccount(!hasAccount);
@@ -115,6 +122,7 @@ function LoginModalOpen() {
               emailError={emailError}
               passwordError={passwordError}
               toggleClass={toggleClass}
+              goToPassword={goToPassword}
             />
           </S.Logincontainer>
         </>

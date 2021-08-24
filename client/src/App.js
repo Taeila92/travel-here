@@ -15,9 +15,10 @@ import Login from 'pages/Login';
 import NotFound from 'pages/NotFound';
 import WriteBtn from 'components/Write/WriteBtn/WriteBtn';
 import WriteModal from 'components/Write/WriteModal/WriteModal';
+import LoginFind from 'pages/LoginFind';
 
 // hook
-import useAuth from "hooks/useAuth";
+import useAuth from 'hooks/useAuth';
 
 function App() {
   const [visible, setVisible] = useState(false);
@@ -54,6 +55,7 @@ function App() {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route path="/login" component={Login} />
+              <Route path="/loginhelp" component={LoginFind} />
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
               <Route component={NotFound} />
@@ -62,6 +64,7 @@ function App() {
             // 로그인 후
             <Switch>
               <Route exact path="/" component={Home} />
+              <Route path="/loginhelp" component={LoginFind} />
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
               <Route component={NotFound} />

@@ -2,9 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
-import { useHistory } from "react-router";
 import firebase from "firebase";
-
 
 export default function WriteModal({ visible, isVisible, userObj }) {
   const [post, setPost] = useState("");
@@ -13,7 +11,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const [attachment, setAttachment] = useState([]);
   const postRef = useRef();
   const titleRef = useRef();
-  const history = useHistory();
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -45,12 +42,14 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     const uuid = uuidv4();
 
     // users collection의 user_write_posts에 post_id 추가
-    await dbService.collection('users').doc(ID).update({
-      user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),      
-    });
+    await dbService
+      .collection("users")
+      .doc(ID)
+      .update({
+        user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
+      });
 
-
-    await dbService.collection('post').doc(uuid).set({
+    await dbService.collection("post").doc(uuid).set({
       post_title: title,
       post_content: post,
       post_writer: userObj.name,
@@ -69,7 +68,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     setAttachment([]);
     isVisible();
   };
-
 
   useEffect(() => {}, []);
   const onFileChange = (e) => {
@@ -96,7 +94,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     setAttachment((prev, index) => {});
   };
 
-
   return (
     <>
       <S.Overlay visible={visible} onClick={isVisible} />
@@ -105,7 +102,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
 
         {userObj && (
           <S.Wrapper>
-            <img src={userObj.user_image} alt=""/>
+            <img src={userObj.user_image} alt="" />
             <S.Name> {userObj.name}</S.Name>
           </S.Wrapper>
         )}
@@ -146,7 +143,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
           <div>
             {attachment &&
               attachment.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" alt=""/>
+                <img key={i} src={atta} width="70px" height="70px" alt="" />
               ))}
           </div>
           <input

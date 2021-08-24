@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useRef} from 'react'
 import { storageService } from 'firebase.js';
+import ImageLoader from './ContentPlaceholder';
 import * as S from './PostSlider.style'
 
 const PostSlider = ({postImages}) => {
@@ -27,7 +28,7 @@ const PostSlider = ({postImages}) => {
     }).catch((error)=>{
       console.error(error)
     })
-    setSliderReady(()=>(true)) // slider가 준비되면 (동기적으로)
+    setTimeout(() => setSliderReady(true), 1400)
   },[])
 
   const onMouseDown = () => {
@@ -60,6 +61,8 @@ const PostSlider = ({postImages}) => {
     <>
       {(postImages.length != 0) &&
       <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+        {sliderReady || <ImageLoader/>}
+        {console.log(sliderReady)}
         <S.StyledSlider {...setting} >
           {sliderReady && imageURL.map((image)=>{
             return (

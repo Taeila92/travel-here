@@ -6,8 +6,8 @@ const MyLoader = (props) => (
     speed={2}
     gradientRatio ={2}
     width={280}
-    height={400}
-    viewBox="0 0 300 400"
+    height={380}
+    viewBox="0 0 300 380"
     backgroundColor="#F6F8FA"
     foregroundColor="#6f79a8"
     {...props}

@@ -48,10 +48,10 @@ const Content = styled.div`
 `;
 
 const SkeletonContainer = styled.div`
-  box-shadow : 0 0 4px #f40057;
   margin : 0.5rem;
   padding : 1.6rem 0.6rem;
   border-radius: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
 `;
 
 export{

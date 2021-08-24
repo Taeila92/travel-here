@@ -24,16 +24,20 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   }
 
   const onDoneEdit = () => { 
-    onEditFrame(input.current.value, container.current.id);
+    onEditFrame(input.current.value, container.current.id, input.current.placeholder);
   };
   
-  const onEditFrame = async(value, i) => {
+  const onEditFrame = async(value, i, placeholder) => {
     if(!value){
-      return;
+      await dbService.collection('comment').doc(i).update({
+        comment_content: placeholder
+      });
     }
-    await dbService.collection('comment').doc(i).update({
-      comment_content: value
-    });
+    if(value){
+      await dbService.collection('comment').doc(i).update({
+        comment_content: value
+      });
+    }
     onEdit();
     setEdit(false);
     setEditDelete(false);

@@ -30,14 +30,13 @@ const Bookmark = ({ user }) => {
     <>
       {!check && bookmarkDB.map((bm) => {
         return (
-          <S.List key={bm.post_id} onClick={()=>onMovePage(bm)}>
-            <h1>{bm.post_title}</h1>
-            <h2>{bm.post_content}</h2>
+          <S.List key={bm.post_id} onClick={()=>onMovePage(bm)} title={'게시글 보러가기'}>
+            <p>{bm.post_title}</p>
           </S.List>
         )
       })}
       {check &&
-        <h1>daksldfads</h1>
+        <S.Null>찜한 목록이 없습니다</S.Null>
       }
     </>
   )

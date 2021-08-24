@@ -2,7 +2,8 @@
 import * as S from "./Info.style";
 import { useDispatch } from 'react-redux';
 import { userMiddleware } from 'store/modules/userLike';
-import { editUserNameThunk } from 'store/modules/mypageComment';
+import { editMypageThunk } from 'store/modules/mypageComment';
+import { editUserImgThunk } from 'store/modules/mypagePost';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from "uuid";
 
@@ -26,7 +27,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
       name: value,      
     });
     dispatch(userMiddleware(user.uid, '', 'init'));
-    dispatch(editUserNameThunk(user.uid, value, ''));
+    dispatch(editMypageThunk(user.uid, value, 'name'));
     setNickName(false);
     setChange(!change);
   };
@@ -80,6 +81,9 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     });
     setAttachment([]);
     dispatch(userMiddleware(user.uid, '', 'init'));
+    dispatch(editUserImgThunk(user.uid, attachmentUrl));
+    dispatch(editMypageThunk(user.uid, attachmentUrl, 'img'));
+    setChange(!change);
     setImg(false);
   };
 
@@ -100,10 +104,10 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
       <S.NickName>
         <S.Title>닉네임</S.Title>
         {nickName ?
-        (<li>
+        (<div>
           <input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
           <button onClick={onSubmitBtn}>제출</button>
-        </li>) :
+        </div>) :
         (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
         <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
       </S.NickName>

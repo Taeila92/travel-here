@@ -10,7 +10,7 @@ export const getMypageCommentAPI = async(id) => {
   return response;
 }
 
-export const editMypageUserNameAPI = async(id) => {
+export const editMypageAPI = async(id) => {
   const response = await dbService.collection("comment").where("user_uid","==",id).get();
   return response;
 }

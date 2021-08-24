@@ -143,10 +143,10 @@ const Mypage = ({user}) => {
         </S.Contents>
         {info &&
         <S.Content>
-          <li>내 정보</li>
-          <li>
+          <ul>
+            <li>내 정보</li>
             <Info uid={uid} user={user} userDB={userDB} change={change} setChange={setChange}/>
-          </li>
+          </ul>
         </S.Content>}
         {post &&
         <S.Content>

@@ -62,6 +62,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_region: region,
       post_view: 0,
       post_like: 0,
+      uid: userObj.uid,
     });
     setPost("");
     setTitle("");

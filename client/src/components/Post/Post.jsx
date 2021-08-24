@@ -167,7 +167,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
         <ul ref={comment}>
           <S.Header>
             <span>
-              <span>영국</span>
+              <span>{post_title}</span>
               <p>#{post_region}</p>
               <p>{postView}</p>
             </span>
@@ -188,7 +188,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
             <p>{post_writer}</p> {/* post_writer로 검색?*/}
             <span>{time}</span>
           </S.Profile>
-          <S.Title>{post_title}</S.Title>
+          {/* <S.Title>{post_title}</S.Title> */}
           <S.Content>{post_content}</S.Content>
           <S.Like>
             <span>

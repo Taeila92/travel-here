@@ -60,7 +60,6 @@ const CommentList = styled.div`
     text-align: center;
   }
   span, input {
-    width: 85%;
     border: none;
     resize: none;
     outline: none;

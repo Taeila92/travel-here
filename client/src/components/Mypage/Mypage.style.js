@@ -1,13 +1,12 @@
 ﻿import styled from 'styled-components';
+import { flex, marginTop, fontSize, hideScrollbar, cursorPointer, frame } from "./styleConstatns";
 
 
 const Container = styled.section`
   width: 100vw;
   height: 100vh;
-  display: flex;
+  ${flex};
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   caret-color: transparent;
 `;
 
@@ -16,8 +15,7 @@ const Contents = styled.div`
   height: 30rem;
   margin: 0 1rem;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
+  ${flex};
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
@@ -26,9 +24,7 @@ const Contents = styled.div`
 const BackImage = styled.div`
   width: 100%;
   height: 10rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flex};
   justify-content: flex-end;
   background-color: rgb(0, 0, 0, 0.3);
   img {
@@ -56,9 +52,7 @@ const BackImage = styled.div`
 const ListArea = styled.div`
   width: 100%;
   height: 20rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flex};
   justify-content: flex-end;
   p {
     background-color: rgb(255, 255, 255, 0.1);
@@ -103,23 +97,24 @@ const ListArea = styled.div`
 `;
 
 const Content = styled.ul`
-  /* background-color: white;
-  width: 30rem;
-  height: 30rem;
-  margin: 0 1rem;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll; */
   width: 20rem;
   height: 30rem;
   margin: 0 1rem;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
+  ${flex};
+  color: white;
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
+  ul {
+    height: 25rem;
+    overflow-y: scroll;
+    ${hideScrollbar};
+    li:nth-child(1){
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+  }
 `;
 
 

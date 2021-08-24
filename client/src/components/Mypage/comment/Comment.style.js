@@ -1,9 +1,15 @@
 ﻿import styled from "styled-components";
+import { frame } from "../styleConstatns";
 
 const List = styled.li`
-  border: 1px solid black;
-  margin: 1rem 0;
-  cursor: pointer;
+  p {
+    ${frame};
+  }
 `;
 
-export { List };
+const Null = styled.p`
+  ${frame};
+  cursor: auto;
+`;
+
+export { List, Null };

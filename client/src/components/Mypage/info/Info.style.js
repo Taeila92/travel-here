@@ -1,18 +1,19 @@
 ﻿import styled, { css } from "styled-components";
+import { flex, frame } from "../styleConstatns";
 
 const Id = styled.li`
-  margin-bottom: 1rem;
-  border: 1px solid black;
+  ${frame};
+  cursor: auto;
 `;
 
 const NickName = styled.li`
-  margin-bottom: 1rem;
-  border: 1px solid black;
+  ${frame};
+  cursor: auto;
 `;
 
 const Profile = styled.li`
-  margin-bottom: 1rem;
-  border: 1px solid black;
+  ${frame};
+  cursor: auto;
 `;
 
 const ProfileImg = styled.img`

@@ -53,14 +53,14 @@ const CommentList = styled.div`
     background-color: pink;
   }
   p:nth-child(1) {
-    margin-left: 1rem;
+    margin-left: 0.5rem;
     font-size: 0.7rem;
     color: darkgray;
     word-break: normal;
     text-align: center;
   }
-  p:nth-child(2), input {
-    width: 90%;
+  span, input {
+    width: 85%;
     border: none;
     resize: none;
     outline: none;

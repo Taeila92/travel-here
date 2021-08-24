@@ -103,14 +103,23 @@ const ListArea = styled.div`
 `;
 
 const Content = styled.ul`
-  background-color: white;
+  /* background-color: white;
   width: 30rem;
   height: 30rem;
   margin: 0 1rem;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  overflow-y: scroll; */
+  width: 20rem;
+  height: 30rem;
+  margin: 0 1rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 0 4px #f40057;
+  background-color: rgb(0, 0, 0, 0.5);
 `;
 
 

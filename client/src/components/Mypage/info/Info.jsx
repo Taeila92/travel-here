@@ -2,10 +2,11 @@
 import * as S from "./Info.style";
 import { useDispatch } from 'react-redux';
 import { userMiddleware } from 'store/modules/userLike';
+import { editUserNameThunk } from 'store/modules/mypageComment';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from "uuid";
 
-const Info = ({ uid, user, userDB }) => {
+const Info = ({ uid, user, userDB, change, setChange }) => {
 
 
   const input = useRef();
@@ -25,7 +26,9 @@ const Info = ({ uid, user, userDB }) => {
       name: value,      
     });
     dispatch(userMiddleware(user.uid, '', 'init'));
+    dispatch(editUserNameThunk(user.uid, value, ''));
     setNickName(false);
+    setChange(!change);
   };
 
 

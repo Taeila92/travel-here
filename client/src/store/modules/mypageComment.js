@@ -1,14 +1,23 @@
-﻿import { getMypageCommentAPI } from 'store/apis/comment';
+﻿import { getMypageCommentAPI, editMypageUserNameAPI } from 'store/apis/comment';
+import { dbService } from 'firebase.js';
 const { produce } = require('immer');
 
 // Actions
 const GET_COMMENT = 'mypageComment/GET_COMMENT';
+const GET_COMMENT_USERNAME = 'mypageComment/GET_COMMENT_USERNAME'
 
 
 // Action 생성자
 export const getComment = payload => {
   return {
     type : GET_COMMENT,
+    payload,
+  }
+}
+
+export const editCommentUserName = payload => {
+  return {
+    type : GET_COMMENT_USERNAME,
     payload,
   }
 }
@@ -23,9 +32,7 @@ export const mypageCommentMiddleware = (id, type) => async dispatch => {
       arr.push(doc.data());
     })
     let array = Object.assign([], arr);
-    if(array){
-      dispatch(getComment(array));
-    }
+    dispatch(getComment(array));
     if(type === 'finish'){
       arr = [];
     }
@@ -33,6 +40,28 @@ export const mypageCommentMiddleware = (id, type) => async dispatch => {
     console.log(error);
   }
 };
+
+let editObj = {arr: [], value: ''};
+export const editUserNameThunk = (id, value, type) => async dispatch => {
+  try{
+    const response = await editMypageUserNameAPI(id);
+    response.forEach(doc => {
+      editObj.arr.push(doc.data());
+      editObj.value = value;
+    })
+    let array = Object.assign([], editObj.arr);
+    editObj.arr = array;
+    dispatch(editCommentUserName(editObj));
+    if(type === 'finish'){
+      editObj.arr = [];
+      editObj.value = [];
+    }
+  }catch(error){
+    console.log(error);
+  }
+};
+
+
 
 // Reducer
 const initialState = {
@@ -45,8 +74,16 @@ const reducer = (prevState=initialState, action) => {
       case GET_COMMENT :
         draft.data = action.payload;
         break;
+      case GET_COMMENT_USERNAME :
+        draft.data = action.payload;
+        for(let i=0; i<draft.data.arr.length; i++){
+          dbService.collection('comment').doc(draft.data.arr[i].comment_id).update({
+            comment_writer: draft.data.value,      
+          });
+        }
+        break;
       default :
-          return prevState;
+        return prevState;
     }
   })
 };

@@ -73,7 +73,7 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
       <img src={com.user_image} alt="프로필 이미지입니다"></img>
       {edit ?
       (<input ref={input} placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
-      <S.Content><p>{com.comment_writer}</p><p>{com.comment_content}</p></S.Content>}
+      <S.Content>{com.comment_writer && <p>{com.comment_writer}</p>}<span>{com.comment_content}</span></S.Content>}
       <S.EditDel>
         {editDelete &&
           <>

@@ -7,9 +7,6 @@ import NavLinks from 'components/NavLinks/NavLinks';
 import { useHistory } from 'react-router-dom';
 
 function LoginModalOpen() {
-
-  const history = useHistory();
-
   const authService = new AuthService();
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');

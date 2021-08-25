@@ -6,6 +6,7 @@ const { produce } = require('immer');
 // Actions
 const GET_POST = 'mypagePost/GET_POST';
 const EDIT_IMG = 'mypagePost/EDIT_IMG';
+const EDIT_NAME = 'mypagePost/EDIT_NAME';
 
 // Action 생성자
 export const getPost = (payload) => {
@@ -22,10 +23,18 @@ export const editImg = (payload) => {
   }
 };
 
+export const editName = (payload) => {
+  return {
+    type: EDIT_NAME,
+    payload,
+  }
+};
+
 // Reducer
 const initialState = {
   data: [],
   img: '',
+  name: '',
 };
 
 const reducer = (prevState = initialState, action) => {
@@ -40,6 +49,15 @@ const reducer = (prevState = initialState, action) => {
         for(let i=0; i<draft.data.length; i++){
           dbService.collection('post').doc(draft.data[i].post_id).update({
             post_profile_img: draft.img,      
+          });
+        }
+        break;
+      case EDIT_NAME:
+        draft.data = action.payload.arr;
+        draft.name = action.payload.name;
+        for(let i=0; i<draft.data.length; i++){
+          dbService.collection('post').doc(draft.data[i].post_id).update({
+            post_writer: draft.name,      
           });
         }
         break;
@@ -72,6 +90,20 @@ export const editUserImgThunk = (id, img) => async dispatch => {
       arr.img = img;
     })
     dispatch(editImg(arr));
+  }catch(error){
+    console.log(error);
+  }
+}
+
+export const editUserNameThunk = (id, name) => async dispatch => {
+  try{
+    const response = await editMypageImgAPI(id);
+    let arr = {arr: [], name: ''};
+    response.forEach(doc => {
+      arr.arr.push(doc.data());
+      arr.name = name;
+    })
+    dispatch(editName(arr));
   }catch(error){
     console.log(error);
   }

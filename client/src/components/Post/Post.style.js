@@ -51,14 +51,17 @@ const Header = styled.li`
       font-size: 1.2rem;
       font-weight: bold;
     }
-    p {
+    p:nth-child(2) {
       height: 1.5rem;
       padding: 0.2rem 0.5rem 0rem 0.5rem;
       color: #009432;
       background-color: #e1facf;
       border: 1px solid #b8e994;
       border-radius: 20px;
-      margin-left: 0.5rem;
+      margin: 0 0.5rem;
+    }
+    p:nth-child(3){
+      font-size: 0.8rem;
     }
     i {
       margin-left: 1rem;

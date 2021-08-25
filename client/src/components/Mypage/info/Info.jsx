@@ -3,7 +3,7 @@ import * as S from "./Info.style";
 import { useDispatch } from 'react-redux';
 import { userMiddleware } from 'store/modules/userLike';
 import { editMypageThunk } from 'store/modules/mypageComment';
-import { editUserImgThunk } from 'store/modules/mypagePost';
+import { editUserImgThunk, editUserNameThunk } from 'store/modules/mypagePost';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from "uuid";
 
@@ -28,6 +28,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     });
     dispatch(userMiddleware(user.uid, '', 'init'));
     dispatch(editMypageThunk(user.uid, value, 'name'));
+    dispatch(editUserNameThunk(user.uid, value));
     setNickName(false);
     setChange(!change);
   };
@@ -98,41 +99,47 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
   return (
     <>
       <S.Id>
-        <S.Title>아이디</S.Title>
+        <S.Paragraph>
+          <S.Title>아이디</S.Title>
+        </S.Paragraph>
         <p>{user.email}</p>
       </S.Id>
       <S.NickName>
-        <S.Title>닉네임</S.Title>
+        <S.Paragraph>
+          <S.Title>닉네임</S.Title>
+          <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
+        </S.Paragraph>
         {nickName ?
-        (<div>
-          <input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
-          <button onClick={onSubmitBtn}>제출</button>
-        </div>) :
+        (<><input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
+        <button onClick={onSubmitBtn}>제출</button></>) :
         (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
-        <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
       </S.NickName>
       <S.Profile>
-        <S.Title>프로필 사진</S.Title>
-        {userDB.user_image ? <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p> : <p>사진 추가할래?</p>}
-        <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
-        {img && <li>
-          <form onSubmit={onSubmit}>
-            <input
-              accept="image/*"
-              type="file"
-              onChange={onFileChange}
-              name="fileNames[]"
-            />
-            {attachment && (
-              <div>
-                {attachment.map((atta, i) => (
-                  <img key={i} src={atta} width="50px" height="50px" alt="프로필 사진"/>
-                ))}
-              </div>
-            )}
-            <button type="submit">제출</button>
-          </form>
-        </li>}
+        <S.Paragraph>
+          <S.Title>프로필 사진</S.Title>
+          <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
+        </S.Paragraph>
+        <S.Paragraph>
+          {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : <p>사진 추가할래?</p>}
+          {img && <p>
+            <form onSubmit={onSubmit}>
+              <input
+                accept="image/*"
+                type="file"
+                onChange={onFileChange}
+                name="fileNames[]"
+              />
+              {attachment && (
+                <div>
+                  {attachment.map((atta, i) => (
+                    <img key={i} src={atta} width="50px" height="50px" alt="프로필 사진"/>
+                  ))}
+                </div>
+              )}
+              <button type="submit">제출</button>
+            </form>
+          </p>}
+        </S.Paragraph>
       </S.Profile>
     </>
   )

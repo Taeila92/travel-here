@@ -33,9 +33,21 @@ const Icon = styled.i`
   }
 `;
 
+const Paragraph = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 0.5rem;
+  i {
+    margin-left: 0.5rem;
+  }
+`;
+
 
 export {
   Id,
+  Paragraph,
   NickName,
   Profile,
   ProfileImg,

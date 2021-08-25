@@ -13,7 +13,7 @@ import qs from 'qs';
 import getDate from 'utils/getDate';
 
 
-const PostCard = ({ postData, location }) => {
+const PostCard = ({ postData, location,view }) => {
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const PostCard = ({ postData, location }) => {
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
-  let view = useSelector((state)=>state.view.view);
+  // let view = useSelector((state)=>state.view.view);
 
 
 
@@ -61,12 +61,6 @@ const PostCard = ({ postData, location }) => {
 
   const getProfileImage = async (profileImageName) => {
       setProfileImage(profileImageName)
-
-    /*
-    프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
-    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
-      setProfileImage(value)
-    */
   };
 
   // 모달 띄우기
@@ -89,8 +83,8 @@ const PostCard = ({ postData, location }) => {
 
 
   const onContainerClick = () => {
-    onShowPostModal();
     onView();
+    onShowPostModal();
   }
 
   // Lazy Loading
@@ -130,6 +124,7 @@ const PostCard = ({ postData, location }) => {
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
+    // window.location.reload();
   }, [isPostOpened]);
 
   useEffect(()=>{
@@ -161,6 +156,7 @@ const PostCard = ({ postData, location }) => {
       {qsID && <Post
         profile={post_profile_img}
         postData={postData}
+        isPostOpened={isPostOpened}
         setIsPostOpened={setIsPostOpened}
         setLikeRender={setLikeRender}
         setViewRender={setViewRender}

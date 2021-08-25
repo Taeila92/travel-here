@@ -118,6 +118,7 @@ const Mypage = ({user}) => {
             {/* {change ?
             <img src={userDB.user_image} alt="배경사진" /> :
             ((userDB.user_image !== user.user_image) && <img src={user.user_image} alt="배경사진" />)} */}
+            {user.name ? <span>'{user.name}'님 반갑습니다</span> : <span>닉네임을 설정해보세요!</span>}
             {userDB && <img src={userDB.user_image} alt="배경사진" />}
           </S.BackImage>
           <S.ListArea>

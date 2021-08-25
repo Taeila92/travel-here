@@ -15,7 +15,7 @@ import firebase from "firebase";
 import { dbService } from "firebase.js";
 
 
-const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRender, postView }) => {
+const Post = ({postData, isPostOpened, setIsPostOpened, setLikeRender, setViewRender, viewRender, postView }) => {
   const { post_date, post_region, post_title, post_content, post_photo, post_id, post_writer, post_uid, post_profile_img } = postData;
 
   const location = useLocation();
@@ -134,6 +134,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
     history.push({
       search: '',
     });
+    window.location.reload();
   };  
 
 
@@ -149,15 +150,19 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
 
   // 새로고침하면 좋아요, 찜 변경사항이 반영안됨
   // 그래서 일단 경고창 띄우는 걸로 처리
-  useEffect(() => {
-    window.onbeforeunload = (e) => {
-      e.preventDefault()
-      return true;
-    };
-    return () => {
-      window.onbeforeunload = null;
-    };
-  },[window.onbeforeunload]);
+  // useEffect(() => {
+  //   if(!isPostOpened){
+  //     return;
+  //   }
+  //   window.onbeforeunload = (e) => {
+  //     e.preventDefault()
+  //     return true;
+  //   };
+  //   return () => {
+  //     window.onbeforeunload = null;
+  //   };
+  // },[window.onbeforeunload]);
+
 
 
 
@@ -169,7 +174,7 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
             <span>
               <span>{post_title}</span>
               <p>#{post_region}</p>
-              <p>{postView}</p>
+              <p>조회수 {postView}</p>
             </span>
             <div>
               {userCheck && <i onClick={onEditDelete} className="fas fa-ellipsis-v"></i>}
@@ -202,9 +207,9 @@ const Post = ({postData, setIsPostOpened, setLikeRender, setViewRender, viewRend
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (
-              <i onClick={onBookmarkToggle} className="fas fa-bookmark"></i>
+              <i onClick={onBookmarkToggle} title={'찜 해제'} className="fas fa-bookmark"></i>
             ) : (
-              <i onClick={onBookmarkToggle} className="far fa-bookmark"></i>
+              <i onClick={onBookmarkToggle} title={'찜하기'} className="far fa-bookmark"></i>
             )}
           </S.Like>
           <Comment postId={post_id} postregion={post_region} userDB={userDB}/>

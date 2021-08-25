@@ -47,6 +47,9 @@ const BackImage = styled.div`
     border-radius: 10px;
     transform: translateY(1.5rem);
   }
+  span {
+    color: white;
+  }
 `;
 
 const ListArea = styled.div`
@@ -113,6 +116,10 @@ const Content = styled.ul`
     li:nth-child(1){
       text-align: center;
       margin-bottom: 2rem;
+      /* position: sticky;
+      top: 0;
+      width: 100%;
+      background: transparent; */
     }
   }
 `;

@@ -1,33 +1,56 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useHistory } from 'react-router-dom';
 import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
 import * as S from './PostCard.style';
 import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
+import { viewMiddleware } from 'store/modules/view';
 import { useDispatch, useSelector } from 'react-redux';
 import firebase from 'firebase';
+import qs from 'qs';
 import getDate from 'utils/getDate';
 
-const PostCard = ({ postData }) => {
+const PostCard = ({ postData, location }) => {
   const auth = firebase.auth();
   const dispatch = useDispatch();
+
+  let [likeRender, setLikeRender] = useState('init');
+
+  let [viewRender, setViewRender] = useState(false);
 
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
+  let view = useSelector((state) => state.view.view);
+
   // 개별 post
-  const { post_id, post_title, post_region, post_date, post_profile_img } =
-    postData;
+  const {
+    post_id,
+    post_title,
+    post_region,
+    post_view,
+    post_profile_img,
+    post_date,
+  } = postData;
 
   // post모달 띄우는 용도
-  const [isPostModalOpened, setIsPostModalOpened] = useState(false);
+  const [isPostOpened, setIsPostOpened] = useState(false);
 
   // representative image 지정 후 가져오기
   const repImageName = useRef(`${postData.post_photo[0]}`);
   const [repImage, setRepImage] = useState();
+
+  let history = useHistory();
+
+  const query = qs.parse(location.search, {
+    ignoreQueryPrefix: true,
+  });
+
+  const qsID = query.id === post_id;
 
   const getRepImage = async (repImageName) => {
     await storageService
@@ -54,7 +77,25 @@ const PostCard = ({ postData }) => {
 
   // 모달 띄우기
   const onShowPostModal = () => {
-    setIsPostModalOpened(true);
+    setIsPostOpened(true);
+    setLikeRender('init');
+    history.push({
+      search: `?id=${post_id}`,
+      state: {
+        like: likePost.user_like_posts,
+        bookmark: bookmark.user_bookmark_posts,
+        postData,
+      },
+    });
+  };
+
+  const onView = () => {
+    dispatch(viewMiddleware(post_id, 'view'));
+  };
+
+  const onContainerClick = () => {
+    onShowPostModal();
+    onView();
   };
 
   // Lazy Loading
@@ -71,7 +112,6 @@ const PostCard = ({ postData }) => {
             if (entry.isIntersecting) {
               // intersecting 되어 있으면
               observer.unobserve(entry.target); // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target
-              // console.log(entry)
               getRepImage(repImageName.current);
               getProfileImage(profileImageName.current);
               setIsView(true);
@@ -93,22 +133,27 @@ const PostCard = ({ postData }) => {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        dispatch(userMiddleware(user.email, post_id, 'init'));
-        dispatch(bookmarkMiddleware(user.email, post_id, 'init'));
+        dispatch(userMiddleware(user.uid, post_id, 'init'));
+        dispatch(bookmarkMiddleware(user.uid, post_id, 'init'));
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
-  }, [isPostModalOpened]);
+  }, [isPostOpened]);
+
+  useEffect(() => {
+    dispatch(viewMiddleware(post_id, 'init'));
+  }, [viewRender]);
 
   return (
     <>
-      <S.Container onClick={onShowPostModal} id={post_id}>
+      <S.Container onClick={onContainerClick} id={post_id}>
         <S.Profile>
           <img src={post_profile_img} alt="프로필 사진" />
           <div>
             <h2>UserName</h2>
             <h5>#{post_region}</h5>
           </div>
+          <p>{post_view}</p>
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>
@@ -121,14 +166,15 @@ const PostCard = ({ postData }) => {
           <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
-      {/* {(isPostModalOpened && likePost) && <Post */}
-      {isPostModalOpened && (
+      {qsID && (
         <Post
-          profile={profileImage}
+          profile={post_profile_img}
           postData={postData}
-          setIsPostModalOpened={setIsPostModalOpened}
-          like={likePost.user_like_posts}
-          bookmark={bookmark.user_bookmark_posts}
+          setIsPostOpened={setIsPostOpened}
+          setLikeRender={setLikeRender}
+          setViewRender={setViewRender}
+          viewRender={viewRender}
+          postView={view}
         />
       )}
     </>

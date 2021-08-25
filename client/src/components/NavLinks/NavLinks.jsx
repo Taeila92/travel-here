@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useSelector, useDispatch } from 'react-redux';
 import { openNav, closeNav } from 'store/modules/nav';
 import * as S from "./NavLinks.style";
 import AuthService from "auth_service";
 import "firebase/auth";
 import Logo from 'components/Logo/Logo';
+import firebase from "firebase";
+import { userMiddleware } from 'store/modules/userLike';
 
 
 // 로그아웃
@@ -16,9 +18,14 @@ const onLogout = () => {
 const activeStyle = { color: "red" };
 
 export default function NavLinks({ isLoggedIn, isPc }) {
-  
-  const {isNavOpened} = useSelector(state => state.nav);
+  const auth = firebase.auth();
+
   const dispatch = useDispatch();
+
+  // 마이페이지에 유저정보 넘기는 목적
+  const user = useSelector(state => state.userLike.data);
+
+  const {isNavOpened} = useSelector(state => state.nav);
   
   const navToggle = () => {
     if(isNavOpened){
@@ -27,6 +34,12 @@ export default function NavLinks({ isLoggedIn, isPc }) {
       dispatch(openNav())
     }
   }
+
+  useEffect(()=>{
+    auth.onAuthStateChanged((user) => {
+      dispatch(userMiddleware(user.uid, '', 'init'));
+    });
+  },[]);
 
   return (
     <S.Header isPc={isPc} isNavOpened={isNavOpened}>
@@ -45,6 +58,14 @@ export default function NavLinks({ isLoggedIn, isPc }) {
           </S.Li>
           {isLoggedIn ? (
             <>
+              <S.Li>
+                <S.StyledNav to={{
+                  pathname:"/mypage",
+                  state: { user }}} 
+                  activeStyle={activeStyle} exact>
+                  <S.Button>MyPage</S.Button>
+                </S.StyledNav>
+              </S.Li>
               <S.Li>
                 <S.StyledNav to="/" activeStyle={activeStyle} exact>
                   <S.Button onClick={onLogout}>Logout</S.Button>

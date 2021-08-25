@@ -4,7 +4,8 @@ import PostCard from "components/PostCard/PostCard";
 import { fetchPostList } from "store/modules/board";
 import * as S from "./Board.style";
 
-const Board = ({ match }) => {
+const Board = ({ match, location }) => {
+
   // redux에서 데이터 fetch한 결과(성공하면 data에 배열로 담김)
   const { postList, error, loading } = useSelector((state) => ({
     postList: state.board.data,
@@ -24,9 +25,11 @@ const Board = ({ match }) => {
 
   return (
     <S.Container>
-      {postList.map((post) => {
-        return <PostCard key={post.post_id} postData={post} />;
-      })}
+      { 
+        postList.map((post)=>{
+          return <PostCard key={post.post_id} postData={post} location={location}/>
+        })
+      }
     </S.Container>
   );
 };

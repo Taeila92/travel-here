@@ -5,8 +5,12 @@ import LoginFooter from 'components/LoginModal/footer/LoginFooter';
 import AuthService from 'auth_service';
 import firebaseService from 'firebase';
 import NavLinks from 'components/NavLinks/NavLinks';
+import { useHistory } from 'react-router-dom';
 
 function LoginModalOpen() {
+
+  const history = useHistory();
+
   const authService = new AuthService();
   const [user, setUser] = useState('');
   const [email, setEmail] = useState('');

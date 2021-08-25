@@ -3,6 +3,7 @@ import * as S from './WriteModal.style';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from 'uuid';
 import { useHistory } from 'react-router';
+import firebase from 'firebase';
 
 export default function WriteModal({ visible, isVisible, userObj }) {
   const [post, setPost] = useState('');
@@ -12,7 +13,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const postRef = useRef();
   const titleRef = useRef();
   const history = useHistory();
-  console.log(userObj);
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -39,15 +39,27 @@ export default function WriteModal({ visible, isVisible, userObj }) {
         attachmentUrl.push(await response.ref.getDownloadURL());
       }
     }
+
     const ID = userObj.uid;
-    await dbService.collection('post').doc(ID).set({
+    const uuid = uuidv4();
+
+    // users collection의 user_write_posts에 post_id 추가
+    await dbService
+      .collection('users')
+      .doc(ID)
+      .update({
+        user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
+      });
+
+    await dbService.collection('post').doc(uuid).set({
       post_title: title,
       post_content: post,
-      post_writer: userObj.displayName,
+      post_writer: userObj.name,
+      post_uid: userObj.uid,
       post_date: Date.now(),
-      post_id: ID,
+      post_id: uuid,
       post_photo: attachmentUrl,
-      post_profile_img: userObj.photoURL,
+      post_profile_img: userObj.user_image,
       post_region: region,
       post_view: 0,
       post_like: 0,
@@ -58,6 +70,7 @@ export default function WriteModal({ visible, isVisible, userObj }) {
     setAttachment([]);
     isVisible();
   };
+
   useEffect(() => {}, []);
   const onFileChange = (e) => {
     const { files } = e.target;
@@ -74,12 +87,15 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       reader.readAsDataURL(file);
     }
   };
+
   const onClearAttachmentClick = () => {
     setAttachment(null);
   };
+
   const removeAttachment = (e) => {
     setAttachment((prev, index) => {});
   };
+
   return (
     <>
       <S.Overlay visible={visible} onClick={isVisible} />

@@ -1,5 +1,5 @@
-﻿import { produce } from 'immer';
-import { getCommentAPI } from 'store/apis/comment';
+﻿import { getCommentAPI } from 'store/apis/comment';
+const { produce } = require('immer');
 
 // Actions
 const COMMENT_ADD = 'comment/COMMENT_ADD';
@@ -70,7 +70,7 @@ const reducer = (prevState=initialState, action) => {
         draft.data = [];
         break;
       default :
-          return prevState;
+        return prevState;
     }
   })
 }

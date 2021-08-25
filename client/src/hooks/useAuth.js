@@ -10,7 +10,6 @@ const useAuth = () => {
     userInfo: state.user.userInfo,
   }));
   const dispatch = useDispatch();
-  //console.log(isLoggedIn, userInfo);
 
   const login = (providerName) => {
     const authProvider = new firebase.auth[`${providerName}AuthProvider`]();

@@ -2,13 +2,18 @@
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 import board from "store/modules/board";
-import comment from "store/modules/comment";
+import bookmark from "store/modules/bookmark";
 import category from "store/modules/category";
+import comment from "store/modules/comment";
+import del from "store/modules/delete";
+import mypageBookmark from "store/modules/mypageBookmark";
+import mypageComment from "store/modules/mypageComment";
+import mypagePost from "store/modules/mypagePost";
 import nav from "store/modules/nav";
 import postLike from "store/modules/postLike";
-import userLike from "store/modules/userLike";
-import bookmark from "store/modules/bookmark";
 import user from "store/modules/user";
+import userLike from "store/modules/userLike";
+import view from "store/modules/view";
 
 const reducer = combineReducers({
   user,
@@ -19,6 +24,11 @@ const reducer = combineReducers({
   postLike,
   userLike,
   bookmark,
+  mypagePost,
+  mypageBookmark,
+  mypageComment,
+  view,
+  del,
 });
 
 const enhancer =

@@ -189,7 +189,7 @@ const Post = ({postData, isPostOpened, setIsPostOpened, setLikeRender, setViewRe
           </S.Header>
           {post_photo && <PostSlider postImages={post_photo}/>}
           <S.Profile>
-            <img src={post_profile_img} alt="프로필 이미지입니다"></img>
+            {post_profile_img ? <img src={post_profile_img} alt="프로필 이미지입니다"></img> : <i className="fas fa-user-circle"></i>}
             <p>{post_writer}</p> {/* post_writer로 검색?*/}
             <span>{time}</span>
           </S.Profile>

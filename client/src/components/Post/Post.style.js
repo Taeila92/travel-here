@@ -137,6 +137,13 @@ const Profile = styled.li`
     font-size: 0.8rem;
     color: lightgray;
   }
+  i {
+    font-size: 3rem;
+    color: darkgray;
+    background: white;
+    border-radius: 50%;
+    transform: translateX(0.04rem);
+  }
 `;
 
 const Title = styled.li`

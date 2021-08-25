@@ -50,6 +50,13 @@ const BackImage = styled.div`
   span {
     color: white;
   }
+  i {
+    font-size: 5rem;
+    color: white;
+    background: darkgray;
+    border-radius: 50%;
+    transform: translateY(2rem);
+  }
 `;
 
 const ListArea = styled.div`

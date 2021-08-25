@@ -77,12 +77,19 @@ const CommentList = styled.div`
   input::placeholder{
     color: darkgray;
   }
-  i {
+  i:nth-child(2) {
     text-align: end;
     font-size: 1rem;
     margin-left: 0.5rem;
     ${cursorPointer};
   }
+`;
+
+
+const ProfileIcon = styled.i`
+  font-size: 2rem;
+  color: darkgray;
+  transform: translateX(0.03rem);
 `;
 
 const Content = styled.span`
@@ -150,6 +157,7 @@ export {
   Comment,
   Content,
   CommentList,
+  ProfileIcon,
   EditDel,
   Toggle,
   Check,

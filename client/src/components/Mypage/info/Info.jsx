@@ -112,7 +112,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
         {nickName ?
         (<><input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
         <button onClick={onSubmitBtn}>제출</button></>) :
-        (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임 설정할래?</p>)}
+        (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임을 설정해보세요!</p>)}
       </S.NickName>
       <S.Profile>
         <S.Paragraph>
@@ -120,7 +120,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
           <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
         </S.Paragraph>
         <S.Paragraph>
-          {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : <p>사진 추가할래?</p>}
+          {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : <p>프로필 사진을 추가해보세요!</p>}
           {img && <p>
             <form onSubmit={onSubmit}>
               <input

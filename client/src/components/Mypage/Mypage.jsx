@@ -7,9 +7,6 @@ import Post from './post/Post';
 import Comment from './comment/Comment';
 import Bookmark from './bookmark/Bookmark';
 
-import img from "assets/images/mypage_back_Img1.png";
-import profileImg from "assets/images/profile_img.png";
-
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
@@ -34,8 +31,6 @@ const Mypage = ({user}) => {
   const dispatch = useDispatch();
 
   const userDB = useSelector(state => state.userLike.data);
-
-  // const postDB = useSelector(state => state.mypagePost.data);
 
   const onClose = () => {
     setInfo(false);
@@ -115,11 +110,8 @@ const Mypage = ({user}) => {
       <S.Container>
         <S.Contents>
           <S.BackImage>
-            {/* {change ?
-            <img src={userDB.user_image} alt="배경사진" /> :
-            ((userDB.user_image !== user.user_image) && <img src={user.user_image} alt="배경사진" />)} */}
             {user.name ? <span>'{user.name}'님 반갑습니다</span> : <span>닉네임을 설정해보세요!</span>}
-            {userDB && <img src={userDB.user_image} alt="배경사진" />}
+            {userDB.user_image ? <img src={userDB.user_image} alt="배경사진" /> : <i className="fas fa-user-circle"></i>}
           </S.BackImage>
           <S.ListArea>
             <p onClick={onInfo}>

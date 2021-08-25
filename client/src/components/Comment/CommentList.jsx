@@ -74,7 +74,7 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
 
   return (
     <S.CommentList ref={container} id={com.comment_id} key={com.comment_id}>
-      <img src={com.user_image} alt="프로필 이미지입니다"></img>
+      {com.user_image ? <img src={com.user_image} alt="프로필 이미지입니다"></img> : <S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon>}
       {edit ?
       (<input ref={input} placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
       <S.Content>{com.comment_writer && <p>{com.comment_writer}</p>}<span>{com.comment_content}</span></S.Content>}

@@ -129,8 +129,8 @@ const Post = ({postData, isPostOpened, setIsPostOpened, setLikeRender, setViewRe
   
   // 모달창 닫기
   const onHideModal = () => {
-    setIsPostOpened(false);
     setViewRender(!viewRender);
+    setIsPostOpened(false);
     history.push({
       search: '',
     });
@@ -202,7 +202,6 @@ const Post = ({postData, isPostOpened, setIsPostOpened, setLikeRender, setViewRe
               ) : (
                 <i onClick={onLikeToggle} className="far fa-heart"></i>
               )}
-              {/* {likeRender === 'init' ? <span>{post_like}</span> : <span>{likeNum}</span>}<p>명</p>이 좋아합니다 */}
               <span>{likeNum}</span>
               <p>명</p>이 좋아합니다
             </span>
@@ -215,6 +214,7 @@ const Post = ({postData, isPostOpened, setIsPostOpened, setLikeRender, setViewRe
           <Comment postId={post_id} postregion={post_region} userDB={userDB}/>
         </ul>
       </S.Contents>
+      {/* <S.Test></S.Test> */}
     </S.Container>
   );
 };

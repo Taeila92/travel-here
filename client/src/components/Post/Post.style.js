@@ -20,6 +20,7 @@ const Contents = styled.div`
   border-radius: 10px;
   padding: 3rem 0;
   ${flex};
+  /* filter: blur(5px); */
   ul {
     width: 27rem;
     max-height: 40rem;
@@ -181,6 +182,31 @@ const Like = styled.li`
   }
 `;
 
+const Img = styled.img`
+  width: 30rem;
+  height: 45rem;
+  border-radius: 20px;
+`;
+
+const Alert = styled.div`
+  position: absolute;
+  width: 20rem;
+  height: 20rem;
+  background: white;
+  border: 1px solid black;
+  button {
+    ${cursorPointer};
+  }
+`;
+
+const Test = styled.div`
+  position: absolute;
+  width: 30rem;
+  height: 50rem;
+  background: rgb(255, 255, 255, 0.5);
+  z-index: 20;
+`;
+
 
 
 export {
@@ -188,9 +214,11 @@ export {
   Contents,
   Header,
   editDelToggle,
-  // Images, 
   Profile,
   Title, 
   Content,
   Like,
+  Img,
+  Alert,
+  Test,
 };

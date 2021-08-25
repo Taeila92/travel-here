@@ -11,12 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
 import qs from 'qs';
 import getDate from 'utils/getDate';
+import NoneMember from 'components/Post/NoneMember';
 
 
-const PostCard = ({ postData, location,view }) => {
+const PostCard = ({ postData, location, view }) => {
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
+
+  let [userCheck, setUserCheck] = useState(false);
 
   let [likeRender, setLikeRender] = useState('init');
 
@@ -121,6 +124,7 @@ const PostCard = ({ postData, location,view }) => {
       if(user){
         dispatch(userMiddleware(user.uid, post_id, 'init'));
         dispatch(bookmarkMiddleware(user.uid, post_id, 'init'));
+        setUserCheck(user);
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
@@ -153,7 +157,8 @@ const PostCard = ({ postData, location,view }) => {
           <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
-      {qsID && <Post
+      {qsID && (userCheck ?
+      <Post
         profile={post_profile_img}
         postData={postData}
         isPostOpened={isPostOpened}
@@ -161,8 +166,9 @@ const PostCard = ({ postData, location,view }) => {
         setLikeRender={setLikeRender}
         setViewRender={setViewRender}
         viewRender={viewRender}
-        postView={view}
-      />}
+        postView={view} /> :
+      <NoneMember setIsPostOpened={setIsPostOpened}/>
+      )}
     </>
   );
 };

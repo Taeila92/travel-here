@@ -1,21 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as S from './LoginHelp.style';
 import firebaseService from 'firebase';
+import { useHistory } from 'react-router-dom';
 
 function LoginHelp() {
-  // const handlePassReset = (e) => {
-  //   e.preventDefault();
-  //   firebaseService
-  //     .auth()
-  //     .sendPasswordResetEmail(email)
-  //     .then(() => {
-  //       console.log('Password reset email sent!');
-  //     })
-  //     .catch((err) => {
-  //       setEmailError(err.code);
-  //       setPasswordError(err.message);
-  //     });
-  // };
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const history = useHistory();
+
+  // 로그인 페이지로 전환
+  const routeChange = () => {
+    let path = '/login';
+    history.push(path);
+  };
+
+  const sendPasswordReset = (e) => {
+    e.preventDefault();
+    firebaseService
+      .auth()
+      .sendPasswordResetEmail(email)
+      .then(() => {
+        setEmail('');
+      })
+      .catch((err) => {
+        switch (err.code) {
+          case 'auth/invalid-email':
+          case 'auth/user-disabled':
+          case 'auth/user-not-found':
+            setEmailError(err.message);
+            break;
+          default:
+            return;
+        }
+      });
+  };
   return (
     <>
       <S.LoginBg />
@@ -23,22 +41,28 @@ function LoginHelp() {
         <S.Header>
           <ul>
             <li>
-              <h1>이메일/비밀번호 찾기</h1>
+              <h1>비밀번호 재설정</h1>
             </li>
 
             <li>
               <input
                 className="inputEmail"
-                type="email"
+                type="text"
+                value={email}
                 autoFocus
                 required
                 placeholder="Email Address"
+                onChange={(e) => setEmail(e.target.value)}
               />
-              <li>
-                <button className="loginBtn">찾기</button>
-              </li>
+              <p className="errorMsg">{emailError}</p>
+              <button onClick={sendPasswordReset} className="sendEmailBtn">
+                이메일로 받기
+              </button>
             </li>
           </ul>
+          <S.BackBtn onClick={routeChange}>
+            <i className="fas fa-arrow-left"></i>
+          </S.BackBtn>
         </S.Header>
       </S.Logincontainer>
     </>

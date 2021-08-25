@@ -77,9 +77,11 @@ function LoginHeader(props) {
                         placeholder="Password"
                       />
                       <p className="errorMsg">{passwordError}</p>
-                      <button onClick={goToPassword}>비밀번호 찾기</button>
                       <button onClick={handleLogin} className="btn">
                         Log in
+                      </button>
+                      <button className="findPassword" onClick={goToPassword}>
+                        비밀번호 재설정
                       </button>
                     </div>
                   </div>
@@ -107,9 +109,11 @@ function LoginHeader(props) {
                         placeholder="Password"
                       />
                       <p className="errorMsg">{passwordError}</p>
-                      <button onClick={goToPassword}>비밀번호 찾기</button>
                       <button onClick={handleSignUP} className="btn">
                         Sign up
+                      </button>
+                      <button className="findPassword" onClick={goToPassword}>
+                        비밀번호 재설정
                       </button>
                     </div>
                   </div>

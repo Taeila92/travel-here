@@ -48,18 +48,29 @@ const Header = styled.header`
         border-radius: 12px;
         outline: none;
       }
-      .loginBtn {
+      .sendEmailBtn {
         border: none;
         width: 100%;
         height: 3rem;
         border-radius: 12px;
-        background-color: #d8bfd8;
+        color: #fff;
+        background-color: #ff73b3;
         cursor: pointer;
         font-size: 18px;
         margin-top: 1rem;
+        box-shadow: 0 0 10px 1px #ff73b3;
       }
     }
   }
 `;
 
-export { Header, Logincontainer, LoginBg };
+const BackBtn = styled.button`
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 24px;
+  top: 1em;
+  left: 1em;
+`;
+export { Header, Logincontainer, LoginBg, BackBtn };

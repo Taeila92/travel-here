@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import * as S from './LoginModalOpen.style';
 import LoginHeader from 'components/LoginModal/header/LoginHeader';
-import LoginFooter from 'components/LoginModal/footer/LoginFooter';
 import AuthService from 'auth_service';
 import firebaseService from 'firebase';
 import NavLinks from 'components/NavLinks/NavLinks';
@@ -18,6 +17,12 @@ function LoginModalOpen() {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [hasAccount, setHasAccount] = useState(false);
+  const history = useHistory();
+
+  const goToPassword = () => {
+    let path = '/LoginHelp';
+    history.push(path);
+  };
 
   const toggleClass = () => {
     setHasAccount(!hasAccount);
@@ -49,7 +54,7 @@ function LoginModalOpen() {
           case 'auth/wrong-password':
             setPasswordError(err.message);
             break;
-          default :
+          default:
             return;
         }
       });
@@ -70,10 +75,10 @@ function LoginModalOpen() {
           case 'auth/weak-password':
             setPasswordError(err.message);
             break;
-          default :
+          default:
             return;
         }
-      })
+      });
   };
 
   // 로그아웃
@@ -120,8 +125,8 @@ function LoginModalOpen() {
               emailError={emailError}
               passwordError={passwordError}
               toggleClass={toggleClass}
+              goToPassword={goToPassword}
             />
-            {/* <LoginFooter authService={authService} /> */}
           </S.Logincontainer>
         </>
       )}

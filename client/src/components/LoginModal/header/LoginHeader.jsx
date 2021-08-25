@@ -14,11 +14,11 @@ function LoginHeader(props) {
     handleLogin,
     handleSignUP,
     hasAccount,
-    setHasAccount,
     emailError,
     passwordError,
     handleLogout,
     toggleClass,
+    goToPassword,
   } = props;
 
   return (
@@ -80,6 +80,9 @@ function LoginHeader(props) {
                       <button onClick={handleLogin} className="btn">
                         Log in
                       </button>
+                      <button className="findPassword" onClick={goToPassword}>
+                        비밀번호 재설정
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -108,6 +111,9 @@ function LoginHeader(props) {
                       <p className="errorMsg">{passwordError}</p>
                       <button onClick={handleSignUP} className="btn">
                         Sign up
+                      </button>
+                      <button className="findPassword" onClick={goToPassword}>
+                        비밀번호 재설정
                       </button>
                     </div>
                   </div>

@@ -65,6 +65,7 @@ const Header = styled.header`
     opacity: 1;
     transition: all 0.5s;
   }
+
   .container .btn:hover {
     opacity: 0.7;
   }
@@ -137,9 +138,18 @@ const Header = styled.header`
   .container .container-form .btn {
     position: relative;
     box-shadow: 0 0 10px 1px #ff73b3;
-    margin-top: 30px;
+    margin-top: 13px;
     width: 70%;
     border-radius: 12px;
+  }
+  .container .container-form .findPassword {
+    position: relative;
+    cursor: pointer;
+    text-align: end;
+    background-color: transparent;
+    font-size: 10px;
+    width: 70%;
+    border: none;
   }
   .container .form-item {
     position: absolute;

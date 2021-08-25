@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import * as S from './WriteModal.style';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from 'uuid';
-import { useHistory } from 'react-router';
 import firebase from 'firebase';
 
 export default function WriteModal({ visible, isVisible, userObj }) {
@@ -12,7 +11,6 @@ export default function WriteModal({ visible, isVisible, userObj }) {
   const [attachment, setAttachment] = useState([]);
   const postRef = useRef();
   const titleRef = useRef();
-  const history = useHistory();
 
   const onChange = (e) => {
     const { value, name } = e.target;

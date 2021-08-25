@@ -1,4 +1,4 @@
-﻿import styled from "styled-components";
+﻿import styled, { keyframes } from "styled-components";
 import { flex, marginTop, fontSize, hideScrollbar, cursorPointer } from "./styleConstants.js";
 
 
@@ -188,15 +188,71 @@ const Img = styled.img`
   border-radius: 20px;
 `;
 
+const show = keyframes`
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(1.01);
+  }
+`;
+
 const Alert = styled.div`
   position: absolute;
   width: 20rem;
-  height: 20rem;
   background: white;
-  border: 1px solid black;
-  button {
-    ${cursorPointer};
+  border: 1px solid #9980FA;
+  box-shadow: 0 0 5px #9980FA;
+  font-weight: bold;
+  animation: ${show} 200ms;
+  animation-iteration-count: 2;
+  animation-direction: normal;
+  div:nth-child(1){
+    ${flex};
+    justify-content: flex-start;
+    height: 12rem;
+    i {
+      font-size: 4rem;
+      margin: 3rem 0 2rem 0;
+      color: #9980FA;
+    }
   }
+  div:nth-child(2){
+    ${flex};
+    padding: 3rem 0 2rem 0;
+    button {
+      ${cursorPointer};
+      border: none;
+      width: 15rem;
+      height: 2.5rem;
+      font-size: 0.9rem;
+      font-weight: bold;
+      border-radius: 10px;
+    }
+    button:hover{
+      transform: scale(1.01);
+    }
+    button:nth-child(1){
+      background: #b8a6ff;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    button:nth-child(2){
+      background: white;
+      border: 1px solid #b8a6ff;
+      color: #AFAFAF;
+    }
+  }
+`;
+
+
+const AlertText1 = styled.p`
+  margin-bottom: 1rem; 
+`;
+
+const AlertText2 = styled.p`
+  color: #AFAFAF;
 `;
 
 const Test = styled.div`
@@ -220,5 +276,7 @@ export {
   Like,
   Img,
   Alert,
+  AlertText1,
+  AlertText2,
   Test,
 };

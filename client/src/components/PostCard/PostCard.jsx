@@ -67,11 +67,11 @@ const PostCard = ({ postData, location, view }) => {
   };
 
   // 모달 띄우기
-  const onShowPostModal = () => {
+  const onShowPostModal = (postId) => {
     setIsPostOpened(true);
     setLikeRender('init');
     history.push({
-      search: `?id=${post_id}`,
+      search: `?id=${postId}`,
       state: {
         like: likePost.user_like_posts,
         bookmark: bookmark.user_bookmark_posts,
@@ -87,7 +87,7 @@ const PostCard = ({ postData, location, view }) => {
 
   const onContainerClick = () => {
     onView();
-    onShowPostModal();
+    onShowPostModal(post_id);
   }
 
   // Lazy Loading
@@ -111,10 +111,17 @@ const PostCard = ({ postData, location, view }) => {
       
       observer.observe(lazyTarget.current)
     } 
-
-
     return () => observer && observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if(location.state === undefined){
+      return;
+    }
+    if(location.state.hasOwnProperty('uuid')){
+      onShowPostModal(location.state.uuid);
+    }
+  }, [])
 
   // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
   // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움

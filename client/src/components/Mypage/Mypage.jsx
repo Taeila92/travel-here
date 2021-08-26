@@ -24,6 +24,8 @@ const Mypage = ({user}) => {
 
   const [change, setChange] = useState(false);
 
+  const [check, setCheck] = useState(false);
+
   const [uid, setUid] = useState('');
 
   const auth = firebase.auth();
@@ -37,42 +39,55 @@ const Mypage = ({user}) => {
     setPost(false);
     setComment(false);
     setBookmark(false);
+    // setCheck(false);
   };
+
+  const onDelayClose = () => {
+    setCheck(false);
+    setTimeout(()=>{
+      onClose();
+    }, 800);
+  }
+
 
   const onInfo = () => {
     if(info){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setInfo(true);
+    setCheck(true);
   }
 
   const onPost = () => {
     if(post){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setPost(true);
+    setCheck(true);
   };
 
   const onComment = () => {
     if(comment){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setComment(true);
+    setCheck(true);
   };
 
   const onBookmark = () => {
     if(bookmark){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setBookmark(true);
+    setCheck(true);
   };
 
 
@@ -108,7 +123,7 @@ const Mypage = ({user}) => {
   return (
     <>
       <S.Container>
-        <S.Contents>
+        <S.Contents check={check}>
           <S.BackImage>
             {user.name ? <span>'{user.name}'님 반갑습니다</span> : <span>닉네임을 설정해보세요!</span>}
             {userDB.user_image ? <img src={userDB.user_image} alt="배경사진" /> : <i className="fas fa-user-circle"></i>}
@@ -135,28 +150,28 @@ const Mypage = ({user}) => {
           </S.ListArea>
         </S.Contents>
         {info &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>
             <li>내 정보</li>
             <Info uid={uid} user={user} userDB={userDB} change={change} setChange={setChange}/>
           </ul>
         </S.Content>}
         {post &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>
             <li>내가 쓴 글</li>
             <Post user={user}/>
           </ul>
         </S.Content>}
         {comment &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>
             <li>내가 쓴 댓글</li>
             <Comment user={user}/>
           </ul>
         </S.Content>}
         {bookmark &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>  
             <li>찜</li>
             <Bookmark user={user}/>

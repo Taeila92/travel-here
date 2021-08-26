@@ -1,24 +1,60 @@
-﻿import styled from 'styled-components';
+﻿import styled, { keyframes, css } from 'styled-components';
 import { flex, marginTop, fontSize, hideScrollbar, cursorPointer, frame } from "./styleConstatns";
 
 
 const Container = styled.section`
   width: 100vw;
-  height: 100vh;
+  height: 90vh;
   ${flex};
   flex-direction: row;
   caret-color: transparent;
 `;
 
+
+const leftShow = keyframes`
+  from {
+    transform: translateX(0rem);
+  }
+  to {
+    transform: translateX(-10.5rem);
+  }
+`; 
+
+const leftClose = keyframes`
+  from {
+    transform: translateX(-10.5rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+`; 
+
 const Contents = styled.div`
   width: 20rem;
   height: 30rem;
-  margin: 0 1rem;
   border-radius: 20px;
   ${flex};
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
+  margin-bottom: 3rem;
+  ${({check}) => {
+    if(check){
+      return css`
+        transform: translateX(-10.5rem);
+        animation: ${leftShow} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+    if(!check){
+      return css`
+        animation: ${leftClose} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+  }}
 `;
 
 const BackImage = styled.div`
@@ -106,16 +142,61 @@ const ListArea = styled.div`
   }
 `;
 
+const rightShow = keyframes`
+  from {
+    transform: translateX(0rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(10.5rem);
+    opacity: 1;
+  }
+`;
+
+
+const rightClose = keyframes`
+  from {
+    transform: translateX(10.5rem);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0rem);
+    opacity: 0;
+  }
+`;
+
+
 const Content = styled.ul`
+  position: absolute;
   width: 20rem;
   height: 30rem;
-  margin: 0 1rem;
+  margin-bottom: 3rem;
   border-radius: 20px;
   ${flex};
   color: white;
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
+  animation: ${rightShow} 800ms;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  ${({check}) => {
+    if(check){
+      return css`
+        transform: translateX(10.5rem);
+        animation: ${rightShow} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+    if(!check){
+      return css`
+        animation: ${rightClose} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+  }}
   ul {
     height: 25rem;
     overflow-y: scroll;

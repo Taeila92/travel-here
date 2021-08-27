@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import firebase from "firebase";
 import { loginUserInfo, logoutUserInfo } from "store/modules/user";
+import { userMiddleware } from 'store/modules/userLike';
 import { dbService } from "firebase.js";
 
 const useAuth = () => {
@@ -39,6 +40,7 @@ const useAuth = () => {
         // 유저 정보가 db에 저장되어 있다면
         if (userDB.exists) {
             dispatch(loginUserInfo(userDB.data()));
+            dispatch(userMiddleware(user.uid, '', 'init'));
           // 아니면 새로 저장해야
         } else {
           const value = {

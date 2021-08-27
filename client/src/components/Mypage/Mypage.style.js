@@ -1,34 +1,66 @@
-﻿import styled from 'styled-components';
+﻿import styled, { keyframes, css } from 'styled-components';
+import { flex, marginTop, fontSize, hideScrollbar, cursorPointer, frame } from "./styleConstatns";
 
 
 const Container = styled.section`
   width: 100vw;
-  height: 100vh;
-  display: flex;
+  height: 90vh;
+  ${flex};
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
   caret-color: transparent;
 `;
+
+
+const leftShow = keyframes`
+  from {
+    transform: translateX(0rem);
+  }
+  to {
+    transform: translateX(-10.5rem);
+  }
+`; 
+
+const leftClose = keyframes`
+  from {
+    transform: translateX(-10.5rem);
+  }
+  to {
+    transform: translateX(0rem);
+  }
+`; 
 
 const Contents = styled.div`
   width: 20rem;
   height: 30rem;
-  margin: 0 1rem;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
+  ${flex};
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
+  margin-bottom: 3rem;
+  ${({check}) => {
+    if(check){
+      return css`
+        transform: translateX(-10.5rem);
+        animation: ${leftShow} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+    if(!check){
+      return css`
+        animation: ${leftClose} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+  }}
 `;
 
 const BackImage = styled.div`
   width: 100%;
   height: 10rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flex};
   justify-content: flex-end;
   background-color: rgb(0, 0, 0, 0.3);
   img {
@@ -51,14 +83,22 @@ const BackImage = styled.div`
     border-radius: 10px;
     transform: translateY(1.5rem);
   }
+  span {
+    color: white;
+  }
+  i {
+    font-size: 5rem;
+    color: white;
+    background: darkgray;
+    border-radius: 50%;
+    transform: translateY(2rem);
+  }
 `;
 
 const ListArea = styled.div`
   width: 100%;
   height: 20rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  ${flex};
   justify-content: flex-end;
   p {
     background-color: rgb(255, 255, 255, 0.1);
@@ -102,15 +142,74 @@ const ListArea = styled.div`
   }
 `;
 
+const rightShow = keyframes`
+  from {
+    transform: translateX(0rem);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(10.5rem);
+    opacity: 1;
+  }
+`;
+
+
+const rightClose = keyframes`
+  from {
+    transform: translateX(10.5rem);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(0rem);
+    opacity: 0;
+  }
+`;
+
+
 const Content = styled.ul`
-  background-color: white;
-  width: 30rem;
+  position: absolute;
+  width: 20rem;
   height: 30rem;
-  margin: 0 1rem;
+  margin-bottom: 3rem;
   border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
+  ${flex};
+  color: white;
+  overflow: hidden;
+  box-shadow: 0 0 4px #f40057;
+  background-color: rgb(0, 0, 0, 0.5);
+  animation: ${rightShow} 800ms;
+  animation-iteration-count: 1;
+  animation-direction: normal;
+  ${({check}) => {
+    if(check){
+      return css`
+        transform: translateX(10.5rem);
+        animation: ${rightShow} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+    if(!check){
+      return css`
+        animation: ${rightClose} 800ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+      `;
+    }
+  }}
+  ul {
+    height: 25rem;
+    overflow-y: scroll;
+    ${hideScrollbar};
+    li:nth-child(1){
+      text-align: center;
+      margin-bottom: 2rem;
+      /* position: sticky;
+      top: 0;
+      width: 100%;
+      background: transparent; */
+    }
+  }
 `;
 
 

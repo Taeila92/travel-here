@@ -9,3 +9,8 @@ export const getBookmarkAPI = async(id) => {
   const response = await dbService.collection("post").where("post_id","==",id).get();
   return response;
 }
+
+export const editMypageImgAPI = async(id) => {
+  const response = await dbService.collection("post").where("uid","==",id).get();
+  return response;
+}

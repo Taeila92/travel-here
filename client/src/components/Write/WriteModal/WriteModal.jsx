@@ -6,7 +6,8 @@ import { useHistory } from "react-router";
 import firebase from "firebase";
 
 
-export default function WriteModal({ visible, isVisible, userObj }) {
+
+export default function WriteModal({ visible, isVisible, userObj, location }) {
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [region, setRegion] = useState("");
@@ -62,12 +63,18 @@ export default function WriteModal({ visible, isVisible, userObj }) {
       post_region: region,
       post_view: 0,
       post_like: 0,
+      uid: userObj.uid,
     });
     setPost("");
     setTitle("");
     setRegion("");
     setAttachment([]);
     isVisible();
+
+    history.push({
+      pathname: `/categorylist/${region}`,
+      state: {uuid},
+    });
   };
 
 

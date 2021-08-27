@@ -11,12 +11,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import firebase from "firebase";
 import qs from 'qs';
 import getDate from 'utils/getDate';
+import NoneMember from 'components/Post/NoneMember';
 
 
-const PostCard = ({ postData, location }) => {
+const PostCard = ({ postData, location, view }) => {
 
   const auth = firebase.auth();
   const dispatch = useDispatch();
+
+  let [userCheck, setUserCheck] = useState(false);
 
   let [likeRender, setLikeRender] = useState('init');
 
@@ -27,7 +30,7 @@ const PostCard = ({ postData, location }) => {
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
-  let view = useSelector((state)=>state.view.view);
+  // let view = useSelector((state)=>state.view.view);
 
 
 
@@ -61,20 +64,14 @@ const PostCard = ({ postData, location }) => {
 
   const getProfileImage = async (profileImageName) => {
       setProfileImage(profileImageName)
-
-    /*
-    프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
-    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
-      setProfileImage(value)
-    */
   };
 
   // 모달 띄우기
-  const onShowPostModal = () => {
+  const onShowPostModal = (postId) => {
     setIsPostOpened(true);
     setLikeRender('init');
     history.push({
-      search: `?id=${post_id}`,
+      search: `?id=${postId}`,
       state: {
         like: likePost.user_like_posts,
         bookmark: bookmark.user_bookmark_posts,
@@ -89,8 +86,8 @@ const PostCard = ({ postData, location }) => {
 
 
   const onContainerClick = () => {
-    onShowPostModal();
     onView();
+    onShowPostModal(post_id);
   }
 
   // Lazy Loading
@@ -114,10 +111,17 @@ const PostCard = ({ postData, location }) => {
       
       observer.observe(lazyTarget.current)
     } 
-
-
     return () => observer && observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    if(location.state === undefined){
+      return;
+    }
+    if(location.state.hasOwnProperty('uuid')){
+      onShowPostModal(location.state.uuid);
+    }
+  }, [])
 
   // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
   // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움
@@ -127,9 +131,11 @@ const PostCard = ({ postData, location }) => {
       if(user){
         dispatch(userMiddleware(user.uid, post_id, 'init'));
         dispatch(bookmarkMiddleware(user.uid, post_id, 'init'));
+        setUserCheck(user);
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
+    // window.location.reload();
   }, [isPostOpened]);
 
   useEffect(()=>{
@@ -158,15 +164,18 @@ const PostCard = ({ postData, location }) => {
           <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
-      {qsID && <Post
+      {qsID && (userCheck ?
+      <Post
         profile={post_profile_img}
         postData={postData}
+        isPostOpened={isPostOpened}
         setIsPostOpened={setIsPostOpened}
         setLikeRender={setLikeRender}
         setViewRender={setViewRender}
         viewRender={viewRender}
-        postView={view}
-      />}
+        postView={view} /> :
+      <NoneMember setIsPostOpened={setIsPostOpened}/>
+      )}
     </>
   );
 };

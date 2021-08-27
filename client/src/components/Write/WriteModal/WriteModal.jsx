@@ -22,6 +22,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const isHeight = useMediaQuery({ maxHeight: 765 });
   const history = useHistory();
 
+
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -80,6 +81,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
     setRegion("");
     setAttachment([]);
     isVisible();
+
 
     history.push({
       pathname: `/categorylist/${region}`,

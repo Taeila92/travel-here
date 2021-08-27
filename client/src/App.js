@@ -14,12 +14,13 @@ import Home from "pages/Home";
 import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import WriteBtn from "components/Write/WriteBtn/WriteBtn";
+import WriteModal from "components/Write/WriteModal/WriteModal";
+// import Write from "pages/Write";
 import MyPage from "pages/MyPage";
 
 // firebase
 import firebase from "firebase";
 import { dbService } from "firebase.js";
-import WriteModal from "components/Write/WriteModal/WriteModal";
 
 // hook
 import useAuth from "hooks/useAuth";
@@ -99,19 +100,24 @@ function App() {
               <Route exact path="/" component={Home} />
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
-              {isLoggedIn && <Route exact path="/mypage" component={MyPage} />}
+              <Route exact path="/mypage" component={MyPage} />
               <Route component={NotFound} />
+              {/* <Route
+                exact path="/WriteModal"
+                render={() => <WriteModal visible={visible} isVisible={isVisible} />}
+              />       */}
+              {/* <Route exact path="/WriteModal" component={Write} /> */}
             </Switch>
           )}
         </Content>
         <Link to="/categorylist/:region" />
+        {isLoggedIn && (
+          <>
+            <WriteBtn isVisible={isVisible} />
+            <WriteModal visible={visible} isVisible={isVisible} />
+          </>
+        )}
       </BrowserRouter>
-      {isLoggedIn && (
-        <>
-          <WriteBtn isVisible={isVisible} />
-          <WriteModal visible={visible} isVisible={isVisible} />
-        </>
-      )}
     </Background>
   );
 }

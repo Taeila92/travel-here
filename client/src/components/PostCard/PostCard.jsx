@@ -166,7 +166,7 @@ const PostCard = ({ postData, location, view }) => {
         </S.SkeletonContainer>
       )}
       {qsID && (userCheck ?
-         <Post
+        <Post
         profile={post_profile_img}
         postData={postData}
         isPostOpened={isPostOpened}

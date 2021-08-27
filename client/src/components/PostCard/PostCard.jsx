@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from "firebase";
+import qs from 'qs';
 import { useHistory } from "react-router-dom";
-import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
-import * as S from './PostCard.style';
 import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import { viewMiddleware } from 'store/modules/view';
-import { useDispatch, useSelector } from 'react-redux';
-import firebase from "firebase";
-import qs from 'qs';
+import { storageService } from 'firebase.js';
 import getDate from 'utils/getDate';
 import NoneMember from 'components/Post/NoneMember';
-
+import MyLoader from './ContentPlaceholder';
+import * as S from './PostCard.style';
 
 const PostCard = ({ postData, location, view }) => {
 
@@ -104,7 +104,7 @@ const PostCard = ({ postData, location, view }) => {
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
             getRepImage(repImageName.current)
             getProfileImage(profileImageName.current)
-            setIsView(true);
+            setTimeout(() => setIsView(true), 1400);
           }
         })
       },{ threshold : 0.3 })
@@ -112,7 +112,7 @@ const PostCard = ({ postData, location, view }) => {
       observer.observe(lazyTarget.current)
     } 
     return () => observer && observer.disconnect();
-  }, []);
+  }, [lazyTarget, isView]);
 
   useEffect(() => {
     if(location.state === undefined){
@@ -144,7 +144,8 @@ const PostCard = ({ postData, location, view }) => {
 
   return (
     <>
-      <S.Container onClick={onContainerClick} id={post_id}>
+      {isView ? (      
+      <S.Container onClick={onContainerClick} id={post_id} >
         <S.Profile>
           <img src={post_profile_img} alt="프로필 사진" />
           <div>        
@@ -155,17 +156,17 @@ const PostCard = ({ postData, location, view }) => {
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>
-          {isView ? (
-            <img src={repImage} alt="여행 사진" />
-          ) : (
-            <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage>
-          )}
-          {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
+            <img src={repImage} alt="여행 사진" /> 
           <div>{getDate(post_date)}</div>
         </S.Content>
       </S.Container>
+      ) : (
+        <S.SkeletonContainer ref={lazyTarget}>
+          <MyLoader />
+        </S.SkeletonContainer>
+      )}
       {qsID && (userCheck ?
-      <Post
+         <Post
         profile={post_profile_img}
         postData={postData}
         isPostOpened={isPostOpened}

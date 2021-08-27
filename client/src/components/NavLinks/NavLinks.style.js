@@ -7,7 +7,7 @@ const Container = styled.div`
   top: -2rem;
   bottom: 0;
   display: flex;
-  padding-top: 4px;
+  padding-top: 1rem;
   ${(props) => {
     if (!props.isPc) {
       return css`

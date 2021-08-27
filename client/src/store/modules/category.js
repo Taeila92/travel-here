@@ -1,6 +1,9 @@
 import { dbService } from "firebase.js";
 import lodash from "lodash";
 
+const initPhoto =
+  "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465";
+
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
 const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";
@@ -66,9 +69,7 @@ export default function reducer(state = initialState, action) {
     default:
       return state;
   }
-}
-
-// redux-thunk
+} // redux-thunk
 export function getCategoryThunk() {
   return async (dispatch, getState) => {
     try {
@@ -77,33 +78,27 @@ export function getCategoryThunk() {
       let resArray = [
         {
           region: "asia",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
         {
           region: "north_america",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
         {
           region: "south_america",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
         {
           region: "africa",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
         {
           region: "europe",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
         {
           region: "australia",
-          photo:
-            "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465",
+          photo: initPhoto,
         },
       ];
       res.forEach((res) => {

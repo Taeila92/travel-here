@@ -36,23 +36,22 @@ function App() {
   };
 
   // firestore에서 유저정보 가져오기
-  const getUser = async() => {
-    const users = await dbService.collection('users').get();
+  const getUser = async () => {
+    const users = await dbService.collection("users").get();
     return users;
   };
 
-  const setUserDB = async(user) => {
+  const setUserDB = async (user) => {
     const users = await getUser();
     let id = [];
-    users.forEach(user => {
+    users.forEach((user) => {
       id.push(user.id);
     });
 
-    
-    // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장 
+    // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장
     const includeId = id.includes(user.uid);
-    if(!includeId){
-      dbService.collection('users').doc(user.uid).set({
+    if (!includeId) {
+      dbService.collection("users").doc(user.uid).set({
         uid: user.uid,
         email: user.email,
         name: user.displayName,
@@ -63,9 +62,8 @@ function App() {
         user_write_comments: [],
         user_write_posts: [],
       });
-    };
+    }
   };
-
 
   return (
     <Background>
@@ -106,18 +104,14 @@ function App() {
             </Switch>
           )}
         </Content>
-        <Link to="/categorylist/:region" /> 
-        {isLoggedIn && (
-          <>
-            <WriteBtn isVisible={isVisible} />
-            <WriteModal
-              visible={visible}
-              isVisible={isVisible}
-              userObj={userInfo}
-            />
-          </>
-        )}
+        <Link to="/categorylist/:region" />
       </BrowserRouter>
+      {isLoggedIn && (
+        <>
+          <WriteBtn isVisible={isVisible} />
+          <WriteModal visible={visible} isVisible={isVisible} />
+        </>
+      )}
     </Background>
   );
 }

@@ -1,10 +1,16 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase";
 
-export default function UpdateModal({ visible, isVisible, postData, login }) {
+export default function UpdateModal({
+  visible,
+  isVisible,
+  postData,
+  login,
+  isHeight,
+}) {
   const {
     post_date,
     post_region,
@@ -18,11 +24,11 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
     post_like,
     post_profile_img,
   } = postData;
-  console.log(postData);
   const [post, setPost] = useState(post_content);
   const [title, setTitle] = useState(post_title);
   const [region, setRegion] = useState(post_region);
-  const [attachment, setAttachment] = useState(post_photo);
+  const [attachment, setAttachment] = useState([]);
+
   // const postRef = useRef();
   // const titleRef = useRef();
   const onChange = (e) => {
@@ -38,7 +44,7 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    let attachmentUrl = [];
+    let attachmentUrl = post_photo;
     if (attachment) {
       for (let i = 0; i < attachment.length; i++) {
         const attachmentRef = storageService
@@ -52,30 +58,22 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
       }
     }
 
-    const ID = login.uid;
-
-    // users collection의 user_write_posts에 post_id 추가
-    await dbService
-      .collection("users")
-      .doc(ID)
-      .update({
-        user_write_posts: firebase.firestore.FieldValue.arrayUnion(post_id),
-      });
-
-    await dbService.collection("post").doc(post_id).set({
+    const updateData = {
       post_title: title,
       post_content: post,
-      post_writer,
-      post_uid,
-      post_date,
-      post_id,
+      post_writer: post_writer,
+      post_uid: post_uid,
+      post_date: post_date,
+      post_id: post_id,
       post_photo: attachmentUrl,
-      post_profile_img,
+      post_profile_img: post_profile_img,
       post_region: region,
-      post_view,
-      post_like,
+      post_view: post_view,
+      post_like: post_like,
       post_update: true,
-    });
+    };
+
+    await dbService.collection("post").doc(post_id).set(updateData);
     setPost("");
     setTitle("");
     setRegion("");
@@ -92,16 +90,11 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
       file = files[i];
       let reader = new FileReader();
       reader.onload = () => {
-        fileURLs[i] = reader.result;
+        fileURLs.push(reader.result);
         setAttachment([...fileURLs]);
       };
       reader.readAsDataURL(file);
     }
-    console.log(attachment);
-  };
-
-  const attach = () => {
-    console.log(attachment);
   };
   const onClearAttachmentClick = () => {
     setAttachment(null);
@@ -110,7 +103,7 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
   return (
     <>
       <S.Overlay visible={visible} onClick={isVisible} />
-      <S.Container visible={visible}>
+      <S.Container visible={visible} isHeight={isHeight}>
         <i onClick={isVisible} className="fas fa-times" />
 
         {login && (
@@ -154,6 +147,10 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
             name="fileNames[]"
           />
           <div>
+            {post_photo &&
+              post_photo.map((atta, i) => (
+                <img key={i} src={atta} width="70px" height="70px" alt="" />
+              ))}
             {attachment &&
               attachment.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
@@ -165,7 +162,6 @@ export default function UpdateModal({ visible, isVisible, postData, login }) {
             onClick={onClearAttachmentClick}
           />
           <input type="submit" value="수정" />
-          <button onClick={attach}>asdfdfas</button>
         </form>
       </S.Container>
     </>

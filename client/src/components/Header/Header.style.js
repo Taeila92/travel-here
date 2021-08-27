@@ -5,10 +5,13 @@ const Header = styled.header`
   background-color: transparent;
   height: 100px;
   z-index: 10;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
   ${(props) => {
-    if (!props.isPc) {
+    if (props.isNavOpened) {
       return css`
-        height: 150px;
+        height: 250px;
       `;
     }
   }}

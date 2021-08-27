@@ -16,23 +16,13 @@ const onLogout = () => {
 
 const activeStyle = { color: "red" };
 
-export default function NavLinks({ isLoggedIn, isPc }) {
+export default function NavLinks({ isLoggedIn, isPc, isNavOpened, navToggle }) {
   const auth = firebase.auth();
 
   const dispatch = useDispatch();
 
   // 마이페이지에 유저정보 넘기는 목적
   const user = useSelector((state) => state.userLike.data);
-
-  const { isNavOpened } = useSelector((state) => state.nav);
-
-  const navToggle = () => {
-    if (isNavOpened) {
-      dispatch(closeNav());
-    } else {
-      dispatch(openNav());
-    }
-  };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -42,9 +32,9 @@ export default function NavLinks({ isLoggedIn, isPc }) {
 
   return (
     <S.Header isPc={isPc} isNavOpened={isNavOpened}>
-      <Logo></Logo>
+      <Logo isNavOpened={isNavOpened}/>
       <S.Container isPc={isPc} isNavOpened={isNavOpened}>
-        <S.Ul>
+        <S.Ul isPc={isPc}>
           <S.Li>
             <S.StyledNav
               onClick={navToggle}
@@ -81,7 +71,7 @@ export default function NavLinks({ isLoggedIn, isPc }) {
               </S.Li>
               <S.Li>
                 <S.StyledNav to="/" activeStyle={activeStyle} exact>
-                  <S.Button onClick={onLogout}>Logout</S.Button>
+                  <S.Button isPc={isPc} onClick={onLogout}>Logout</S.Button>
                 </S.StyledNav>
               </S.Li>
             </>

@@ -1,10 +1,11 @@
 import styled from "styled-components";
 
 const Container = styled.div`
-  position: relative;
+  position: absolute;
   width: 180px;
   height: 55px;
   overflow: hidden;
+  margin-top: 1rem;
   `;
 
 const Img = styled.img`

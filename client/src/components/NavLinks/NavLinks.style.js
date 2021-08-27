@@ -1,65 +1,95 @@
 import styled, { css } from "styled-components";
 import { NavLink } from "react-router-dom";
 
+const Header = styled.div`
+  width: 100vw;
+  padding-bottom: 1rem;
+  `;
+
+
 const Container = styled.div`
-  position: absolute;
-  right: 0;
-  top: -2rem;
-  bottom: 0;
+  padding: 1.5rem 0;
   display: flex;
-  padding-top: 1rem;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
   ${(props) => {
     if (!props.isPc) {
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
-        height: 240px;
+        height: 250px;
         transition: 0.3s;
         transform: ${(props) =>
           props.isNavOpened ? "0" : "translateY(-240px)"};
+        align-items: ${(props) =>
+          props.isNavOpened && "flex-start"};
       `;
     }
-  }}
-`;
-
-const Header = styled.div`
-  position: relative;
-  background-color: transparent;
+  }} 
 `;
 
 const Ul = styled.ul`
   display: flex;
-  margin: 0 auto;
-  justify-content: center;
+  flex-direction: row;
   align-items: center;
-  @media screen and (max-width: 1024px) {
-    flex-direction: column;
+  justify-content: flex-end;
+  width: 100vw;
+  font-weight: bold;
+  ${(props) => {
+    if (!props.isPc) {
+      return css`
+        flex-direction: ${(props) =>
+          props.isNavOpened ? "row" : "column"};
+        justify-content: ${(props) =>
+          props.isNavOpened ? "flex-end" : "center"};
+        margin-bottom: ${(props) =>
+          props.isNavOpened ? "0" : "2rem"};
+      `;
+    }
+  }} 
+  li {
+    ${(props) => {
+    if (!props.isPc) {
+      return css`
+        margin: ${(props) =>
+          props.isNavOpened ? "0 0 0 5rem" : "0.2rem 0 1.5rem 0"};
+      `;
+      }
+    }} 
   }
 `;
 
 const Li = styled.li`
-  font-size: 24px;
-  font-weight: 700;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-left: 5rem;
+  font-size: 1.5rem;
+  a {
+    color: white;
+  }
+  
 `;
 
 const Button = styled.button`
-  border: none;
-  background-color: transparent;
+  padding: 0;
+  font-weight: bold;
+  margin-right: 3rem;
+  font-size: 1.5rem;
   color: white;
-  font-size: 24px;
-  font-weight: 700;
-  :hover {
-    cursor: pointer;
+  border: none;
+  background: transparent;
+  ${(props) => {
+  if (!props.isPc) {
+    return css`
+      margin-right: ${(props) =>
+        props.isNavOpened || "0"};
+    `;
   }
+  }} 
 `;
 
 const StyledNav = styled(NavLink)`
-  transition: 0.2s;
-  padding: 10px 40px 10px;
-  color: white;
+
 `;
 
 export { Container, Ul, Li, Button, Header, StyledNav };

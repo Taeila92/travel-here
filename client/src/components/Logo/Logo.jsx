@@ -5,7 +5,7 @@ import { useHistory } from "react-router";
 
 // logo Image
 
-export default function Logo() {
+export default function Logo({ isNavOpened }) {
   
   const history = useHistory();
 
@@ -16,7 +16,7 @@ export default function Logo() {
   }
 
   return (
-    <S.Container>
+    <S.Container isNavOpened={isNavOpened}>
       <S.Img src={logo} alt="Logo" onClick={onLogoClick}/>
     </S.Container>
   );

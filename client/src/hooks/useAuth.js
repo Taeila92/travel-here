@@ -46,7 +46,7 @@ const useAuth = () => {
           const value = {
             uid: user.uid,
             email: user.email,
-            name: user.displayName,
+            name: user.displayName || '익명',
             user_image: user.photoURL,
             user_like_comments: [],
             user_like_posts: [],

@@ -108,8 +108,19 @@ export default function UpdateModal({
 
         {login && (
           <S.Wrapper>
-            <img src={login.photoURL} alt="" />
-            <S.Name> {login.displayName}</S.Name>
+            {login.photoURL ? (
+              <>
+                <img src={login.photoURL} alt="프로필 이미지입니다"></img>
+                <S.Name> {login.displayName}</S.Name>
+              </>
+            ) : (
+              <>
+                <i className="fas fa-user-circle"></i>
+                <S.Name photo={Boolean(login.photoURL)}>
+                  {login.displayName}
+                </S.Name>
+              </>
+            )}
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>

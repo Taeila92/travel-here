@@ -72,9 +72,22 @@ const Wrapper = styled.span`
   span {
     margin-left: 0.2rem;
   }
+  i {
+    display: block;
+    font-size: 2rem;
+    color: darkgray;
+    left: 0;
+    margin-left: 0.2rem;
+  }
 `;
+
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
+  ${(props) =>
+    props.photo ||
+    css`
+      padding-left: 1.5rem;
+    `}
 `;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};

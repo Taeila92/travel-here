@@ -6,6 +6,7 @@ import firebase from "firebase";
 import { userMiddleware } from "store/modules/userLike";
 import { useDispatch } from "react-redux";
 import UpdateModal from "./UpdateModal";
+import { useMediaQuery } from "react-responsive";
 
 export default function WriteModal({ visible, isVisible, postData }) {
   const [post, setPost] = useState("");
@@ -17,6 +18,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const titleRef = useRef();
   const auth = firebase.auth();
   const dispatch = useDispatch();
+  const isHeight = useMediaQuery({ maxHeight: 765 });
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -115,11 +117,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
           isVisible={isVisible}
           postData={postData}
           login={login}
+          isHeight={isHeight}
         />
       ) : (
         <>
           <S.Overlay visible={visible} onClick={isVisible} />
-          <S.Container visible={visible}>
+          <S.Container visible={visible} isHeight={isHeight}>
             <i onClick={isVisible} className="fas fa-times" />
 
             {login && (

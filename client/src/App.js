@@ -15,7 +15,7 @@ import Login from "pages/Login";
 import NotFound from "pages/NotFound";
 import WriteBtn from "components/Write/WriteBtn/WriteBtn";
 import WriteModal from "components/Write/WriteModal/WriteModal";
-// import Write from "pages/Write";
+import Write from "pages/Write";
 import MyPage from "pages/MyPage";
 
 // firebase
@@ -101,12 +101,13 @@ function App() {
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
               <Route exact path="/mypage" component={MyPage} />
-              <Route component={NotFound} />
+              {/* <Route exact path="/WriteModal" component={Write} /> */}
+              {/* <Route exact path="/WriteModal" component={WriteModal} /> */}
               {/* <Route
                 exact path="/WriteModal"
                 render={() => <WriteModal visible={visible} isVisible={isVisible} />}
               />       */}
-              {/* <Route exact path="/WriteModal" component={Write} /> */}
+              <Route component={NotFound} />
             </Switch>
           )}
         </Content>
@@ -114,7 +115,7 @@ function App() {
         {isLoggedIn && (
           <>
             <WriteBtn isVisible={isVisible} />
-            <WriteModal visible={visible} isVisible={isVisible} />
+            {/* <WriteModal visible={visible} isVisible={isVisible} /> */}
           </>
         )}
       </BrowserRouter>

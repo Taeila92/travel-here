@@ -38,10 +38,14 @@ const Container = styled.div`
         border-radius: 10px;
         color: white;
         font-weight: bold;
+        border: 1px solid #409BF0;
         background-color: #409BF0;
+        transition: all 200ms ease-in-out;
       }
       button:hover {
         cursor: pointer;
+        background: transparent;
+        color: #409BF0;
       }
     }
   }

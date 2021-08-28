@@ -8,6 +8,7 @@ import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import { viewMiddleware } from 'store/modules/view';
+import { closeNav } from "store/modules/nav";
 import { storageService } from 'firebase.js';
 import getDate from 'utils/getDate';
 import NoneMember from 'components/Post/NoneMember';
@@ -68,6 +69,7 @@ const PostCard = ({ postData, location, view }) => {
 
   // 모달 띄우기
   const onShowPostModal = (postId) => {
+    dispatch(closeNav());
     setIsPostOpened(true);
     setLikeRender('init');
     history.push({
@@ -104,7 +106,7 @@ const PostCard = ({ postData, location, view }) => {
             observer.unobserve(entry.target) // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target 
             getRepImage(repImageName.current)
             getProfileImage(profileImageName.current)
-            setTimeout(() => setIsView(true), 1400);
+            setTimeout(() => setIsView(true), 700);
           }
         })
       },{ threshold : 0.3 })

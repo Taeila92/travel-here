@@ -17,6 +17,9 @@ const Container = styled.section`
       `;
     }
   }} 
+  @media screen and (min-width: 1024px) {
+    transform: translateY(0);
+  }
 `;
 
 

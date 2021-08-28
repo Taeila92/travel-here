@@ -23,6 +23,7 @@ export default function NavLinks({ isLoggedIn, isPc, isNavOpened, navToggle }) {
 
   // 마이페이지에 유저정보 넘기는 목적
   const user = useSelector((state) => state.userLike.data);
+  
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -33,7 +34,7 @@ export default function NavLinks({ isLoggedIn, isPc, isNavOpened, navToggle }) {
   return (
     <S.Header isPc={isPc} isNavOpened={isNavOpened}>
       <Logo isNavOpened={isNavOpened}/>
-      <S.Container isPc={isPc} isNavOpened={isNavOpened}>
+      <S.Container isPc={isPc} isNavOpened={isNavOpened} login={isLoggedIn}>
         <S.Ul isPc={isPc}>
           <S.Li>
             <S.StyledNav
@@ -79,7 +80,7 @@ export default function NavLinks({ isLoggedIn, isPc, isNavOpened, navToggle }) {
             <>
               <S.Li>
                 <S.StyledNav to="/login" activeStyle={activeStyle} exact>
-                  Login
+                  <S.Button isPc={isPc}>Login</S.Button>
                 </S.StyledNav>
               </S.Li>
             </>

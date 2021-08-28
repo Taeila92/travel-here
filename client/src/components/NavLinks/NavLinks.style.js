@@ -15,7 +15,7 @@ const Container = styled.div`
   justify-content: center;
   width: 100vw;
   ${(props) => {
-    if (!props.isPc) {
+    if (!props.isPc && props.login) {
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
@@ -27,7 +27,19 @@ const Container = styled.div`
           props.isNavOpened && "flex-start"};
       `;
     }
-  }} 
+    if(!props.isPc && !props.login){
+      return css`
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100vw;
+        height: 170px;
+        transition: 0.3s;
+        transform: ${(props) =>
+          props.isNavOpened ? "translateY(0px)" : "translateY(-170px)"};
+        align-items: ${(props) =>
+          props.isNavOpened && "flex-start"};
+      `;
+    }
+  }}
 `;
 
 const Ul = styled.ul`
@@ -55,8 +67,6 @@ const Ul = styled.ul`
       return css`
         margin: ${(props) =>
           props.isNavOpened ? "0 0 0 5rem" : "0rem 0 1.2rem 0"};
-        /* font-size: ${(props) =>
-          props.isNavOpened ? "1.5rem" : "1rem"}; */
       `;
       }
     }} 
@@ -66,6 +76,9 @@ const Ul = styled.ul`
 const Li = styled.li`
   margin-left: 5rem;
   font-size: 1.5rem;
+  :hover{
+    cursor: pointer;
+  }
   a {
     color: white;
   }
@@ -80,13 +93,14 @@ const Button = styled.button`
   color: white;
   border: none;
   background: transparent;
+  :hover{
+    cursor: pointer;
+  }
   ${(props) => {
   if (!props.isPc) {
     return css`
       margin-right: ${(props) =>
-        props.isNavOpened || "0"};
-      /* font-size: ${(props) =>
-        props.isNavOpened ? "1.5rem" : "1rem"}; */
+        props.isNavOpened || "0" };
     `;
   }
   }} 

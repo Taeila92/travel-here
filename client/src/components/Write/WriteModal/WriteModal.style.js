@@ -17,11 +17,6 @@ const Container = styled.div`
   z-index: 100;
   overflow: auto;
 
-  i {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-  }
   p {
     margin-top: 1rem;
     margin-left: 1rem;
@@ -68,15 +63,13 @@ const Wrapper = styled.span`
   span {
     margin-left: 0.2rem;
   }
-  i {
-    display: block;
-    font-size: 2rem;
-    color: darkgray;
-    left: 0;
-    margin-left: 0.2rem;
-  }
 `;
-
+const NamelessIcon = styled.i`
+  font-size: 2rem;
+  color: darkgray;
+  left: 0;
+  margin-left: 0.2rem;
+`;
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
   ${(props) =>
@@ -84,6 +77,13 @@ const Name = styled.span`
     css`
       padding-left: 1.5rem;
     `}
+`;
+
+const CloseModal = styled.i`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: 1px solid red;
 `;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
@@ -96,4 +96,12 @@ const Overlay = styled.div`
   z-index: 99;
 `;
 
-export { Container, Overlay, Wrapper, Name, ImgWrapper };
+export {
+  Container,
+  Overlay,
+  Wrapper,
+  Name,
+  ImgWrapper,
+  NamelessIcon,
+  CloseModal,
+};

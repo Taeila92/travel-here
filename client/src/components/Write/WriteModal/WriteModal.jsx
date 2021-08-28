@@ -154,8 +154,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
         <>
           <S.Overlay visible={visible} onClick={isVisible} />
           <S.Container visible={visible} isHeight={isHeight}>
-            <i onClick={isVisible} className="fas fa-times" />
-
+            <S.CloseModal onClick={isVisible} className="fas fa-times" />
             {login && (
               <S.Wrapper>
                 {login.photoURL ? (
@@ -167,7 +166,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-user-circle"></i>
+                    <S.NamelessIcon className="fas fa-user-circle" />
                     <S.Name photo={Boolean(login.photoURL)}>
                       {login.email}
                     </S.Name>

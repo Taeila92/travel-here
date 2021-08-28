@@ -44,19 +44,15 @@ const Container = styled.div`
         height: 40vh;
       `}
   }
-  div {
-    margin: 0.5rem 0.5rem 0;
-    height: 80px;
-    border: 2px solid #e3e3e3;
-    border-radius: 10px;
-    img {
-      margin: 0.2rem;
-    }
-  }
 `;
-const Input = styled.input`
-  position: absolute;
-  bottom: 2rem;
+const ImgWrapper = styled.div`
+  margin: 0.5rem 0.5rem 0;
+  height: 80px;
+  border: 2px solid #e3e3e3;
+  border-radius: 10px;
+  img {
+    margin: 0.2rem;
+  }
 `;
 const Wrapper = styled.span`
   width: 100%;
@@ -100,4 +96,4 @@ const Overlay = styled.div`
   z-index: 99;
 `;
 
-export { Container, Overlay, Wrapper, Name };
+export { Container, Overlay, Wrapper, Name, ImgWrapper };

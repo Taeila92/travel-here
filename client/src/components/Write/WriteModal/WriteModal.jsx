@@ -8,12 +8,14 @@ import { useDispatch } from "react-redux";
 import UpdateModal from "./UpdateModal";
 import { useMediaQuery } from "react-responsive";
 import { useHistory } from "react-router";
+import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [region, setRegion] = useState("");
   const [attachment, setAttachment] = useState([]);
+  const [load, setLoad] = useState(false);
   const [login, setLogin] = useState("");
   const postRef = useRef();
   const titleRef = useRef();
@@ -34,6 +36,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   };
 
   const onSubmit = async (e) => {
+    setLoad(true);
     e.preventDefault();
     let attachmentUrl = [];
     if (attachment) {
@@ -59,7 +62,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
-
+    // 정보 올리기
     await dbService.collection("post").doc(uuid).set({
       post_title: title,
       post_content: post,
@@ -80,6 +83,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
     setRegion("");
     setAttachment([]);
     isVisible();
+    setLoad(false);
 
     history.push({
       pathname: `/categorylist/${region}`,
@@ -87,6 +91,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
     });
   };
 
+  // 파일을 여러개 추가
   const onFileChange = (e) => {
     const { files } = e.target;
     let file;
@@ -138,7 +143,9 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 {login.photoURL ? (
                   <>
                     <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                    <S.Name> {login.displayName}</S.Name>
+                    <S.Name photo={Boolean(login.photoURL)}>
+                      {login.displayName}
+                    </S.Name>
                   </>
                 ) : (
                   <>
@@ -184,18 +191,22 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 onChange={onFileChange}
                 name="fileNames[]"
               />
-              <div>
+              <S.ImgWrapper>
                 {attachment &&
                   attachment.map((atta, i) => (
                     <img key={i} src={atta} width="70px" height="70px" alt="" />
                   ))}
-              </div>
+              </S.ImgWrapper>
               <input
                 type="button"
                 value="이미지 모두 삭제"
                 onClick={onClearAttachmentClick}
               />
-              <input type="submit" value="등록" />
+              {load ? (
+                <Loading width="30" height="30" />
+              ) : (
+                <input type="submit" value="등록" />
+              )}
             </form>
           </S.Container>
         </>

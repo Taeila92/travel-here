@@ -2,8 +2,7 @@ import { useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
-import firebase from "firebase";
-
+import Loading from "../../Loading/Loading";
 export default function UpdateModal({
   visible,
   isVisible,
@@ -27,10 +26,10 @@ export default function UpdateModal({
   const [post, setPost] = useState(post_content);
   const [title, setTitle] = useState(post_title);
   const [region, setRegion] = useState(post_region);
+  const [load, setLoad] = useState(false);
+
   const [attachment, setAttachment] = useState([]);
 
-  // const postRef = useRef();
-  // const titleRef = useRef();
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -43,6 +42,7 @@ export default function UpdateModal({
   };
 
   const onSubmit = async (e) => {
+    setLoad(true);
     e.preventDefault();
     let attachmentUrl = post_photo;
     if (attachment) {
@@ -79,6 +79,7 @@ export default function UpdateModal({
     setRegion("");
     setAttachment([]);
     isVisible();
+    setLoad(false);
   };
 
   const onFileChange = (e) => {
@@ -157,7 +158,7 @@ export default function UpdateModal({
             onChange={onFileChange}
             name="fileNames[]"
           />
-          <div>
+          <S.ImgWrapper>
             {post_photo &&
               post_photo.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
@@ -166,13 +167,17 @@ export default function UpdateModal({
               attachment.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
               ))}
-          </div>
+          </S.ImgWrapper>
           <input
             type="button"
             value="이미지 모두 삭제"
             onClick={onClearAttachmentClick}
           />
-          <input type="submit" value="수정" />
+          {load ? (
+            <Loading width="30" height="30" />
+          ) : (
+            <input type="submit" value="수정" />
+          )}
         </form>
       </S.Container>
     </>

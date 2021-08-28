@@ -8,13 +8,13 @@ const Header = styled.header`
   width: 100vw;
   display: flex;
   justify-content: center;
-  ${(props) => {
+  /* ${(props) => {
     if (props.isNavOpened) {
       return css`
-        height: 250px;
+        height: 220px;
       `;
     }
-  }}
+  }} */
 `;
 
 export { Header };

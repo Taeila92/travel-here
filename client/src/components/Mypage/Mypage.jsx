@@ -15,7 +15,7 @@ import firebase from 'firebase';
 
 
 
-const Mypage = ({user}) => {
+const Mypage = ({ user }) => {
 
   const [info, setInfo] = useState(false);
   const [post, setPost] = useState(false);
@@ -33,6 +33,10 @@ const Mypage = ({user}) => {
   const dispatch = useDispatch();
 
   const userDB = useSelector(state => state.userLike.data);
+
+  const { isNavOpened }  = useSelector(state => state.nav);
+
+  
 
   const onClose = () => {
     setInfo(false);
@@ -91,6 +95,8 @@ const Mypage = ({user}) => {
   };
 
 
+  useEffect(()=>{}, [isNavOpened]);
+
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.uid));
     
@@ -122,7 +128,7 @@ const Mypage = ({user}) => {
 
   return (
     <>
-      <S.Container>
+      <S.Container isNavOpened={isNavOpened}>
         <S.Contents check={check}>
           <S.BackImage>
             {user.name ? <span>'{user.name}'님 반갑습니다</span> : <span>닉네임을 설정해보세요!</span>}

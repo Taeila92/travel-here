@@ -19,10 +19,10 @@ const Container = styled.div`
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
-        height: 250px;
+        height: 200px;
         transition: 0.3s;
         transform: ${(props) =>
-          props.isNavOpened ? "0" : "translateY(-240px)"};
+          props.isNavOpened ? "translateY(0px)" : "translateY(-200px)"};
         align-items: ${(props) =>
           props.isNavOpened && "flex-start"};
       `;
@@ -54,7 +54,9 @@ const Ul = styled.ul`
     if (!props.isPc) {
       return css`
         margin: ${(props) =>
-          props.isNavOpened ? "0 0 0 5rem" : "0.2rem 0 1.5rem 0"};
+          props.isNavOpened ? "0 0 0 5rem" : "0rem 0 1.2rem 0"};
+        /* font-size: ${(props) =>
+          props.isNavOpened ? "1.5rem" : "1rem"}; */
       `;
       }
     }} 
@@ -83,6 +85,8 @@ const Button = styled.button`
     return css`
       margin-right: ${(props) =>
         props.isNavOpened || "0"};
+      /* font-size: ${(props) =>
+        props.isNavOpened ? "1.5rem" : "1rem"}; */
     `;
   }
   }} 

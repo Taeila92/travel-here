@@ -105,13 +105,13 @@ function App() {
           )}
         </Content>
         <Link to="/categorylist/:region" />
+        {isLoggedIn && (
+          <>
+            <WriteBtn isVisible={isVisible} />
+            <WriteModal visible={visible} isVisible={isVisible} />
+          </>
+        )}
       </BrowserRouter>
-      {isLoggedIn && (
-        <>
-          <WriteBtn isVisible={isVisible} />
-          <WriteModal visible={visible} isVisible={isVisible} />
-        </>
-      )}
     </Background>
   );
 }

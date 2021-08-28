@@ -4,10 +4,10 @@ import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase";
 import { userMiddleware } from "store/modules/userLike";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import UpdateModal from "./UpdateModal";
 import { useMediaQuery } from "react-responsive";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
@@ -23,7 +23,8 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const dispatch = useDispatch();
   const isHeight = useMediaQuery({ maxHeight: 765 });
   const history = useHistory();
-
+  const location = useLocation();
+  console.log(location);
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -35,6 +36,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
     }
   };
 
+  // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
+  let likePost = useSelector((state) => state.userLike.data);
+  // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
+  let bookmark = useSelector((state) => state.userLike.data);
+
+  console.log(location);
   const onSubmit = async (e) => {
     setLoad(true);
     e.preventDefault();
@@ -84,13 +91,24 @@ export default function WriteModal({ visible, isVisible, postData }) {
     setAttachment([]);
     isVisible();
     setLoad(false);
-
-    history.push({
-      pathname: `/categorylist/${region}`,
-      state: { uuid },
-    });
+    if (location.pathname === `/categorylist/${region}`) {
+      // 모달 띄우기
+      history.push({
+        pathname: `/categorylist/${region}`,
+        search: `?id=${uuid}`,
+        state: {
+          like: likePost.user_like_posts,
+          bookmark: bookmark.user_bookmark_posts,
+          postData,
+        },
+      });
+    } else {
+      history.push({
+        pathname: `/categorylist/${region}`,
+        state: { uuid },
+      });
+    }
   };
-
   // 파일을 여러개 추가
   const onFileChange = (e) => {
     const { files } = e.target;
@@ -109,11 +127,11 @@ export default function WriteModal({ visible, isVisible, postData }) {
   };
 
   const onClearAttachmentClick = () => {
-    setAttachment(null);
+    setAttachment([]);
   };
 
   const removeAttachment = (e) => {
-    setAttachment((prev, index) => {});
+    setAttachment([]);
   };
 
   useEffect(() => {
@@ -151,7 +169,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   <>
                     <i className="fas fa-user-circle"></i>
                     <S.Name photo={Boolean(login.photoURL)}>
-                      {login.displayName}
+                      {login.email}
                     </S.Name>
                   </>
                 )}
@@ -194,7 +212,16 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.ImgWrapper>
                 {attachment &&
                   attachment.map((atta, i) => (
-                    <img key={i} src={atta} width="70px" height="70px" alt="" />
+                    <>
+                      <img
+                        key={i}
+                        src={atta}
+                        width="70px"
+                        height="70px"
+                        alt="올릴 이미지"
+                      />
+                      <i onClick={removeAttachment} className="fas fa-times" />
+                    </>
                   ))}
               </S.ImgWrapper>
               <input

@@ -30,14 +30,13 @@ const Post = ({user}) => {
     <>
       {!check && postDB.map((post) => {
         return(
-        <S.List key={post.post_id} onClick={() => onMovePage(post)}>
-          <h1>{post.post_title}</h1>
-          <h2>{post.post_content}</h2>
+        <S.List key={post.post_id} onClick={() => onMovePage(post)} title={'게시글 보러가기'}>
+          <p>{post.post_title}</p>
         </S.List>
         )
       })}
       {check &&
-        <h1>daksldfads</h1>
+        <S.Null>작성하신 게시글이 없습니다</S.Null>
       }
     </>
   )

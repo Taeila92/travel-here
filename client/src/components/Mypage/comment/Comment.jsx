@@ -30,13 +30,13 @@ const Comment = ({ user }) => {
     <>
       {!check && commentDB.map((com) => {
         return(
-        <S.List key={com.comment_id} onClick={()=>{onMovePage(com)}}>
-          <h1>{com.comment_content}</h1>
+        <S.List key={com.comment_id} onClick={()=>{onMovePage(com)}} title={'게시글 보러가기'}>
+          <p>{com.comment_content}</p>
         </S.List>
         )
       })}
       {check &&
-        <h1>daksldfads</h1>
+        <S.Null>작성한 댓글이 없습니다</S.Null>
       }
     </>
   )

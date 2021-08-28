@@ -1,20 +1,24 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import firebase from 'firebase';
+import qs from 'qs';
 import { useHistory } from 'react-router-dom';
-import { storageService } from 'firebase.js';
 import Post from 'components/Post/Post';
-import * as S from './PostCard.style';
 import { userMiddleware } from 'store/modules/userLike';
 import { likeMiddleware } from 'store/modules/postLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
 import { viewMiddleware } from 'store/modules/view';
-import { useDispatch, useSelector } from 'react-redux';
-import firebase from 'firebase';
-import qs from 'qs';
+import { storageService } from 'firebase.js';
 import getDate from 'utils/getDate';
+import NoneMember from 'components/Post/NoneMember';
+import MyLoader from './ContentPlaceholder';
+import * as S from './PostCard.style';
 
-const PostCard = ({ postData, location }) => {
+const PostCard = ({ postData, location, view }) => {
   const auth = firebase.auth();
   const dispatch = useDispatch();
+
+  let [userCheck, setUserCheck] = useState(false);
 
   let [likeRender, setLikeRender] = useState('init');
 
@@ -25,7 +29,7 @@ const PostCard = ({ postData, location }) => {
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
-  let view = useSelector((state) => state.view.view);
+  // let view = useSelector((state)=>state.view.view);
 
   // 개별 post
   const {
@@ -67,20 +71,14 @@ const PostCard = ({ postData, location }) => {
 
   const getProfileImage = async (profileImageName) => {
     setProfileImage(profileImageName);
-
-    /*
-    프로필 사진도 절대 경로로 바꾸면 이와같이 바꿀 것!!!
-    await storageService.refFromURL(profileImageName).getDownloadURL().then((value)=>{
-      setProfileImage(value)
-    */
   };
 
   // 모달 띄우기
-  const onShowPostModal = () => {
+  const onShowPostModal = (postId) => {
     setIsPostOpened(true);
     setLikeRender('init');
     history.push({
-      search: `?id=${post_id}`,
+      search: `?id=${postId}`,
       state: {
         like: likePost.user_like_posts,
         bookmark: bookmark.user_bookmark_posts,
@@ -94,8 +92,8 @@ const PostCard = ({ postData, location }) => {
   };
 
   const onContainerClick = () => {
-    onShowPostModal();
     onView();
+    onShowPostModal(post_id);
   };
 
   // Lazy Loading
@@ -114,7 +112,7 @@ const PostCard = ({ postData, location }) => {
               observer.unobserve(entry.target); // 1. 화면에서 나갈 때, 다시 발생안시키기 위해 2. element가 들어가야해서 .target
               getRepImage(repImageName.current);
               getProfileImage(profileImageName.current);
-              setIsView(true);
+              setTimeout(() => setIsView(true), 1400);
             }
           });
         },
@@ -123,8 +121,16 @@ const PostCard = ({ postData, location }) => {
 
       observer.observe(lazyTarget.current);
     }
-
     return () => observer && observer.disconnect();
+  }, [lazyTarget, isView]);
+
+  useEffect(() => {
+    if (location.state === undefined) {
+      return;
+    }
+    if (location.state.hasOwnProperty('uuid')) {
+      onShowPostModal(location.state.uuid);
+    }
   }, []);
 
   // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
@@ -135,9 +141,11 @@ const PostCard = ({ postData, location }) => {
       if (user) {
         dispatch(userMiddleware(user.uid, post_id, 'init'));
         dispatch(bookmarkMiddleware(user.uid, post_id, 'init'));
+        setUserCheck(user);
       }
     });
     dispatch(likeMiddleware(post_id, 'init'));
+    // window.location.reload();
   }, [isPostOpened]);
 
   useEffect(() => {
@@ -146,37 +154,42 @@ const PostCard = ({ postData, location }) => {
 
   return (
     <>
-      <S.Container onClick={onContainerClick} id={post_id}>
-        <S.Profile>
-          <img src={post_profile_img} alt="프로필 사진" />
-          <div>
-            <h2>UserName</h2>
-            <h5>#{post_region}</h5>
-          </div>
-          <p>{post_view}</p>
-        </S.Profile>
-        <S.Content>
-          <h2>{post_title}</h2>
-          {isView ? (
+      {isView ? (
+        <S.Container onClick={onContainerClick} id={post_id}>
+          <S.Profile>
+            <img src={post_profile_img} alt="프로필 사진" />
+            <div>
+              <h2>UserName</h2>
+              <h5>#{post_region}</h5>
+            </div>
+            <p>{post_view}</p>
+          </S.Profile>
+          <S.Content>
+            <h2>{post_title}</h2>
             <img src={repImage} alt="여행 사진" />
-          ) : (
-            <S.SkeletonImage ref={lazyTarget}>loading</S.SkeletonImage>
-          )}
-          {/* 이미지가 로드 안 되었으면 회색 상자로 나오게 하고 싶다.. 그리고 이미지가 로드될때, 아래 창이 안 말려들었으면..*/}
-          <div>{getDate(post_date)}</div>
-        </S.Content>
-      </S.Container>
-      {qsID && (
-        <Post
-          profile={post_profile_img}
-          postData={postData}
-          setIsPostOpened={setIsPostOpened}
-          setLikeRender={setLikeRender}
-          setViewRender={setViewRender}
-          viewRender={viewRender}
-          postView={view}
-        />
+            <div>{getDate(post_date)}</div>
+          </S.Content>
+        </S.Container>
+      ) : (
+        <S.SkeletonContainer ref={lazyTarget}>
+          <MyLoader />
+        </S.SkeletonContainer>
       )}
+      {qsID &&
+        (userCheck ? (
+          <Post
+            profile={post_profile_img}
+            postData={postData}
+            isPostOpened={isPostOpened}
+            setIsPostOpened={setIsPostOpened}
+            setLikeRender={setLikeRender}
+            setViewRender={setViewRender}
+            viewRender={viewRender}
+            postView={view}
+          />
+        ) : (
+          <NoneMember setIsPostOpened={setIsPostOpened} />
+        ))}
     </>
   );
 };

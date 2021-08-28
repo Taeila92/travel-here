@@ -7,11 +7,8 @@ import Post from './post/Post';
 import Comment from './comment/Comment';
 import Bookmark from './bookmark/Bookmark';
 
-import img from "assets/images/mypage_back_Img1.png";
-import profileImg from "assets/images/profile_img.png";
-
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
-import { mypageCommentMiddleware, getComment } from 'store/modules/mypageComment';
+import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
 
 import firebase from 'firebase';
@@ -25,7 +22,9 @@ const Mypage = ({user}) => {
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
 
-  // const [change, setChange] = useState(false);
+  const [change, setChange] = useState(false);
+
+  const [check, setCheck] = useState(false);
 
   const [uid, setUid] = useState('');
 
@@ -35,62 +34,66 @@ const Mypage = ({user}) => {
 
   const userDB = useSelector(state => state.userLike.data);
 
-  // const postDB = useSelector(state => state.mypagePost.data);
-
   const onClose = () => {
     setInfo(false);
     setPost(false);
     setComment(false);
     setBookmark(false);
+    // setCheck(false);
   };
+
+  const onDelayClose = () => {
+    setCheck(false);
+    setTimeout(()=>{
+      onClose();
+    }, 800);
+  }
+
 
   const onInfo = () => {
     if(info){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setInfo(true);
+    setCheck(true);
   }
 
   const onPost = () => {
     if(post){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setPost(true);
+    setCheck(true);
   };
 
   const onComment = () => {
     if(comment){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setComment(true);
+    setCheck(true);
   };
 
   const onBookmark = () => {
     if(bookmark){
-      onClose();
+      onDelayClose();
       return;
     }
     onClose();
     setBookmark(true);
+    setCheck(true);
   };
 
 
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.uid));
-    for(let i=0; i<user.user_write_comments.length; i++){
-      if(i === user.user_write_comments.length-1){
-        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
-      }
-      if(i !== user.user_write_comments.length-1){
-        dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
-      }
-    }
+    
     for(let i=0; i<user.user_bookmark_posts.length; i++){
       if(i === user.user_bookmark_posts.length-1){
         dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish'));
@@ -105,16 +108,25 @@ const Mypage = ({user}) => {
     });
   },[]);
 
+  useEffect(()=>{
+    for(let i=0; i<user.user_write_comments.length; i++){
+      if(i === user.user_write_comments.length-1){
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
+      }
+      if(i !== user.user_write_comments.length-1){
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
+      }
+    }
+  },[change])
+
 
   return (
     <>
       <S.Container>
-        <S.Contents>
+        <S.Contents check={check}>
           <S.BackImage>
-            {/* {change ?
-            <img src={userDB.user_image} alt="배경사진" /> :
-            ((userDB.user_image !== user.user_image) && <img src={user.user_image} alt="배경사진" />)} */}
-            <img src={userDB.user_image} alt="배경사진" />
+            {user.name ? <span>'{user.name}'님 반갑습니다</span> : <span>닉네임을 설정해보세요!</span>}
+            {userDB.user_image ? <img src={userDB.user_image} alt="배경사진" /> : <i className="fas fa-user-circle"></i>}
           </S.BackImage>
           <S.ListArea>
             <p onClick={onInfo}>
@@ -138,28 +150,28 @@ const Mypage = ({user}) => {
           </S.ListArea>
         </S.Contents>
         {info &&
-        <S.Content>
-          <li>내 정보</li>
-          <li>
-            <Info uid={uid} user={user} userDB={userDB} />
-          </li>
+        <S.Content check={check}>
+          <ul>
+            <li>내 정보</li>
+            <Info uid={uid} user={user} userDB={userDB} change={change} setChange={setChange}/>
+          </ul>
         </S.Content>}
         {post &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>
             <li>내가 쓴 글</li>
             <Post user={user}/>
           </ul>
         </S.Content>}
         {comment &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>
             <li>내가 쓴 댓글</li>
             <Comment user={user}/>
           </ul>
         </S.Content>}
         {bookmark &&
-        <S.Content>
+        <S.Content check={check}>
           <ul>  
             <li>찜</li>
             <Bookmark user={user}/>

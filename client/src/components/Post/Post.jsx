@@ -19,6 +19,7 @@ import {
 // import { userBookmarkDelThunk, getComId } from 'store/modules/delete';
 import firebase from 'firebase';
 import { dbService } from 'firebase.js';
+import WriteModal from 'components/Write/WriteModal/WriteModal';
 
 const Post = ({
   postData,
@@ -53,6 +54,9 @@ const Post = ({
   let [bar, setBar] = useState(false);
 
   let [user, setUser] = useState('');
+
+  // writeModal
+  const [visible, setVisible] = useState(false);
 
   let history = useHistory();
 
@@ -97,10 +101,8 @@ const Post = ({
     }
   };
 
-  const postEdit = async () => {
-    // await dbService.collection('post').doc(post_id).update({
-    //   post_content: firebase.firestore.FieldValue.arrayUnion(),
-    // });
+  const postEdit = () => {
+    setVisible(!visible);
   };
 
   // 게시글 삭제 시 삭제되는 것들
@@ -172,11 +174,12 @@ const Post = ({
 
   // 모달창 닫기
   const onHideModal = () => {
-    setIsPostOpened(false);
     setViewRender(!viewRender);
+    setIsPostOpened(false);
     history.push({
       search: '',
     });
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -188,27 +191,15 @@ const Post = ({
     timeNotice(post_date);
   }, []);
 
-  // 새로고침하면 좋아요, 찜 변경사항이 반영안됨
-  // 그래서 일단 경고창 띄우는 걸로 처리
-  useEffect(() => {
-    window.onbeforeunload = (e) => {
-      e.preventDefault();
-      return true;
-    };
-    return () => {
-      window.onbeforeunload = null;
-    };
-  }, [window.onbeforeunload]);
-
   return (
     <S.Container>
       <S.Contents>
         <ul ref={comment}>
           <S.Header>
             <span>
-              <span>영국</span>
+              <span>{post_title}</span>
               <p>#{post_region}</p>
-              <p>{postView}</p>
+              <p>조회수 {postView}</p>
             </span>
             <div>
               {userCheck && (
@@ -226,11 +217,15 @@ const Post = ({
           </S.Header>
           {post_photo && <PostSlider postImages={post_photo} />}
           <S.Profile>
-            <img src={post_profile_img} alt="프로필 이미지입니다"></img>
+            {post_profile_img ? (
+              <img src={post_profile_img} alt="프로필 이미지입니다"></img>
+            ) : (
+              <i className="fas fa-user-circle"></i>
+            )}
             <p>{post_writer}</p> {/* post_writer로 검색?*/}
             <span>{time}</span>
           </S.Profile>
-          <S.Title>{post_title}</S.Title>
+          {/* <S.Title>{post_title}</S.Title> */}
           <S.Content>{post_content}</S.Content>
           <S.Like>
             <span>
@@ -239,19 +234,27 @@ const Post = ({
               ) : (
                 <i onClick={onLikeToggle} className="far fa-heart"></i>
               )}
-              {/* {likeRender === 'init' ? <span>{post_like}</span> : <span>{likeNum}</span>}<p>명</p>이 좋아합니다 */}
               <span>{likeNum}</span>
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (
-              <i onClick={onBookmarkToggle} className="fas fa-bookmark"></i>
+              <i
+                onClick={onBookmarkToggle}
+                title={'찜 해제'}
+                className="fas fa-bookmark"
+              ></i>
             ) : (
-              <i onClick={onBookmarkToggle} className="far fa-bookmark"></i>
+              <i
+                onClick={onBookmarkToggle}
+                title={'찜하기'}
+                className="far fa-bookmark"
+              ></i>
             )}
           </S.Like>
           <Comment postId={post_id} postregion={post_region} userDB={userDB} />
         </ul>
       </S.Contents>
+      <WriteModal visible={visible} isVisible={postEdit} postData={postData} />
     </S.Container>
   );
 };

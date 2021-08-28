@@ -76,7 +76,7 @@ export default function NavLinks({ isLoggedIn, isPc }) {
                   activeStyle={activeStyle}
                   exact
                 >
-                  <S.Button>MyPage</S.Button>
+                  MyPage
                 </S.StyledNav>
               </S.Li>
               <S.Li>

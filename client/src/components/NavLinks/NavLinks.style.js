@@ -7,17 +7,16 @@ const Container = styled.div`
   top: -2rem;
   bottom: 0;
   display: flex;
-  padding-top: 4px;
+  padding-top: 1rem;
   ${(props) => {
     if (!props.isPc) {
       return css`
         background-color: rgba(0, 0, 0, 0.5);
         width: 100vw;
-        height: 120px;
-        padding-right: 20px;
+        height: 240px;
         transition: 0.3s;
         transform: ${(props) =>
-          props.isNavOpened ? '0' : 'translateY(-150px)'};
+          props.isNavOpened ? '0' : 'translateY(-240px)'};
       `;
     }
   }}

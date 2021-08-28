@@ -24,16 +24,20 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   }
 
   const onDoneEdit = () => { 
-    onEditFrame(input.current.value, container.current.id);
+    onEditFrame(input.current.value, container.current.id, input.current.placeholder);
   };
   
-  const onEditFrame = async(value, i) => {
+  const onEditFrame = async(value, i, placeholder) => {
     if(!value){
-      return;
+      await dbService.collection('comment').doc(i).update({
+        comment_content: placeholder
+      });
     }
-    await dbService.collection('comment').doc(i).update({
-      comment_content: value
-    });
+    if(value){
+      await dbService.collection('comment').doc(i).update({
+        comment_content: value
+      });
+    }
     onEdit();
     setEdit(false);
     setEditDelete(false);
@@ -70,10 +74,10 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
 
   return (
     <S.CommentList ref={container} id={com.comment_id} key={com.comment_id}>
-      <img src={com.user_image} alt="프로필 이미지입니다"></img>
+      {com.user_image ? <img src={com.user_image} alt="프로필 이미지입니다"></img> : <S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon>}
       {edit ?
       (<input ref={input} placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
-      <S.Content><p>{com.comment_writer}</p><p>{com.comment_content}</p></S.Content>}
+      <S.Content>{com.comment_writer && <p>{com.comment_writer}</p>}<span>{com.comment_content}</span></S.Content>}
       <S.EditDel>
         {editDelete &&
           <>

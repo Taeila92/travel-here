@@ -18,24 +18,15 @@ function SamplePrevArrow(props) {
   const { onClick } = props;
   return (
     <S.ArrowStyle onClick={onClick}>
-      <i className="fas fa-arrow-left" fontSize="300px" />
+      <i className="fas fa-arrow-left" />
     </S.ArrowStyle>
   );
 }
-// const settings = {
-//   dots: false,
-//   infinite: true,
-//   speed: 500,
-//   slidesToShow: 3,
-//   slidesToScroll: 1,
-//   nextArrow: <SampleNextArrow />,
-//   prevArrow: <SamplePrevArrow />,
-// };
 
 const Category = () => {
   const category = useSelector((state) => state.category.data);
   const isPc = useMediaQuery({
-    query: `(min-width : 820px) and (max-width :3840px)`,
+    query: `(min-width : 820px)`,
   });
 
   const settings = {
@@ -66,7 +57,7 @@ const Category = () => {
             <S.LinkStyle to={`/categorylist/${cate.region}`}>
               <h3>{cate.region.replace('_', ' ').toUpperCase()}</h3>
               <div>
-                <img src={cate.photo} />
+                <img src={cate.photo} alt="category Img" />
               </div>
             </S.LinkStyle>
           </S.CategoryBox>

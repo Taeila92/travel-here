@@ -106,17 +106,13 @@ function App() {
               <Route component={NotFound} />
             </Switch>
           )}
-          <Link to="/categorylist/:region" />
         </Content>
+        <Link to="/categorylist/:region" />
       </BrowserRouter>
       {isLoggedIn && (
         <>
           <WriteBtn isVisible={isVisible} />
-          <WriteModal
-            visible={visible}
-            isVisible={isVisible}
-            userObj={userInfo}
-          />
+          <WriteModal visible={visible} isVisible={isVisible} />
         </>
       )}
     </Background>

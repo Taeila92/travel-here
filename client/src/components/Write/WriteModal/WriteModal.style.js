@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const width = "80vw";
 const height = "70vh";
@@ -15,7 +15,7 @@ const Container = styled.div`
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
   z-index: 100;
-  overflow: hidden;
+  overflow: auto;
 
   i {
     position: absolute;
@@ -36,6 +36,13 @@ const Container = styled.div`
     margin: 1rem 0.5rem 0;
     border: 2px solid #e3e3e3;
     border-radius: 5px;
+  }
+  textarea {
+    ${(props) =>
+      !props.isHeight &&
+      css`
+        height: 40vh;
+      `}
   }
   div {
     margin: 0.5rem 0.5rem 0;
@@ -65,9 +72,22 @@ const Wrapper = styled.span`
   span {
     margin-left: 0.2rem;
   }
+  i {
+    display: block;
+    font-size: 2rem;
+    color: darkgray;
+    left: 0;
+    margin-left: 0.2rem;
+  }
 `;
+
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
+  ${(props) =>
+    props.photo ||
+    css`
+      padding-left: 1.5rem;
+    `}
 `;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};

@@ -1,9 +1,14 @@
 ﻿import styled from "styled-components";
+import { flex, frame, cursorPointer } from "../styleConstatns";
 
 const List = styled.li`
-  border: 1px solid black;
-  margin: 1rem 0;
-  cursor: pointer;
+  ${frame};
+
 `;
 
-export { List };
+const Null = styled.p`
+  ${frame};
+  cursor: auto;
+`;
+
+export { List, Null };

@@ -94,4 +94,42 @@ const LinkStyle = styled(Link)`
   }
 `;
 
-export { Container, LinkStyle, ArrowStyle, Relative, CategoryBox };
+const SkeletonWrapper = styled.div`
+  margin-top: 13rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const SkeletonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+`;
+
+const SkeletonTitle = styled.div`
+  width: ${(props) => (props.isPc ? "70vw" : "25vw")};
+  height: ${(props) => (props.isPc ? "4vh" : "2.5vh")};
+  background-color: rgba(100, 100, 100, 0.5);
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+`;
+const SkeletonImg = styled.div`
+  width: ${(props) => (props.isPc ? "80vw" : "30vw")};
+  height: ${(props) => (props.isPc ? "40vh" : "15vh")};
+  background-color: rgba(100, 100, 100, 0.5);
+  margin-left: 1rem;
+  margin-top: 1rem;
+  border-radius: 0.5rem;
+`;
+export {
+  Container,
+  LinkStyle,
+  ArrowStyle,
+  Relative,
+  CategoryBox,
+  SkeletonContainer,
+  SkeletonTitle,
+  SkeletonImg,
+  SkeletonWrapper,
+};

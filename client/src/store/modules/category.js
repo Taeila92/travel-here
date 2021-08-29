@@ -1,14 +1,13 @@
-import { dbService } from 'firebase.js';
-import lodash from 'lodash';
+import { dbService } from "firebase.js";
 
 const initPhoto =
-  'https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465';
+  "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465";
 
 //actions
-const GET_CATEGORY_START = 'category/GET_CATEGORY_START';
-const GET_CATEGORY_SUCCESS = 'category/GETCATEGORY_SUCCESS';
-const GET_CATEIMAGE_SUCCESS = 'category/GETCATEIMAGE_SUCCESS';
-const GET_CATEGORY_FAIL = 'category/GET_CATEGORY_FAIL';
+const GET_CATEGORY_START = "category/GET_CATEGORY_START";
+const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";
+const GET_CATEIMAGE_SUCCESS = "category/GETCATEIMAGE_SUCCESS";
+const GET_CATEGORY_FAIL = "category/GET_CATEGORY_FAIL";
 
 //action constructor
 export function getCategoryStart() {
@@ -74,35 +73,35 @@ export function getCategoryThunk() {
   return async (dispatch, getState) => {
     try {
       dispatch(getCategoryStart());
-      const res = await dbService.collection('post').get();
+      const res = await dbService.collection("post").get();
       let resArray = [
         {
-          region: 'asia',
+          region: "asia",
           photo: initPhoto,
         },
         {
-          region: 'north_america',
+          region: "north_america",
           photo: initPhoto,
         },
         {
-          region: 'south_america',
+          region: "south_america",
           photo: initPhoto,
         },
         {
-          region: 'africa',
+          region: "africa",
           photo: initPhoto,
         },
         {
-          region: 'europe',
+          region: "europe",
           photo: initPhoto,
         },
         {
-          region: 'australia',
+          region: "australia",
           photo: initPhoto,
         },
       ];
       res.forEach((res) => {
-        if (res.data().post_region !== '' && res.data().post_photo.length > 0) {
+        if (res.data().post_region !== "" && res.data().post_photo.length > 0) {
           const random = Math.floor(
             Math.random() * res.data().post_photo.length
           );

@@ -1,39 +1,48 @@
-import { useEffect, useRef, useState } from 'react';
-import * as S from './WriteModal.style';
-import { dbService, storageService } from 'firebase.js';
-import { v4 as uuidv4 } from 'uuid';
-import firebase from 'firebase';
-import { userMiddleware } from 'store/modules/userLike';
-import { useDispatch } from 'react-redux';
-import UpdateModal from './UpdateModal';
-import { useMediaQuery } from 'react-responsive';
-import { useHistory } from 'react-router';
+import { useEffect, useRef, useState } from "react";
+import * as S from "./WriteModal.style";
+import { dbService, storageService } from "firebase.js";
+import { v4 as uuidv4 } from "uuid";
+import firebase from "firebase";
+import { userMiddleware } from "store/modules/userLike";
+import { useDispatch, useSelector } from "react-redux";
+import UpdateModal from "./UpdateModal";
+import { useMediaQuery } from "react-responsive";
+import { useHistory, useLocation } from "react-router";
+import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
-  const [post, setPost] = useState('');
-  const [title, setTitle] = useState('');
-  const [region, setRegion] = useState('');
+  const [post, setPost] = useState("");
+  const [title, setTitle] = useState("");
+  const [region, setRegion] = useState("");
   const [attachment, setAttachment] = useState([]);
-  const [login, setLogin] = useState('');
+  const [load, setLoad] = useState(false);
+  const [login, setLogin] = useState("");
   const postRef = useRef();
   const titleRef = useRef();
   const auth = firebase.auth();
   const dispatch = useDispatch();
   const isHeight = useMediaQuery({ maxHeight: 765 });
   const history = useHistory();
+  const location = useLocation();
 
   const onChange = (e) => {
     const { value, name } = e.target;
-    if (name === 'textarea') {
+    if (name === "textarea") {
       setPost(value);
-    } else if (name === 'region') {
+    } else if (name === "region") {
       setRegion(value);
-    } else if (name === 'title') {
+    } else if (name === "title") {
       setTitle(value);
     }
   };
 
+  // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
+  let likePost = useSelector((state) => state.userLike.data);
+  // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
+  let bookmark = useSelector((state) => state.userLike.data);
+
   const onSubmit = async (e) => {
+    setLoad(true);
     e.preventDefault();
     let attachmentUrl = [];
     if (attachment) {
@@ -43,7 +52,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
           .child(`${login.uid}/${uuidv4()}`);
         const response = await attachmentRef.putString(
           attachment[i],
-          'data_url'
+          "data_url"
         );
         attachmentUrl.push(await response.ref.getDownloadURL());
       }
@@ -54,13 +63,13 @@ export default function WriteModal({ visible, isVisible, postData }) {
 
     // users collection의 user_write_posts에 post_id 추가
     await dbService
-      .collection('users')
+      .collection("users")
       .doc(ID)
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
-
-    await dbService.collection('post').doc(uuid).set({
+    // 정보 올리기
+    await dbService.collection("post").doc(uuid).set({
       post_title: title,
       post_content: post,
       post_writer: login.displayName,
@@ -75,18 +84,32 @@ export default function WriteModal({ visible, isVisible, postData }) {
       uid: login.uid,
       post_update: false,
     });
-    setPost('');
-    setTitle('');
-    setRegion('');
+    setPost("");
+    setTitle("");
+    setRegion("");
     setAttachment([]);
     isVisible();
-
-    history.push({
-      pathname: `/categorylist/${region}`,
-      state: { uuid },
-    });
+    setLoad(false);
+    if (location.pathname === `/categorylist/${region}`) {
+      // 모달 띄우기
+      history.push({
+        pathname: `/categorylist/${region}`,
+        search: `?id=${uuid}`,
+        state: {
+          like: likePost.user_like_posts,
+          bookmark: bookmark.user_bookmark_posts,
+          postData,
+        },
+      });
+      window.location.reload();
+    } else {
+      history.push({
+        pathname: `/categorylist/${region}`,
+        state: { uuid },
+      });
+    }
   };
-
+  // 파일을 여러개 추가
   const onFileChange = (e) => {
     const { files } = e.target;
     let file;
@@ -104,17 +127,18 @@ export default function WriteModal({ visible, isVisible, postData }) {
   };
 
   const onClearAttachmentClick = () => {
-    setAttachment(null);
+    setAttachment([]);
   };
 
   const removeAttachment = (e) => {
-    setAttachment((prev, index) => {});
+    console.log(e);
+    // setAttachment([]);
   };
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setLogin(user);
-      dispatch(userMiddleware(user.uid, '', 'init'));
+      dispatch(userMiddleware(user.uid, "", "init"));
     });
   }, []);
   return (
@@ -131,20 +155,21 @@ export default function WriteModal({ visible, isVisible, postData }) {
         <>
           <S.Overlay visible={visible} onClick={isVisible} />
           <S.Container visible={visible} isHeight={isHeight}>
-            <i onClick={isVisible} className="fas fa-times" />
-
+            <S.CloseModal onClick={isVisible} className="fas fa-times" />
             {login && (
               <S.Wrapper>
                 {login.photoURL ? (
                   <>
                     <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                    <S.Name> {login.displayName}</S.Name>
+                    <S.Name photo={Boolean(login.photoURL)}>
+                      {login.displayName}
+                    </S.Name>
                   </>
                 ) : (
                   <>
-                    <i className="fas fa-user-circle"></i>
+                    <S.NamelessIcon className="fas fa-user-circle" />
                     <S.Name photo={Boolean(login.photoURL)}>
-                      {login.displayName}
+                      {login.email}
                     </S.Name>
                   </>
                 )}
@@ -152,6 +177,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
             )}
             <form onSubmit={onSubmit}>
               <input
+                value={title}
                 name="title"
                 type="text"
                 ref={titleRef}
@@ -159,13 +185,14 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 placeholder="제목을 입력해 주세요."
               />
               <textarea
+                value={post}
                 name="textarea"
                 ref={postRef}
                 onChange={onChange}
                 placeholder="내용을 입력해주세요."
                 rows="10"
               />
-              <select name="region" onChange={onChange}>
+              <select name="region" value={region} onChange={onChange}>
                 <option selected value="">
                   지역을 선택해 주세요.
                 </option>
@@ -184,18 +211,31 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 onChange={onFileChange}
                 name="fileNames[]"
               />
-              <div>
+              <S.ImgWrapper>
                 {attachment &&
                   attachment.map((atta, i) => (
-                    <img key={i} src={atta} width="70px" height="70px" alt="" />
+                    <>
+                      <img
+                        key={i}
+                        src={atta}
+                        width="70px"
+                        height="70px"
+                        alt="올릴 이미지"
+                      />
+                      <i onClick={removeAttachment} className="fas fa-times" />
+                    </>
                   ))}
-              </div>
+              </S.ImgWrapper>
               <input
                 type="button"
                 value="이미지 모두 삭제"
                 onClick={onClearAttachmentClick}
               />
-              <input type="submit" value="등록" />
+              {load ? (
+                <Loading width="30" height="30" />
+              ) : (
+                <input type="submit" value="등록" />
+              )}
             </form>
           </S.Container>
         </>

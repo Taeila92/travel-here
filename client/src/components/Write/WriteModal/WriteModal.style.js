@@ -17,11 +17,6 @@ const Container = styled.div`
   z-index: 100;
   overflow: auto;
 
-  i {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-  }
   p {
     margin-top: 1rem;
     margin-left: 1rem;
@@ -44,25 +39,21 @@ const Container = styled.div`
         height: 40vh;
       `}
   }
-  div {
-    margin: 0.5rem 0.5rem 0;
-    height: 80px;
-    border: 2px solid #e3e3e3;
-    border-radius: 10px;
-    img {
-      margin: 0.2rem;
-    }
-  }
 `;
-const Input = styled.input`
-  position: absolute;
-  bottom: 2rem;
+const ImgWrapper = styled.div`
+  margin: 0.5rem 0.5rem 0;
+  height: 80px;
+  border: 2px solid #e3e3e3;
+  border-radius: 10px;
+  img {
+    margin: 0.2rem;
+  }
 `;
 const Wrapper = styled.span`
   width: 100%;
   display: flex;
   align-items: center;
-  /* margin-bottom: 1rem; */
+
   margin: 1rem 0 0 0.5rem;
   img {
     width: 2rem;
@@ -72,22 +63,21 @@ const Wrapper = styled.span`
   span {
     margin-left: 0.2rem;
   }
-  i {
-    display: block;
-    font-size: 2rem;
-    color: darkgray;
-    left: 0;
-    margin-left: 0.2rem;
-  }
 `;
-
+const NamelessIcon = styled.i`
+  font-size: 2rem;
+  color: darkgray;
+  left: 0;
+  margin-left: 0.2rem;
+`;
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
-  ${(props) =>
-    props.photo ||
-    css`
-      padding-left: 1.5rem;
-    `}
+`;
+
+const CloseModal = styled.i`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 `;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};
@@ -100,4 +90,12 @@ const Overlay = styled.div`
   z-index: 99;
 `;
 
-export { Container, Overlay, Wrapper, Name };
+export {
+  Container,
+  Overlay,
+  Wrapper,
+  Name,
+  ImgWrapper,
+  NamelessIcon,
+  CloseModal,
+};

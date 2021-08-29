@@ -2,11 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import PostCard from "components/PostCard/PostCard";
 import { fetchPostList } from "store/modules/board";
-import { viewMiddleware } from 'store/modules/view';
+import Loading from "../../components/Loading/Loading";
 import * as S from "./Board.style";
 
 const Board = ({ match, location }) => {
-
   let [viewRender, setViewRender] = useState(false);
 
   // let { post_view } = useSelector((state)=>state.board.data);
@@ -21,40 +20,41 @@ const Board = ({ match, location }) => {
   const dispatch = useDispatch();
 
   // categorylist에서 region에 따라서 놓여져있고 클릭하면 그에 맞게 검색
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(fetchPostList(match.params.region));
-  },[dispatch, match.params.region])
+  }, [dispatch, match.params.region]);
 
   // let arr;
   // arr.push(view);
   // useEffect(()=>{
-    // postList.map((post)=>{
-    //   dispatch(viewMiddleware(post.post_id, 'init'));
-    // })
-    // for(let i=0; i<postList.length; i++){
-    //   arr.push(postList[i].post_view);
-    // }
-    // console.log(arr);
-    // console.log(postList);
+  // postList.map((post)=>{
+  //   dispatch(viewMiddleware(post.post_id, 'init'));
+  // })
+  // for(let i=0; i<postList.length; i++){
+  //   arr.push(postList[i].post_view);
+  // }
+  // console.log(arr);
+  // console.log(postList);
   // },[view]);
 
-  if (loading) return <div>로딩중</div>;
+  if (loading) return <Loading width="100" height="100" />;
   if (error) return <div>Error</div>;
   if (!postList) return null;
 
   return (
     <S.Container postlistLength={postList.length}>
-      { 
-        postList.map((post)=>{
-          return <PostCard
+      {postList.map((post) => {
+        return (
+          <PostCard
             key={post.post_id}
             postData={post}
             location={location}
             view={view}
             viewRender={viewRender}
-            setViewRender={setViewRender}/>
-        })
-      }
+            setViewRender={setViewRender}
+          />
+        );
+      })}
     </S.Container>
   );
 };

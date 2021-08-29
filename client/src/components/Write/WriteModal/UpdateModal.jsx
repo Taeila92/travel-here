@@ -2,8 +2,7 @@ import { useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
-import firebase from "firebase";
-
+import Loading from "../../Loading/Loading";
 export default function UpdateModal({
   visible,
   isVisible,
@@ -27,10 +26,10 @@ export default function UpdateModal({
   const [post, setPost] = useState(post_content);
   const [title, setTitle] = useState(post_title);
   const [region, setRegion] = useState(post_region);
+  const [load, setLoad] = useState(false);
+
   const [attachment, setAttachment] = useState([]);
 
-  // const postRef = useRef();
-  // const titleRef = useRef();
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -43,6 +42,7 @@ export default function UpdateModal({
   };
 
   const onSubmit = async (e) => {
+    setLoad(true);
     e.preventDefault();
     let attachmentUrl = post_photo;
     if (attachment) {
@@ -74,11 +74,13 @@ export default function UpdateModal({
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
-    setPost("");
-    setTitle("");
-    setRegion("");
-    setAttachment([]);
+    // setPost("");
+    // setTitle("");
+    // setRegion("");
+    // setAttachment([]);
     isVisible();
+    setLoad(false);
+    window.location.reload();
   };
 
   const onFileChange = (e) => {
@@ -104,21 +106,21 @@ export default function UpdateModal({
     <>
       <S.Overlay visible={visible} onClick={isVisible} />
       <S.Container visible={visible} isHeight={isHeight}>
-        <i onClick={isVisible} className="fas fa-times" />
+        <S.CloseModal onClick={isVisible} className="fas fa-times" />
 
         {login && (
           <S.Wrapper>
             {login.photoURL ? (
               <>
                 <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                <S.Name> {login.displayName}</S.Name>
-              </>
-            ) : (
-              <>
-                <i className="fas fa-user-circle"></i>
                 <S.Name photo={Boolean(login.photoURL)}>
                   {login.displayName}
                 </S.Name>
+              </>
+            ) : (
+              <>
+                <S.NamelessIcon className="fas fa-user-circle" />
+                <S.Name photo={Boolean(login.photoURL)}>{login.email}</S.Name>
               </>
             )}
           </S.Wrapper>
@@ -157,7 +159,7 @@ export default function UpdateModal({
             onChange={onFileChange}
             name="fileNames[]"
           />
-          <div>
+          <S.ImgWrapper>
             {post_photo &&
               post_photo.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
@@ -166,13 +168,17 @@ export default function UpdateModal({
               attachment.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
               ))}
-          </div>
+          </S.ImgWrapper>
           <input
             type="button"
             value="이미지 모두 삭제"
             onClick={onClearAttachmentClick}
           />
-          <input type="submit" value="수정" />
+          {load ? (
+            <Loading width="30" height="30" />
+          ) : (
+            <input type="submit" value="수정" />
+          )}
         </form>
       </S.Container>
     </>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { useMediaQuery } from "react-responsive";
 import NavLinks from "components/NavLinks/NavLinks";
 import NavBar from "components/NavBar/NavBar";
@@ -24,9 +24,16 @@ export default function Header({ isLoggedIn }) {
     }
   };
 
+  useEffect(()=>{
+    if (isPc) {
+      dispatch(closeNav());
+    }
+  },[isPc])
+
+
   return (
     <S.Header isPc={isPc} isNavOpened={isNavOpened}>
-      <NavLinks isLoggedIn={isLoggedIn} isPc={isPc} isNavOpened={isNavOpened} navToggle={navToggle}/>
+      <NavLinks isLoggedIn={isLoggedIn} isPc={isPc} isNavOpened={isNavOpened} navToggle={navToggle} />
       <NavBar isPc={isPc} />
     </S.Header>
   );

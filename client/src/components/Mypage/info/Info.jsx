@@ -120,23 +120,29 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
           <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
         </S.Paragraph>
         <S.Paragraph>
-          {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : <p>프로필 사진을 추가해보세요!</p>}
+          {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : (img || <p><S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon></p>)}
           {img && <p>
             <form onSubmit={onSubmit}>
-              <input
-                accept="image/*"
-                type="file"
-                onChange={onFileChange}
-                name="fileNames[]"
-              />
+              <div>
+                <label for="inputFile">사진 선택</label>
+                <input
+                  id="inputFile"
+                  accept="image/*"
+                  type="file"
+                  onChange={onFileChange}
+                  name="fileNames[]"
+                />
+              </div>
               {attachment && (
                 <div>
                   {attachment.map((atta, i) => (
-                    <img key={i} src={atta} width="50px" height="50px" alt="프로필 사진"/>
+                    <>
+                      <img key={i} src={atta} width="80px" height="80px" alt="프로필 사진"/>
+                      <button type="submit">선택 완료</button>
+                    </>
                   ))}
                 </div>
               )}
-              <button type="submit">제출</button>
             </form>
           </p>}
         </S.Paragraph>

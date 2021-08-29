@@ -97,6 +97,7 @@ const BackImage = styled.div`
   }
   span {
     color: white;
+    font-size: 1.2rem;
   }
   i {
     font-size: 5rem;
@@ -131,9 +132,6 @@ const ListArea = styled.div`
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.1);
     margin-bottom: 3rem;
-    /* height: 10rem; */
-    /* text-align: center; */
-    /* border: 1px rgb(255, 255, 255, 0.2) solid; */
   }
   li {
     width: 13rem;
@@ -216,10 +214,7 @@ const Content = styled.ul`
     li:nth-child(1){
       text-align: center;
       margin-bottom: 2rem;
-      /* position: sticky;
-      top: 0;
-      width: 100%;
-      background: transparent; */
+      font-size: 1.2rem;
     }
   }
 `;

@@ -7,7 +7,7 @@ const Container = styled.div`
   border-radius: 1.5rem;
   box-shadow : 0 0 4px #f40057;
   color : white;
-  margin : 0.5rem;
+  margin : 0.5rem; 
   padding : 1.6rem 0.6rem;
   z-index : 1;
 `;
@@ -16,7 +16,9 @@ const Profile = styled.div`
   width : 100%;
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin-bottom : 1rem;
+  position : relative;
   img {
     width : 2rem;
     height : 2rem;
@@ -25,11 +27,17 @@ const Profile = styled.div`
   div {
     margin-left: 1rem;
   }
-  
+  p {
+    position : absolute;
+    right : 0;
+    margin-right : 1rem;
+  }
 `;
 
 const Content = styled.div`
   width : 100%;
+  position : relative;
+  min-height: 100px;
   h2 {
     font-size : 1.3rem;
     margin-bottom : 0.5rem;
@@ -43,7 +51,8 @@ const Content = styled.div`
   }
   div {
     font-size : 0.8rem;
-    margin-top: 1rem;
+    position : absolute;
+    bottom : -10px;
   }
 `;
 

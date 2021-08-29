@@ -43,7 +43,7 @@ const Board = ({ match, location }) => {
   if (!postList) return null;
 
   return (
-    <S.Container>
+    <S.Container postlistLength={postList.length}>
       { 
         postList.map((post)=>{
           return <PostCard

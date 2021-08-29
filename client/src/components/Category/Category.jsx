@@ -4,27 +4,12 @@ import { getCategoryThunk } from "../../store/modules/category";
 import Slider from "react-slick";
 import { useMediaQuery } from "react-responsive";
 import * as S from "./Category.style";
+import CategorySkeleton from "./CategorySkeleton";
 
-function SampleNextArrow(props) {
-  const { onClick } = props;
-  return (
-    <S.ArrowStyle onClick={onClick} right>
-      <i className="fas fa-arrow-right" />
-    </S.ArrowStyle>
-  );
-}
-
-function SamplePrevArrow(props) {
-  const { onClick } = props;
-  return (
-    <S.ArrowStyle onClick={onClick}>
-      <i className="fas fa-arrow-left" />
-    </S.ArrowStyle>
-  );
-}
-
-const Category = () => {
+export default function Category() {
   const category = useSelector((state) => state.category.data);
+  const loading = useSelector((state) => state.category.loading);
+
   const isPc = useMediaQuery({
     query: `(min-width : 820px)`,
   });
@@ -35,8 +20,8 @@ const Category = () => {
     speed: 500,
     slidesToShow: isPc ? 3 : 1,
     slidesToScroll: 1,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   const dispatch = useDispatch();
@@ -48,6 +33,8 @@ const Category = () => {
   useEffect(() => {
     getCategory();
   }, [getCategory]);
+
+  if (loading) return <CategorySkeleton />;
 
   return (
     <S.Container>
@@ -65,6 +52,22 @@ const Category = () => {
       </Slider>
     </S.Container>
   );
-};
+}
 
-export default Category;
+function NextArrow(props) {
+  const { onClick } = props;
+  return (
+    <S.ArrowStyle onClick={onClick} right>
+      <i className="fas fa-arrow-right" />
+    </S.ArrowStyle>
+  );
+}
+
+function PrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <S.ArrowStyle onClick={onClick}>
+      <i className="fas fa-arrow-left" />
+    </S.ArrowStyle>
+  );
+}

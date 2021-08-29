@@ -1,5 +1,4 @@
 import { dbService } from "firebase.js";
-import lodash from "lodash";
 
 const initPhoto =
   "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465";

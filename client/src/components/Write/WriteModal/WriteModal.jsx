@@ -11,6 +11,7 @@ import { useHistory, useLocation } from "react-router";
 import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
+  // redux 사용하기
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [region, setRegion] = useState("");
@@ -24,7 +25,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const isHeight = useMediaQuery({ maxHeight: 765 });
   const history = useHistory();
   const location = useLocation();
-
 
   const onChange = (e) => {
     const { value, name } = e.target;

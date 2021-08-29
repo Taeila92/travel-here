@@ -15,6 +15,7 @@ import Login from 'pages/Login';
 import NotFound from 'pages/NotFound';
 import WriteBtn from 'components/Write/WriteBtn/WriteBtn';
 import MyPage from 'pages/MyPage';
+import PassWord from 'pages/PassWord';
 
 // firebase
 import firebase from 'firebase';
@@ -99,7 +100,7 @@ function App() {
             // 로그인 후
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route path="/loginhelp" component={LoginFind} />
+              {isLoggedIn && <Route path="/password" component={PassWord} />}
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
               {isLoggedIn && <Route exact path="/mypage" component={MyPage} />}

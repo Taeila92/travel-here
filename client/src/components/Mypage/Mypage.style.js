@@ -1,6 +1,12 @@
 ﻿import styled, { keyframes, css } from 'styled-components';
-import { flex, marginTop, fontSize, hideScrollbar, cursorPointer, frame } from "./styleConstatns";
-
+import {
+  flex,
+  marginTop,
+  fontSize,
+  hideScrollbar,
+  cursorPointer,
+  frame,
+} from './styleConstatns';
 
 const Container = styled.section`
   width: 100vw;
@@ -10,7 +16,6 @@ const Container = styled.section`
   caret-color: transparent;
 `;
 
-
 const leftShow = keyframes`
   from {
     transform: translateX(0rem);
@@ -18,7 +23,7 @@ const leftShow = keyframes`
   to {
     transform: translateX(-10.5rem);
   }
-`; 
+`;
 
 const leftClose = keyframes`
   from {
@@ -27,7 +32,7 @@ const leftClose = keyframes`
   to {
     transform: translateX(0rem);
   }
-`; 
+`;
 
 const Contents = styled.div`
   width: 20rem;
@@ -38,8 +43,8 @@ const Contents = styled.div`
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
   margin-bottom: 3rem;
-  ${({check}) => {
-    if(check){
+  ${({ check }) => {
+    if (check) {
       return css`
         transform: translateX(-10.5rem);
         animation: ${leftShow} 800ms;
@@ -47,7 +52,7 @@ const Contents = styled.div`
         animation-direction: normal;
       `;
     }
-    if(!check){
+    if (!check) {
       return css`
         animation: ${leftClose} 800ms;
         animation-iteration-count: 1;
@@ -85,13 +90,15 @@ const BackImage = styled.div`
   }
   span {
     color: white;
+    transform: translateY(-4.5rem);
   }
   i {
-    font-size: 5rem;
+    font-size: 2.5rem;
     color: white;
     background: darkgray;
     border-radius: 50%;
-    transform: translateY(2rem);
+    transform: translateY(-3.5rem);
+    /* transform: translateY(1rem); */
   }
 `;
 
@@ -153,7 +160,6 @@ const rightShow = keyframes`
   }
 `;
 
-
 const rightClose = keyframes`
   from {
     transform: translateX(10.5rem);
@@ -164,7 +170,6 @@ const rightClose = keyframes`
     opacity: 0;
   }
 `;
-
 
 const Content = styled.ul`
   position: absolute;
@@ -180,8 +185,8 @@ const Content = styled.ul`
   animation: ${rightShow} 800ms;
   animation-iteration-count: 1;
   animation-direction: normal;
-  ${({check}) => {
-    if(check){
+  ${({ check }) => {
+    if (check) {
       return css`
         transform: translateX(10.5rem);
         animation: ${rightShow} 800ms;
@@ -189,7 +194,7 @@ const Content = styled.ul`
         animation-direction: normal;
       `;
     }
-    if(!check){
+    if (!check) {
       return css`
         animation: ${rightClose} 800ms;
         animation-iteration-count: 1;
@@ -201,7 +206,7 @@ const Content = styled.ul`
     height: 25rem;
     overflow-y: scroll;
     ${hideScrollbar};
-    li:nth-child(1){
+    li:nth-child(1) {
       text-align: center;
       margin-bottom: 2rem;
       /* position: sticky;
@@ -211,6 +216,5 @@ const Content = styled.ul`
     }
   }
 `;
-
 
 export { Container, Contents, Content, BackImage, ListArea };

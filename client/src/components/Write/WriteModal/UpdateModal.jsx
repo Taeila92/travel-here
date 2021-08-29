@@ -74,12 +74,13 @@ export default function UpdateModal({
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
-    setPost("");
-    setTitle("");
-    setRegion("");
-    setAttachment([]);
+    // setPost("");
+    // setTitle("");
+    // setRegion("");
+    // setAttachment([]);
     isVisible();
     setLoad(false);
+    window.location.reload();
   };
 
   const onFileChange = (e) => {
@@ -105,21 +106,21 @@ export default function UpdateModal({
     <>
       <S.Overlay visible={visible} onClick={isVisible} />
       <S.Container visible={visible} isHeight={isHeight}>
-        <i onClick={isVisible} className="fas fa-times" />
+        <S.CloseModal onClick={isVisible} className="fas fa-times" />
 
         {login && (
           <S.Wrapper>
             {login.photoURL ? (
               <>
                 <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                <S.Name> {login.displayName}</S.Name>
-              </>
-            ) : (
-              <>
-                <i className="fas fa-user-circle"></i>
                 <S.Name photo={Boolean(login.photoURL)}>
                   {login.displayName}
                 </S.Name>
+              </>
+            ) : (
+              <>
+                <S.NamelessIcon className="fas fa-user-circle" />
+                <S.Name photo={Boolean(login.photoURL)}>{login.email}</S.Name>
               </>
             )}
           </S.Wrapper>

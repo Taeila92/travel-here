@@ -53,7 +53,7 @@ const Wrapper = styled.span`
   width: 100%;
   display: flex;
   align-items: center;
-  /* margin-bottom: 1rem; */
+
   margin: 1rem 0 0 0.5rem;
   img {
     width: 2rem;
@@ -72,18 +72,12 @@ const NamelessIcon = styled.i`
 `;
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
-  ${(props) =>
-    props.photo ||
-    css`
-      padding-left: 1.5rem;
-    `}
 `;
 
 const CloseModal = styled.i`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  border: 1px solid red;
 `;
 const Overlay = styled.div`
   display: ${(props) => (props.visible ? "block" : "none")};

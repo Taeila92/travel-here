@@ -24,7 +24,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const isHeight = useMediaQuery({ maxHeight: 765 });
   const history = useHistory();
   const location = useLocation();
-  console.log(location);
+
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -41,7 +41,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
   let bookmark = useSelector((state) => state.userLike.data);
 
-  console.log(location);
   const onSubmit = async (e) => {
     setLoad(true);
     e.preventDefault();
@@ -102,6 +101,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
           postData,
         },
       });
+      window.location.reload();
     } else {
       history.push({
         pathname: `/categorylist/${region}`,
@@ -176,6 +176,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
             )}
             <form onSubmit={onSubmit}>
               <input
+                value={title}
                 name="title"
                 type="text"
                 ref={titleRef}
@@ -183,13 +184,14 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 placeholder="제목을 입력해 주세요."
               />
               <textarea
+                value={post}
                 name="textarea"
                 ref={postRef}
                 onChange={onChange}
                 placeholder="내용을 입력해주세요."
                 rows="10"
               />
-              <select name="region" onChange={onChange}>
+              <select name="region" value={region} onChange={onChange}>
                 <option selected value="">
                   지역을 선택해 주세요.
                 </option>

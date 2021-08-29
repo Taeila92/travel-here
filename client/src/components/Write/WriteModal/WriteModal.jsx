@@ -131,7 +131,8 @@ export default function WriteModal({ visible, isVisible, postData }) {
   };
 
   const removeAttachment = (e) => {
-    setAttachment([]);
+    console.log(e);
+    // setAttachment([]);
   };
 
   useEffect(() => {

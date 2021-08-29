@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef } from 'react';
+﻿import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as S from './Password.style';
 import firebase from 'firebase';
@@ -38,7 +38,6 @@ const Password = () => {
             return;
         }
       });
-    // [END auth_update_password]
   };
 
   // //사용자 재인증

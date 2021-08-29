@@ -113,26 +113,6 @@ const Mypage = ({ user }) => {
     history.push(path);
   };
 
-  const passwordChange = () => {
-    function getASecureRandomPassword() {
-      return 'correcthorsebatterystaple';
-    }
-
-    // [START auth_update_password]
-    const user = auth.currentUser;
-    const newPassword = getASecureRandomPassword();
-
-    user
-      .updatePassword(newPassword)
-      .then(() => {
-        console.log('Update successful');
-      })
-      .catch((error) => {
-        console.log('pw An error ocurred');
-      });
-    // [END auth_update_password]
-  };
-
   useEffect(() => {
     dispatch(mypagePostMiddleware(user.uid));
 

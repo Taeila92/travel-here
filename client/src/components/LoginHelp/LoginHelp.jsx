@@ -14,13 +14,18 @@ function LoginHelp() {
     history.push(path);
   };
 
-  const sendPasswordReset = (e) => {
-    e.preventDefault();
+  const clearErrors = () => {
+    setEmailError('');
+  };
+
+  const sendPasswordReset = () => {
+    clearErrors();
     firebaseService
       .auth()
       .sendPasswordResetEmail(email)
       .then(() => {
         setEmail('');
+        alert('이메일을 전송 했습니다.');
       })
       .catch((err) => {
         switch (err.code) {

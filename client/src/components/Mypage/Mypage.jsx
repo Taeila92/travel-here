@@ -156,8 +156,8 @@ const Mypage = ({ user }) => {
       <S.Container isNavOpened={isNavOpened}>
         <S.Contents check={check}>
           <S.BackImage>
-            {user.name ? (
-              <span>'{user.name}'님 반갑습니다</span>
+            {userDB.name ? (
+              <span>'{userDB.name}'님 반갑습니다</span>
             ) : (
               <span>닉네임을 설정해보세요!</span>
             )}

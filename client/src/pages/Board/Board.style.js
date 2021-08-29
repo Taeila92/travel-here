@@ -1,14 +1,25 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Container = styled.div`
   margin : 5vh 5vw;
-  width : 80vw;
+  margin-top: 0;
+  padding : 3rem;
+  padding-top: 0;
+  display: flex;
+  flex-direction : column;
+  flex-wrap: wrap;
   ${(props)=>{
     return `height : ${props.postlistLength * 6}vh`
   }};
-  display : flex;
-  flex-direction: column;
-  flex-wrap : wrap;
+  ${(props) => {
+    if (props.isNavOpened) {
+      return css`
+        transform: ${(props) =>
+          props.isNavOpened ? "translateY(110px)" : "translateY(0)"};
+        transition: all 300ms ease-in-out;
+      `;
+    }
+  }} 
 `;
 
 export {

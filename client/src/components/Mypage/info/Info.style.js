@@ -23,11 +23,22 @@ const ProfileImg = styled.img`
   border-radius: 50%;
 `;
 
+const ProfileIcon = styled.i`
+  font-size: 5rem;
+  margin: 0.5rem 1rem 0 0;
+  object-fit: cover;
+  border-radius: 50%;
+  background: darkgray;
+`;
+
 const Title = styled.p`
-  color: blue;
+  border-radius: 10px;
+  color: #245ed4;
+  font-weight: bold;
 `;
 
 const Icon = styled.i`
+  color: darkgray; 
   :hover {
     cursor: pointer;
   }
@@ -42,6 +53,46 @@ const Paragraph = styled.div`
   i {
     margin-left: 0.5rem;
   }
+  img {
+    margin: 0.5rem;
+    margin-left: 0;
+    border-radius: 50%;
+  }
+  form{
+    div:nth-child(1){
+      margin: 0.5rem 0;
+      label {
+        font-size: 0.8rem;
+        background: #1A46A0;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+      }
+      label:hover {
+        cursor: pointer;
+      }
+      input {
+        display: none;
+      }
+    }
+    div:nth-child(2){
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      button {
+        height: 1.5rem;
+        font-size: 0.8rem;
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        border: none;
+        background: #a14892;
+        color: white;
+        transform: translate(-0.5rem, -3.9rem);
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    }
+  }
 `;
 
 
@@ -51,6 +102,7 @@ export {
   NickName,
   Profile,
   ProfileImg,
+  ProfileIcon,
   Title,
   Icon,
 };

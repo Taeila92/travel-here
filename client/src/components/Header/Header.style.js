@@ -5,13 +5,9 @@ const Header = styled.header`
   background-color: transparent;
   height: 100px;
   z-index: 10;
-  ${(props) => {
-    if (!props.isPc) {
-      return css`
-        height: 150px;
-      `;
-    }
-  }}
+  width: 100vw;
+  display: flex;
+  justify-content: center;
 `;
 
 export { Header };

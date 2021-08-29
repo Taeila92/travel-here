@@ -1,7 +1,10 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Container = styled.div``;
+const Container = styled.div`
+  transform: translateY(3rem);
+`;
+
 const CategoryBox = styled.div`
   position: relative;
   border-radius: 1rem;
@@ -62,7 +65,7 @@ const ArrowStyle = styled.div`
   z-index: 2;
   cursor: pointer;
   top: 50%;
-  margin-top: calc(-3rem / 2);
+  margin-top: calc(-7.5rem / 2);
   transition: 0.5s;
   :hover {
     background-color: rgba(255, 255, 255, 0.9);

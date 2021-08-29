@@ -225,7 +225,7 @@ const Post = ({
             <p>{post_writer}</p> {/* post_writer로 검색?*/}
             <span>{time}</span>
           </S.Profile>
-          {/* <S.Title>{post_title}</S.Title> */}
+          <S.Title>{post_title}</S.Title>
           <S.Content>{post_content}</S.Content>
           <S.Like>
             <span>

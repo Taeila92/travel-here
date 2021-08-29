@@ -14,6 +14,18 @@ const Container = styled.section`
   ${flex};
   flex-direction: row;
   caret-color: transparent;
+  ${(props) => {
+    if (props.isNavOpened) {
+      return css`
+        transform: ${(props) =>
+          props.isNavOpened ? "translateY(50px)" : "translateY(0)"};
+        transition: all 300ms ease-in-out;
+      `;
+    }
+  }} 
+  @media screen and (min-width: 1024px) {
+    transform: translateY(0);
+  }
 `;
 
 const leftShow = keyframes`
@@ -90,7 +102,7 @@ const BackImage = styled.div`
   }
   span {
     color: white;
-    transform: translateY(-4.5rem);
+    font-size: 1.2rem;
   }
   i {
     font-size: 2.5rem;
@@ -126,9 +138,6 @@ const ListArea = styled.div`
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.1);
     margin-bottom: 3rem;
-    /* height: 10rem; */
-    /* text-align: center; */
-    /* border: 1px rgb(255, 255, 255, 0.2) solid; */
   }
   li {
     width: 13rem;
@@ -209,10 +218,7 @@ const Content = styled.ul`
     li:nth-child(1) {
       text-align: center;
       margin-bottom: 2rem;
-      /* position: sticky;
-      top: 0;
-      width: 100%;
-      background: transparent; */
+      font-size: 1.2rem;
     }
   }
 `;

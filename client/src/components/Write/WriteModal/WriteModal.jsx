@@ -25,6 +25,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const history = useHistory();
   const location = useLocation();
 
+
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {

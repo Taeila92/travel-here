@@ -18,7 +18,6 @@ import MyPage from 'pages/MyPage';
 import PassWord from 'pages/PassWord';
 
 // firebase
-import firebase from 'firebase';
 import { dbService } from 'firebase.js';
 import WriteModal from 'components/Write/WriteModal/WriteModal';
 import LoginFind from 'pages/LoginFind';
@@ -27,8 +26,7 @@ import LoginFind from 'pages/LoginFind';
 import useAuth from 'hooks/useAuth';
 
 function App() {
-  // const auth = firebase.auth();
-  // const [init, setInit] = useState(false);
+
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
   const [isLoggedIn, userInfo] = useAuth();
@@ -103,7 +101,7 @@ function App() {
               {isLoggedIn && <Route path="/password" component={PassWord} />}
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
-              {isLoggedIn && <Route exact path="/mypage" component={MyPage} />}
+              <Route exact path="/mypage" component={MyPage} />
               <Route component={NotFound} />
             </Switch>
           )}

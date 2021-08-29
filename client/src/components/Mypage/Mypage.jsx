@@ -32,6 +32,10 @@ const Mypage = ({ user }) => {
 
   const userDB = useSelector((state) => state.userLike.data);
 
+  const { isNavOpened }  = useSelector(state => state.nav);
+
+  
+
   const onClose = () => {
     setInfo(false);
     setPost(false);
@@ -113,7 +117,9 @@ const Mypage = ({ user }) => {
     history.push(path);
   };
 
-  useEffect(() => {
+  useEffect(()=>{}, [isNavOpened]);
+
+  useEffect(()=>{
     dispatch(mypagePostMiddleware(user.uid));
 
     for (let i = 0; i < user.user_bookmark_posts.length; i++) {
@@ -147,7 +153,7 @@ const Mypage = ({ user }) => {
 
   return (
     <>
-      <S.Container>
+      <S.Container isNavOpened={isNavOpened}>
         <S.Contents check={check}>
           <S.BackImage>
             {user.name ? (

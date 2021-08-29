@@ -8,6 +8,8 @@ import * as S from "./Board.style";
 const Board = ({ match, location }) => {
   let [viewRender, setViewRender] = useState(false);
 
+  const { isNavOpened }  = useSelector(state => state.nav);
+
   // let { post_view } = useSelector((state)=>state.board.data);
 
   // redux에서 데이터 fetch한 결과(성공하면 data에 배열로 담김)
@@ -22,7 +24,9 @@ const Board = ({ match, location }) => {
   // categorylist에서 region에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(() => {
     dispatch(fetchPostList(match.params.region));
-  }, [dispatch, match.params.region]);
+  },[dispatch, match.params.region]);
+
+  useEffect(()=>{}, [isNavOpened])
 
   // let arr;
   // arr.push(view);
@@ -40,6 +44,7 @@ const Board = ({ match, location }) => {
   if (loading) return <Loading width="100" height="100" />;
   if (error) return <div>Error</div>;
   if (!postList) return null;
+
 
   return (
     <S.Container postlistLength={postList.length}>

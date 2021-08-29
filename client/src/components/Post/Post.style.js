@@ -5,7 +5,7 @@ import { flex, marginTop, fontSize, hideScrollbar, cursorPointer } from "./style
 const Container = styled.section`
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   ${flex};
@@ -14,12 +14,26 @@ const Container = styled.section`
   z-index: 10;
   `;
 
+const showPost = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-10rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
 const Contents = styled.div`
   width: 30rem;
   background-color: white;
   border-radius: 10px;
   padding: 3rem 0;
   ${flex};
+  animation: ${showPost} 500ms;
+  animation-iteration-count: 1;
+  animation-direction: normal;
   /* filter: blur(5px); */
   ul {
     width: 27rem;
@@ -51,6 +65,11 @@ const Header = styled.li`
     span {
       font-size: 1.2rem;
       font-weight: bold;
+      max-width: 12rem;
+      display: block;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     p:nth-child(2) {
       height: 1.5rem;

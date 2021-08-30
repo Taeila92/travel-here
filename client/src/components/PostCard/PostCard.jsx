@@ -149,7 +149,7 @@ const PostCard = ({ postData, location, view }) => {
       {isView ? (      
       <S.Container onClick={onContainerClick} id={post_id} >
         <S.Profile>
-          <img src={post_profile_img} alt="프로필 사진" />
+          {post_profile_img ? (<img src={post_profile_img} alt="" />) : <i className="fas fa-user-circle"></i>}
           <div>        
             {post_writer ? <h2>{post_writer}</h2> : <h2>익명</h2>}
             <h5>#{post_region}</h5>

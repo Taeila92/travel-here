@@ -1,12 +1,5 @@
 ﻿import styled, { keyframes, css } from 'styled-components';
-import {
-  flex,
-  marginTop,
-  fontSize,
-  hideScrollbar,
-  cursorPointer,
-  frame,
-} from './styleConstatns';
+import { flex, hideScrollbar } from './styleConstatns';
 
 const Container = styled.section`
   width: 100vw;
@@ -14,7 +7,7 @@ const Container = styled.section`
   ${flex};
   flex-direction: row;
   caret-color: transparent;
-  ${(props) => {
+  /* ${(props) => {
     if (props.isNavOpened) {
       return css`
         transform: ${(props) =>
@@ -22,7 +15,7 @@ const Container = styled.section`
         transition: all 300ms ease-in-out;
       `;
     }
-  }} 
+  }}  */
   @media screen and (min-width: 1024px) {
     transform: translateY(0);
   }
@@ -48,9 +41,10 @@ const leftClose = keyframes`
 
 const Contents = styled.div`
   width: 20rem;
-  height: 30rem;
+  height: 35rem;
   border-radius: 20px;
   ${flex};
+  justify-content: flex-start;
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
@@ -76,7 +70,7 @@ const Contents = styled.div`
 
 const BackImage = styled.div`
   width: 100%;
-  height: 10rem;
+  height: 9rem;
   ${flex};
   justify-content: flex-end;
   background-color: rgb(0, 0, 0, 0.3);
@@ -110,15 +104,15 @@ const BackImage = styled.div`
     background: darkgray;
     border-radius: 50%;
     transform: translateY(-3.5rem);
-    /* transform: translateY(1rem); */
   }
 `;
 
 const ListArea = styled.div`
   width: 100%;
-  height: 20rem;
+  height: 25rem;
   ${flex};
   justify-content: flex-end;
+  margin-top: 1rem;
   p {
     background-color: rgb(255, 255, 255, 0.1);
     color: white;
@@ -152,7 +146,7 @@ const ListArea = styled.div`
       color: rgb(255, 255, 255, 0.7);
     }
   }
-  li:nth-child(2) {
+  li:nth-child(2n) {
     border-top: 1px rgb(255, 255, 255, 0.2) solid;
     border-bottom: 1px rgb(255, 255, 255, 0.2) solid;
   }
@@ -183,7 +177,7 @@ const rightClose = keyframes`
 const Content = styled.ul`
   position: absolute;
   width: 20rem;
-  height: 30rem;
+  height: 35rem;
   margin-bottom: 3rem;
   border-radius: 20px;
   ${flex};
@@ -212,7 +206,7 @@ const Content = styled.ul`
     }
   }}
   ul {
-    height: 25rem;
+    height: 30rem;
     overflow-y: scroll;
     ${hideScrollbar};
     li:nth-child(1) {

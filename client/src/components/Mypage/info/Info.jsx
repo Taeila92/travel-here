@@ -110,8 +110,10 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
           <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
         </S.Paragraph>
         {nickName ?
-        (<><input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
-        <button onClick={onSubmitBtn}>제출</button></>) :
+        (<div>
+          <textarea ref={input} type="text" wrap="off" placeholder="닉네임을 설정해보세요!" onKeyPress={e=>onEnter(e)} />
+          <button onClick={onSubmitBtn}>제출</button>
+        </div>) :
         (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임을 설정해보세요!</p>)}
       </S.NickName>
       <S.Profile>

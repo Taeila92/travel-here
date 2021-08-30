@@ -6,6 +6,7 @@ import Info from './info/Info';
 import Post from './post/Post';
 import Comment from './comment/Comment';
 import Bookmark from './bookmark/Bookmark';
+import Password from './Password/Password';
 
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
@@ -19,6 +20,7 @@ const Mypage = ({ user }) => {
   const [post, setPost] = useState(false);
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
+  const [password, setPassword] = useState(false);
 
   const [change, setChange] = useState(false);
 
@@ -41,7 +43,7 @@ const Mypage = ({ user }) => {
     setPost(false);
     setComment(false);
     setBookmark(false);
-    // setCheck(false);
+    setPassword(false);
   };
 
   const onDelayClose = () => {
@@ -91,12 +93,21 @@ const Mypage = ({ user }) => {
     setCheck(true);
   };
 
+  const onPassword = () => {
+    if (password) {
+      onDelayClose();
+      return;
+    }
+    onClose();
+    setPassword(true);
+    setCheck(true);
+  };
+
   const history = useHistory();
 
   // 로그인 페이지로 전환
   const routeChange = () => {
-    let path = '/';
-    history.push(path);
+    history.push('/');
   };
 
   // 사용자 삭제
@@ -183,10 +194,12 @@ const Mypage = ({ user }) => {
               <li onClick={onBookmark}>
                 <i className="fas fa-bookmark"></i>찜
               </li>
-              <li onClick={goToPassword}>
+              <li onClick={onPassword}>
                 <i class="fas fa-unlock-alt"></i>비밀번호 변경
               </li>
-              <li onClick={userDel}>탈퇴하기</li>
+              <li onClick={userDel}>
+                <i class="fas fa-user-times"></i>탈퇴하기
+              </li>
             </ul>
           </S.ListArea>
         </S.Contents>
@@ -225,6 +238,14 @@ const Mypage = ({ user }) => {
             <ul>
               <li>찜</li>
               <Bookmark user={user} />
+            </ul>
+          </S.Content>
+        )}
+        {password && (
+          <S.Content check={check}>
+            <ul>
+              <li>비밀번호 변경</li>
+              <Password user={user} />
             </ul>
           </S.Content>
         )}

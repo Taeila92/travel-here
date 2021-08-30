@@ -9,6 +9,41 @@ const Id = styled.li`
 const NickName = styled.li`
   ${frame};
   cursor: auto;
+  div{
+    display: flex;
+    flex-direction: row;
+    align-content: flex-start;
+    textarea {
+      caret-color: black;
+      border: none;
+      outline: none;
+      resize: none;
+      width: 80%;
+      height: 1.5rem;
+      font-size: 0.9rem;
+      display: table-cell;
+      vertical-align: middle;
+      padding: 0.25rem;
+      overflow: hidden;
+    }
+    textarea::placeholder{
+      color: darkgray;
+      font-weight: bold;
+      font-size: 0.8rem;
+    }
+    button {
+      height: 1.5rem;
+      font-size: 0.8rem;
+      background: #1A46A0;
+      padding: 0.2rem 0.5rem;
+      border: none;
+      color: white;
+      /* transform: translateY(0.06rem); */
+    }
+    button:hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 const Profile = styled.li`

@@ -74,10 +74,7 @@ export default function UpdateModal({
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
-    // setPost("");
-    // setTitle("");
-    // setRegion("");
-    // setAttachment([]);
+
     isVisible();
     setLoad(false);
     window.location.reload();

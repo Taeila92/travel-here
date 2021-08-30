@@ -15,7 +15,7 @@ import Login from 'pages/Login';
 import NotFound from 'pages/NotFound';
 import WriteBtn from 'components/Write/WriteBtn/WriteBtn';
 import MyPage from 'pages/MyPage';
-import PassWord from 'pages/PassWord';
+// import PassWord from 'pages/PassWord';
 
 // firebase
 import { dbService } from 'firebase.js';
@@ -33,36 +33,6 @@ function App() {
 
   const isVisible = () => {
     setVisible(!visible);
-  };
-
-  // firestore에서 유저정보 가져오기
-  const getUser = async () => {
-    const users = await dbService.collection('users').get();
-    return users;
-  };
-
-  const setUserDB = async (user) => {
-    const users = await getUser();
-    let id = [];
-    users.forEach((user) => {
-      id.push(user.id);
-    });
-
-    // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장
-    const includeId = id.includes(user.uid);
-    if (!includeId) {
-      dbService.collection('users').doc(user.uid).set({
-        uid: user.uid,
-        email: user.email,
-        name: user.displayName,
-        user_image: user.photoURL,
-        user_like_comments: [],
-        user_like_posts: [],
-        user_bookmark_posts: [],
-        user_write_comments: [],
-        user_write_posts: [],
-      });
-    }
   };
 
   return (
@@ -98,7 +68,7 @@ function App() {
             // 로그인 후
             <Switch>
               <Route exact path="/" component={Home} />
-              {isLoggedIn && <Route path="/password" component={PassWord} />}
+              {/* <Route path="/password" component={PassWord} /> */}
               <Route exact path="/categorylist" component={CategoryList} />
               <Route path="/categorylist/:region" component={Board} />
               <Route exact path="/mypage" component={MyPage} />

@@ -169,6 +169,7 @@ const Title = styled.li`
   margin-top: 2rem;
   font-size: 1.1rem;
   font-weight: bold;
+  line-height: 1.5;
 `;
 
 const Content = styled.li`

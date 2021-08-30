@@ -222,7 +222,7 @@ const Post = ({
             ) : (
               <i className="fas fa-user-circle"></i>
             )}
-            <p>{post_writer}</p> {/* post_writer로 검색?*/}
+            <p>{post_writer}</p>
             <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>

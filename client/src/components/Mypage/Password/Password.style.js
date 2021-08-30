@@ -30,12 +30,10 @@ const BackBtn = styled.button`
 const Contents = styled.div`
   position: relative;
   width: 20rem;
-  height: 15rem;
+  height: 10rem;
   border-radius: 20px;
   ${flex};
   overflow: hidden;
-  box-shadow: 0 0 4px #f40057;
-  background-color: rgb(0, 0, 0, 0.5);
   margin-bottom: 3rem;
   h1 {
     font-size: 34px;
@@ -50,22 +48,24 @@ const Contents = styled.div`
     height: 2rem;
     border-radius: 12px;
     outline: none;
-    box-shadow: 0 0 10px 1px #ff73b3;
+    box-shadow: 0 0 5px 1px #ff73b3;
+    caret-color: black;
   }
   p {
     color: white;
   }
   .chageBtn {
     border: none;
-    width: 50%;
-    height: 3rem;
+    width: 5rem;
+    height: 2rem;
     border-radius: 12px;
     color: #fff;
     background-color: #ff73b3;
     cursor: pointer;
-    font-size: 18px;
+    font-size: 1rem;
+    font-weight: bold;
     margin-top: 1rem;
-    box-shadow: 0 0 10px 1px #ff73b3;
+    box-shadow: 0 0 5px #ff73b3;
   }
 `;
 

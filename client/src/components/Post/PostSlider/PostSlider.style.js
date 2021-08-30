@@ -23,6 +23,19 @@ const StyledSlider = styled(Slider)`
       object-fit: cover;
     }
   }
+  .slick-prev {
+    left : 10px;
+    z-index : 100;
+  }
+  .slick-next {
+    right : 10px;
+    z-index : 100;
+  }
+  .slick-prev::before, .slick-next::before {
+    position : absolute;
+    top : 0;
+    bottom : 0;
+  }
 `;
 
 export {

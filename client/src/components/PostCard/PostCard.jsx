@@ -154,7 +154,7 @@ const PostCard = ({ postData, location, view }) => {
             {post_writer ? <h2>{post_writer}</h2> : <h2>익명</h2>}
             <h5>#{post_region}</h5>
           </div>
-          <p>{post_view}</p>
+          <p>조회수 : {post_view}</p>
         </S.Profile>
         <S.Content>
           <h2>{post_title}</h2>

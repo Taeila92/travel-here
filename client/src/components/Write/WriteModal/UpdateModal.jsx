@@ -75,10 +75,6 @@ export default function UpdateModal({
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
-    // setPost("");
-    // setTitle("");
-    // setRegion("");
-    // setAttachment([]);
     isVisible();
     setLoad(false);
     window.location.reload();
@@ -99,16 +95,12 @@ export default function UpdateModal({
       reader.readAsDataURL(file);
     }
   };
-
+  // 추가된 이미지 삭제
   const removeAttachment = (e) => {
-    console.log(e);
-    // setAttachment([]);
     setAttachment(attachment.filter((at) => at !== e));
   };
-
+  // 등록된 이미지들 중 삭제
   const removePhoto = (e) => {
-    console.log(e);
-    // setAttachment([]);
     setPhoto(photo.filter((at) => at !== e));
   };
 
@@ -175,11 +167,6 @@ export default function UpdateModal({
             name="fileNames[]"
           />
           <S.ImgWrapper>
-            {/* {post_photo &&
-              post_photo.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" alt="" />
-              ))}
-             */}
             {photo &&
               photo.map((atta, i) => (
                 <div>

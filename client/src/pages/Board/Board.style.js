@@ -7,16 +7,20 @@ const Container = styled.div`
   padding-top: 0;
   display: flex;
   justify-content: center;
-  ${({isPc})=>{
+  ${({isPc, isTablet})=>{
     if(isPc){
       return css`
         flex-direction : row;
       `;
+    } else if(isTablet){
+      return css`
+        flex-direction: row;
+
+      `;
     } else {
       return css`
         flex-direction: column;
-
-      `;
+      `
     }
   }}
   ${(props) => {

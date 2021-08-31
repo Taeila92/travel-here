@@ -25,6 +25,9 @@ const Board = ({ match, location }) => {
   const isPc = useMediaQuery({
     query : "(min-width : 1024px) and (max-width :1920px)"
   })
+  const isTablet = useMediaQuery({
+    query : "(min-width : 680px) and (max-width :1023px)"
+  })
 
   // categorylist에서 region에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(() => {
@@ -51,74 +54,103 @@ const Board = ({ match, location }) => {
   if (error) return <div>Error</div>;
   if (!postList) return null;
 
-  // postList를 세 등분
+  // postList를 등분
   if(postList){
-    const check = Math.ceil(postList.length / 3);
+    let check;
+    if(isTablet){
+      check =  Math.ceil(postList.length / 2)
+      return (
+        <S.Container isPc={isPc} isTablet={isTablet}>
+          <S.Column>
+          {postList.filter((ele, index)=>{
+            return index < check
+          }).map((post) => {
+              return (
+                <PostCard
+                  key={post.post_id}
+                  postData={post}
+                  location={location}
+                  view={view}
+                  viewRender={viewRender}
+                  setViewRender={setViewRender}
+                />
+              );
+          })}
+        </S.Column>
+        <S.Column>
+          {postList.filter((ele, index)=>{
+            return index >= check
+          }).map((post) => {
+              return (
+                <PostCard
+                  key={post.post_id}
+                  postData={post}
+                  location={location}
+                  view={view}
+                  viewRender={viewRender}
+                  setViewRender={setViewRender}
+                />
+              );
+          })}
+        </S.Column>
+        </S.Container>
+      );
+    } else { // PC. 세등분
+      check = Math.ceil(postList.length / 3);
 
-    return (
-      <S.Container isPc={isPc}>
-        <S.Column>
-          {postList.map((post, i) => {
-            if(i < check) {
-              return (
-                <PostCard
-                  key={post.post_id}
-                  postData={post}
-                  location={location}
-                  view={view}
-                  viewRender={viewRender}
-                  setViewRender={setViewRender}
-                />
-              );
-            }
-          })}
-        </S.Column>
-        <S.Column>
-          {postList.map((post, i) => {
-            if(i >= check && i < check * 2){
-              return (
-                <PostCard
-                  key={post.post_id}
-                  postData={post}
-                  location={location}
-                  view={view}
-                  viewRender={viewRender}
-                  setViewRender={setViewRender}
-                />
-              );
-            }
-          })}
-        </S.Column>
-        <S.Column>
-          {postList.map((post, i) => {
-            if(i >= check * 2){
-              return (
-                <PostCard
-                  key={post.post_id}
-                  postData={post}
-                  location={location}
-                  view={view}
-                  viewRender={viewRender}
-                  setViewRender={setViewRender}
-                />
-              );
-            }
-          })}
-        </S.Column>
-        {/* {postList.map((post) => {
-          return (
-            <PostCard
-              key={post.post_id}
-              postData={post}
-              location={location}
-              view={view}
-              viewRender={viewRender}
-              setViewRender={setViewRender}
-            />
-          );
-        })} */}
-      </S.Container>
-    );
+      return (
+        <S.Container isPc={isPc} isTablet={isTablet}>
+          <S.Column>
+            {postList.filter((ele, index)=>{
+              return index < check
+            }).map((post) => {
+                return (
+                  <PostCard
+                    key={post.post_id}
+                    postData={post}
+                    location={location}
+                    view={view}
+                    viewRender={viewRender}
+                    setViewRender={setViewRender}
+                  />
+                );
+            })}
+          </S.Column>
+          <S.Column>
+            {postList.filter((ele, index) =>{
+              return index >= check && index < check * 2
+            }).map((post, i) => {
+                return (
+                  <PostCard
+                    key={post.post_id}
+                    postData={post}
+                    location={location}
+                    view={view}
+                    viewRender={viewRender}
+                    setViewRender={setViewRender}
+                  />
+                );
+            })}
+          </S.Column>
+          <S.Column>
+            {postList.filter((ele, index) =>{
+              return index > check * 2
+            }).map((post, i) => {
+                return (
+                  <PostCard
+                    key={post.post_id}
+                    postData={post}
+                    location={location}
+                    view={view}
+                    viewRender={viewRender}
+                    setViewRender={setViewRender}
+                  />
+                );
+            })}
+          </S.Column>
+        </S.Container>
+      );
+    }
   }
 
   

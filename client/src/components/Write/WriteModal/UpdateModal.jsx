@@ -26,6 +26,7 @@ export default function UpdateModal({
   const [post, setPost] = useState(post_content);
   const [title, setTitle] = useState(post_title);
   const [region, setRegion] = useState(post_region);
+  const [photo, setPhoto] = useState(post_photo);
   const [load, setLoad] = useState(false);
 
   const [attachment, setAttachment] = useState([]);
@@ -42,9 +43,9 @@ export default function UpdateModal({
   };
 
   const onSubmit = async (e) => {
+    let attachmentUrl = photo;
     setLoad(true);
     e.preventDefault();
-    let attachmentUrl = post_photo;
     if (attachment) {
       for (let i = 0; i < attachment.length; i++) {
         const attachmentRef = storageService
@@ -98,8 +99,22 @@ export default function UpdateModal({
       reader.readAsDataURL(file);
     }
   };
+
+  const removeAttachment = (e) => {
+    console.log(e);
+    // setAttachment([]);
+    setAttachment(attachment.filter((at) => at !== e));
+  };
+
+  const removePhoto = (e) => {
+    console.log(e);
+    // setAttachment([]);
+    setPhoto(photo.filter((at) => at !== e));
+  };
+
   const onClearAttachmentClick = () => {
-    setAttachment(null);
+    setAttachment([]);
+    setPhoto([]);
   };
 
   return (
@@ -160,13 +175,30 @@ export default function UpdateModal({
             name="fileNames[]"
           />
           <S.ImgWrapper>
-            {post_photo &&
+            {/* {post_photo &&
               post_photo.map((atta, i) => (
                 <img key={i} src={atta} width="70px" height="70px" alt="" />
               ))}
+             */}
+            {photo &&
+              photo.map((atta, i) => (
+                <div>
+                  <i
+                    onClick={() => removePhoto(atta)}
+                    className="fas fa-times"
+                  />
+                  <img key={i} src={atta} alt="올릴 이미지" />
+                </div>
+              ))}
             {attachment &&
               attachment.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" alt="" />
+                <div>
+                  <i
+                    onClick={() => removeAttachment(atta)}
+                    className="fas fa-times"
+                  />
+                  <img key={i} src={atta} alt="올릴 이미지" />
+                </div>
               ))}
           </S.ImgWrapper>
           <input

@@ -124,10 +124,11 @@ const Mypage = ({ user }) => {
       });
   };
 
-  const goToPassword = () => {
-    let path = '/password';
-    history.push(path);
-  };
+  // const onDelayClose = () => {
+  //   onClose();
+  //   setCheck(false);
+  // }
+
 
   useEffect(()=>{}, [isNavOpened]);
 
@@ -198,10 +199,10 @@ const Mypage = ({ user }) => {
                 <i className="fas fa-bookmark"></i>찜
               </li>
               <li onClick={onPassword}>
-                <i class="fas fa-unlock-alt"></i>비밀번호 변경
+                <i className="fas fa-unlock-alt"></i>비밀번호 변경
               </li>
               <li onClick={userDel}>
-                <i class="fas fa-user-times"></i>탈퇴하기
+                <i className="fas fa-user-times"></i>탈퇴하기
               </li>
             </ul>
           </S.ListArea>
@@ -209,7 +210,7 @@ const Mypage = ({ user }) => {
         {info && (
           <S.Content check={check}>
             <ul>
-              <li>내 정보</li>
+              <li>내 정보<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Info
                 uid={uid}
                 user={user}
@@ -223,7 +224,7 @@ const Mypage = ({ user }) => {
         {post && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 글</li>
+              <li>내가 쓴 글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Post user={user} />
             </ul>
           </S.Content>
@@ -231,7 +232,7 @@ const Mypage = ({ user }) => {
         {comment && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 댓글</li>
+              <li>내가 쓴 댓글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Comment user={user} />
             </ul>
           </S.Content>
@@ -239,7 +240,7 @@ const Mypage = ({ user }) => {
         {bookmark && (
           <S.Content check={check}>
             <ul>
-              <li>찜</li>
+              <li>찜<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Bookmark user={user} />
             </ul>
           </S.Content>
@@ -247,7 +248,7 @@ const Mypage = ({ user }) => {
         {password && (
           <S.Content check={check}>
             <ul>
-              <li>비밀번호 변경</li>
+              <li>비밀번호 변경<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Password user={user} />
             </ul>
           </S.Content>

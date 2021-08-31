@@ -195,7 +195,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 rows="10"
               />
               <select name="region" value={region} onChange={onChange}>
-                <option selected value="">
+                <option value="default" value="">
                   지역을 선택해 주세요.
                 </option>
                 <option value="asia">Asia</option>

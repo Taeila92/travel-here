@@ -73,7 +73,7 @@ const Password = () => {
             변경
           </button>
           {/* <S.BackBtn onClick={goToMypage}>
-            <i class="fas fa-times"></i>
+            <i className="fas fa-times"></i>
           </S.BackBtn> */}
         </S.Contents>
       {/* </S.Container> */}

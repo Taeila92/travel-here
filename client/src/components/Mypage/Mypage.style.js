@@ -12,7 +12,7 @@ const Container = styled.section`
   }
 `;
 
-const leftShow = keyframes`
+const leftclose = keyframes`
   from {
     transform: translateX(0rem);
   }
@@ -21,12 +21,24 @@ const leftShow = keyframes`
   }
 `;
 
-const leftClose = keyframes`
+const leftshow = keyframes`
   from {
     transform: translateX(-10.5rem);
   }
   to {
     transform: translateX(0rem);
+  }
+`;
+
+
+const show = keyframes`
+  from {
+    display: none;
+    opacity: 0;
+  }
+  to {
+    display: flex;
+    opacity: 1;
   }
 `;
 
@@ -43,15 +55,26 @@ const Contents = styled.div`
   ${({ check }) => {
     if (check) {
       return css`
+        @media screen and (max-width: 740px) {
+          animation: ${show} 800ms;
+          display: none;
+          animation-iteration-count: 1;
+          animation-direction: normal;
+        }
         transform: translateX(-10.5rem);
-        animation: ${leftShow} 800ms;
+        animation: ${leftclose} 800ms;
         animation-iteration-count: 1;
         animation-direction: normal;
       `;
     }
     if (!check) {
       return css`
-        animation: ${leftClose} 800ms;
+        @media screen and (max-width: 740px) {
+          animation: ${show} 800ms;
+          animation-iteration-count: 1;
+          animation-direction: normal;
+        }
+        animation: ${leftshow} 800ms;
         animation-iteration-count: 1;
         animation-direction: normal;
       `;
@@ -143,7 +166,7 @@ const ListArea = styled.div`
   }
 `;
 
-const rightShow = keyframes`
+const rightclose = keyframes`
   from {
     transform: translateX(0rem);
     opacity: 0;
@@ -154,7 +177,7 @@ const rightShow = keyframes`
   }
 `;
 
-const rightClose = keyframes`
+const rightshow1 = keyframes`
   from {
     transform: translateX(10.5rem);
     opacity: 1;
@@ -176,21 +199,33 @@ const Content = styled.ul`
   overflow: hidden;
   box-shadow: 0 0 4px #f40057;
   background-color: rgb(0, 0, 0, 0.5);
-  animation: ${rightShow} 800ms;
+  animation: ${rightclose} 800ms;
   animation-iteration-count: 1;
   animation-direction: normal;
   ${({ check }) => {
     if (check) {
       return css`
+        @media screen and (max-width: 740px) {
+          animation: ${show} 800ms;
+          transform: translateX(0rem);
+          animation-iteration-count: 1;
+          animation-direction: normal;
+        }
         transform: translateX(10.5rem);
-        animation: ${rightShow} 800ms;
+        animation: ${rightclose} 800ms;
         animation-iteration-count: 1;
         animation-direction: normal;
       `;
     }
     if (!check) {
       return css`
-        animation: ${rightClose} 800ms;
+        @media screen and (max-width: 740px) {
+          display: none;
+          animation: ${show} 800ms;
+          animation-iteration-count: 1;
+          animation-direction: normal;
+        }
+        animation: ${rightshow1} 800ms;
         animation-iteration-count: 1;
         animation-direction: normal;
       `;
@@ -204,6 +239,15 @@ const Content = styled.ul`
       text-align: center;
       margin-bottom: 2rem;
       font-size: 1.2rem;
+      i {
+        position: absolute;
+        font-size: 1.5rem;
+        top: 2.4rem;
+        left: 2.5rem;
+      }
+      i:hover {
+        cursor: pointer;
+      }
     }
   }
 `;

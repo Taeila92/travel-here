@@ -70,17 +70,16 @@ export default function WriteModal({ visible, isVisible, postData }) {
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
 
-      console.log(login, likePost);
     // 정보 올리기
     await dbService.collection("post").doc(uuid).set({
       post_title: title,
       post_content: post,
-      post_writer: login.displayName || likePost.name,
+      post_writer: likePost.name || login.displayName,
       post_uid: login.uid,
       post_date: Date.now(),
       post_id: uuid,
       post_photo: attachmentUrl,
-      post_profile_img: login.photoURL || likePost.user_image,
+      post_profile_img: likePost.user_image || login.photoURL,
       post_region: region,
       post_view: 0,
       post_like: 0,
@@ -163,9 +162,9 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.Wrapper>
                 {login.photoURL ? (
                   <>
-                    <img src={login.photoURL} alt="프로필 이미지입니다"></img>
+                    <img src={likePost.user_image  || login.photoURL} alt="프로필 이미지입니다"></img>
                     <S.Name photo={Boolean(login.photoURL)}>
-                      {login.displayName}
+                      { likePost.name || login.displayName}
                     </S.Name>
                   </>
                 ) : (
@@ -214,7 +213,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 onChange={onFileChange}
                 name="fileNames[]"
               />
-              <S.ImgWrapper>
+              <S.ImgWrapper attachment={attachment}>
                 {attachment &&
                   attachment.map((atta, i) => (
                     <>

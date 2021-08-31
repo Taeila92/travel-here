@@ -85,6 +85,9 @@ const Paragraph = styled.div`
   align-items: center;
   justify-content: flex-start;
   margin-bottom: 0.5rem;
+  :last-child{
+    position: relative;
+  }
   i {
     margin-left: 0.5rem;
   }
@@ -131,6 +134,17 @@ const Paragraph = styled.div`
 `;
 
 
+const Loading = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: rgb(0,0,0,0.7);
+  ${flex};
+`;
+
 export {
   Id,
   Paragraph,
@@ -140,4 +154,5 @@ export {
   ProfileIcon,
   Title,
   Icon,
+  Loading,
 };

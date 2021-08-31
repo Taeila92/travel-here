@@ -6,6 +6,7 @@ import { editMypageThunk } from 'store/modules/mypageComment';
 import { editUserImgThunk, editUserNameThunk } from 'store/modules/mypagePost';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from "uuid";
+import Loading from "../../Loading/Loading";
 
 const Info = ({ uid, user, userDB, change, setChange }) => {
 
@@ -15,6 +16,8 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
   const dispatch = useDispatch();
 
   const [attachment, setAttachment] = useState([]);
+
+  let [load, setLoad] = useState(false);
 
   let [nickName, setNickName] = useState(false);
 
@@ -68,6 +71,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
 
   const onSubmit = async(e) => {
     e.preventDefault();
+    setLoad(true);
     let attachmentUrl = [];
     if (attachment) {
       const attachmentRef = storageService
@@ -92,6 +96,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     setTimeout(()=>{
       dispatch(editMypageThunk(user.uid, '', 'finish'));
     }, 1000);
+    setLoad(false);
   };
 
   const onIconClick = () => {
@@ -151,6 +156,9 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
                   ))}
                 </div>
               )}
+              {load && <S.Loading>
+                <Loading width="30" height="30" />
+              </S.Loading>}
             </form>
           </p>}
         </S.Paragraph>

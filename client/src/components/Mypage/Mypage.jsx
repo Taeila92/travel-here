@@ -11,6 +11,7 @@ import Password from './Password/Password';
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
+import { closeNav } from "store/modules/nav";
 
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
@@ -147,6 +148,8 @@ const Mypage = ({ user }) => {
     auth.onAuthStateChanged((user) => {
       setUid(user);
     });
+
+    dispatch(closeNav());
   }, []);
 
   useEffect(() => {

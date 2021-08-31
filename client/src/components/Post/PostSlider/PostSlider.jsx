@@ -62,7 +62,6 @@ const PostSlider = ({postImages}) => {
       {(postImages.length != 0) &&
       <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
         {sliderReady || <ImageLoader/>}
-        {console.log(sliderReady)}
         <S.StyledSlider {...setting} >
           {sliderReady && imageURL.map((image)=>{
             return (

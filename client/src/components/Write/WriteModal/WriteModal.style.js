@@ -5,7 +5,7 @@ const height = "70vh";
 
 const Container = styled.div`
   width: ${width};
-  height: ${height};
+  /* height: ${height}; */
   background-color: white;
   border-radius: 0.5rem;
   display: ${(props) => (props.visible ? "block" : "none")};
@@ -15,7 +15,7 @@ const Container = styled.div`
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
   z-index: 100;
-  overflow: auto;
+  overflow: hidden;
 
   p {
     margin-top: 1rem;
@@ -31,6 +31,9 @@ const Container = styled.div`
     margin: 1rem 0.5rem 0;
     border: 2px solid #e3e3e3;
     border-radius: 5px;
+  }
+  input:last-child{
+    margin-bottom: 1rem;
   }
   textarea {
     ${(props) =>
@@ -48,6 +51,20 @@ const ImgWrapper = styled.div`
   img {
     margin: 0.2rem;
   }
+  ${(props) => {
+    if(props.attachment === undefined){
+      return;
+    }
+    if(props.attachment.length === 0){
+      return css`
+        display: none;
+      `;
+    } else {
+      return css`
+        display: block;
+      `;
+    }
+  }} 
 `;
 const Wrapper = styled.span`
   width: 100%;

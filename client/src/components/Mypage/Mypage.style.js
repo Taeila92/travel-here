@@ -7,15 +7,6 @@ const Container = styled.section`
   ${flex};
   flex-direction: row;
   caret-color: transparent;
-  /* ${(props) => {
-    if (props.isNavOpened) {
-      return css`
-        transform: ${(props) =>
-          props.isNavOpened ? "translateY(50px)" : "translateY(0)"};
-        transition: all 300ms ease-in-out;
-      `;
-    }
-  }}  */
   @media screen and (min-width: 1024px) {
     transform: translateY(0);
   }

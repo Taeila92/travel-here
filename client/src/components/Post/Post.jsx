@@ -177,6 +177,13 @@ const Post = ({
     setTime(`${Math.floor(years)}년 전`);
   }
 
+  const onContainerClick = (e) => {
+    if(e.target !== e.currentTarget){
+      return;
+    }
+    onHideModal();
+  }
+
   // 모달창 닫기
   const onHideModal = () => {
     setViewRender(!viewRender);
@@ -198,7 +205,7 @@ const Post = ({
   }, []);
 
   return (
-    <S.Container>
+    <S.Container onClick={e=>onContainerClick(e)}>
       <S.Contents>
         <ul ref={comment}>
           <S.Header>

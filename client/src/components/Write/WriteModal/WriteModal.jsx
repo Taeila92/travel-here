@@ -36,7 +36,13 @@ export default function WriteModal({ visible, isVisible, postData }) {
       setTitle(value);
     }
   };
-
+  // if (!visible) {
+  //   setPost("");
+  //   setTitle("");
+  //   setRegion("");
+  //   setAttachment([]);
+  // }
+  // console.log(visible);
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
@@ -127,13 +133,20 @@ export default function WriteModal({ visible, isVisible, postData }) {
     }
   };
 
-  const onClearAttachmentClick = () => {
+  //창 닫기
+  const closeModal = () => {
+    setPost("");
+    setTitle("");
+    setRegion("");
     setAttachment([]);
+    isVisible();
   };
-
+  // 올린파일 삭제
+  // const onClearAttachmentClick = () => {
+  //   setAttachment([]);
+  // };
+  // 올린파일 개별 삭제
   const removeAttachment = (e) => {
-    console.log(e);
-    // setAttachment([]);
     setAttachment(attachment.filter((at) => at !== e));
   };
 
@@ -142,6 +155,8 @@ export default function WriteModal({ visible, isVisible, postData }) {
       setLogin(user);
       dispatch(userMiddleware(user.uid, "", "init"));
     });
+    if (!visible) {
+    }
   }, []);
   return (
     <>
@@ -155,9 +170,9 @@ export default function WriteModal({ visible, isVisible, postData }) {
         />
       ) : (
         <>
-          <S.Overlay visible={visible} onClick={isVisible} />
+          <S.Overlay visible={visible} onClick={closeModal} />
           <S.Container visible={visible} isHeight={isHeight}>
-            <S.CloseModal onClick={isVisible} className="fas fa-times" />
+            <S.CloseModal onClick={closeModal} className="fas fa-times" />
             {login && (
               <S.Wrapper>
                 {login.photoURL ? (
@@ -178,7 +193,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
               </S.Wrapper>
             )}
             <form onSubmit={onSubmit}>
-              <input
+              <S.TitleInput
                 value={title}
                 name="title"
                 type="text"
@@ -206,13 +221,24 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 <option value="australia">Australia</option>
                 <option value="antarctica">Antarctica</option>
               </select>
-              <input
-                multiple
+              {/* <input
                 accept="image/*"
                 type="file"
                 onChange={onFileChange}
                 name="fileNames[]"
-              />
+              /> */}
+              <S.ImgUpload>
+                <label for="inputFile">사진 선택</label>
+                <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
+                <input
+                  multiple
+                  id="inputFile"
+                  accept="image/*"
+                  type="file"
+                  onChange={onFileChange}
+                  name="fileNames[]"
+                />
+              </S.ImgUpload>
               <S.ImgWrapper>
                 {attachment &&
                   attachment.map((atta, i) => (
@@ -225,15 +251,15 @@ export default function WriteModal({ visible, isVisible, postData }) {
                     </div>
                   ))}
               </S.ImgWrapper>
-              <input
+              {/* <input
                 type="button"
                 value="이미지 모두 삭제"
                 onClick={onClearAttachmentClick}
-              />
+              /> */}
               {load ? (
                 <Loading width="30" height="30" />
               ) : (
-                <input type="submit" value="등록" />
+                <S.SubmitBtn type="submit" value="등록" />
               )}
             </form>
           </S.Container>

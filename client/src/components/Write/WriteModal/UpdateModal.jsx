@@ -104,16 +104,25 @@ export default function UpdateModal({
     setPhoto(photo.filter((at) => at !== e));
   };
 
-  const onClearAttachmentClick = () => {
-    setAttachment([]);
-    setPhoto([]);
-  };
+  // const onClearAttachmentClick = () => {
+  //   setAttachment([]);
+  //   setPhoto([]);
+  // };
 
+  //창 닫기
+  const closeModal = () => {
+    setPost(post_content);
+    setTitle(post_title);
+    setRegion(post_region);
+    setPhoto(post_photo);
+    setAttachment([]);
+    isVisible();
+  };
   return (
     <>
-      <S.Overlay visible={visible} onClick={isVisible} />
+      <S.Overlay visible={visible} onClick={closeModal} />
       <S.Container visible={visible} isHeight={isHeight}>
-        <S.CloseModal onClick={isVisible} className="fas fa-times" />
+        <S.CloseModal onClick={closeModal} className="fas fa-times" />
 
         {login && (
           <S.Wrapper>
@@ -133,7 +142,7 @@ export default function UpdateModal({
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>
-          <input
+          <S.TitleInput
             name="title"
             type="text"
             value={title}
@@ -159,13 +168,18 @@ export default function UpdateModal({
             <option value="australia">Australia</option>
             <option value="antarctica">Antarctica</option>
           </select>
-          <input
-            multiple
-            accept="image/*"
-            type="file"
-            onChange={onFileChange}
-            name="fileNames[]"
-          />
+          <S.ImgUpload>
+            <label for="inputFile">사진 선택</label>
+            <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
+            <input
+              multiple
+              id="inputFile"
+              accept="image/*"
+              type="file"
+              onChange={onFileChange}
+              name="fileNames[]"
+            />
+          </S.ImgUpload>
           <S.ImgWrapper>
             {photo &&
               photo.map((atta, i) => (
@@ -188,15 +202,15 @@ export default function UpdateModal({
                 </div>
               ))}
           </S.ImgWrapper>
-          <input
+          {/* <input
             type="button"
             value="이미지 모두 삭제"
             onClick={onClearAttachmentClick}
-          />
+          /> */}
           {load ? (
             <Loading width="30" height="30" />
           ) : (
-            <input type="submit" value="수정" />
+            <S.SubmitBtn type="submit" value="수정" />
           )}
         </form>
       </S.Container>

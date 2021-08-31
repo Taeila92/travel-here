@@ -6,7 +6,6 @@ const initPhoto =
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
 const GET_CATEGORY_SUCCESS = "category/GETCATEGORY_SUCCESS";
-const GET_CATEIMAGE_SUCCESS = "category/GETCATEIMAGE_SUCCESS";
 const GET_CATEGORY_FAIL = "category/GET_CATEGORY_FAIL";
 
 //action constructor
@@ -52,12 +51,6 @@ export default function reducer(state = initialState, action) {
         ...state,
         loading: false,
         data: action.data,
-      };
-    case GET_CATEIMAGE_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-        photo: action.photo,
       };
     case GET_CATEGORY_FAIL:
       return {

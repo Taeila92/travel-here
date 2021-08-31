@@ -4,6 +4,7 @@ import PostCard from "components/PostCard/PostCard";
 import { fetchPostList } from "store/modules/board";
 import Loading from "../../components/Loading/Loading";
 import * as S from "./Board.style";
+import { useMediaQuery } from "react-responsive";
 
 const Board = ({ match, location }) => {
   let [viewRender, setViewRender] = useState(false);
@@ -20,6 +21,10 @@ const Board = ({ match, location }) => {
     view: state.view.view,
   }));
   const dispatch = useDispatch();
+
+  const isPc = useMediaQuery({
+    query : "(min-width : 1024px) and (max-width :1920px)"
+  })
 
   // categorylist에서 region에 따라서 놓여져있고 클릭하면 그에 맞게 검색
   useEffect(() => {
@@ -41,27 +46,82 @@ const Board = ({ match, location }) => {
   // console.log(postList);
   // },[view]);
 
+
   if (loading) return <Loading width="100" height="100" />;
   if (error) return <div>Error</div>;
   if (!postList) return null;
 
+  // postList를 세 등분
+  if(postList){
+    const check = Math.ceil(postList.length / 3);
 
-  return (
-    <S.Container postlistLength={postList.length}>
-      {postList.map((post) => {
-        return (
-          <PostCard
-            key={post.post_id}
-            postData={post}
-            location={location}
-            view={view}
-            viewRender={viewRender}
-            setViewRender={setViewRender}
-          />
-        );
-      })}
-    </S.Container>
-  );
+    return (
+      <S.Container isPc={isPc}>
+        <S.Column>
+          {postList.map((post, i) => {
+            if(i < check) {
+              return (
+                <PostCard
+                  key={post.post_id}
+                  postData={post}
+                  location={location}
+                  view={view}
+                  viewRender={viewRender}
+                  setViewRender={setViewRender}
+                />
+              );
+            }
+          })}
+        </S.Column>
+        <S.Column>
+          {postList.map((post, i) => {
+            if(i >= check && i < check * 2){
+              return (
+                <PostCard
+                  key={post.post_id}
+                  postData={post}
+                  location={location}
+                  view={view}
+                  viewRender={viewRender}
+                  setViewRender={setViewRender}
+                />
+              );
+            }
+          })}
+        </S.Column>
+        <S.Column>
+          {postList.map((post, i) => {
+            if(i >= check * 2){
+              return (
+                <PostCard
+                  key={post.post_id}
+                  postData={post}
+                  location={location}
+                  view={view}
+                  viewRender={viewRender}
+                  setViewRender={setViewRender}
+                />
+              );
+            }
+          })}
+        </S.Column>
+        {/* {postList.map((post) => {
+          return (
+            <PostCard
+              key={post.post_id}
+              postData={post}
+              location={location}
+              view={view}
+              viewRender={viewRender}
+              setViewRender={setViewRender}
+            />
+          );
+        })} */}
+      </S.Container>
+    );
+  }
+
+  
 };
 
 export default Board;

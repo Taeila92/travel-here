@@ -45,8 +45,19 @@ const ImgWrapper = styled.div`
   height: 80px;
   border: 2px solid #e3e3e3;
   border-radius: 10px;
-  img {
-    margin: 0.2rem;
+  display: flex;
+  div {
+    position: relative;
+    i {
+      position: absolute;
+      top: 0.3rem;
+      right: 0.3rem;
+    }
+    img {
+      margin: 0.2rem;
+      width: 70px;
+      height: 70px;
+    }
   }
 `;
 const Wrapper = styled.span`

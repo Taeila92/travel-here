@@ -134,6 +134,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const removeAttachment = (e) => {
     console.log(e);
     // setAttachment([]);
+    setAttachment(attachment.filter((at) => at !== e));
   };
 
   useEffect(() => {
@@ -215,16 +216,13 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.ImgWrapper>
                 {attachment &&
                   attachment.map((atta, i) => (
-                    <>
-                      <img
-                        key={i}
-                        src={atta}
-                        width="70px"
-                        height="70px"
-                        alt="올릴 이미지"
+                    <div>
+                      <i
+                        onClick={() => removeAttachment(atta)}
+                        className="fas fa-times"
                       />
-                      <i onClick={removeAttachment} className="fas fa-times" />
-                    </>
+                      <img key={i} src={atta} alt="올릴 이미지" />
+                    </div>
                   ))}
               </S.ImgWrapper>
               <input

@@ -53,7 +53,7 @@ const Title = styled.div`
   position: absolute;
   top: -3rem;
   right: -1.2rem;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 6rem;

@@ -95,6 +95,7 @@ const Paragraph = styled.div`
     margin: 0.5rem;
     margin-left: 0;
     border-radius: 50%;
+    object-fit: cover;
   }
   form{
     div:nth-child(1){

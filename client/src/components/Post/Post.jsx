@@ -7,6 +7,11 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
+
+import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
+import { mypageCommentMiddleware } from 'store/modules/mypageComment';
+import { mypagePostMiddleware } from 'store/modules/mypagePost';
+
 import {
   commentDelThunk,
   userComDelThunk,
@@ -186,6 +191,7 @@ const Post = ({
     auth.onAuthStateChanged((user) => {
       setUser(user);
       dispatch(userMiddleware(user.uid, '', 'init'));
+      dispatch(mypagePostMiddleware(user.uid));
     });
     dispatch(likeMiddleware(post_id, 'init'));
     timeNotice(post_date);

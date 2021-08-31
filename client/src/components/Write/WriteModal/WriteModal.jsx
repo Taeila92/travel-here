@@ -69,16 +69,18 @@ export default function WriteModal({ visible, isVisible, postData }) {
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
+
+      console.log(login, likePost);
     // 정보 올리기
     await dbService.collection("post").doc(uuid).set({
       post_title: title,
       post_content: post,
-      post_writer: login.displayName,
+      post_writer: login.displayName || likePost.name,
       post_uid: login.uid,
       post_date: Date.now(),
       post_id: uuid,
       post_photo: attachmentUrl,
-      post_profile_img: login.photoURL,
+      post_profile_img: login.photoURL || likePost.user_image,
       post_region: region,
       post_view: 0,
       post_like: 0,

@@ -1,6 +1,8 @@
-﻿import { getMypageCommentAPI, editMypageAPI } from 'store/apis/comment';
+﻿'use strict';
+import { getMypageCommentAPI, editMypageAPI } from 'store/apis/comment';
 import { dbService } from 'firebase.js';
-const { produce } = require('immer');
+import { produce } from 'immer';
+
 
 // Actions
 const GET_COMMENT = 'mypageComment/GET_COMMENT';
@@ -35,15 +37,16 @@ let arr = [];
 //thunk
 export const mypageCommentMiddleware = (id, type) => async dispatch => {
   try{
+    if(type === 'finish'){
+      arr = [];
+      return;
+    }
     const response = await getMypageCommentAPI(id);
     response.forEach(doc => {
       arr.push(doc.data());
     })
     let array = Object.assign([], arr);
     dispatch(getComment(array));
-    if(type === 'finish'){
-      arr = [];
-    }
   }catch(error){
     console.log(error);
   }
@@ -52,6 +55,10 @@ export const mypageCommentMiddleware = (id, type) => async dispatch => {
 let editObj = {arr: [], value: ''};
 export const editMypageThunk = (id, value, type) => async dispatch => {
   try{
+    if(type === 'finish'){
+      editObj = {arr: [], value: ''};
+      return;
+    }
     const response = await editMypageAPI(id);
     response.forEach(doc => {
       editObj.arr.push(doc.data());
@@ -64,10 +71,6 @@ export const editMypageThunk = (id, value, type) => async dispatch => {
     }
     if(type === 'img'){
       dispatch(editCommentImg(editObj));
-    }
-    if(type === 'finish'){
-      editObj.arr = [];
-      editObj.value = [];
     }
   }catch(error){
     console.log(error);

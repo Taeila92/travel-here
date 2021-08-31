@@ -151,7 +151,7 @@ const PostCard = ({ postData, location, view }) => {
         <S.Profile>
           <img src={post_profile_img} alt="프로필 사진" />
           <div>        
-            {post_writer ? <h2>{post_writer}</h2> : <h2>익명</h2>}
+            {post_writer ? <h2>{postData.post_writer}</h2> : <h2>익명</h2>}
             <h5>#{post_region}</h5>
           </div>
           <p>{post_view}</p>

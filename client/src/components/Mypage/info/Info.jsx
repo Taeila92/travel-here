@@ -31,6 +31,9 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     dispatch(editUserNameThunk(user.uid, value));
     setNickName(false);
     setChange(!change);
+    setTimeout(()=>{
+      dispatch(editMypageThunk(user.uid, '', 'finish'));
+    }, 1000);
   };
 
 
@@ -86,6 +89,9 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     dispatch(editMypageThunk(user.uid, attachmentUrl, 'img'));
     setChange(!change);
     setImg(false);
+    setTimeout(()=>{
+      dispatch(editMypageThunk(user.uid, '', 'finish'));
+    }, 1000);
   };
 
   const onIconClick = () => {

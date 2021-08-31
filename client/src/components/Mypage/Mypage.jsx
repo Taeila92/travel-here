@@ -119,7 +119,7 @@ const Mypage = ({ user }) => {
         routeChange();
       })
       .catch((error) => {
-        console.log('user An error ocurred ');
+        console.log(error);
       });
   };
 

@@ -49,9 +49,13 @@ const Mypage = ({ user }) => {
 
   const onDelayClose = () => {
     setCheck(false);
-    setTimeout(() => {
+    if(matchMedia("screen and (min-width: 740px)").matches){
+      setTimeout(() => {
+        onClose();
+      }, 800)
+    } else {
       onClose();
-    }, 800);
+    }
   };
 
   const onInfo = () => {
@@ -123,11 +127,6 @@ const Mypage = ({ user }) => {
         console.log(error);
       });
   };
-
-  // const onDelayClose = () => {
-  //   onClose();
-  //   setCheck(false);
-  // }
 
 
   useEffect(()=>{}, [isNavOpened]);

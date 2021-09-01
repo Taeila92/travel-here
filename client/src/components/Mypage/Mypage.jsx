@@ -135,17 +135,6 @@ const Mypage = ({ user }) => {
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.uid));
 
-    for (let i = 0; i < user.user_bookmark_posts.length; i++) {
-      if (i === user.user_bookmark_posts.length - 1) {
-        dispatch(
-          mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish')
-        );
-      }
-      if (i !== user.user_bookmark_posts.length - 1) {
-        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
-      }
-    }
-
     auth.onAuthStateChanged((user) => {
       setUid(user);
     });
@@ -154,13 +143,20 @@ const Mypage = ({ user }) => {
   }, []);
 
   useEffect(() => {
+    for (let i = 0; i < user.user_bookmark_posts.length; i++) {
+      if (i === user.user_bookmark_posts.length - 1) {
+        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish'));
+      }
+      if (i !== user.user_bookmark_posts.length - 1) {
+        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
+      }
+    }
+    
     for (let i = 0; i < user.user_write_comments.length; i++) {
       if (i === user.user_write_comments.length - 1) {
-        dispatch(
-          mypageCommentMiddleware(user.user_write_comments[i], 'finish')
-        );
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
       }
-      if (i !== user.user_write_comments.length - 1) {
+      if (i !== user.user_write_comments.length) {
         dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
       }
     }
@@ -172,7 +168,7 @@ const Mypage = ({ user }) => {
         <S.Contents check={check}>
           <S.BackImage>
             {userDB.name ? (
-              <span>'{userDB.name}'님 반갑습니다</span>
+              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
             ) : (
               <span>닉네임을 설정해보세요!</span>
             )}

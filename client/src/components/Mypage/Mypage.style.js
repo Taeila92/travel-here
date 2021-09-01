@@ -113,11 +113,42 @@ const BackImage = styled.div`
     font-size: 1.2rem;
   }
   i {
-    font-size: 2.5rem;
+    font-size: 5rem;
     color: white;
     background: darkgray;
     border-radius: 50%;
-    transform: translateY(-3.5rem);
+    transform: translateY(2rem);
+  }
+`;
+
+const Title = styled.span`
+  width: 80%;
+  word-break: break-all;
+  line-height: 1.5;
+  transform: translateY(1rem);
+  ${flex};
+  ${(props) => {
+    if (props.name.length >= 7) {
+      return css`
+        flex-direction: column;
+      `;
+    } else {
+      return css`
+        flex-direction: row;
+      `;
+    }
+  }} 
+  span:first-child{
+    margin-right: 0.5rem;
+  }
+  span:last-child{
+    font-size: 1.1rem;
+  }
+  b:first-child {
+    color: #409BF0;
+  }
+  b:last-child {
+    font-size: 1.1rem;
   }
 `;
 
@@ -252,4 +283,4 @@ const Content = styled.ul`
   }
 `;
 
-export { Container, Contents, Content, BackImage, ListArea };
+export { Container, Contents, Content, BackImage, ListArea, Title };

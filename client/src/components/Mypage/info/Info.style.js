@@ -23,13 +23,13 @@ const NickName = styled.li`
       font-size: 0.9rem;
       display: table-cell;
       vertical-align: middle;
-      padding: 0.25rem;
+      padding: 0.35rem;
       overflow: hidden;
     }
     textarea::placeholder{
       color: darkgray;
       font-weight: bold;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
     }
     button {
       height: 1.5rem;
@@ -38,7 +38,6 @@ const NickName = styled.li`
       padding: 0.2rem 0.5rem;
       border: none;
       color: white;
-      /* transform: translateY(0.06rem); */
     }
     button:hover {
       cursor: pointer;
@@ -97,39 +96,65 @@ const Paragraph = styled.div`
     border-radius: 50%;
     object-fit: cover;
   }
-  form{
-    div:nth-child(1){
-      margin: 0.5rem 0;
-      label {
-        font-size: 0.8rem;
-        background: #1A46A0;
-        padding: 0.2rem 0.5rem;
-        border-radius: 10px;
-      }
-      label:hover {
-        cursor: pointer;
-      }
-      input {
-        display: none;
-      }
+`;
+
+const Form = styled.form`
+  padding-bottom: 2rem;
+  ${(props) => {
+    if (props.img) {
+      return css`
+        padding-bottom: 2rem;
+      `;
+    } else {
+      return css`
+        padding-bottom: 0;
+      `;
     }
-    div:nth-child(2){
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-      button {
-        height: 1.5rem;
-        font-size: 0.8rem;
-        padding: 0.2rem 0.5rem;
-        border-radius: 10px;
-        border: none;
-        background: #a14892;
-        color: white;
-        transform: translate(-0.5rem, -3.9rem);
-      }
-      button:hover {
-        cursor: pointer;
-      }
+  }}
+  div:nth-child(1){
+    margin: 0.5rem 0;
+    label {
+      font-size: 0.8rem;
+      background: #1A46A0;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+    }
+    label:hover {
+      cursor: pointer;
+    }
+    input {
+      display: none;
+    }
+    p {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 0.8rem;
+      background: #1A46A0;
+      padding: 0.35rem 0.5rem;
+      border-radius: 10px;
+      text-align: center;
+    }
+    p:hover {
+      cursor: pointer;
+    }
+  }
+  div:nth-child(2){
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    button {
+      height: 1.5rem;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 10px;
+      border: none;
+      background: #a14892;
+      color: white;
+      transform: translate(-0.5rem, -3.9rem);
+    }
+    button:hover {
+      cursor: pointer;
     }
   }
 `;
@@ -156,4 +181,5 @@ export {
   Title,
   Icon,
   Loading,
+  Form,
 };

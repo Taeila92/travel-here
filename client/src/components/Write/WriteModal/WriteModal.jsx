@@ -162,7 +162,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.Wrapper>
                 {login.photoURL ? (
                   <>
-                    <img src={likePost.user_image  || login.photoURL} alt="프로필 이미지입니다"></img>
+                    <img src={login.photoURL || likePost.user_image} alt="프로필 이미지입니다"></img>
                     <S.Name photo={Boolean(login.photoURL)}>
                       { likePost.name || login.displayName}
                     </S.Name>

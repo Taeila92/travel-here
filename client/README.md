@@ -27,7 +27,7 @@ $ yarn start
 <br>
 
 ## 3. 폴더 디렉토리
-
+```
 📦public
 ┗ 📜index.html
 📦src
@@ -163,7 +163,7 @@ $ yarn start
 ┣ 📜firebase.js
 ┣ 📜history.js
 ┗ 📜index.js
-
+```
 <br>
 
 ## 4. 프로젝트 기능 설명

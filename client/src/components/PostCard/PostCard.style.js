@@ -19,10 +19,14 @@ const Profile = styled.div`
   justify-content: flex-start;
   margin-bottom : 1rem;
   position : relative;
+  font-size : 1rem;
   img {
     width : 2rem;
     height : 2rem;
     border-radius: 50%;
+  }
+  i {
+    font-size : 2rem;
   }
   div {
     margin-left: 1rem;

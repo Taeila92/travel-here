@@ -259,7 +259,10 @@ export default function WriteModal({ visible, isVisible, postData }) {
               {load ? (
                 <Loading width="30" height="30" />
               ) : (
-                <S.SubmitBtn type="submit" value="등록" />
+                <S.BtnWrapper>
+                  <input type="button" onClick={closeModal} value="취소" />
+                  <input type="submit" value="등록" />
+                </S.BtnWrapper>
               )}
             </form>
           </S.Container>

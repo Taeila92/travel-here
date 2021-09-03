@@ -210,7 +210,10 @@ export default function UpdateModal({
           {load ? (
             <Loading width="30" height="30" />
           ) : (
-            <S.SubmitBtn type="submit" value="수정" />
+            <S.BtnWrapper>
+              <input type="button" onClick={closeModal} value="취소" />
+              <input type="submit" value="수정" />
+            </S.BtnWrapper>
           )}
         </form>
       </S.Container>

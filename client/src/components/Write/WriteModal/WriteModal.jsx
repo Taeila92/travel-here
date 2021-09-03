@@ -36,13 +36,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
       setTitle(value);
     }
   };
-  // if (!visible) {
-  //   setPost("");
-  //   setTitle("");
-  //   setRegion("");
-  //   setAttachment([]);
-  // }
-  // console.log(visible);
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
@@ -141,10 +134,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
     setAttachment([]);
     isVisible();
   };
-  // 올린파일 삭제
-  // const onClearAttachmentClick = () => {
-  //   setAttachment([]);
-  // };
+
   // 올린파일 개별 삭제
   const removeAttachment = (e) => {
     setAttachment(attachment.filter((at) => at !== e));
@@ -251,11 +241,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
                     </div>
                   ))}
               </S.ImgWrapper>
-              {/* <input
-                type="button"
-                value="이미지 모두 삭제"
-                onClick={onClearAttachmentClick}
-              /> */}
               {load ? (
                 <Loading width="30" height="30" />
               ) : (

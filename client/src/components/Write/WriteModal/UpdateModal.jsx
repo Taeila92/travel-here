@@ -62,15 +62,15 @@ export default function UpdateModal({
     const updateData = {
       post_title: title,
       post_content: post,
-      post_writer: post_writer,
-      post_uid: post_uid,
-      post_date: post_date,
-      post_id: post_id,
+      post_writer,
+      post_uid,
+      post_date,
+      post_id,
       post_photo: attachmentUrl,
-      post_profile_img: post_profile_img,
+      post_profile_img,
       post_region: region,
-      post_view: post_view,
-      post_like: post_like,
+      post_view,
+      post_like,
       post_update: true,
     };
 
@@ -202,11 +202,6 @@ export default function UpdateModal({
                 </div>
               ))}
           </S.ImgWrapper>
-          {/* <input
-            type="button"
-            value="이미지 모두 삭제"
-            onClick={onClearAttachmentClick}
-          /> */}
           {load ? (
             <Loading width="30" height="30" />
           ) : (

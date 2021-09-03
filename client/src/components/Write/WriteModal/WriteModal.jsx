@@ -69,7 +69,8 @@ export default function WriteModal({ visible, isVisible, postData }) {
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
     // 정보 올리기
-    await dbService.collection("post").doc(uuid).set({
+
+    const writeData = {
       post_title: title,
       post_content: post,
       post_writer: login.displayName,
@@ -83,7 +84,9 @@ export default function WriteModal({ visible, isVisible, postData }) {
       post_like: 0,
       uid: login.uid,
       post_update: false,
-    });
+    };
+
+    await dbService.collection("post").doc(uuid).set(writeData);
     setPost("");
     setTitle("");
     setRegion("");

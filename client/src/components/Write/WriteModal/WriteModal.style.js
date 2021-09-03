@@ -20,7 +20,9 @@ const Container = styled.div`
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(-5rem)"};
   z-index: ${(props) => (props.visible ? 100 : -1)};
-
+  &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}
   p {
     margin-top: 1rem;
     margin-left: 1rem;

@@ -9,8 +9,8 @@ const Button = styled.div`
   width: 4rem;
   height: 4rem;
   transition: 0.3s;
-  background-color: #1A46A0;
-
+  background-color: #1a46a0;
+  z-index: 10;
   ::before {
     content: "";
     position: absolute;
@@ -39,12 +39,12 @@ const Button = styled.div`
   }
   :hover {
     background-color: transparent;
-    border: 0.2rem solid #1A46A0;
+    border: 0.2rem solid #1a46a0;
     ::after {
-      background-color: #1A46A0;
+      background-color: #1a46a0;
     }
     ::before {
-      background-color: #1A46A0;
+      background-color: #1a46a0;
     }
   }
 `;

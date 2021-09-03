@@ -1,32 +1,31 @@
 // react
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
 // style
-import GlobalStyle from 'styles/GlobalStyle';
-import Header from 'components/Header/Header';
-import { Background, Content } from 'styles/Background';
+import GlobalStyle from "styles/GlobalStyle";
+import Header from "components/Header/Header";
+import { Background, Content } from "styles/Background";
 
 // router
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
-import CategoryList from 'pages/CategoryList';
-import Board from 'pages/Board/Board';
-import Home from 'pages/Home';
-import Login from 'pages/Login';
-import NotFound from 'pages/NotFound';
-import WriteBtn from 'components/Write/WriteBtn/WriteBtn';
-import MyPage from 'pages/MyPage';
-import PassWord from 'pages/PassWord';
+import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
+import CategoryList from "pages/CategoryList";
+import Board from "pages/Board/Board";
+import Home from "pages/Home";
+import Login from "pages/Login";
+import NotFound from "pages/NotFound";
+import WriteBtn from "components/Write/WriteBtn/WriteBtn";
+import MyPage from "pages/MyPage";
+import PassWord from "pages/PassWord";
 
 // firebase
-import { dbService } from 'firebase.js';
-import WriteModal from 'components/Write/WriteModal/WriteModal';
-import LoginFind from 'pages/LoginFind';
+import { dbService } from "firebase.js";
+import WriteModal from "components/Write/WriteModal/WriteModal";
+import LoginFind from "pages/LoginFind";
 
 // hook
-import useAuth from 'hooks/useAuth';
+import useAuth from "hooks/useAuth";
 
 function App() {
-
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
   const [isLoggedIn, userInfo] = useAuth();
@@ -37,7 +36,7 @@ function App() {
 
   // firestore에서 유저정보 가져오기
   const getUser = async () => {
-    const users = await dbService.collection('users').get();
+    const users = await dbService.collection("users").get();
     return users;
   };
 
@@ -51,7 +50,7 @@ function App() {
     // 로그인한 유저정보가 기존의 firestore에 없을 경우에만 firestore에 저장
     const includeId = id.includes(user.uid);
     if (!includeId) {
-      dbService.collection('users').doc(user.uid).set({
+      dbService.collection("users").doc(user.uid).set({
         uid: user.uid,
         email: user.email,
         name: user.displayName,

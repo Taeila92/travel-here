@@ -9,7 +9,6 @@ import CategorySkeleton from "./CategorySkeleton";
 export default function Category() {
   const category = useSelector((state) => state.category.data);
   const loading = useSelector((state) => state.category.loading);
-
   const isPc = useMediaQuery({
     query: `(min-width : 820px)`,
   });

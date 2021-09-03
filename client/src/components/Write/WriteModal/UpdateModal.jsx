@@ -26,6 +26,7 @@ export default function UpdateModal({
   const [post, setPost] = useState(post_content);
   const [title, setTitle] = useState(post_title);
   const [region, setRegion] = useState(post_region);
+  const [photo, setPhoto] = useState(post_photo);
   const [load, setLoad] = useState(false);
 
   const [attachment, setAttachment] = useState([]);
@@ -42,9 +43,9 @@ export default function UpdateModal({
   };
 
   const onSubmit = async (e) => {
+    let attachmentUrl = photo;
     setLoad(true);
     e.preventDefault();
-    let attachmentUrl = post_photo;
     if (attachment) {
       for (let i = 0; i < attachment.length; i++) {
         const attachmentRef = storageService
@@ -61,23 +62,19 @@ export default function UpdateModal({
     const updateData = {
       post_title: title,
       post_content: post,
-      post_writer: post_writer,
-      post_uid: post_uid,
-      post_date: post_date,
-      post_id: post_id,
+      post_writer,
+      post_uid,
+      post_date,
+      post_id,
       post_photo: attachmentUrl,
-      post_profile_img: post_profile_img,
+      post_profile_img,
       post_region: region,
-      post_view: post_view,
-      post_like: post_like,
+      post_view,
+      post_like,
       post_update: true,
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
-    // setPost("");
-    // setTitle("");
-    // setRegion("");
-    // setAttachment([]);
     isVisible();
     setLoad(false);
     window.location.reload();
@@ -98,15 +95,34 @@ export default function UpdateModal({
       reader.readAsDataURL(file);
     }
   };
-  const onClearAttachmentClick = () => {
-    setAttachment(null);
+  // 추가된 이미지 삭제
+  const removeAttachment = (e) => {
+    setAttachment(attachment.filter((at) => at !== e));
+  };
+  // 등록된 이미지들 중 삭제
+  const removePhoto = (e) => {
+    setPhoto(photo.filter((at) => at !== e));
   };
 
+  // const onClearAttachmentClick = () => {
+  //   setAttachment([]);
+  //   setPhoto([]);
+  // };
+
+  //창 닫기
+  const closeModal = () => {
+    setPost(post_content);
+    setTitle(post_title);
+    setRegion(post_region);
+    setPhoto(post_photo);
+    setAttachment([]);
+    isVisible();
+  };
   return (
     <>
-      <S.Overlay visible={visible} onClick={isVisible} />
+      <S.Overlay visible={visible} onClick={closeModal} />
       <S.Container visible={visible} isHeight={isHeight}>
-        <S.CloseModal onClick={isVisible} className="fas fa-times" />
+        <S.CloseModal onClick={closeModal} className="fas fa-times" />
 
         {login && (
           <S.Wrapper>
@@ -126,7 +142,7 @@ export default function UpdateModal({
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>
-          <input
+          <S.TitleInput
             name="title"
             type="text"
             value={title}
@@ -152,32 +168,47 @@ export default function UpdateModal({
             <option value="australia">Australia</option>
             <option value="antarctica">Antarctica</option>
           </select>
-          <input
-            multiple
-            accept="image/*"
-            type="file"
-            onChange={onFileChange}
-            name="fileNames[]"
-          />
+          <S.ImgUpload>
+            <label for="inputFile">사진 선택</label>
+            <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
+            <input
+              multiple
+              id="inputFile"
+              accept="image/*"
+              type="file"
+              onChange={onFileChange}
+              name="fileNames[]"
+            />
+          </S.ImgUpload>
           <S.ImgWrapper>
-            {post_photo &&
-              post_photo.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" alt="" />
+            {photo &&
+              photo.map((atta, i) => (
+                <div>
+                  <i
+                    onClick={() => removePhoto(atta)}
+                    className="fas fa-times"
+                  />
+                  <img key={i} src={atta} alt="올릴 이미지" />
+                </div>
               ))}
             {attachment &&
               attachment.map((atta, i) => (
-                <img key={i} src={atta} width="70px" height="70px" alt="" />
+                <div>
+                  <i
+                    onClick={() => removeAttachment(atta)}
+                    className="fas fa-times"
+                  />
+                  <img key={i} src={atta} alt="올릴 이미지" />
+                </div>
               ))}
           </S.ImgWrapper>
-          <input
-            type="button"
-            value="이미지 모두 삭제"
-            onClick={onClearAttachmentClick}
-          />
           {load ? (
             <Loading width="30" height="30" />
           ) : (
-            <input type="submit" value="수정" />
+            <S.BtnWrapper>
+              <input type="button" onClick={closeModal} value="취소" />
+              <input type="submit" value="수정" />
+            </S.BtnWrapper>
           )}
         </form>
       </S.Container>

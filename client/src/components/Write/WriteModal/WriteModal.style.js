@@ -18,7 +18,7 @@ const Container = styled.div`
   /* display: ${(props) => (props.visible ? "block" : "none")}; */
   opacity: ${(props) => (props.visible ? 1 : 0)};
   transform: ${(props) =>
-    props.visible ? "translateY(0)" : "translateY(-5rem)"};
+    props.visible ? "translateY(0)" : "translateY(-45rem)"};
   z-index: ${(props) => (props.visible ? 100 : -1)};
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -225,14 +225,17 @@ const CloseModal = styled.i`
   }
 `;
 const Overlay = styled.div`
+  transform: ${(props) =>
+    props.visible ? "translateY(0)" : "translateY(-55rem)"};
   position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  transition: 0.5s;
+  /* background-color: rgba(0, 0, 0, 0.6); */
+  transition: 0.1s;
   /* display: ${(props) => (props.visible ? "block" : "none")}; */
+
   opacity: ${(props) => (props.visible ? 1 : 0)};
   z-index: ${(props) => (props.visible ? 90 : -2)};
 `;

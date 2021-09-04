@@ -136,6 +136,21 @@ const ImgWrapper = styled.div`
       `;
     }
   }} 
+
+  ${(props) => {
+    if(props.photo === undefined){
+      return;
+    }
+    if(props.photo.length === 0){
+      return css`
+        display: none;
+      `;
+    } else {
+      return css`
+        display: flex;
+      `;
+    }
+  }}
 `;
 
 const BtnWrapper = styled.div`

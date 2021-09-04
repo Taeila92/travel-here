@@ -187,7 +187,7 @@ export default function UpdateModal({
               name="fileNames[]"
             />
           </S.ImgUpload>
-          <S.ImgWrapper attachment={attachment}>
+          <S.ImgWrapper photo={photo}>
             {photo &&
               photo.map((atta, i) => (
                 <div>

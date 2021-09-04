@@ -6,11 +6,23 @@ const Container = styled.div`
   padding : 3rem;
   padding-top: 0;
   display: flex;
-  flex-direction : column;
-  flex-wrap: wrap;
-  ${(props)=>{
-    return `height : ${props.postlistLength * 6}vh`
-  }};
+  justify-content: center;
+  ${({isPc, isTablet})=>{
+    if(isPc){
+      return css`
+        flex-direction : row;
+      `;
+    } else if(isTablet){
+      return css`
+        flex-direction: row;
+
+      `;
+    } else {
+      return css`
+        flex-direction: column;
+      `
+    }
+  }}
   ${(props) => {
     if (props.isNavOpened) {
       return css`
@@ -20,8 +32,18 @@ const Container = styled.div`
       `;
     }
   }} 
+  
+`;
+
+const Column = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height : 100%;
 `;
 
 export {
-  Container
+  Container,
+  Column
 }

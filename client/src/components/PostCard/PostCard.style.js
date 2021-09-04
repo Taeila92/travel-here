@@ -5,7 +5,7 @@ const Container = styled.div`
   min-width : 300px;
   max-width : 300px;
   border-radius: 1.5rem;
-  box-shadow : 0 0 4px #f40057;
+  box-shadow : 0 0 4px #D980FA;
   color : white;
   margin : 0.5rem; 
   padding : 1.6rem 0.6rem;
@@ -19,9 +19,15 @@ const Profile = styled.div`
   justify-content: flex-start;
   margin-bottom : 1rem;
   position : relative;
+  font-size : 1rem;
   img {
     width : 2rem;
     height : 2rem;
+    border-radius: 50%;
+  }
+  i {
+    font-size : 2rem;
+    background: darkgray;
     border-radius: 50%;
   }
   div {
@@ -31,6 +37,12 @@ const Profile = styled.div`
     position : absolute;
     right : 0;
     margin-right : 1rem;
+    font-size: 0.8rem;
+    border-radius: 10px;
+    /* border: 0.1px solid white; */
+    /* box-shadow: 0 0 5px white; */
+    background: #1A46A0;
+    padding: 0.2rem 0.5rem;
   }
 `;
 

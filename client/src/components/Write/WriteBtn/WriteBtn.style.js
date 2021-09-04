@@ -9,8 +9,8 @@ const Button = styled.div`
   width: 4rem;
   height: 4rem;
   transition: 0.3s;
-  background-color: #1A46A0;
-
+  background-color: #1a46a0;
+  z-index: 10;
   ::before {
     content: "";
     position: absolute;
@@ -39,14 +39,29 @@ const Button = styled.div`
   }
   :hover {
     background-color: transparent;
-    border: 0.2rem solid #1A46A0;
+    border: 0.2rem solid #1a46a0;
     ::after {
-      background-color: #1A46A0;
+      background-color: #1a46a0;
     }
     ::before {
-      background-color: #1A46A0;
+      background-color: #1a46a0;
     }
   }
 `;
 
-export { Button };
+const Title = styled.div`
+  position: absolute;
+  top: -3rem;
+  right: -1.2rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 2rem;
+  color: white;
+  background: rgb(255,255,255,0.2);
+  border-radius: 10px;
+  font-size: 0.9rem;
+`;
+
+export { Title, Button };

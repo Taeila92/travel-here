@@ -53,7 +53,6 @@ const CommentList = styled.div`
     background-color: pink;
   }
   p:nth-child(1) {
-    margin-left: 0.5rem;
     font-size: 0.7rem;
     color: darkgray;
     word-break: normal;
@@ -81,6 +80,8 @@ const CommentList = styled.div`
     text-align: end;
     font-size: 1rem;
     margin-left: 0.5rem;
+  }
+  i:hover {
     ${cursorPointer};
   }
 `;

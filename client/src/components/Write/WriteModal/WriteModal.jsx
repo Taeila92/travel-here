@@ -11,6 +11,7 @@ import { useHistory, useLocation } from "react-router";
 import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
+  // redux 사용하기
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [region, setRegion] = useState("");
@@ -25,7 +26,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
   const history = useHistory();
   const location = useLocation();
 
-
   const onChange = (e) => {
     const { value, name } = e.target;
     if (name === "textarea") {
@@ -36,7 +36,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
       setTitle(value);
     }
   };
-
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
@@ -69,22 +68,26 @@ export default function WriteModal({ visible, isVisible, postData }) {
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
+
     // 정보 올리기
-    await dbService.collection("post").doc(uuid).set({
+
+    const writeData = {
       post_title: title,
       post_content: post,
-      post_writer: login.displayName,
+      post_writer: likePost.name || login.displayName,
       post_uid: login.uid,
       post_date: Date.now(),
       post_id: uuid,
       post_photo: attachmentUrl,
-      post_profile_img: login.photoURL,
+      post_profile_img: likePost.user_image || login.photoURL,
       post_region: region,
       post_view: 0,
       post_like: 0,
       uid: login.uid,
       post_update: false,
-    });
+    };
+
+    await dbService.collection("post").doc(uuid).set(writeData);
     setPost("");
     setTitle("");
     setRegion("");
@@ -127,13 +130,18 @@ export default function WriteModal({ visible, isVisible, postData }) {
     }
   };
 
-  const onClearAttachmentClick = () => {
+  //창 닫기
+  const closeModal = () => {
+    setPost("");
+    setTitle("");
+    setRegion("");
     setAttachment([]);
+    isVisible();
   };
 
+  // 올린파일 개별 삭제
   const removeAttachment = (e) => {
-    console.log(e);
-    // setAttachment([]);
+    setAttachment(attachment.filter((at) => at !== e));
   };
 
   useEffect(() => {
@@ -142,6 +150,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
       dispatch(userMiddleware(user.uid, "", "init"));
     });
   }, []);
+
   return (
     <>
       {postData ? (
@@ -151,33 +160,37 @@ export default function WriteModal({ visible, isVisible, postData }) {
           postData={postData}
           login={login}
           isHeight={isHeight}
+          likePost={likePost}
         />
       ) : (
         <>
-          <S.Overlay visible={visible} onClick={isVisible} />
+          <S.Overlay visible={visible} onClick={closeModal} />
           <S.Container visible={visible} isHeight={isHeight}>
-            <S.CloseModal onClick={isVisible} className="fas fa-times" />
+            <S.CloseModal onClick={closeModal} className="fas fa-times" />
             {login && (
               <S.Wrapper>
-                {login.photoURL ? (
+                {likePost.user_image ? (
                   <>
-                    <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                    <S.Name photo={Boolean(login.photoURL)}>
-                      {login.displayName}
+                    <img
+                      src={likePost.user_image}
+                      alt="프로필 이미지입니다"
+                    ></img>
+                    <S.Name photo={Boolean(likePost.user_image)}>
+                      {likePost.name || login.displayName || likePost.email}
                     </S.Name>
                   </>
                 ) : (
                   <>
                     <S.NamelessIcon className="fas fa-user-circle" />
-                    <S.Name photo={Boolean(login.photoURL)}>
-                      {login.email}
+                    <S.Name photo={Boolean(likePost.user_image)}>
+                      {likePost.name || login.displayName || likePost.email}
                     </S.Name>
                   </>
                 )}
               </S.Wrapper>
             )}
             <form onSubmit={onSubmit}>
-              <input
+              <S.TitleInput
                 value={title}
                 name="title"
                 type="text"
@@ -194,7 +207,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 rows="10"
               />
               <select name="region" value={region} onChange={onChange}>
-                <option selected value="">
+                <option value="default" value="">
                   지역을 선택해 주세요.
                 </option>
                 <option value="asia">Asia</option>
@@ -205,37 +218,44 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 <option value="australia">Australia</option>
                 <option value="antarctica">Antarctica</option>
               </select>
-              <input
-                multiple
+              {/* <input
                 accept="image/*"
                 type="file"
                 onChange={onFileChange}
                 name="fileNames[]"
-              />
-              <S.ImgWrapper>
+              /> */}
+              <S.ImgUpload>
+                <label for="inputFile">사진 선택</label>
+                <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
+                <input
+                  multiple
+                  id="inputFile"
+                  accept="image/*"
+                  type="file"
+                  onChange={onFileChange}
+                  name="fileNames[]"
+                />
+              </S.ImgUpload>
+              <S.ImgWrapper attachment={attachment}>
                 {attachment &&
                   attachment.map((atta, i) => (
-                    <>
-                      <img
-                        key={i}
-                        src={atta}
-                        width="70px"
-                        height="70px"
-                        alt="올릴 이미지"
+                    <div>
+                      <i
+                        title="해당 사진 삭제"
+                        onClick={() => removeAttachment(atta)}
+                        className="fas fa-times"
                       />
-                      <i onClick={removeAttachment} className="fas fa-times" />
-                    </>
+                      <img key={i} src={atta} alt="올릴 이미지" />
+                    </div>
                   ))}
               </S.ImgWrapper>
-              <input
-                type="button"
-                value="이미지 모두 삭제"
-                onClick={onClearAttachmentClick}
-              />
               {load ? (
                 <Loading width="30" height="30" />
               ) : (
-                <input type="submit" value="등록" />
+                <S.BtnWrapper>
+                  <input type="button" onClick={closeModal} value="취소" />
+                  <input type="submit" value="등록" />
+                </S.BtnWrapper>
               )}
             </form>
           </S.Container>

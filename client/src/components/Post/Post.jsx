@@ -7,19 +7,19 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { likeMiddleware } from 'store/modules/postLike';
 import { userMiddleware } from 'store/modules/userLike';
 import { bookmarkMiddleware } from 'store/modules/bookmark';
+import { mypagePostMiddleware } from 'store/modules/mypagePost';
+
 import {
   commentDelThunk,
   userComDelThunk,
   userLikeDelThunk,
   userBookmarkDelThunk,
   getComId,
-} from 'store/modules/delete';
-// import { userComDelThunk } from 'store/modules/delete';
-// import { userLikeDelThunk } from 'store/modules/delete';
-// import { userBookmarkDelThunk, getComId } from 'store/modules/delete';
-import firebase from 'firebase';
-import { dbService } from 'firebase.js';
-import WriteModal from 'components/Write/WriteModal/WriteModal';
+} from "store/modules/delete";
+
+import firebase from "firebase";
+import { dbService } from "firebase.js";
+import WriteModal from "components/Write/WriteModal/WriteModal";
 
 const Post = ({
   postData,
@@ -49,11 +49,11 @@ const Post = ({
 
   const dispatch = useDispatch();
 
-  let [time, setTime] = useState('');
+  let [time, setTime] = useState("");
 
   let [bar, setBar] = useState(false);
 
-  let [user, setUser] = useState('');
+  let [user, setUser] = useState("");
 
   // writeModal
   const [visible, setVisible] = useState(false);
@@ -79,14 +79,14 @@ const Post = ({
   const onLikeToggle = async () => {
     if (likePost) {
       setLikePost(false);
-      setLikeRender('noneLike');
-      dispatch(likeMiddleware(post_id, 'noneLike'));
-      dispatch(userMiddleware(user.uid, post_id, 'noneLike'));
+      setLikeRender("noneLike");
+      dispatch(likeMiddleware(post_id, "noneLike"));
+      dispatch(userMiddleware(user.uid, post_id, "noneLike"));
     } else {
       setLikePost(true);
-      setLikeRender('like');
-      dispatch(likeMiddleware(post_id, 'like'));
-      dispatch(userMiddleware(user.uid, post_id, 'like'));
+      setLikeRender("like");
+      dispatch(likeMiddleware(post_id, "like"));
+      dispatch(userMiddleware(user.uid, post_id, "like"));
     }
   };
 
@@ -94,15 +94,16 @@ const Post = ({
   const onBookmarkToggle = () => {
     if (bookmarkPost) {
       setBookmarkPost(false);
-      dispatch(bookmarkMiddleware(user.uid, post_id, 'noneBookmark'));
+      dispatch(bookmarkMiddleware(user.uid, post_id, "noneBookmark"));
     } else {
       setBookmarkPost(true);
-      dispatch(bookmarkMiddleware(user.uid, post_id, 'bookmark'));
+      dispatch(bookmarkMiddleware(user.uid, post_id, "bookmark"));
     }
   };
 
   const postEdit = () => {
     setVisible(!visible);
+    setBar(false);
   };
 
   // 게시글 삭제 시 삭제되는 것들
@@ -110,9 +111,9 @@ const Post = ({
   // users collection : user_write_posts, user_write_comments, user_like_posts, user_bookmark_posts
   // comment collection : comment 문서 자체
   const postDelete = async () => {
-    await dbService.collection('post').doc(post_id).delete();
+    await dbService.collection("post").doc(post_id).delete();
     await dbService
-      .collection('users')
+      .collection("users")
       .doc(user.uid)
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayRemove(post_id),
@@ -172,12 +173,19 @@ const Post = ({
     setTime(`${Math.floor(years)}년 전`);
   }
 
+  const onContainerClick = (e) => {
+    if(e.target !== e.currentTarget){
+      return;
+    }
+    onHideModal();
+  }
+
   // 모달창 닫기
   const onHideModal = () => {
     setViewRender(!viewRender);
     setIsPostOpened(false);
     history.push({
-      search: '',
+      search: "",
     });
     window.location.reload();
   };
@@ -186,13 +194,14 @@ const Post = ({
     auth.onAuthStateChanged((user) => {
       setUser(user);
       dispatch(userMiddleware(user.uid, '', 'init'));
+      dispatch(mypagePostMiddleware(user.uid));
     });
-    dispatch(likeMiddleware(post_id, 'init'));
+    dispatch(likeMiddleware(post_id, "init"));
     timeNotice(post_date);
   }, []);
 
   return (
-    <S.Container>
+    <S.Container onClick={e=>onContainerClick(e)}>
       <S.Contents>
         <ul ref={comment}>
           <S.Header>
@@ -222,7 +231,7 @@ const Post = ({
             ) : (
               <i className="fas fa-user-circle"></i>
             )}
-            <p>{post_writer}</p> {/* post_writer로 검색?*/}
+            {post_writer ? <p>{post_writer}</p> : <p>익명</p>}
             <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
@@ -238,15 +247,15 @@ const Post = ({
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (
-              <i
+              <S.Bookmark
                 onClick={onBookmarkToggle}
-                title={'찜 해제'}
+                title={"찜 해제"}
                 className="fas fa-bookmark"
-              ></i>
+              ><div>찜 목록에 추가됨</div></S.Bookmark>
             ) : (
               <i
                 onClick={onBookmarkToggle}
-                title={'찜하기'}
+                title={"찜하기"}
                 className="far fa-bookmark"
               ></i>
             )}

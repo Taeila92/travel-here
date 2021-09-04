@@ -18,7 +18,6 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
     }
     if(e.key === 'Enter'){
       e.preventDefault();
-      console.log(e.target.parentElement);
       onEditFrame(e.target.value, e.target.parentElement.id);
     }
   }
@@ -77,7 +76,7 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
       {com.user_image ? <img src={com.user_image} alt="프로필 이미지입니다"></img> : <S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon>}
       {edit ?
       (<input ref={input} placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
-      <S.Content>{com.comment_writer && <p>{com.comment_writer}</p>}<span>{com.comment_content}</span></S.Content>}
+      <S.Content>{com.comment_writer ? <p>{com.comment_writer}</p> : <p>익명</p>}<span>{com.comment_content}</span></S.Content>}
       <S.EditDel>
         {editDelete &&
           <>

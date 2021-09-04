@@ -130,6 +130,13 @@ export default function WriteModal({ visible, isVisible, postData }) {
     }
   };
 
+  const onOverlayClick = (e) => {
+    if(e.target !== e.currentTarget){
+      return;
+    }
+    closeModal();
+  }
+
   //창 닫기
   const closeModal = () => {
     setPost("");
@@ -164,101 +171,102 @@ export default function WriteModal({ visible, isVisible, postData }) {
         />
       ) : (
         <>
-          <S.Overlay visible={visible} onClick={closeModal} />
-          <S.Container visible={visible} isHeight={isHeight}>
-            <S.CloseModal onClick={closeModal} className="fas fa-times" />
-            {login && (
-              <S.Wrapper>
-                {likePost.user_image ? (
-                  <>
-                    <img
-                      src={likePost.user_image}
-                      alt="프로필 이미지입니다"
-                    ></img>
-                    <S.Name photo={Boolean(likePost.user_image)}>
-                      {likePost.name || login.displayName || likePost.email}
-                    </S.Name>
-                  </>
-                ) : (
-                  <>
-                    <S.NamelessIcon className="fas fa-user-circle" />
-                    <S.Name photo={Boolean(likePost.user_image)}>
-                      {likePost.name || login.displayName || likePost.email}
-                    </S.Name>
-                  </>
-                )}
-              </S.Wrapper>
-            )}
-            <form onSubmit={onSubmit}>
-              <S.TitleInput
-                value={title}
-                name="title"
-                type="text"
-                ref={titleRef}
-                onChange={onChange}
-                placeholder="제목을 입력해 주세요."
-              />
-              <textarea
-                value={post}
-                name="textarea"
-                ref={postRef}
-                onChange={onChange}
-                placeholder="내용을 입력해주세요."
-                rows="10"
-              />
-              <select name="region" value={region} onChange={onChange}>
-                <option value="default" value="">
-                  지역을 선택해 주세요.
-                </option>
-                <option value="asia">Asia</option>
-                <option value="north_america">North America</option>
-                <option value="south_america">South America</option>
-                <option value="africa">Africa</option>
-                <option value="europe">Europe</option>
-                <option value="australia">Australia</option>
-                <option value="antarctica">Antarctica</option>
-              </select>
-              {/* <input
-                accept="image/*"
-                type="file"
-                onChange={onFileChange}
-                name="fileNames[]"
-              /> */}
-              <S.ImgUpload>
-                <label for="inputFile">사진 선택</label>
-                <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
-                <input
-                  multiple
-                  id="inputFile"
+          <S.Overlay visible={visible} onClick={e=>onOverlayClick(e)}>
+            <S.Container visible={visible} isHeight={isHeight}>
+              <S.CloseModal onClick={closeModal} className="fas fa-times" />
+              {login && (
+                <S.Wrapper>
+                  {likePost.user_image ? (
+                    <>
+                      <img
+                        src={likePost.user_image}
+                        alt="프로필 이미지입니다"
+                      ></img>
+                      <S.Name photo={Boolean(likePost.user_image)}>
+                        {likePost.name || login.displayName || likePost.email}
+                      </S.Name>
+                    </>
+                  ) : (
+                    <>
+                      <S.NamelessIcon className="fas fa-user-circle" />
+                      <S.Name photo={Boolean(likePost.user_image)}>
+                        {likePost.name || login.displayName || likePost.email}
+                      </S.Name>
+                    </>
+                  )}
+                </S.Wrapper>
+              )}
+              <form onSubmit={onSubmit}>
+                <S.TitleInput
+                  value={title}
+                  name="title"
+                  type="text"
+                  ref={titleRef}
+                  onChange={onChange}
+                  placeholder="제목을 입력해 주세요."
+                />
+                <textarea
+                  value={post}
+                  name="textarea"
+                  ref={postRef}
+                  onChange={onChange}
+                  placeholder="내용을 입력해주세요."
+                  rows="10"
+                />
+                <select name="region" value={region} onChange={onChange}>
+                  <option value="default" value="">
+                    지역을 선택해 주세요.
+                  </option>
+                  <option value="asia">Asia</option>
+                  <option value="north_america">North America</option>
+                  <option value="south_america">South America</option>
+                  <option value="africa">Africa</option>
+                  <option value="europe">Europe</option>
+                  <option value="australia">Australia</option>
+                  <option value="antarctica">Antarctica</option>
+                </select>
+                {/* <input
                   accept="image/*"
                   type="file"
                   onChange={onFileChange}
                   name="fileNames[]"
-                />
-              </S.ImgUpload>
-              <S.ImgWrapper attachment={attachment}>
-                {attachment &&
-                  attachment.map((atta, i) => (
-                    <div>
-                      <i
-                        title="해당 사진 삭제"
-                        onClick={() => removeAttachment(atta)}
-                        className="fas fa-times"
-                      />
-                      <img key={i} src={atta} alt="올릴 이미지" />
-                    </div>
-                  ))}
-              </S.ImgWrapper>
-              {load ? (
-                <Loading width="30" height="30" />
-              ) : (
-                <S.BtnWrapper>
-                  <input type="button" onClick={closeModal} value="취소" />
-                  <input type="submit" value="등록" />
-                </S.BtnWrapper>
-              )}
-            </form>
-          </S.Container>
+                /> */}
+                <S.ImgUpload>
+                  <label for="inputFile">사진 선택</label>
+                  <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
+                  <input
+                    multiple
+                    id="inputFile"
+                    accept="image/*"
+                    type="file"
+                    onChange={onFileChange}
+                    name="fileNames[]"
+                  />
+                </S.ImgUpload>
+                <S.ImgWrapper attachment={attachment}>
+                  {attachment &&
+                    attachment.map((atta, i) => (
+                      <div>
+                        <i
+                          title="해당 사진 삭제"
+                          onClick={() => removeAttachment(atta)}
+                          className="fas fa-times"
+                        />
+                        <img key={i} src={atta} alt="올릴 이미지" />
+                      </div>
+                    ))}
+                </S.ImgWrapper>
+                {load ? (
+                  <Loading width="30" height="30" />
+                ) : (
+                  <S.BtnWrapper>
+                    <input type="button" onClick={closeModal} value="취소" />
+                    <input type="submit" value="등록" />
+                  </S.BtnWrapper>
+                )}
+              </form>
+            </S.Container>
+          </S.Overlay>
         </>
       )}
     </>

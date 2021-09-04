@@ -1,20 +1,13 @@
 import styled, { css } from "styled-components";
 
-const width = "80vw";
-const height = "65vh";
 const primaryColor = "#1a46a0";
 
 const Container = styled.div`
-  width: ${width};
+  width: 80vw;
   background-color: white;
   border-radius: 0.3rem;
-  position: fixed;
   transition: ${(props) => (props.visible ? "0.5s" : "1s")};
-  top: 50%;
-  left: 50%;
   overflow: hidden;
-  margin-top: calc(-${height} / 2);
-  margin-left: calc(-${width} / 2);
   opacity: ${(props) => (props.visible ? 1 : 1)};
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(-75rem)"};
@@ -49,11 +42,28 @@ const Container = styled.div`
     margin-bottom: 1rem;
   }
   textarea {
+    resize: vertical;
+    min-height: 15rem;
+    max-height: 28rem;
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: lightgray;
+    }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 3px;
+      background-color: darkgray;
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
     ${(props) =>
       !props.isHeight &&
       css`
         height: 40vh;
-      `}
+    `}
   }
 `;
 const TitleInput = styled.input`
@@ -225,14 +235,16 @@ const CloseModal = styled.i`
 `;
 const Overlay = styled.div`
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0;
   left: 0;
   bottom: 0;
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
-  transition: 0.5s;
-  opacity: ${(props) => (props.visible ? 1 : 1)};
-
+  transition: ${(props) => (props.visible ? '0.5s' : '1s')};
+  opacity: ${(props) => (props.visible ? 1 : 0)};
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(-88rem)"};
   z-index: ${(props) => (props.visible ? 90 : -2)};

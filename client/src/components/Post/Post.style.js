@@ -12,7 +12,7 @@ const Container = styled.section`
   caret-color: transparent;
   background-color: rgb(0,0,0,0.7);
   z-index: 10;
-  `;
+`;
 
 const showPost = keyframes`
   from {
@@ -71,17 +71,24 @@ const Header = styled.li`
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    p:nth-child(2) {
+    p {
       height: 1.5rem;
       padding: 0.2rem 0.5rem 0rem 0.5rem;
+    }
+    p:nth-child(2) {
+      font-size: 0.8rem;
       color: #009432;
       background-color: #e1facf;
-      border: 1px solid #b8e994;
-      border-radius: 20px;
+      border-radius: 10px;
       margin: 0 0.5rem;
+      line-height: 1.2;
     }
     p:nth-child(3){
-      font-size: 0.8rem;
+      font-size: 0.7rem;
+      color: #883997;
+      background-color: #fce3fc;
+      border-radius: 10px;
+      line-height: 1.5;
     }
     i {
       margin-left: 1rem;
@@ -204,8 +211,52 @@ const Like = styled.li`
     }
   }
   i {
+    position: relative;
     font-size: 1.2rem;
     ${cursorPointer};
+    color: darkgray;
+  }
+`;
+
+const showBookmark = keyframes`
+  from {
+    opacity: 1;
+  }
+  50% {
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  to {
+    display: none;
+  }
+`;
+
+
+const Bookmark = styled.i`
+  position: relative;
+  font-size: 1.2rem;
+  ${cursorPointer};
+  color: darkgray;
+  div {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8rem;
+    border: 1px solid lightgray;
+    border-radius: 10px;
+    text-align: center;
+    padding: 0.2rem 0.5rem;
+    font-weight: normal;
+    font-size: 0.8rem;
+    transform: translateY(-1.5rem);
+    color: black;
+    z-index: 20;
+    animation: ${showBookmark} 1500ms;
+    animation-iteration-count: 1;
+    animation-direction: normal;
   }
 `;
 
@@ -302,6 +353,7 @@ export {
   Content,
   Like,
   Img,
+  Bookmark,
   Alert,
   AlertText1,
   AlertText2,

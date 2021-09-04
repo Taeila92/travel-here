@@ -129,11 +129,9 @@ const PostCard = ({ postData, location, view }) => {
 
   useEffect(() => {
     if (location.state === undefined) {
-      console.log('뭔일이냐');
       return;
     }
     if (location.state.hasOwnProperty("uuid")) {
-      console.log('왜안되냐');
       onShowPostModal(location.state.uuid);
     }
   }, []);

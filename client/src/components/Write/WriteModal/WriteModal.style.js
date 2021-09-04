@@ -1,6 +1,8 @@
 import styled, { css } from "styled-components";
 
 const primaryColor = "#1a46a0";
+const gray = "#e3e3e3";
+const lightBlack = "#333333";
 
 const Container = styled.div`
   width: 80vw;
@@ -28,11 +30,11 @@ const Container = styled.div`
   textarea,
   select {
     margin: 1rem 0.5rem 0;
-    border: 2px solid #e3e3e3;
+    border: 2px solid ${gray};
     border-radius: 5px;
     outline: none;
     option {
-      color: #333333;
+      color: ${lightBlack};
     }
   }
   select:hover {
@@ -68,7 +70,7 @@ const Container = styled.div`
 `;
 const TitleInput = styled.input`
   margin: 1rem 0.5rem 0;
-  border: 2px solid #e3e3e3;
+  border: 2px solid ${gray};
   border-radius: 5px;
 `;
 const ImgUpload = styled.div`
@@ -105,9 +107,28 @@ const ImgUpload = styled.div`
 const ImgWrapper = styled.div`
   margin: 0.5rem 0.5rem 0;
   height: 80px;
-  border: 2px solid #e3e3e3;
+  border: 2px solid ${gray};
   border-radius: 10px;
   display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  ::-webkit-scrollbar {
+      height: 0.4rem;
+    }
+    ::-webkit-scrollbar-track {
+      height: 0.4rem;
+      border-radius: 40px;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      height: 0.4rem;
+      border-radius: 40px;
+      background-color: skyblue;
+    }
+    ::-webkit-scrollbar-button {
+      width: 0;
+      height: 0;
+    }
   div {
     position: relative;
     i {
@@ -190,9 +211,9 @@ const BtnWrapper = styled.div`
     :nth-child(1) {
       color: #555555;
       margin-right: 1rem;
-      background-color: #e3e3e3;
+      background-color: ${gray};
       :hover {
-        border: 1px solid #333333;
+        border: 1px solid ${lightBlack};
         background-color: transparent;
       }
     }

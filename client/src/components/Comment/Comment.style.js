@@ -1,11 +1,15 @@
 ﻿import styled from "styled-components";
 import { flex, marginTop, hideScrollbar, cursorPointer } from "./styleConstants.js";
 
+const gray = "#e3e3e3";
+const blue = "#409BF0";
+const red = "#ED4956";
+
 const Comment = styled.li`
   width: 100%;
   ${marginTop};
   padding-top: 1rem;
-  border-top: 1px solid #e3e3e3;
+  border-top: 1px solid ${gray};
   section {
     position: relative;
     height: 3rem;
@@ -14,7 +18,7 @@ const Comment = styled.li`
       width: 100%;
       height: 3rem;
       caret-color: black;
-      border: 2px solid #e3e3e3;
+      border: 2px solid ${gray};
       border-radius: 10px;
       outline: none;
       padding: 1rem 5rem 1rem 1rem;
@@ -41,7 +45,7 @@ const CommentList = styled.div`
   justify-content: flex-start;
   flex-direction: row;
   white-space: pre;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px solid #f2f2f2;
   &:last-child {
     border: none;
   }
@@ -113,15 +117,15 @@ const Check = styled.div`
   font-size: 0.8rem;
   padding: 0.5rem 0;
   ${cursorPointer};
-  color: #409BF0;
+  color: ${blue};
 `;
 
 const Toggle = styled.div`
   position: absolute;
   ${flex};
   flex-direction: row;
-  border: 1px solid #e3e3e3;
-  box-shadow: 0 0 4px #E3E3E3;
+  border: 1px solid ${gray};
+  box-shadow: 0 0 4px ${gray};
   border-radius: 10px;
   transform: translate(-4rem, 0rem);
   div {
@@ -129,8 +133,8 @@ const Toggle = styled.div`
   }
   div:nth-child(1){
     padding: 0.1rem 0.5rem 0.1rem 1rem;
-    border-right: 1px solid #e3e3e3;
-    color: #409BF0;
+    border-right: 1px solid ${gray};
+    color: ${blue};
     ${cursorPointer};
   }
   div:nth-child(2){
@@ -138,7 +142,7 @@ const Toggle = styled.div`
     z-index: 10;
     border-radius: 10px;
     background: white;
-    color: #ED4956;
+    color: ${red};
     ${cursorPointer};
   }
   div:nth-child(3){
@@ -147,8 +151,8 @@ const Toggle = styled.div`
     width: 0.5rem;
     height: 0.5rem;
     background: white;
-    border: 1px solid #e3e3e3;
-    box-shadow: 0 0 4px #E3E3E3;
+    border: 1px solid ${gray};
+    box-shadow: 0 0 4px ${gray};
     transform: translateX(0.25rem) rotate(0.125turn);
   }
 `;

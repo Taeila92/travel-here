@@ -23,7 +23,7 @@ const Board = ({ match, location }) => {
   const dispatch = useDispatch();
 
   const isPc = useMediaQuery({
-    query : "(min-width : 1024px) and (max-width :1920px)"
+    query : "(min-width : 1024px)"
   })
   const isTablet = useMediaQuery({
     query : "(min-width : 680px) and (max-width :1023px)"

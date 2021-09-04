@@ -9,15 +9,15 @@ const Container = styled.div`
   background-color: white;
   border-radius: 0.3rem;
   position: fixed;
-  transition: ${(props) => (props.visible ? '0.5s' : '1s')}; 
+  transition: ${(props) => (props.visible ? "0.5s" : "1s")};
   top: 50%;
   left: 50%;
   overflow: hidden;
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  opacity: ${(props) => (props.visible ? 1 : 1)};
   transform: ${(props) =>
-    props.visible ? "translateY(0)" : "translateY(-45rem)"};
+    props.visible ? "translateY(0)" : "translateY(-75rem)"};
   z-index: ${(props) => (props.visible ? 100 : -1)};
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
@@ -112,9 +112,9 @@ const ImgWrapper = styled.div`
       border-radius: 50%;
       text-align: center;
       line-height: 1.3;
-    }
-    i:hover {
-      cursor: pointer;
+      :hover {
+        cursor: pointer;
+      }
     }
     img {
       margin: 0.2rem;
@@ -231,8 +231,10 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   transition: 0.5s;
+  opacity: ${(props) => (props.visible ? 1 : 1)};
 
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  transform: ${(props) =>
+    props.visible ? "translateY(0)" : "translateY(-88rem)"};
   z-index: ${(props) => (props.visible ? 90 : -2)};
 `;
 

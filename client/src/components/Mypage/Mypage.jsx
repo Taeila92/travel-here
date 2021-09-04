@@ -6,10 +6,12 @@ import Info from './info/Info';
 import Post from './post/Post';
 import Comment from './comment/Comment';
 import Bookmark from './bookmark/Bookmark';
+import Password from './Password/Password';
 
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
+import { closeNav } from "store/modules/nav";
 
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
@@ -19,6 +21,7 @@ const Mypage = ({ user }) => {
   const [post, setPost] = useState(false);
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
+  const [password, setPassword] = useState(false);
 
   const [change, setChange] = useState(false);
 
@@ -41,14 +44,18 @@ const Mypage = ({ user }) => {
     setPost(false);
     setComment(false);
     setBookmark(false);
-    // setCheck(false);
+    setPassword(false);
   };
 
   const onDelayClose = () => {
     setCheck(false);
-    setTimeout(() => {
+    if(matchMedia("screen and (min-width: 740px)").matches){
+      setTimeout(() => {
+        onClose();
+      }, 800)
+    } else {
       onClose();
-    }, 800);
+    }
   };
 
   const onInfo = () => {
@@ -91,12 +98,21 @@ const Mypage = ({ user }) => {
     setCheck(true);
   };
 
+  const onPassword = () => {
+    if (password) {
+      onDelayClose();
+      return;
+    }
+    onClose();
+    setPassword(true);
+    setCheck(true);
+  };
+
   const history = useHistory();
 
   // 로그인 페이지로 전환
   const routeChange = () => {
-    let path = '/';
-    history.push(path);
+    history.push('/');
   };
 
   // 사용자 삭제
@@ -108,44 +124,38 @@ const Mypage = ({ user }) => {
         routeChange();
       })
       .catch((error) => {
-        console.log('user An error ocurred ');
+        console.log(error);
       });
   };
 
-  const goToPassword = () => {
-    let path = '/password';
-    history.push(path);
-  };
 
   useEffect(()=>{}, [isNavOpened]);
 
   useEffect(()=>{
     dispatch(mypagePostMiddleware(user.uid));
 
+    auth.onAuthStateChanged((user) => {
+      setUid(user);
+    });
+
+    dispatch(closeNav());
+  }, []);
+
+  useEffect(() => {
     for (let i = 0; i < user.user_bookmark_posts.length; i++) {
       if (i === user.user_bookmark_posts.length - 1) {
-        dispatch(
-          mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish')
-        );
+        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish'));
       }
       if (i !== user.user_bookmark_posts.length - 1) {
         dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
       }
     }
-
-    auth.onAuthStateChanged((user) => {
-      setUid(user);
-    });
-  }, []);
-
-  useEffect(() => {
+    
     for (let i = 0; i < user.user_write_comments.length; i++) {
       if (i === user.user_write_comments.length - 1) {
-        dispatch(
-          mypageCommentMiddleware(user.user_write_comments[i], 'finish')
-        );
+        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
       }
-      if (i !== user.user_write_comments.length - 1) {
+      if (i !== user.user_write_comments.length) {
         dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
       }
     }
@@ -157,7 +167,7 @@ const Mypage = ({ user }) => {
         <S.Contents check={check}>
           <S.BackImage>
             {userDB.name ? (
-              <span>'{userDB.name}'님 반갑습니다</span>
+              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
             ) : (
               <span>닉네임을 설정해보세요!</span>
             )}
@@ -183,17 +193,19 @@ const Mypage = ({ user }) => {
               <li onClick={onBookmark}>
                 <i className="fas fa-bookmark"></i>찜
               </li>
-              <li onClick={goToPassword}>
-                <i class="fas fa-unlock-alt"></i>비밀번호 변경
+              <li onClick={onPassword}>
+                <i className="fas fa-unlock-alt"></i>비밀번호 변경
               </li>
-              <li onClick={userDel}>탈퇴하기</li>
+              <li onClick={userDel}>
+                <i className="fas fa-user-times"></i>탈퇴하기
+              </li>
             </ul>
           </S.ListArea>
         </S.Contents>
         {info && (
           <S.Content check={check}>
             <ul>
-              <li>내 정보</li>
+              <li>내 정보<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Info
                 uid={uid}
                 user={user}
@@ -207,7 +219,7 @@ const Mypage = ({ user }) => {
         {post && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 글</li>
+              <li>내가 쓴 글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Post user={user} />
             </ul>
           </S.Content>
@@ -215,7 +227,7 @@ const Mypage = ({ user }) => {
         {comment && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 댓글</li>
+              <li>내가 쓴 댓글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Comment user={user} />
             </ul>
           </S.Content>
@@ -223,8 +235,16 @@ const Mypage = ({ user }) => {
         {bookmark && (
           <S.Content check={check}>
             <ul>
-              <li>찜</li>
+              <li>찜<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
               <Bookmark user={user} />
+            </ul>
+          </S.Content>
+        )}
+        {password && (
+          <S.Content check={check}>
+            <ul>
+              <li>비밀번호 변경<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <Password user={user} />
             </ul>
           </S.Content>
         )}

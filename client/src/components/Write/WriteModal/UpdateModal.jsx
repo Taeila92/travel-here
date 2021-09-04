@@ -3,12 +3,15 @@ import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
 import Loading from "../../Loading/Loading";
+
+
 export default function UpdateModal({
   visible,
   isVisible,
   postData,
   login,
   isHeight,
+  likePost,
 }) {
   const {
     post_date,
@@ -75,9 +78,9 @@ export default function UpdateModal({
     };
 
     await dbService.collection("post").doc(post_id).set(updateData);
+
     isVisible();
     setLoad(false);
-    window.location.reload();
   };
 
   const onFileChange = (e) => {
@@ -118,6 +121,8 @@ export default function UpdateModal({
     setAttachment([]);
     isVisible();
   };
+
+
   return (
     <>
       <S.Overlay visible={visible} onClick={closeModal} />
@@ -126,19 +131,21 @@ export default function UpdateModal({
 
         {login && (
           <S.Wrapper>
-            {login.photoURL ? (
-              <>
-                <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                <S.Name photo={Boolean(login.photoURL)}>
-                  {login.displayName}
-                </S.Name>
-              </>
-            ) : (
-              <>
-                <S.NamelessIcon className="fas fa-user-circle" />
-                <S.Name photo={Boolean(login.photoURL)}>{login.email}</S.Name>
-              </>
-            )}
+              {(likePost.user_image) ? (
+                <>
+                  <img src={likePost.user_image} alt="프로필 이미지입니다"></img>
+                  <S.Name photo={Boolean(likePost.user_image)}>
+                    {( likePost.name || login.displayName ) || likePost.email}
+                  </S.Name>
+                </>
+              ) : (
+                <>
+                  <S.NamelessIcon className="fas fa-user-circle" />
+                  <S.Name photo={Boolean(likePost.user_image)}>
+                    {( likePost.name || login.displayName ) || likePost.email}
+                  </S.Name>
+                </>
+              )}
           </S.Wrapper>
         )}
         <form onSubmit={onSubmit}>
@@ -180,7 +187,7 @@ export default function UpdateModal({
               name="fileNames[]"
             />
           </S.ImgUpload>
-          <S.ImgWrapper>
+          <S.ImgWrapper attachment={attachment}>
             {photo &&
               photo.map((atta, i) => (
                 <div>

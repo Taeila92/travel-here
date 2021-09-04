@@ -68,17 +68,18 @@ export default function WriteModal({ visible, isVisible, postData }) {
       .update({
         user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
       });
+
     // 정보 올리기
 
     const writeData = {
       post_title: title,
       post_content: post,
-      post_writer: login.displayName,
+      post_writer: likePost.name || login.displayName,
       post_uid: login.uid,
       post_date: Date.now(),
       post_id: uuid,
       post_photo: attachmentUrl,
-      post_profile_img: login.photoURL,
+      post_profile_img: likePost.user_image || login.photoURL,
       post_region: region,
       post_view: 0,
       post_like: 0,
@@ -148,9 +149,9 @@ export default function WriteModal({ visible, isVisible, postData }) {
       setLogin(user);
       dispatch(userMiddleware(user.uid, "", "init"));
     });
-    if (!visible) {
-    }
   }, []);
+
+
   return (
     <>
       {postData ? (
@@ -160,6 +161,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
           postData={postData}
           login={login}
           isHeight={isHeight}
+          likePost={likePost}
         />
       ) : (
         <>
@@ -168,18 +170,18 @@ export default function WriteModal({ visible, isVisible, postData }) {
             <S.CloseModal onClick={closeModal} className="fas fa-times" />
             {login && (
               <S.Wrapper>
-                {login.photoURL ? (
+                {(likePost.user_image) ? (
                   <>
-                    <img src={login.photoURL} alt="프로필 이미지입니다"></img>
-                    <S.Name photo={Boolean(login.photoURL)}>
-                      {login.displayName}
+                    <img src={likePost.user_image} alt="프로필 이미지입니다"></img>
+                    <S.Name photo={Boolean(likePost.user_image)}>
+                      {( likePost.name || login.displayName ) || likePost.email}
                     </S.Name>
                   </>
                 ) : (
                   <>
                     <S.NamelessIcon className="fas fa-user-circle" />
-                    <S.Name photo={Boolean(login.photoURL)}>
-                      {login.email}
+                    <S.Name photo={Boolean(likePost.user_image)}>
+                      {( likePost.name || login.displayName ) || likePost.email}
                     </S.Name>
                   </>
                 )}
@@ -203,7 +205,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 rows="10"
               />
               <select name="region" value={region} onChange={onChange}>
-                <option selected value="">
+                <option value="default" value="">
                   지역을 선택해 주세요.
                 </option>
                 <option value="asia">Asia</option>
@@ -232,11 +234,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   name="fileNames[]"
                 />
               </S.ImgUpload>
-              <S.ImgWrapper>
+              <S.ImgWrapper attachment={attachment}>
                 {attachment &&
                   attachment.map((atta, i) => (
                     <div>
                       <i
+                        title="해당 사진 삭제"
                         onClick={() => removeAttachment(atta)}
                         className="fas fa-times"
                       />

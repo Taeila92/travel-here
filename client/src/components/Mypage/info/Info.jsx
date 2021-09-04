@@ -6,6 +6,7 @@ import { editMypageThunk } from 'store/modules/mypageComment';
 import { editUserImgThunk, editUserNameThunk } from 'store/modules/mypagePost';
 import { dbService, storageService } from 'firebase.js';
 import { v4 as uuidv4 } from "uuid";
+import Loading from "../../Loading/Loading";
 
 const Info = ({ uid, user, userDB, change, setChange }) => {
 
@@ -15,6 +16,8 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
   const dispatch = useDispatch();
 
   const [attachment, setAttachment] = useState([]);
+
+  let [load, setLoad] = useState(false);
 
   let [nickName, setNickName] = useState(false);
 
@@ -31,6 +34,9 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     dispatch(editUserNameThunk(user.uid, value));
     setNickName(false);
     setChange(!change);
+    setTimeout(()=>{
+      dispatch(editMypageThunk(user.uid, '', 'finish'));
+    }, 1000);
   };
 
 
@@ -65,6 +71,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
 
   const onSubmit = async(e) => {
     e.preventDefault();
+    setLoad(true);
     let attachmentUrl = [];
     if (attachment) {
       const attachmentRef = storageService
@@ -80,13 +87,28 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
     await dbService.collection('users').doc(user.uid).update({
       user_image: attachmentUrl,
     });
+    changeImg(attachmentUrl);
+  };
+
+  const onDefaultImg = async() => {
+    await dbService.collection('users').doc(user.uid).update({
+      user_image: null,
+    });
+    changeImg(null);
+  }
+
+  const changeImg = (data) => {
     setAttachment([]);
     dispatch(userMiddleware(user.uid, '', 'init'));
-    dispatch(editUserImgThunk(user.uid, attachmentUrl));
-    dispatch(editMypageThunk(user.uid, attachmentUrl, 'img'));
+    dispatch(editUserImgThunk(user.uid, data));
+    dispatch(editMypageThunk(user.uid, data, 'img'));
     setChange(!change);
     setImg(false);
-  };
+    setTimeout(()=>{
+      dispatch(editMypageThunk(user.uid, '', 'finish'));
+    }, 1000);
+    setLoad(false);
+  }
 
   const onIconClick = () => {
     setNickName(!nickName);
@@ -107,24 +129,26 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
       <S.NickName>
         <S.Paragraph>
           <S.Title>닉네임</S.Title>
-          <S.Icon onClick={onIconClick} className="fas fa-cog"></S.Icon>
+          <S.Icon onClick={onIconClick} className="fas fa-cog" title={"수정하기"}></S.Icon>
         </S.Paragraph>
         {nickName ?
-        (<><input ref={input} type="text" onKeyPress={e=>onEnter(e)}/>
-        <button onClick={onSubmitBtn}>제출</button></>) :
+        (<div>
+          <textarea ref={input} type="text" maxLength="10" wrap="off" placeholder="최대 10자(띄어쓰기 포함)" onKeyPress={e=>onEnter(e)} />
+          <button onClick={onSubmitBtn}>제출</button>
+        </div>) :
         (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임을 설정해보세요!</p>)}
       </S.NickName>
       <S.Profile>
         <S.Paragraph>
           <S.Title>프로필 사진</S.Title>
-          <S.Icon onClick={onImgClick} className="fas fa-cog"></S.Icon>
+          <S.Icon onClick={onImgClick} className="fas fa-cog" title={"수정하기"}></S.Icon>
         </S.Paragraph>
         <S.Paragraph>
           {userDB.user_image ? (img || <p><S.ProfileImg src={userDB.user_image} alt="프로필 사진"></S.ProfileImg></p>) : (img || <p><S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon></p>)}
           {img && <p>
-            <form onSubmit={onSubmit}>
+            <S.Form onSubmit={onSubmit} img={userDB.user_image}>
               <div>
-                <label for="inputFile">사진 선택</label>
+                <label for="inputFile">사진 변경</label>
                 <input
                   id="inputFile"
                   accept="image/*"
@@ -132,6 +156,8 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
                   onChange={onFileChange}
                   name="fileNames[]"
                 />
+                {userDB.user_image &&
+                <p onClick={onDefaultImg}>기본사진으로 변경</p>}
               </div>
               {attachment && (
                 <div>
@@ -143,7 +169,10 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
                   ))}
                 </div>
               )}
-            </form>
+              {load && <S.Loading>
+                <Loading width="30" height="30" />
+              </S.Loading>}
+            </S.Form>
           </p>}
         </S.Paragraph>
       </S.Profile>

@@ -17,7 +17,7 @@ const Container = styled.div`
   ${(props) => {
     if (!props.isPc && props.login) {
       return css`
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.7);
         width: 100vw;
         height: 200px;
         transition: 0.3s;
@@ -29,7 +29,7 @@ const Container = styled.div`
     }
     if(!props.isPc && !props.login){
       return css`
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(0, 0, 0, 0.7);
         width: 100vw;
         height: 170px;
         transition: 0.3s;

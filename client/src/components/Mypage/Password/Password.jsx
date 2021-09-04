@@ -59,9 +59,8 @@ const Password = () => {
 
   return (
     <>
-      <S.Container>
+      {/* <S.Container> */}
         <S.Contents>
-          <h1>비밀번호 변경</h1>
           <input
             type="password"
             required
@@ -73,11 +72,11 @@ const Password = () => {
           <button className="chageBtn" onClick={passwordChange}>
             변경
           </button>
-          <S.BackBtn onClick={goToMypage}>
-            <i class="fas fa-times"></i>
-          </S.BackBtn>
+          {/* <S.BackBtn onClick={goToMypage}>
+            <i className="fas fa-times"></i>
+          </S.BackBtn> */}
         </S.Contents>
-      </S.Container>
+      {/* </S.Container> */}
     </>
   );
 };

@@ -129,9 +129,11 @@ const PostCard = ({ postData, location, view }) => {
 
   useEffect(() => {
     if (location.state === undefined) {
+      console.log('뭔일이냐');
       return;
     }
     if (location.state.hasOwnProperty("uuid")) {
+      console.log('왜안되냐');
       onShowPostModal(location.state.uuid);
     }
   }, []);
@@ -162,10 +164,10 @@ const PostCard = ({ postData, location, view }) => {
           <S.Profile>
           {post_profile_img ? (<img src={post_profile_img} alt="" />) : <i className="fas fa-user-circle"></i>}
             <div>
-              {post_writer ? <h2>{post_writer}</h2> : <h2>익명</h2>}
+              {post_writer ? <h2>{postData.post_writer}</h2> : <h2>익명</h2>}
               <h5>#{post_region}</h5>
             </div>
-            <p>{post_view}</p>
+            <p>조회수 {post_view}</p>
           </S.Profile>
           <S.Content>
             <h2>{post_title}</h2>

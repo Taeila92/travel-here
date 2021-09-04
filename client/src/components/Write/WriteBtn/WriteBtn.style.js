@@ -49,4 +49,19 @@ const Button = styled.div`
   }
 `;
 
-export { Button };
+const Title = styled.div`
+  position: absolute;
+  top: -3rem;
+  right: -1.2rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 6rem;
+  height: 2rem;
+  color: white;
+  background: rgb(255,255,255,0.2);
+  border-radius: 10px;
+  font-size: 0.9rem;
+`;
+
+export { Title, Button };

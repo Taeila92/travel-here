@@ -6,23 +6,23 @@ const primaryColor = "#1a46a0";
 
 const Container = styled.div`
   width: ${width};
-  height: ${height};
   background-color: white;
   border-radius: 0.3rem;
   position: fixed;
   transition: 0.5s;
   top: 50%;
   left: 50%;
+  overflow: hidden;
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
-  overflow: auto;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  display: ${(props) => (props.visible ? 'block' : 'none')};
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(-5rem)"};
   z-index: ${(props) => (props.visible ? 100 : -1)};
   &::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera*/
-}
+  }
+
   p {
     margin-top: 1rem;
     margin-left: 1rem;
@@ -37,9 +37,16 @@ const Container = styled.div`
     margin: 1rem 0.5rem 0;
     border: 2px solid #e3e3e3;
     border-radius: 5px;
+    outline: none;
     option {
       color: #333333;
     }
+  }
+  select:hover{
+    cursor: pointer;
+  }
+  input:last-child{
+    margin-bottom: 1rem;
   }
   textarea {
     ${(props) =>
@@ -57,6 +64,10 @@ const TitleInput = styled.input`
 const ImgUpload = styled.div`
   height: 1.6rem;
   position: relative;
+  margin: 1rem 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   label {
     position: absolute;
     top: 50%;
@@ -73,7 +84,7 @@ const ImgUpload = styled.div`
     }
   }
   p {
-    margin-left: 5.2rem;
+    margin: 0.7rem 0 0 6rem;
     font-size: 0.8rem;
     color: red;
   }
@@ -93,6 +104,17 @@ const ImgWrapper = styled.div`
       position: absolute;
       top: 0.3rem;
       right: 0.3rem;
+      font-size: 0.8rem;
+      width: 1rem;
+      height: 1rem;
+      background: #FF0000;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 1.3;
+    }
+    i:hover {
+      cursor: pointer;
     }
     img {
       margin: 0.2rem;
@@ -100,6 +122,20 @@ const ImgWrapper = styled.div`
       height: 70px;
     }
   }
+  ${(props) => {
+    if(props.attachment === undefined){
+      return;
+    }
+    if(props.attachment.length === 0){
+      return css`
+        display: none;
+      `;
+    } else {
+      return css`
+        display: flex;
+      `;
+    }
+  }} 
 `;
 
 const BtnWrapper = styled.div`
@@ -147,6 +183,8 @@ const Wrapper = styled.span`
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    object-fit: cover;
+    margin-right: 0.3rem;
   }
   span {
     margin-left: 0.2rem;
@@ -156,7 +194,7 @@ const NamelessIcon = styled.i`
   font-size: 2rem;
   color: darkgray;
   left: 0;
-  margin-left: 0.2rem;
+  margin: 0 0.3rem 0 0.2rem;
 `;
 const Name = styled.span`
   color: rgba(0, 0, 0, 0.6);
@@ -166,6 +204,9 @@ const CloseModal = styled.i`
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
+  :hover {
+    cursor: pointer;
+  }
 `;
 const Overlay = styled.div`
   position: fixed;
@@ -175,7 +216,7 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   transition: 0.5s;
-  opacity: ${(props) => (props.visible ? 1 : 0)};
+  display: ${(props) => (props.visible ? 'block' : 'none')};
   z-index: ${(props) => (props.visible ? 90 : -2)};
 `;
 

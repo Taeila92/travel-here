@@ -61,6 +61,7 @@ const CommentList = styled.div`
     color: darkgray;
     word-break: normal;
     text-align: center;
+    white-space: nowrap;
   }
   span, input {
     border: none;

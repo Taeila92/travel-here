@@ -46,6 +46,18 @@ const Contents = styled.div`
   animation-iteration-count: 1;
   animation-direction: normal;
   /* filter: blur(5px); */
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+    height: 30rem;
+    padding: 2rem 0;
+  }
+  @media screen and (max-width: 420px) {
+    width: 22rem;
+    padding: 1rem 0;
+  }
+  @media screen and (max-width: 360px) {
+    width: 20rem;
+  }
   ul {
     width: 27rem;
     max-height: 40rem;
@@ -54,6 +66,15 @@ const Contents = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     ${hideScrollbar};
+    @media screen and (max-width: 500px) {
+      width: 23rem;
+    }
+    @media screen and (max-width: 420px) {
+      width: 20rem;
+    }
+    @media screen and (max-width: 360px) {
+      width: 18rem;
+    }
   }
 `;
 
@@ -68,6 +89,9 @@ const Header = styled.li`
   left: 0;
   padding-bottom: 1rem;
   z-index: 11;
+  @media screen and (max-width: 500px) {
+    padding-bottom: 0.5rem;
+  }
   span {
     ${flex};
     flex-direction: row;
@@ -80,6 +104,10 @@ const Header = styled.li`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      @media screen and (max-width: 500px) {
+        font-size: 1rem;
+        max-width: 10rem;
+      }
     }
     p {
       height: 1.5rem;

@@ -249,13 +249,13 @@ const Post = ({
             {bookmarkPost ? (
               <S.Bookmark
                 onClick={onBookmarkToggle}
-                title={"찜 해제"}
+                title="찜 해제"
                 className="fas fa-bookmark"
               ><div>찜 목록에 추가됨</div></S.Bookmark>
             ) : (
               <i
                 onClick={onBookmarkToggle}
-                title={"찜하기"}
+                title="찜하기"
                 className="far fa-bookmark"
               ></i>
             )}

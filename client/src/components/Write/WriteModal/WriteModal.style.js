@@ -15,7 +15,8 @@ const Container = styled.div`
   overflow: hidden;
   margin-top: calc(-${height} / 2);
   margin-left: calc(-${width} / 2);
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  /* display: ${(props) => (props.visible ? "block" : "none")}; */
+  opacity: ${(props) => (props.visible ? 1 : 0)};
   transform: ${(props) =>
     props.visible ? "translateY(0)" : "translateY(-5rem)"};
   z-index: ${(props) => (props.visible ? 100 : -1)};
@@ -42,10 +43,10 @@ const Container = styled.div`
       color: #333333;
     }
   }
-  select:hover{
+  select:hover {
     cursor: pointer;
   }
-  input:last-child{
+  input:last-child {
     margin-bottom: 1rem;
   }
   textarea {
@@ -107,7 +108,7 @@ const ImgWrapper = styled.div`
       font-size: 0.8rem;
       width: 1rem;
       height: 1rem;
-      background: #FF0000;
+      background: #ff0000;
       color: white;
       border-radius: 50%;
       text-align: center;
@@ -123,10 +124,10 @@ const ImgWrapper = styled.div`
     }
   }
   ${(props) => {
-    if(props.attachment === undefined){
+    if (props.attachment === undefined) {
       return;
     }
-    if(props.attachment.length === 0){
+    if (props.attachment.length === 0) {
       return css`
         display: none;
       `;
@@ -135,13 +136,13 @@ const ImgWrapper = styled.div`
         display: flex;
       `;
     }
-  }} 
+  }}
 
   ${(props) => {
-    if(props.photo === undefined){
+    if (props.photo === undefined) {
       return;
     }
-    if(props.photo.length === 0){
+    if (props.photo.length === 0) {
       return css`
         display: none;
       `;
@@ -231,7 +232,8 @@ const Overlay = styled.div`
   right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   transition: 0.5s;
-  display: ${(props) => (props.visible ? 'block' : 'none')};
+  /* display: ${(props) => (props.visible ? "block" : "none")}; */
+  opacity: ${(props) => (props.visible ? 1 : 0)};
   z-index: ${(props) => (props.visible ? 90 : -2)};
 `;
 

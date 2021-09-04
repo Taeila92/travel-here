@@ -151,7 +151,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
     });
   }, []);
 
-
   return (
     <>
       {postData ? (
@@ -170,18 +169,21 @@ export default function WriteModal({ visible, isVisible, postData }) {
             <S.CloseModal onClick={closeModal} className="fas fa-times" />
             {login && (
               <S.Wrapper>
-                {(likePost.user_image) ? (
+                {likePost.user_image ? (
                   <>
-                    <img src={likePost.user_image} alt="프로필 이미지입니다"></img>
+                    <img
+                      src={likePost.user_image}
+                      alt="프로필 이미지입니다"
+                    ></img>
                     <S.Name photo={Boolean(likePost.user_image)}>
-                      {( likePost.name || login.displayName ) || likePost.email}
+                      {likePost.name || login.displayName || likePost.email}
                     </S.Name>
                   </>
                 ) : (
                   <>
                     <S.NamelessIcon className="fas fa-user-circle" />
                     <S.Name photo={Boolean(likePost.user_image)}>
-                      {( likePost.name || login.displayName ) || likePost.email}
+                      {likePost.name || login.displayName || likePost.email}
                     </S.Name>
                   </>
                 )}

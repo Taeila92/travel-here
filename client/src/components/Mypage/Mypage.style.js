@@ -30,7 +30,6 @@ const leftshow = keyframes`
   }
 `;
 
-
 const show = keyframes`
   from {
     display: none;
@@ -49,7 +48,7 @@ const Contents = styled.div`
   ${flex};
   justify-content: flex-start;
   overflow: hidden;
-  box-shadow: 0 0 4px #D980FA;
+  box-shadow: 0 0 4px #d980fa;
   background-color: rgb(0, 0, 0, 0.5);
   margin-bottom: 3rem;
   ${({ check }) => {
@@ -137,15 +136,15 @@ const Title = styled.span`
         flex-direction: row;
       `;
     }
-  }} 
-  span:first-child{
+  }}
+  span:first-child {
     margin-right: 0.5rem;
   }
-  span:last-child{
+  span:last-child {
     font-size: 1.1rem;
   }
   b:first-child {
-    color: #409BF0;
+    color: #409bf0;
   }
   b:last-child {
     font-size: 1.1rem;
@@ -228,7 +227,7 @@ const Content = styled.ul`
   ${flex};
   color: white;
   overflow: hidden;
-  box-shadow: 0 0 4px #D980FA;
+  box-shadow: 0 0 4px #d980fa;
   background-color: rgb(0, 0, 0, 0.5);
   animation: ${rightclose} 800ms;
   animation-iteration-count: 1;
@@ -283,4 +282,59 @@ const Content = styled.ul`
   }
 `;
 
-export { Container, Contents, Content, BackImage, ListArea, Title };
+const Header = styled.div`
+  text-align: center;
+  ul {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 0;
+    li {
+      width: 100%;
+      h1 {
+        font-size: 34px;
+        transform: translateY(-100%);
+      }
+      button {
+        border: none;
+        width: 100%;
+        height: 3rem;
+        border-radius: 12px;
+        color: #fff;
+        background-color: #ff73b3;
+        cursor: pointer;
+        font-size: 18px;
+        margin-top: 1rem;
+        box-shadow: 0 0 10px 1px #ff73b3;
+      }
+    }
+  }
+`;
+const Logincontainer = styled.div`
+  position: absolute;
+  width: 480px;
+  height: 400px;
+  background-color: #fffaf0;
+  margin: 50px auto;
+  padding: 20px;
+  z-index: 100;
+  padding: 60px 68px 40px 68px;
+  @media screen and (max-width: 740px) {
+    width: 100vw;
+    margin: 0;
+    height: 100vh;
+    padding: 1em;
+  }
+`;
+
+export {
+  Container,
+  Contents,
+  Content,
+  BackImage,
+  ListArea,
+  Title,
+  Header,
+  Logincontainer,
+};

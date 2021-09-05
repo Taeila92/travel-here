@@ -2,6 +2,7 @@
 import { useHistory } from 'react-router-dom';
 import * as S from './Password.style';
 import firebase from 'firebase';
+import { deburr } from 'lodash';
 
 const Password = () => {
   const [password, setPassword] = useState('');
@@ -25,7 +26,7 @@ const Password = () => {
       .updatePassword(newPassword)
       .then(() => {
         setPassword('');
-        console.log('Update successful');
+        alert('패스워드가 변경 되었습니다.');
       })
       .catch((err) => {
         switch (err.code) {
@@ -42,40 +43,47 @@ const Password = () => {
 
   // //사용자 재인증
 
-  // function promptForCredentials() {
-  //   return {};
-  // }
-  // // TODO(you): prompt the user to re-provide their sign-in credentials
-  // const credential = promptForCredentials();
+  function reauthenticateWithCredential() {
+    function promptForCredentials() {
+      return {};
+    }
 
-  // user
-  //   .reauthenticateWithCredential(credential)
-  //   .then(() => {
-  //     console.log('User re-authenticated');
-  //   })
-  //   .catch((error) => {
-  //     console.log('An error ocurred');
-  //   });
+    // [START auth_reauth_with_credential]
+    const user = firebase.auth().currentUser;
+
+    // TODO(you): prompt the user to re-provide their sign-in credentials
+    const credential = firebase.auth.EmailAuthProvider.credential(user.email);
+    user
+      .reauthenticateWithCredential(credential)
+      .then(() => {
+        // User re-authenticated.
+      })
+      .catch((error) => {
+        // An error ocurred
+        // ...
+      });
+    // [END auth_reauth_with_credential]
+  }
 
   return (
     <>
       {/* <S.Container> */}
-        <S.Contents>
-          <input
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Password"
-          />
-          <p className="errorMsg">{passwordError}</p>
-          <button className="chageBtn" onClick={passwordChange}>
-            변경
-          </button>
-          {/* <S.BackBtn onClick={goToMypage}>
+      <S.Contents>
+        <input
+          type="password"
+          required
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <p className="errorMsg">{passwordError}</p>
+        <button className="chageBtn" onClick={passwordChange}>
+          변경
+        </button>
+        {/* <S.BackBtn onClick={goToMypage}>
             <i className="fas fa-times"></i>
           </S.BackBtn> */}
-        </S.Contents>
+      </S.Contents>
       {/* </S.Container> */}
     </>
   );

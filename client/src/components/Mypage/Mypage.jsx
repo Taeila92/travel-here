@@ -11,7 +11,7 @@ import Password from './Password/Password';
 import { mypageBookmarkMiddleware } from 'store/modules/mypageBookmark';
 import { mypageCommentMiddleware } from 'store/modules/mypageComment';
 import { mypagePostMiddleware } from 'store/modules/mypagePost';
-import { closeNav } from "store/modules/nav";
+import { closeNav } from 'store/modules/nav';
 
 import firebase from 'firebase';
 import { useHistory } from 'react-router-dom';
@@ -22,7 +22,7 @@ const Mypage = ({ user }) => {
   const [comment, setComment] = useState(false);
   const [bookmark, setBookmark] = useState(false);
   const [password, setPassword] = useState(false);
-
+  const [open, setOpen] = useState(false);
   const [change, setChange] = useState(false);
 
   const [check, setCheck] = useState(false);
@@ -35,9 +35,7 @@ const Mypage = ({ user }) => {
 
   const userDB = useSelector((state) => state.userLike.data);
 
-  const { isNavOpened }  = useSelector(state => state.nav);
-
-  
+  const { isNavOpened } = useSelector((state) => state.nav);
 
   const onClose = () => {
     setInfo(false);
@@ -49,10 +47,10 @@ const Mypage = ({ user }) => {
 
   const onDelayClose = () => {
     setCheck(false);
-    if(matchMedia("screen and (min-width: 740px)").matches){
+    if (matchMedia('screen and (min-width: 740px)').matches) {
       setTimeout(() => {
         onClose();
-      }, 800)
+      }, 800);
     } else {
       onClose();
     }
@@ -117,21 +115,24 @@ const Mypage = ({ user }) => {
 
   // 사용자 삭제
   const userDel = () => {
-    const user = auth.currentUser;
-    user
-      .delete()
-      .then(() => {
-        routeChange();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (true) {
+      const user = auth.currentUser;
+      user
+        .delete()
+        .then(() => {
+          routeChange();
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      return;
+    }
   };
 
+  useEffect(() => {}, [isNavOpened]);
 
-  useEffect(()=>{}, [isNavOpened]);
-
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(mypagePostMiddleware(user.uid));
 
     auth.onAuthStateChanged((user) => {
@@ -144,16 +145,20 @@ const Mypage = ({ user }) => {
   useEffect(() => {
     for (let i = 0; i < user.user_bookmark_posts.length; i++) {
       if (i === user.user_bookmark_posts.length - 1) {
-        dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish'));
+        dispatch(
+          mypageBookmarkMiddleware(user.user_bookmark_posts[i], 'finish')
+        );
       }
       if (i !== user.user_bookmark_posts.length - 1) {
         dispatch(mypageBookmarkMiddleware(user.user_bookmark_posts[i]));
       }
     }
-    
+
     for (let i = 0; i < user.user_write_comments.length; i++) {
       if (i === user.user_write_comments.length - 1) {
-        dispatch(mypageCommentMiddleware(user.user_write_comments[i], 'finish'));
+        dispatch(
+          mypageCommentMiddleware(user.user_write_comments[i], 'finish')
+        );
       }
       if (i !== user.user_write_comments.length) {
         dispatch(mypageCommentMiddleware(user.user_write_comments[i]));
@@ -167,7 +172,13 @@ const Mypage = ({ user }) => {
         <S.Contents check={check}>
           <S.BackImage>
             {userDB.name ? (
-              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
+              <S.Title name={userDB.name}>
+                <span>
+                  <b>'{userDB.name}'</b>
+                  <b>님</b>
+                </span>
+                <span>반갑습니다</span>
+              </S.Title>
             ) : (
               <span>닉네임을 설정해보세요!</span>
             )}
@@ -196,16 +207,54 @@ const Mypage = ({ user }) => {
               <li onClick={onPassword}>
                 <i className="fas fa-unlock-alt"></i>비밀번호 변경
               </li>
-              <li onClick={userDel}>
+
+              <li
+                onClick={() => setOpen(!open)}
+                className="btn btn-primary"
+                data-toggle="modal"
+              >
                 <i className="fas fa-user-times"></i>탈퇴하기
               </li>
             </ul>
           </S.ListArea>
         </S.Contents>
+        {open && (
+          <>
+            <S.Logincontainer>
+              <S.Header>
+                <ul>
+                  <li>
+                    <h1>탈퇴하시겠습니까?</h1>
+                  </li>
+                  <li>
+                    <button className="modal fade" onClick={userDel}>
+                      예
+                    </button>
+                  </li>
+                  <li>
+                    <button
+                      className="modal fade"
+                      onClick={() => setOpen(!open)}
+                    >
+                      아니오
+                    </button>
+                  </li>
+                </ul>
+              </S.Header>
+            </S.Logincontainer>
+          </>
+        )}
         {info && (
           <S.Content check={check}>
             <ul>
-              <li>내 정보<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <li>
+                내 정보
+                <i
+                  className="fas fa-angle-left"
+                  onClick={onDelayClose}
+                  title={'뒤로가기'}
+                ></i>
+              </li>
               <Info
                 uid={uid}
                 user={user}
@@ -219,7 +268,14 @@ const Mypage = ({ user }) => {
         {post && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <li>
+                내가 쓴 글
+                <i
+                  className="fas fa-angle-left"
+                  onClick={onDelayClose}
+                  title={'뒤로가기'}
+                ></i>
+              </li>
               <Post user={user} />
             </ul>
           </S.Content>
@@ -227,7 +283,14 @@ const Mypage = ({ user }) => {
         {comment && (
           <S.Content check={check}>
             <ul>
-              <li>내가 쓴 댓글<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <li>
+                내가 쓴 댓글
+                <i
+                  className="fas fa-angle-left"
+                  onClick={onDelayClose}
+                  title={'뒤로가기'}
+                ></i>
+              </li>
               <Comment user={user} />
             </ul>
           </S.Content>
@@ -235,7 +298,14 @@ const Mypage = ({ user }) => {
         {bookmark && (
           <S.Content check={check}>
             <ul>
-              <li>찜<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <li>
+                찜
+                <i
+                  className="fas fa-angle-left"
+                  onClick={onDelayClose}
+                  title={'뒤로가기'}
+                ></i>
+              </li>
               <Bookmark user={user} />
             </ul>
           </S.Content>
@@ -243,7 +313,14 @@ const Mypage = ({ user }) => {
         {password && (
           <S.Content check={check}>
             <ul>
-              <li>비밀번호 변경<i className="fas fa-angle-left" onClick={onDelayClose} title={'뒤로가기'}></i></li>
+              <li>
+                비밀번호 변경
+                <i
+                  className="fas fa-angle-left"
+                  onClick={onDelayClose}
+                  title={'뒤로가기'}
+                ></i>
+              </li>
               <Password user={user} />
             </ul>
           </S.Content>

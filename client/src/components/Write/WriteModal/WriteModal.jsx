@@ -11,20 +11,23 @@ import { useHistory, useLocation } from "react-router";
 import Loading from "../../Loading/Loading";
 
 export default function WriteModal({ visible, isVisible, postData }) {
-  // redux 사용하기
+  const auth = firebase.auth();
+  const isHeight = useMediaQuery({ maxHeight: 765 });
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const location = useLocation();
+
   const [post, setPost] = useState("");
   const [title, setTitle] = useState("");
   const [region, setRegion] = useState("");
   const [attachment, setAttachment] = useState([]);
   const [load, setLoad] = useState(false);
   const [login, setLogin] = useState("");
+
   const postRef = useRef();
+  const regionRef = useRef();
   const titleRef = useRef();
-  const auth = firebase.auth();
-  const dispatch = useDispatch();
-  const isHeight = useMediaQuery({ maxHeight: 765 });
-  const history = useHistory();
-  const location = useLocation();
 
   const onChange = (e) => {
     const { value, name } = e.target;
@@ -42,75 +45,86 @@ export default function WriteModal({ visible, isVisible, postData }) {
   let bookmark = useSelector((state) => state.userLike.data);
 
   const onSubmit = async (e) => {
-    setLoad(true);
     e.preventDefault();
-    let attachmentUrl = [];
-    if (attachment) {
-      for (let i = 0; i < attachment.length; i++) {
-        const attachmentRef = storageService
-          .ref()
-          .child(`${login.uid}/${uuidv4()}`);
-        const response = await attachmentRef.putString(
-          attachment[i],
-          "data_url"
-        );
-        attachmentUrl.push(await response.ref.getDownloadURL());
-      }
-    }
-
-    const ID = login.uid;
-    const uuid = uuidv4();
-
-    // users collection의 user_write_posts에 post_id 추가
-    await dbService
-      .collection("users")
-      .doc(ID)
-      .update({
-        user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
-      });
-
-    // 정보 올리기
-
-    const writeData = {
-      post_title: title,
-      post_content: post,
-      post_writer: likePost.name || login.displayName,
-      post_uid: login.uid,
-      post_date: Date.now(),
-      post_id: uuid,
-      post_photo: attachmentUrl,
-      post_profile_img: likePost.user_image || login.photoURL,
-      post_region: region,
-      post_view: 0,
-      post_like: 0,
-      uid: login.uid,
-      post_update: false,
-    };
-
-    await dbService.collection("post").doc(uuid).set(writeData);
-    setPost("");
-    setTitle("");
-    setRegion("");
-    setAttachment([]);
-    isVisible();
-    setLoad(false);
-    if (location.pathname === `/categorylist/${region}`) {
-      // 모달 띄우기
-      history.push({
-        pathname: `/categorylist/${region}`,
-        search: `?id=${uuid}`,
-        state: {
-          like: likePost.user_like_posts,
-          bookmark: bookmark.user_bookmark_posts,
-          postData,
-        },
-      });
-      window.location.reload();
+    if (!title) {
+      alert("제목을 입력해 주세요.");
+      postRef.current.focus();
+    } else if (!post) {
+      alert("내용을 입력해 주세요.");
+      titleRef.current.focus();
+    } else if (!region) {
+      alert("지역을 선택해 주세요.");
+      regionRef.current.focus();
     } else {
-      history.push({
-        pathname: `/categorylist/${region}`,
-        state: { uuid },
-      });
+      setLoad(true);
+      let attachmentUrl = [];
+      if (attachment) {
+        for (let i = 0; i < attachment.length; i++) {
+          const attachmentRef = storageService
+            .ref()
+            .child(`${login.uid}/${uuidv4()}`);
+          const response = await attachmentRef.putString(
+            attachment[i],
+            "data_url"
+          );
+          attachmentUrl.push(await response.ref.getDownloadURL());
+        }
+      }
+
+      const ID = login.uid;
+      const uuid = uuidv4();
+
+      // users collection의 user_write_posts에 post_id 추가
+      await dbService
+        .collection("users")
+        .doc(ID)
+        .update({
+          user_write_posts: firebase.firestore.FieldValue.arrayUnion(uuid),
+        });
+
+      // 정보 올리기
+
+      const writeData = {
+        post_title: title,
+        post_content: post,
+        post_writer: likePost.name || login.displayName,
+        post_uid: login.uid,
+        post_date: Date.now(),
+        post_id: uuid,
+        post_photo: attachmentUrl,
+        post_profile_img: likePost.user_image || login.photoURL,
+        post_region: region,
+        post_view: 0,
+        post_like: 0,
+        uid: login.uid,
+        post_update: false,
+      };
+
+      await dbService.collection("post").doc(uuid).set(writeData);
+      setPost("");
+      setTitle("");
+      setRegion("");
+      setAttachment([]);
+      isVisible();
+      setLoad(false);
+      if (location.pathname === `/categorylist/${region}`) {
+        // 모달 띄우기
+        history.push({
+          pathname: `/categorylist/${region}`,
+          search: `?id=${uuid}`,
+          state: {
+            like: likePost.user_like_posts,
+            bookmark: bookmark.user_bookmark_posts,
+            postData,
+          },
+        });
+        window.location.reload();
+      } else {
+        history.push({
+          pathname: `/categorylist/${region}`,
+          state: { uuid },
+        });
+      }
     }
   };
   // 파일을 여러개 추가
@@ -171,10 +185,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.Wrapper>
                 {likePost.user_image ? (
                   <>
-                    <img
-                      src={likePost.user_image}
-                      alt="프로필 이미지입니다"
-                    ></img>
+                    <img src={likePost.user_image} alt="프로필 이미지"></img>
                     <S.Name photo={Boolean(likePost.user_image)}>
                       {likePost.name || login.displayName || likePost.email}
                     </S.Name>
@@ -206,7 +217,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 placeholder="내용을 입력해주세요."
                 rows="10"
               />
-              <select name="region" value={region} onChange={onChange}>
+              <select
+                name="region"
+                value={region}
+                ref={regionRef}
+                onChange={onChange}
+              >
                 <option value="default" value="">
                   지역을 선택해 주세요.
                 </option>
@@ -218,12 +234,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 <option value="australia">Australia</option>
                 <option value="antarctica">Antarctica</option>
               </select>
-              {/* <input
-                accept="image/*"
-                type="file"
-                onChange={onFileChange}
-                name="fileNames[]"
-              /> */}
               <S.ImgUpload>
                 <label for="inputFile">사진 선택</label>
                 <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>

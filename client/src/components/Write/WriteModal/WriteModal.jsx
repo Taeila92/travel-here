@@ -176,7 +176,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
               <S.CloseModal onClick={closeModal} className="fas fa-times" />
               {login && (
                 <S.Wrapper>
-                  {likePost.user_image ? (
+                  {(login.photoURL || likePost.user_image ) ? (
                     <>
                       <img
                         src={likePost.user_image}

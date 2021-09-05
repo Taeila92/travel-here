@@ -13,8 +13,6 @@ const Comment = memo(({ postId, postregion, userDB}) => {
 
   const auth = firebase.auth();
 
-  let time = Date.now().toString();
-
   const uuid = uuidv4();
 
   const textarea = useRef();
@@ -68,6 +66,8 @@ const Comment = memo(({ postId, postregion, userDB}) => {
       return;
     }
 
+    let time = Date.now();
+
     await dbService.collection('comment').doc(uuid).set({
       post_id: postId,
       post_region: postregion,
@@ -77,6 +77,7 @@ const Comment = memo(({ postId, postregion, userDB}) => {
       user_uid: user.uid,
       user_image: userDB.user_image,
       comment_writer: user.displayName || userDB.name,
+      time,
     })
 
 
@@ -125,7 +126,7 @@ const Comment = memo(({ postId, postregion, userDB}) => {
         </textarea>
         <button ref={postBtn} type="submit" onClick={onAdd}>게시</button>
       </section>
-      {allComment && allComment.map((com)=>{
+      {allComment && allComment.slice(0, allComment.length).sort((a, b)=>a.time - b.time).map((com)=>{
           return (
             <CommentList
             key={com.comment_id}

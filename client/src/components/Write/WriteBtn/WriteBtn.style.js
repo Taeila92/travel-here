@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+const darkBlue = "#1a46a0";
+
 const Button = styled.div`
   position: fixed;
   bottom: 2rem;
@@ -9,7 +11,7 @@ const Button = styled.div`
   width: 4rem;
   height: 4rem;
   transition: 0.3s;
-  background-color: #1a46a0;
+  background-color: ${darkBlue};
   z-index: 10;
   ::before {
     content: "";
@@ -39,12 +41,12 @@ const Button = styled.div`
   }
   :hover {
     background-color: transparent;
-    border: 0.2rem solid #1a46a0;
+    border: 0.2rem solid ${darkBlue};
     ::after {
-      background-color: #1a46a0;
+      background-color: ${darkBlue};
     }
     ::before {
-      background-color: #1a46a0;
+      background-color: ${darkBlue};
     }
   }
 `;

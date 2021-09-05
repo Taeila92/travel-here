@@ -148,7 +148,6 @@ const PostCard = ({ postData, location, view }) => {
       }
     });
     dispatch(likeMiddleware(post_id, "init"));
-    // window.location.reload();
   }, [isPostOpened]);
 
   useEffect(() => {

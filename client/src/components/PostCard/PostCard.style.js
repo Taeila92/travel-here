@@ -10,6 +10,10 @@ const Container = styled.div`
   margin : 0.5rem; 
   padding : 1.6rem 0.6rem;
   z-index : 1;
+  :hover {
+    cursor: pointer;
+    transform: scale(1.01);
+  }
 `;
 
 const Profile = styled.div`

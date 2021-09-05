@@ -11,8 +11,6 @@ const Board = ({ match, location }) => {
 
   const { isNavOpened }  = useSelector(state => state.nav);
 
-  // let { post_view } = useSelector((state)=>state.board.data);
-
   // redux에서 데이터 fetch한 결과(성공하면 data에 배열로 담김)
   const { postList, error, loading, view } = useSelector((state) => ({
     postList: state.board.data,
@@ -34,21 +32,7 @@ const Board = ({ match, location }) => {
     dispatch(fetchPostList(match.params.region));
   },[dispatch, match.params.region]);
 
-  useEffect(()=>{}, [isNavOpened])
-
-  // let arr;
-  // arr.push(view);
-  // useEffect(()=>{
-  // postList.map((post)=>{
-  //   dispatch(viewMiddleware(post.post_id, 'init'));
-  // })
-  // for(let i=0; i<postList.length; i++){
-  //   arr.push(postList[i].post_view);
-  // }
-  // console.log(arr);
-  // console.log(postList);
-  // },[view]);
-
+  useEffect(()=>{}, [isNavOpened]);
 
   if (loading) return <Loading width="100" height="100" />;
   if (error) return <div>Error</div>;
@@ -152,8 +136,6 @@ const Board = ({ match, location }) => {
       );
     }
   }
-
-  
 };
 
 export default Board;

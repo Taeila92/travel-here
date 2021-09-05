@@ -6,10 +6,12 @@ import * as S from './PostSlider.style'
 const PostSlider = ({postImages}) => {
 
   const img = useRef();
+  const count = useRef();
   
   // post에 저장되어있던 image들의 url을 저장
-  const [imageURL, setImageURL] = useState([])
-  const [sliderReady, setSliderReady] = useState(false)
+  const [imageURL, setImageURL] = useState([]);
+  const [sliderReady, setSliderReady] = useState(false);
+  let [num, setNum] = useState('');
 
   useEffect(()=>{
     // 현재 post가 가지고 있는 것들을 url로 받아옴
@@ -39,6 +41,20 @@ const PostSlider = ({postImages}) => {
     img.current.style.cursor = 'default';
   }
 
+  const onMouseEnter = () => {
+    if(count.current === undefined){
+      return;
+    }
+    count.current.style.opacity = '1';
+  }
+
+  const onMouseLeave = () => {
+    if(count.current === undefined){
+      return;
+    }
+    count.current.style.opacity = '0';
+  }
+
   const setting = {
     dots: false,
     infinite: false,
@@ -53,25 +69,31 @@ const PostSlider = ({postImages}) => {
     if(postImages.length != 0){
       img.current.style.width = '27rem';
       img.current.style.height = '100%';
-      img.current.style.margin = '1rem 0 1rem 0';
+      img.current.style.margin = '0';
     }
   }, []);
 
   return (
     <>
       {(postImages.length != 0) &&
-      <li ref={img} onMouseDown={onMouseDown} onMouseUp={onMouseUp}>
+      <S.Li
+        ref={img}
+        onMouseDown={onMouseDown}
+        onMouseUp={onMouseUp}
+        onMouseEnter={onMouseEnter}
+        onMouseLeave={onMouseLeave}>
         {sliderReady || <ImageLoader/>}
-        <S.StyledSlider {...setting} >
-          {sliderReady && imageURL.map((image)=>{
+        <S.StyledSlider {...setting}>
+          {sliderReady && imageURL.map((image, index)=>{
             return (
-              <div key={image}>
+              <S.Div key={image}>
+                <p ref={count}><p>{index+1}/{imageURL.length}</p></p>
                 <img src={image} alt="여행사진" />
-              </div>
+              </S.Div>
             );
           })}
         </S.StyledSlider>
-      </li>}
+      </S.Li>}
     </>
   )
 }

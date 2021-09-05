@@ -1,6 +1,8 @@
 ﻿import styled, { css } from "styled-components";
 import { flex, frame } from "../styleConstatns";
 
+const darkBlue = "#1A46A0";
+
 const Id = styled.li`
   ${frame};
   cursor: auto;
@@ -34,7 +36,7 @@ const NickName = styled.li`
     button {
       height: 1.5rem;
       font-size: 0.8rem;
-      background: #1A46A0;
+      background: ${darkBlue};
       padding: 0.2rem 0.5rem;
       border: none;
       color: white;
@@ -115,7 +117,7 @@ const Form = styled.form`
     margin: 0.5rem 0;
     label {
       font-size: 0.8rem;
-      background: #1A46A0;
+      background: ${darkBlue};
       padding: 0.2rem 0.5rem;
       border-radius: 10px;
     }
@@ -130,7 +132,7 @@ const Form = styled.form`
       bottom: 0;
       left: 0;
       font-size: 0.8rem;
-      background: #1A46A0;
+      background: ${darkBlue};
       padding: 0.35rem 0.5rem;
       border-radius: 10px;
       text-align: center;

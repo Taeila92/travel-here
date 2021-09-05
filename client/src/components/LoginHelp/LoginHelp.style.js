@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+const pink = "#ff73b3";
+
 const LoginBg = styled.div`
   position: fixed;
   top: 0;
@@ -54,11 +56,11 @@ const Header = styled.header`
         height: 3rem;
         border-radius: 12px;
         color: #fff;
-        background-color: #ff73b3;
+        background-color: ${pink};
         cursor: pointer;
         font-size: 18px;
         margin-top: 1rem;
-        box-shadow: 0 0 10px 1px #ff73b3;
+        box-shadow: 0 0 10px 1px ${pink};
       }
     }
   }

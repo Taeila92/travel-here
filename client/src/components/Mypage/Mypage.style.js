@@ -1,6 +1,8 @@
 ﻿import styled, { keyframes, css } from 'styled-components';
 import { flex, hideScrollbar } from './styleConstatns';
 
+const purple = "#D980FA";
+
 const Container = styled.section`
   width: 100vw;
   height: 90vh;
@@ -49,7 +51,7 @@ const Contents = styled.div`
   ${flex};
   justify-content: flex-start;
   overflow: hidden;
-  box-shadow: 0 0 4px #D980FA;
+  box-shadow: 0 0 4px ${purple};
   background-color: rgb(0, 0, 0, 0.5);
   margin-bottom: 3rem;
   ${({ check }) => {
@@ -228,7 +230,7 @@ const Content = styled.ul`
   ${flex};
   color: white;
   overflow: hidden;
-  box-shadow: 0 0 4px #D980FA;
+  box-shadow: 0 0 4px ${purple};
   background-color: rgb(0, 0, 0, 0.5);
   animation: ${rightclose} 800ms;
   animation-iteration-count: 1;

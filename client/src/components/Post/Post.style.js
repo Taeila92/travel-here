@@ -7,6 +7,12 @@ import {
   cursorPointer,
 } from "./styleConstants.js";
 
+const gray = "#e3e3e3";
+const darkGray = "#afafaf";
+const red = "#ed4956";
+const blue = "#9980fa";
+const lightPurple = "#b8a6ff";
+
 const Container = styled.section`
   width: 100vw;
   height: 100vh;
@@ -40,6 +46,18 @@ const Contents = styled.div`
   animation-iteration-count: 1;
   animation-direction: normal;
   /* filter: blur(5px); */
+  @media screen and (max-width: 500px) {
+    width: 25rem;
+    height: 30rem;
+    padding: 2rem 0;
+  }
+  @media screen and (max-width: 420px) {
+    width: 22rem;
+    padding: 1rem 0;
+  }
+  @media screen and (max-width: 360px) {
+    width: 20rem;
+  }
   ul {
     width: 27rem;
     max-height: 40rem;
@@ -48,6 +66,15 @@ const Contents = styled.div`
     align-items: flex-start;
     justify-content: flex-start;
     ${hideScrollbar};
+    @media screen and (max-width: 500px) {
+      width: 23rem;
+    }
+    @media screen and (max-width: 420px) {
+      width: 20rem;
+    }
+    @media screen and (max-width: 360px) {
+      width: 18rem;
+    }
   }
 `;
 
@@ -62,6 +89,9 @@ const Header = styled.li`
   left: 0;
   padding-bottom: 1rem;
   z-index: 11;
+  @media screen and (max-width: 500px) {
+    padding-bottom: 0.5rem;
+  }
   span {
     ${flex};
     flex-direction: row;
@@ -74,6 +104,10 @@ const Header = styled.li`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      @media screen and (max-width: 500px) {
+        font-size: 1rem;
+        max-width: 10rem;
+      }
     }
     p {
       height: 1.5rem;
@@ -119,39 +153,39 @@ const editDelToggle = styled.div`
   width: 4rem;
   border-radius: 10px;
   background-color: white;
-  border: 1px solid #e3e3e3;
+  border: 1px solid ${gray};
   transform: translate(-0.8rem, 1rem);
-  box-shadow: 0 0 4px #e3e3e3;
+  box-shadow: 0 0 4px ${gray};
   div {
     position: absolute;
     top: 0;
     width: 1rem;
     height: 1rem;
     background-color: white;
-    border-top: 1px solid #e3e3e3;
-    border-left: 1px solid #e3e3e3;
+    border-top: 1px solid ${gray};
+    border-left: 1px solid ${gray};
     transform: translate(0rem, -0.55rem) rotate(0.125turn);
-    box-shadow: 0 0 4px #e3e3e3;
+    box-shadow: 0 0 4px ${gray};
   }
   p {
     padding: 0.5rem 0.5rem;
     font-size: 0.8rem;
   }
   p:nth-child(2) {
-    border-bottom: 1px solid #e3e3e3;
+    border-bottom: 1px solid ${gray};
     background-color: white;
     z-index: 10;
     color: #409bf0;
   }
   p:nth-child(3) {
-    color: #ed4956;
+    color: ${red};
   }
 `;
 
 const Profile = styled.li`
   ${flex};
   flex-direction: row;
-  ${marginTop};
+  margin-top: 2rem;
   img {
     width: 3rem;
     height: 3rem;
@@ -177,7 +211,7 @@ const Profile = styled.li`
 `;
 
 const Title = styled.li`
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-size: 1.1rem;
   font-weight: bold;
   line-height: 1.5;
@@ -211,7 +245,7 @@ const Like = styled.li`
     i {
       font-size: 1rem;
       margin-right: 0.3rem;
-      color: #ed4956;
+      color: ${red};
     }
   }
   i {
@@ -283,8 +317,8 @@ const Alert = styled.div`
   position: absolute;
   width: 20rem;
   background: white;
-  border: 1px solid #9980fa;
-  box-shadow: 0 0 5px #9980fa;
+  border: 1px solid ${blue};
+  box-shadow: 0 0 5px ${blue};
   font-weight: bold;
   animation: ${show} 200ms;
   animation-iteration-count: 2;
@@ -296,7 +330,7 @@ const Alert = styled.div`
     i {
       font-size: 4rem;
       margin: 3rem 0 2rem 0;
-      color: #9980fa;
+      color: ${blue};
     }
   }
   div:nth-child(2) {
@@ -315,14 +349,14 @@ const Alert = styled.div`
       transform: scale(1.01);
     }
     button:nth-child(1) {
-      background: #b8a6ff;
+      background: ${lightPurple};
       color: white;
       margin-bottom: 0.5rem;
     }
     button:nth-child(2) {
       background: white;
-      border: 1px solid #b8a6ff;
-      color: #afafaf;
+      border: 1px solid ${lightPurple};
+      color: ${darkGray};
     }
   }
 `;
@@ -332,7 +366,7 @@ const AlertText1 = styled.p`
 `;
 
 const AlertText2 = styled.p`
-  color: #afafaf;
+  color: ${darkGray};
 `;
 
 const Test = styled.div`

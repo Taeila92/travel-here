@@ -8,6 +8,8 @@ import {
   frame,
 } from '../styleConstatns';
 
+const pink = "#ff73b3";
+
 const Container = styled.section`
   width: 100vw;
   height: 90vh;
@@ -48,7 +50,7 @@ const Contents = styled.div`
     height: 2rem;
     border-radius: 12px;
     outline: none;
-    box-shadow: 0 0 5px 1px #ff73b3;
+    box-shadow: 0 0 5px 1px ${pink};
     caret-color: black;
   }
   p {
@@ -60,12 +62,12 @@ const Contents = styled.div`
     height: 2rem;
     border-radius: 12px;
     color: #fff;
-    background-color: #ff73b3;
+    background-color: ${pink};
     cursor: pointer;
     font-size: 1rem;
     font-weight: bold;
     margin-top: 1rem;
-    box-shadow: 0 0 5px #ff73b3;
+    box-shadow: 0 0 5px ${pink};
   }
 `;
 

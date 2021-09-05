@@ -185,7 +185,7 @@ const editDelToggle = styled.div`
 const Profile = styled.li`
   ${flex};
   flex-direction: row;
-  ${marginTop};
+  margin-top: 2rem;
   img {
     width: 3rem;
     height: 3rem;
@@ -211,7 +211,7 @@ const Profile = styled.li`
 `;
 
 const Title = styled.li`
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-size: 1.1rem;
   font-weight: bold;
   line-height: 1.5;

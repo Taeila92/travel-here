@@ -146,6 +146,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
     isVisible();
   };
 
+
   // 올린파일 개별 삭제
   const removeAttachment = (e) => {
     setAttachment(attachment.filter((at) => at !== e));
@@ -157,6 +158,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
       dispatch(userMiddleware(user.uid, "", "init"));
     });
   }, []);
+
 
   return (
     <>
@@ -201,6 +203,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   value={title}
                   name="title"
                   type="text"
+                  tabIndex="1"
                   ref={titleRef}
                   onChange={onChange}
                   placeholder="제목을 입력해 주세요."
@@ -209,11 +212,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   value={post}
                   name="textarea"
                   ref={postRef}
+                  tabIndex="2"
                   onChange={onChange}
                   placeholder="내용을 입력해주세요."
                   rows="10"
                 />
-                <select name="region" value={region} onChange={onChange}>
+                <select name="region" value={region} onChange={onChange} tabIndex="3">
                   <option value="default" value="">
                     지역을 선택해 주세요.
                   </option>
@@ -232,7 +236,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   name="fileNames[]"
                 /> */}
                 <S.ImgUpload>
-                  <label for="inputFile">사진 선택</label>
+                  <label for="inputFile" tabIndex="4">사진 선택</label>
                   <p>※ ctrl로 사진을 여러장 선택하실 수 있습니다.</p>
                   <input
                     multiple
@@ -260,8 +264,8 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   <Loading width="30" height="30" />
                 ) : (
                   <S.BtnWrapper>
-                    <input type="button" onClick={closeModal} value="취소" />
-                    <input type="submit" value="등록" />
+                    <input type="button" tabIndex="5" onClick={closeModal} value="취소" />
+                    <input type="submit" tabIndex="6" value="등록" />
                   </S.BtnWrapper>
                 )}
               </form>

@@ -32,7 +32,7 @@ const Container = styled.div`
     margin: 1rem 0.5rem 0;
     border: 2px solid ${gray};
     border-radius: 5px;
-    outline: none;
+    /* outline: none; */
     option {
       color: ${lightBlack};
     }

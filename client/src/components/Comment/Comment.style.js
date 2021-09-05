@@ -41,7 +41,9 @@ const Comment = styled.li`
 
 const CommentList = styled.div`
   ${flex};
+  position: relative;
   margin-top: 0.5rem;
+  padding-bottom: 0.8rem;
   justify-content: flex-start;
   flex-direction: row;
   white-space: pre;
@@ -54,7 +56,7 @@ const CommentList = styled.div`
     height: 2rem;
     object-fit: cover;
     border-radius: 50%;
-    background-color: pink;
+    margin-bottom: 0.2rem;
   }
   p:nth-child(1) {
     font-size: 0.7rem;
@@ -62,6 +64,7 @@ const CommentList = styled.div`
     word-break: normal;
     text-align: center;
     white-space: nowrap;
+    margin-bottom: 0.2rem;
   }
   span, input {
     border: none;
@@ -71,6 +74,7 @@ const CommentList = styled.div`
     line-height: 1.5;
     white-space: pre-line;
     margin: 0 0.5rem;
+    margin-bottom: 0.2rem;
   }
   input {
     width: 75%;
@@ -96,6 +100,7 @@ const ProfileIcon = styled.i`
   font-size: 2rem;
   color: darkgray;
   transform: translateX(0.03rem);
+  margin-bottom: 0.2rem;
 `;
 
 const Content = styled.span`
@@ -119,11 +124,13 @@ const Check = styled.div`
   padding: 0.5rem 0;
   ${cursorPointer};
   color: ${blue};
+  margin-bottom: 0.2rem;
 `;
 
 const Toggle = styled.div`
   position: absolute;
   ${flex};
+  background: white;
   flex-direction: row;
   border: 1px solid ${gray};
   box-shadow: 0 0 4px ${gray};
@@ -133,7 +140,7 @@ const Toggle = styled.div`
     font-size: 0.8rem;
   }
   div:nth-child(1){
-    padding: 0.1rem 0.5rem 0.1rem 1rem;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
     border-right: 1px solid ${gray};
     color: ${blue};
     ${cursorPointer};
@@ -158,6 +165,12 @@ const Toggle = styled.div`
   }
 `;
 
+const Time = styled.p`
+  position: absolute;
+  bottom: 0.3rem;
+  left: 0;
+  font-size: 0.7rem;
+`;
 
 export {
   Comment,
@@ -167,4 +180,5 @@ export {
   EditDel,
   Toggle,
   Check,
+  Time,
 }

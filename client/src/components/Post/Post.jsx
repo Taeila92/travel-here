@@ -20,6 +20,7 @@ import {
 import firebase from "firebase";
 import { dbService } from "firebase.js";
 import WriteModal from "components/Write/WriteModal/WriteModal";
+import timeCalculate from "utils/timeCalculate";
 
 const Post = ({
   postData,
@@ -137,42 +138,6 @@ const Post = ({
     setBar(!bar);
   };
 
-  function timeNotice(time) {
-    const milliSeconds = new Date() - time;
-    const seconds = milliSeconds / 1000;
-    if (seconds < 60) {
-      setTime(`방금 전`);
-      return;
-    }
-    const minutes = seconds / 60;
-    if (minutes < 60) {
-      setTime(`${Math.floor(minutes)}분 전`);
-      return;
-    }
-    const hours = minutes / 60;
-    if (hours < 24) {
-      setTime(`${Math.floor(hours)}시간 전`);
-      return;
-    }
-    const days = hours / 24;
-    if (days < 7) {
-      setTime(`${Math.floor(days)}일 전`);
-      return;
-    }
-    const weeks = days / 7;
-    if (weeks < 5) {
-      setTime(`${Math.floor(weeks)}주 전`);
-      return;
-    }
-    const months = days / 30;
-    if (months < 12) {
-      setTime(`${Math.floor(months)}개월 전`);
-      return;
-    }
-    const years = days / 365;
-    setTime(`${Math.floor(years)}년 전`);
-  }
-
   const onContainerClick = (e) => {
     if(e.target !== e.currentTarget){
       return;
@@ -197,7 +162,7 @@ const Post = ({
       dispatch(mypagePostMiddleware(user.uid));
     });
     dispatch(likeMiddleware(post_id, "init"));
-    timeNotice(post_date);
+    setTime(timeCalculate(post_date));
   }, []);
 
   return (

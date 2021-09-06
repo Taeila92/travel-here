@@ -170,6 +170,7 @@ const Time = styled.p`
   bottom: 0.3rem;
   left: 0;
   font-size: 0.7rem;
+  color: #d8d8d8;
 `;
 
 export {

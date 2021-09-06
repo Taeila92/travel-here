@@ -53,6 +53,7 @@ const Div = styled.div`
     flex-direction: column;
     align-items: flex-end;
     justify-content: center;
+    /* opacity: 1; */
     p{
       transform: translate(-0.5rem, 2rem);
       color: white;

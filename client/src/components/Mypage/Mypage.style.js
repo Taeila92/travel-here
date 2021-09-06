@@ -46,14 +46,15 @@ const show = keyframes`
 
 const Contents = styled.div`
   width: 20rem;
-  height: 35rem;
+  height: 30rem;
   border-radius: 20px;
+  position: absolute;
   ${flex};
   justify-content: flex-start;
   overflow: hidden;
   box-shadow: 0 0 4px ${purple};
   background-color: rgb(0, 0, 0, 0.5);
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
   ${({ check }) => {
     if (check) {
       return css`
@@ -86,16 +87,16 @@ const Contents = styled.div`
 
 const BackImage = styled.div`
   width: 100%;
-  height: 9rem;
+  padding: 1rem 0;
   ${flex};
-  justify-content: flex-end;
+  flex-direction: row;
   background-color: rgb(0, 0, 0, 0.3);
   img {
     width: 5rem;
     height: 5rem;
     object-fit: cover;
     border-radius: 50%;
-    transform: translateY(2rem);
+    /* transform: translateX(2.3rem); */
   }
   div {
     width: 100%;
@@ -119,18 +120,18 @@ const BackImage = styled.div`
     color: white;
     background: darkgray;
     border-radius: 50%;
-    transform: translateY(2rem);
+    /* transform: translateX(2.3rem); */
   }
 `;
 
 const Title = styled.span`
-  width: 80%;
+  width: 12rem;
   word-break: break-all;
   line-height: 1.5;
-  transform: translateY(1rem);
+  margin-left: 0.5rem;
   ${flex};
   ${(props) => {
-    if (props.name.length >= 7) {
+    if (props.name.length >= 2) {
       return css`
         flex-direction: column;
       `;
@@ -142,6 +143,7 @@ const Title = styled.span`
   }} 
   span:first-child{
     margin-right: 0.5rem;
+    text-align: center;
   }
   span:last-child{
     font-size: 1.1rem;
@@ -178,7 +180,7 @@ const ListArea = styled.div`
     width: 15rem;
     border-radius: 10px;
     background-color: rgb(255, 255, 255, 0.1);
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
   }
   li {
     width: 13rem;
@@ -221,11 +223,11 @@ const rightshow1 = keyframes`
   }
 `;
 
-const Content = styled.ul`
+const Content = styled.div`
   position: absolute;
   width: 20rem;
-  height: 35rem;
-  margin-bottom: 3rem;
+  height: 30rem;
+  margin-bottom: 5rem;
   border-radius: 20px;
   ${flex};
   color: white;
@@ -265,7 +267,7 @@ const Content = styled.ul`
     }
   }}
   ul {
-    height: 30rem;
+    height: 26rem;
     overflow-y: scroll;
     ${hideScrollbar};
     li:nth-child(1) {
@@ -275,7 +277,7 @@ const Content = styled.ul`
       i {
         position: absolute;
         font-size: 1.5rem;
-        top: 2.4rem;
+        top: 2rem;
         left: 2.5rem;
       }
       i:hover {

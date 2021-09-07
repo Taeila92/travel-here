@@ -186,22 +186,22 @@ export default function WriteModal({ visible, isVisible, postData }) {
           <S.Overlay visible={visible} onClick={(e) => onOverlayClick(e)}>
             <S.Container visible={visible} isHeight={isHeight}>
               <S.CloseModal onClick={closeModal} className="fas fa-times" />
-              {login && (
+              {likePost && (
                 <S.Wrapper>
                   {login.photoURL || likePost.user_image ? (
                     <>
                       <img
-                        src={likePost.user_image}
+                        src={login.photoURL || likePost.user_image}
                         alt="프로필 이미지입니다"
                       ></img>
-                      <S.Name photo={Boolean(likePost.user_image)}>
+                      <S.Name photo={Boolean(login.photoURL || likePost.user_image)}>
                         {likePost.name || login.displayName || likePost.email}
                       </S.Name>
                     </>
                   ) : (
                     <>
                       <S.NamelessIcon className="fas fa-user-circle" />
-                      <S.Name photo={Boolean(likePost.user_image)}>
+                      <S.Name photo={Boolean(login.photoURL || likePost.user_image)}>
                         {likePost.name || login.displayName || likePost.email}
                       </S.Name>
                     </>

@@ -41,19 +41,19 @@ const PostSlider = ({postImages}) => {
     img.current.style.cursor = 'default';
   }
 
-  const onMouseEnter = () => {
-    if(count.current === undefined){
-      return;
-    }
-    count.current.style.opacity = '1';
-  }
+  // const onMouseEnter = () => {
+  //   if(count.current === undefined){
+  //     return;
+  //   }
+  //   count.current.style.opacity = '1';
+  // }
 
-  const onMouseLeave = () => {
-    if(count.current === undefined){
-      return;
-    }
-    count.current.style.opacity = '0';
-  }
+  // const onMouseLeave = () => {
+  //   if(count.current === undefined){
+  //     return;
+  //   }
+  //   count.current.style.opacity = '0';
+  // }
 
   const setting = {
     dots: false,
@@ -80,8 +80,9 @@ const PostSlider = ({postImages}) => {
         ref={img}
         onMouseDown={onMouseDown}
         onMouseUp={onMouseUp}
-        onMouseEnter={onMouseEnter}
-        onMouseLeave={onMouseLeave}>
+        // onMouseEnter={onMouseEnter}
+        // onMouseLeave={onMouseLeave}
+        >
         {sliderReady || <ImageLoader/>}
         <S.StyledSlider {...setting}>
           {sliderReady && imageURL.map((image, index)=>{

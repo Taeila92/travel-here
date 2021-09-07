@@ -92,11 +92,10 @@ const BackImage = styled.div`
   flex-direction: row;
   background-color: rgb(0, 0, 0, 0.3);
   img {
-    width: 5rem;
-    height: 5rem;
+    width: 4rem;
+    height: 4rem;
     object-fit: cover;
     border-radius: 50%;
-    /* transform: translateX(2.3rem); */
   }
   div {
     width: 100%;
@@ -116,22 +115,21 @@ const BackImage = styled.div`
     font-size: 1.2rem;
   }
   i {
-    font-size: 5rem;
+    font-size: 4rem;
     color: white;
     background: darkgray;
     border-radius: 50%;
-    /* transform: translateX(2.3rem); */
   }
 `;
 
 const Title = styled.span`
-  width: 12rem;
   word-break: break-all;
   line-height: 1.5;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  max-width: 12rem;
   ${flex};
   ${(props) => {
-    if (props.name.length >= 2) {
+    if (props.name.length >= 3) {
       return css`
         flex-direction: column;
       `;

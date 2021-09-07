@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as S from "./WriteModal.style";
 import { dbService, storageService } from "firebase.js";
 import { v4 as uuidv4 } from "uuid";
 import Loading from "../../Loading/Loading";
-
 
 export default function UpdateModal({
   visible,
@@ -32,6 +31,8 @@ export default function UpdateModal({
   const [photo, setPhoto] = useState(post_photo);
   const [load, setLoad] = useState(false);
 
+  const postRef = useRef();
+  const titleRef = useRef();
   const [attachment, setAttachment] = useState([]);
 
   const onChange = (e) => {
@@ -46,41 +47,51 @@ export default function UpdateModal({
   };
 
   const onSubmit = async (e) => {
-    let attachmentUrl = photo;
-    setLoad(true);
     e.preventDefault();
-    if (attachment) {
-      for (let i = 0; i < attachment.length; i++) {
-        const attachmentRef = storageService
-          .ref()
-          .child(`${login.uid}/${uuidv4()}`);
-        const response = await attachmentRef.putString(
-          attachment[i],
-          "data_url"
-        );
-        attachmentUrl.push(await response.ref.getDownloadURL());
+    if (!title) {
+      alert("제목을 입력해 주세요.");
+      postRef.current.focus();
+    } else if (!post) {
+      alert("내용을 입력해 주세요.");
+      titleRef.current.focus();
+    } else if (!region) {
+      alert("지역을 선택해 주세요.");
+    } else {
+      setLoad(true);
+      let attachmentUrl = photo;
+      if (attachment) {
+        for (let i = 0; i < attachment.length; i++) {
+          const attachmentRef = storageService
+            .ref()
+            .child(`${login.uid}/${uuidv4()}`);
+          const response = await attachmentRef.putString(
+            attachment[i],
+            "data_url"
+          );
+          attachmentUrl.push(await response.ref.getDownloadURL());
+        }
       }
+
+      const updateData = {
+        post_title: title,
+        post_content: post,
+        post_writer,
+        post_uid,
+        post_date,
+        post_id,
+        post_photo: attachmentUrl,
+        post_profile_img,
+        post_region: region,
+        post_view,
+        post_like,
+        post_update: true,
+      };
+
+      await dbService.collection("post").doc(post_id).set(updateData);
+
+      isVisible();
+      setLoad(false);
     }
-
-    const updateData = {
-      post_title: title,
-      post_content: post,
-      post_writer,
-      post_uid,
-      post_date,
-      post_id,
-      post_photo: attachmentUrl,
-      post_profile_img,
-      post_region: region,
-      post_view,
-      post_like,
-      post_update: true,
-    };
-
-    await dbService.collection("post").doc(post_id).set(updateData);
-
-    isVisible();
-    setLoad(false);
   };
 
   const onFileChange = (e) => {
@@ -113,12 +124,11 @@ export default function UpdateModal({
   // };
 
   const onOverlayClick = (e) => {
-    if(e.target !== e.currentTarget){
+    if (e.target !== e.currentTarget) {
       return;
     }
     closeModal();
-  }
-
+  };
 
   //창 닫기
   const closeModal = () => {
@@ -130,30 +140,28 @@ export default function UpdateModal({
     isVisible();
   };
 
-
   return (
     <>
-      <S.Overlay visible={visible} onClick={e=>onOverlayClick(e)}>
+      <S.Overlay visible={visible} onClick={(e) => onOverlayClick(e)}>
         <S.Container visible={visible} isHeight={isHeight}>
           <S.CloseModal onClick={closeModal} className="fas fa-times" />
 
           {login && (
             <S.Wrapper>
-                {(likePost.user_image) ? (
-                  <>
-                    <img src={likePost.user_image} alt="프로필 이미지입니다"></img>
-                    <S.Name photo={Boolean(likePost.user_image)}>
-                      {( likePost.name || login.displayName ) || likePost.email}
-                    </S.Name>
-                  </>
-                ) : (
-                  <>
-                    <S.NamelessIcon className="fas fa-user-circle" />
-                    <S.Name photo={Boolean(likePost.user_image)}>
-                      {( likePost.name || login.displayName ) || likePost.email}
-                    </S.Name>
-                  </>
-                )}
+              {likePost.user_image ? (
+                <>
+                  <img
+                    src={likePost.user_image}
+                    alt="프로필 이미지입니다"
+                  ></img>
+                  <S.Name>{likePost.name || login.displayName}</S.Name>
+                </>
+              ) : (
+                <>
+                  <S.NamelessIcon className="fas fa-user-circle" />
+                  <S.Name>{likePost.name || login.displayName}</S.Name>
+                </>
+              )}
             </S.Wrapper>
           )}
           <form onSubmit={onSubmit}>
@@ -161,14 +169,14 @@ export default function UpdateModal({
               name="title"
               type="text"
               value={title}
-              // ref={titleRef}
+              ref={titleRef}
               onChange={onChange}
               placeholder="제목을 입력해 주세요."
             />
             <textarea
               name="textarea"
               value={post}
-              // ref={postRef}
+              ref={postRef}
               onChange={onChange}
               placeholder="내용을 입력해주세요."
               rows="10"

@@ -151,11 +151,16 @@ export default function WriteModal({ visible, isVisible, postData }) {
 
   //창 닫기
   const closeModal = () => {
-    setPost("");
-    setTitle("");
-    setRegion("");
-    setAttachment([]);
-    isVisible();
+    const ok = window.confirm(
+      "창을 닫으면 내용이 초기화가 됩니다. 창을 닫으시겠습니까?"
+    );
+    if (ok) {
+      setPost("");
+      setTitle("");
+      setRegion("");
+      setAttachment([]);
+      isVisible();
+    }
   };
 
   // 올린파일 개별 삭제

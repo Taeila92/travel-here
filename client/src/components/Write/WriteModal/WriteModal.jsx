@@ -238,12 +238,6 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   <option value="australia">Australia</option>
                   <option value="antarctica">Antarctica</option>
                 </select>
-                {/* <input
-                  accept="image/*"
-                  type="file"
-                  onChange={onFileChange}
-                  name="fileNames[]"
-                /> */}
                 <S.ImgUpload>
                   <label for="inputFile" tabIndex="4">
                     사진 선택

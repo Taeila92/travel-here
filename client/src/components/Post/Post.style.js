@@ -108,6 +108,10 @@ const Header = styled.li`
         font-size: 1rem;
         max-width: 10rem;
       }
+      @media screen and (max-width: 370px) {
+        font-size: 1rem;
+        max-width: 5rem;
+      }
     }
     p {
       height: 1.5rem;
@@ -218,9 +222,16 @@ const Title = styled.li`
 `;
 
 const Content = styled.li`
+  width: 100%;
   margin: 1rem 0 2rem 0;
   font-size: 0.9rem;
   line-height: 1.2;
+  textarea {
+    width: 100%;
+    resize: none;
+    border: none;
+    outline: none;
+  }
 `;
 
 const Like = styled.li`

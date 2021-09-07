@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as S from './Post.style';
+import { throttle } from "lodash";
 import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -56,6 +57,8 @@ const Post = ({
 
   let [user, setUser] = useState("");
 
+  const [widthSize, setWidthSize] = useState(window.innerWidth);
+
   // writeModal
   const [visible, setVisible] = useState(false);
 
@@ -75,6 +78,7 @@ const Post = ({
   const userCheck = user.uid === post_uid;
 
   const comment = useRef();
+  const textarea = useRef();
 
   // 좋아요 아이콘 토글 -> 할 때마다 firestore에 저장 되어야 함
   const onLikeToggle = async () => {
@@ -155,6 +159,15 @@ const Post = ({
     window.location.reload();
   };
 
+  const handleSize = useCallback(() => {
+    setWidthSize(window.innerWidth);
+    if(textarea.current){
+      textarea.current.style.height = `${textarea.current.scrollHeight}px`;
+      console.log(textarea.current.scrollHeight);
+    }
+  }, []);
+
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -163,7 +176,17 @@ const Post = ({
     });
     dispatch(likeMiddleware(post_id, "init"));
     setTime(timeCalculate(post_date));
+    if(textarea.current){
+      textarea.current.style.height = `${textarea.current.scrollHeight}px`;
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", throttle(handleSize, 2000));
+    return () => {
+      window.removeEventListener("resize", handleSize);
+    };
+  }, [handleSize]);
 
   return (
     <S.Container onClick={e=>onContainerClick(e)}>
@@ -200,7 +223,7 @@ const Post = ({
             <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
-          <S.Content>{post_content}</S.Content>
+          <S.Content><textarea height="auto" ref={textarea}>{post_content}</textarea></S.Content>
           <S.Like>
             <span>
               {likePost ? (

@@ -25,11 +25,11 @@ const StyledSlider = styled(Slider)`
   }
   .slick-prev {
     left : -10px;
-    z-index : 100;
+    z-index : 10;
   }
   .slick-next {
     right : 10px;
-    z-index : 100;
+    z-index : 10;
   }
   .slick-prev::before, .slick-next::before {
     position : absolute;

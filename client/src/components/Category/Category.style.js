@@ -1,10 +1,6 @@
 import styled, { css } from "styled-components";
 import { Link } from "react-router-dom";
 
-const Container = styled.div`
-  transform: translateY(3rem);
-`;
-
 const CategoryBox = styled.div`
   position: relative;
   border-radius: 1rem;
@@ -35,7 +31,6 @@ const CategoryBox = styled.div`
     overflow: hidden;
     margin: 10px;
     border-radius: 10px;
-
     ${(props) => {
       if (!props.isPc) {
         return css`
@@ -64,8 +59,9 @@ const ArrowStyle = styled.div`
   position: absolute;
   z-index: 2;
   cursor: pointer;
-  top: 50%;
-  margin-top: calc(-7.5rem / 2);
+  top: 0;
+  bottom: 0;
+  margin: auto 0;
   transition: 0.5s;
   :hover {
     background-color: rgba(255, 255, 255, 0.9);
@@ -126,7 +122,6 @@ const SkeletonImg = styled.div`
   border-radius: 0.5rem;
 `;
 export {
-  Container,
   LinkStyle,
   ArrowStyle,
   Relative,

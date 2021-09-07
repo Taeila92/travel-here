@@ -1,7 +1,7 @@
 import { dbService } from "firebase.js";
 
 const initPhoto =
-  "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/crRFxLmkyLQY3MIQ4mQt9nVinpd2%2F7305586a-308c-41bf-a3b4-0f5c5028deb5?alt=media&token=3a0f89f0-f1cd-4877-a46c-2150a949c465";
+  "https://firebasestorage.googleapis.com/v0/b/travel-here-36a2e.appspot.com/o/HlCc4DymorVti0MHAKahOG2TDEv2%2F2148e2a6-0ee1-4adb-927c-873bb956c872?alt=media&token=26e06540-1638-4abc-ab51-6ae1506082f2";
 
 //actions
 const GET_CATEGORY_START = "category/GET_CATEGORY_START";
@@ -94,7 +94,7 @@ export function getCategoryThunk() {
         },
       ];
       res.forEach((res) => {
-        if (res.data().post_region !== "" && res.data().post_photo.length > 0) {
+        if (res.data().post_photo.length > 0) {
           const random = Math.floor(
             Math.random() * res.data().post_photo.length
           );
@@ -105,8 +105,6 @@ export function getCategoryThunk() {
           }
         }
       });
-
-      // const data = lodash.uniqBy(resArray, "region");
       dispatch(getCategorySuccess(resArray));
     } catch (e) {
       dispatch(getCategoryFail(e));

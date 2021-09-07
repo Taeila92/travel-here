@@ -24,7 +24,7 @@ export const plusView = (payload) => {
 
 // Reducer
 const initialState = {
-  view: 0,
+  view: 1,
 };
 
 const reducer = (prevState = initialState, action) => {

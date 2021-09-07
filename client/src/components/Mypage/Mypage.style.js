@@ -96,7 +96,6 @@ const BackImage = styled.div`
     height: 4rem;
     object-fit: cover;
     border-radius: 50%;
-    /* transform: translateX(2.3rem); */
   }
   div {
     width: 100%;
@@ -120,15 +119,14 @@ const BackImage = styled.div`
     color: white;
     background: darkgray;
     border-radius: 50%;
-    /* transform: translateX(2.3rem); */
   }
 `;
 
 const Title = styled.span`
-  width: 12rem;
   word-break: break-all;
   line-height: 1.5;
-  margin-left: 0.5rem;
+  margin-left: 1rem;
+  max-width: 12rem;
   ${flex};
   ${(props) => {
     if (props.name.length >= 3) {

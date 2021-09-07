@@ -132,12 +132,17 @@ export default function UpdateModal({
 
   //창 닫기
   const closeModal = () => {
-    setPost(post_content);
-    setTitle(post_title);
-    setRegion(post_region);
-    setPhoto(post_photo);
-    setAttachment([]);
-    isVisible();
+    const ok = window.confirm(
+      "창을 닫으면 내용이 초기화가 됩니다. 창을 닫으시겠습니까?"
+    );
+    if (ok) {
+      setPost(post_content);
+      setTitle(post_title);
+      setRegion(post_region);
+      setPhoto(post_photo);
+      setAttachment([]);
+      isVisible();
+    }
   };
 
   return (

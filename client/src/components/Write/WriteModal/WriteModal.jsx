@@ -194,16 +194,12 @@ export default function WriteModal({ visible, isVisible, postData }) {
                         src={likePost.user_image}
                         alt="프로필 이미지입니다"
                       ></img>
-                      <S.Name photo={Boolean(likePost.user_image)}>
-                        {likePost.name || login.displayName || likePost.email}
-                      </S.Name>
+                      <S.Name>{likePost.name || login.displayName}</S.Name>
                     </>
                   ) : (
                     <>
                       <S.NamelessIcon className="fas fa-user-circle" />
-                      <S.Name photo={Boolean(likePost.user_image)}>
-                        {likePost.name || login.displayName || likePost.email}
-                      </S.Name>
+                      <S.Name>{likePost.name || login.displayName}</S.Name>
                     </>
                   )}
                 </S.Wrapper>

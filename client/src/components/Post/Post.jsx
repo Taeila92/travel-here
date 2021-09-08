@@ -163,7 +163,6 @@ const Post = ({
     setWidthSize(window.innerWidth);
     if(textarea.current){
       textarea.current.style.height = `${textarea.current.scrollHeight}px`;
-      console.log(textarea.current.scrollHeight);
     }
   }, []);
 
@@ -223,7 +222,7 @@ const Post = ({
             <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
-          <S.Content><textarea height="auto" ref={textarea}>{post_content}</textarea></S.Content>
+          <S.Content><textarea disabled height="auto" ref={textarea}>{post_content}</textarea></S.Content>
           <S.Like>
             <span>
               {likePost ? (

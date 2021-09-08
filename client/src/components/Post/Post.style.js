@@ -231,6 +231,7 @@ const Content = styled.li`
     resize: none;
     border: none;
     outline: none;
+    background: white;
   }
 `;
 

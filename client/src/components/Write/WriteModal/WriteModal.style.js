@@ -47,6 +47,7 @@ const Container = styled.div`
     resize: vertical;
     min-height: 15rem;
     max-height: 28rem;
+    caret-color: black;
     ::-webkit-scrollbar {
       width: 10px;
     }
@@ -72,6 +73,7 @@ const TitleInput = styled.input`
   margin: 1rem 0.5rem 0;
   border: 2px solid ${gray};
   border-radius: 5px;
+  caret-color: black;
 `;
 const ImgUpload = styled.div`
   height: 1.6rem;

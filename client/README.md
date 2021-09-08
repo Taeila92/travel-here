@@ -4,7 +4,29 @@
 
 <br>
 
-## 1. 기술 스택
+## 목차
+
+1. [팀원 소개](#1)
+2. [기술 스택](#2)
+3. [프로젝트 설치 및 실행 방법](#3)
+4. [폴더 디렉토리](#4)
+5. [팀 개발 규칙 (외부링크 예정)](#5)
+6. [개발과정 (외부링크 예정)](#6)
+7. [아쉬운 점 / 개선할 점](#7)
+
+<br>
+
+## 1. 팀원 <a id="1"></a>
+
+- 전상우(팀장)
+- 김현수
+- 박현정
+  - 이런것들 했다
+- 임상기
+
+<br>
+
+## 2. 기술 스택 <a id="2"></a>
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black">
 <img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=black">
@@ -16,7 +38,7 @@
 <br>
 <br>
 
-## 2. 프로젝트 설치 및 실행 방법
+## 3. 프로젝트 설치 및 실행 방법 <a id="3"></a>
 
 ```js
 $ cd client
@@ -26,7 +48,8 @@ $ yarn start
 
 <br>
 
-## 3. 폴더 디렉토리
+## 4. 폴더 디렉토리 <a id="4"></a>
+
 ```
 📦public
 ┗ 📜index.html
@@ -164,22 +187,17 @@ $ yarn start
 ┣ 📜history.js
 ┗ 📜index.js
 ```
+
 <br>
 
-## 4. 프로젝트 기능 설명
+## 5. 프로젝트 기능 설명 <a id="5"></a>
 
 스타일링이 모두 완성되면 gif 추가
 
 <br>
 
-## 5. 팀원
-
-- 전상우(팀장)
-- 김현수
-- 박현정
-  - 이런것들 했다
-- 임상기
+## 6. 버그 <a id="6"></a>
 
 <br>
 
-## 6. 버그
+## 7. 아쉬운 점 / 개선할 점 <a id="7"></a>

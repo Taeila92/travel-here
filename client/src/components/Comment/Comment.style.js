@@ -43,7 +43,7 @@ const CommentList = styled.div`
   ${flex};
   position: relative;
   margin-top: 0.5rem;
-  padding-bottom: 0.8rem;
+  /* padding-bottom: 0.8rem; */
   justify-content: flex-start;
   flex-direction: row;
   white-space: pre;
@@ -58,14 +58,14 @@ const CommentList = styled.div`
     border-radius: 50%;
     margin-bottom: 0.2rem;
   }
-  p:nth-child(1) {
+  /* p:nth-child(1) {
     font-size: 0.7rem;
     color: darkgray;
     word-break: normal;
     text-align: center;
     white-space: nowrap;
     margin-bottom: 0.2rem;
-  }
+  } */
   span, input {
     border: none;
     resize: none;
@@ -109,6 +109,19 @@ const Content = styled.span`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  span:nth-child(1) {
+    ${flex};
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  p:nth-child(1) {
+    font-size: 0.8rem;
+    color: darkgray;
+    word-break: normal;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const EditDel = styled.section`
@@ -166,9 +179,6 @@ const Toggle = styled.div`
 `;
 
 const Time = styled.p`
-  position: absolute;
-  bottom: 0.3rem;
-  left: 0;
   font-size: 0.7rem;
   color: #d8d8d8;
 `;

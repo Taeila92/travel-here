@@ -89,7 +89,7 @@ export function getCategoryThunk() {
           photo: initPhoto,
         },
         {
-          region: "australia",
+          region: "oceania",
           photo: initPhoto,
         },
       ];

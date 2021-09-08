@@ -91,6 +91,7 @@ export default function UpdateModal({
 
       isVisible();
       setLoad(false);
+      window.location.reload();
     }
   };
 
@@ -117,11 +118,6 @@ export default function UpdateModal({
   const removePhoto = (e) => {
     setPhoto(photo.filter((at) => at !== e));
   };
-
-  // const onClearAttachmentClick = () => {
-  //   setAttachment([]);
-  //   setPhoto([]);
-  // };
 
   const onOverlayClick = (e) => {
     if (e.target !== e.currentTarget) {
@@ -188,7 +184,7 @@ export default function UpdateModal({
               <option value="south_america">South America</option>
               <option value="africa">Africa</option>
               <option value="europe">Europe</option>
-              <option value="australia">Australia</option>
+              <option value="oceania">oceania</option>
               <option value="antarctica">Antarctica</option>
             </select>
             <S.ImgUpload>

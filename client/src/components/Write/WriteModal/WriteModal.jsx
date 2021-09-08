@@ -231,11 +231,11 @@ export default function WriteModal({ visible, isVisible, postData }) {
                 >
                   <option value="">지역을 선택해 주세요.</option>
                   <option value="asia">Asia</option>
+                  <option value="europe">Europe</option>
                   <option value="north_america">North America</option>
                   <option value="south_america">South America</option>
                   <option value="africa">Africa</option>
-                  <option value="europe">Europe</option>
-                  <option value="australia">Australia</option>
+                  <option value="oceania">oceania</option>
                   <option value="antarctica">Antarctica</option>
                 </select>
                 <S.ImgUpload>

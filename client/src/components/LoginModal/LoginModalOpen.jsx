@@ -95,6 +95,14 @@ function LoginModalOpen() {
     });
   };
 
+  function getUserProfile() {
+    const user = firebaseService.auth().currentUser;
+    if (user !== null) {
+      const displayName = user.displayName;
+      const email = user.email;
+    }
+  }
+
   useEffect(() => {
     authListener();
   }, []);
@@ -123,6 +131,7 @@ function LoginModalOpen() {
               passwordError={passwordError}
               toggleClass={toggleClass}
               goToPassword={goToPassword}
+              getUserProfile={getUserProfile}
             />
           </S.Logincontainer>
         </>

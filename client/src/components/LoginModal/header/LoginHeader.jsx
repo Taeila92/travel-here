@@ -19,6 +19,7 @@ function LoginHeader(props) {
     handleLogout,
     toggleClass,
     goToPassword,
+    getUserProfile,
   } = props;
 
   return (

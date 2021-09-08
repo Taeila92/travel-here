@@ -19,12 +19,11 @@ export default function Category() {
     speed: 500,
     slidesToShow: isPc ? 3 : 1,
     slidesToScroll: 1,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
+    nextArrow: <_NextArrow />,
+    prevArrow: <_PrevArrow />,
   };
 
   const dispatch = useDispatch();
-
   const getCategory = useCallback(() => {
     dispatch(getCategoryThunk());
   }, [dispatch]);
@@ -36,24 +35,22 @@ export default function Category() {
   if (loading) return <CategorySkeleton />;
 
   return (
-    <S.Container>
-      <Slider {...settings}>
-        {category.map((cate, index) => (
-          <S.CategoryBox key={index} isPc={isPc}>
-            <S.LinkStyle to={`/categorylist/${cate.region}`}>
-              <h3>{cate.region.replace("_", " ").toUpperCase()}</h3>
-              <div>
-                <img src={cate.photo} alt="category Img" />
-              </div>
-            </S.LinkStyle>
-          </S.CategoryBox>
-        ))}
-      </Slider>
-    </S.Container>
+    <Slider {...settings}>
+      {category.map((cate, index) => (
+        <S.CategoryBox key={index} isPc={isPc}>
+          <S.LinkStyle to={`/categorylist/${cate.region}`}>
+            <h3>{cate.region.replace("_", " ").toUpperCase()}</h3>
+            <div>
+              <img src={cate.photo} alt="category Img" />
+            </div>
+          </S.LinkStyle>
+        </S.CategoryBox>
+      ))}
+    </Slider>
   );
 }
 
-function NextArrow(props) {
+function _NextArrow(props) {
   const { onClick } = props;
   return (
     <S.ArrowStyle onClick={onClick} right>
@@ -62,7 +59,7 @@ function NextArrow(props) {
   );
 }
 
-function PrevArrow(props) {
+function _PrevArrow(props) {
   const { onClick } = props;
   return (
     <S.ArrowStyle onClick={onClick}>

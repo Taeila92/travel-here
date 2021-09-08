@@ -1,5 +1,7 @@
 ﻿import styled from "styled-components";
 
+const blue = "#409BF0";
+
 const Container = styled.div`
   width: 100vw;
   height: 70vh;
@@ -12,7 +14,7 @@ const Container = styled.div`
     width: 40rem;
     height: 20rem;
     background: rgb(0,0,0,0.5);
-    box-shadow: 0 0 4px #409BF0;
+    box-shadow: 0 0 4px ${blue};
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -38,14 +40,14 @@ const Container = styled.div`
         border-radius: 10px;
         color: white;
         font-weight: bold;
-        border: 1px solid #409BF0;
-        background-color: #409BF0;
+        border: 1px solid ${blue};
+        background-color: ${blue};
         transition: all 200ms ease-in-out;
       }
       button:hover {
         cursor: pointer;
         background: transparent;
-        color: #409BF0;
+        color: ${blue};
       }
     }
   }

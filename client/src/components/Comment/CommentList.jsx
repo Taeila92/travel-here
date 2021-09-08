@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { dbService } from "firebase.js";
 import firebase from "firebase";
+import timeCalculate from "utils/timeCalculate";
 import * as S from "./Comment.style"; 
 
 
@@ -76,7 +77,10 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
       {com.user_image ? <img src={com.user_image} alt="프로필 이미지입니다"></img> : <S.ProfileIcon className="fas fa-user-circle"></S.ProfileIcon>}
       {edit ?
       (<input ref={input} placeholder={com.comment_content} onKeyPress={e=>onEnter(e)}/>) :
-      <S.Content>{com.comment_writer ? <p>{com.comment_writer}</p> : <p>익명</p>}<span>{com.comment_content}</span></S.Content>}
+      <S.Content>
+        <span>{com.comment_writer ? <p>{com.comment_writer}</p> : <p>익명</p>}<S.Time>{timeCalculate(com.time)}</S.Time></span>
+        <span>{com.comment_content}</span>
+      </S.Content>}
       <S.EditDel>
         {editDelete &&
           <>
@@ -90,6 +94,7 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
         {edit && <S.Check onClick={onDoneEdit}>수정완료</S.Check>}
         {userCheck && <i className="fas fa-ellipsis-v" onClick={onEditDelete}></i>}
       </S.EditDel>
+      {/* <S.Time>{timeCalculate(com.time)}</S.Time> */}
     </S.CommentList>
   )
 }

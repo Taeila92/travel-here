@@ -133,7 +133,7 @@ const Info = ({ uid, user, userDB, change, setChange }) => {
         </S.Paragraph>
         {nickName ?
         (<div>
-          <textarea ref={input} type="text" maxLength="10" wrap="off" placeholder="최대 10자(띄어쓰기 포함)" onKeyPress={e=>onEnter(e)} />
+          <textarea ref={input} type="text" maxLength="15" wrap="off" placeholder="최대 15자(띄어쓰기 포함)" onKeyPress={e=>onEnter(e)} />
           <button onClick={onSubmitBtn}>제출</button>
         </div>) :
         (userDB.name ? <p>{userDB.name}</p> : <p onClick={onUsername}>닉네임을 설정해보세요!</p>)}

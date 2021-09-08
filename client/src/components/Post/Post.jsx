@@ -1,5 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import * as S from './Post.style';
+import { throttle } from "lodash";
 import Comment from 'components/Comment/Comment';
 import PostSlider from './PostSlider/PostSlider';
 import { useDispatch, useSelector } from 'react-redux';
@@ -20,6 +21,7 @@ import {
 import firebase from "firebase";
 import { dbService } from "firebase.js";
 import WriteModal from "components/Write/WriteModal/WriteModal";
+import timeCalculate from "utils/timeCalculate";
 
 const Post = ({
   postData,
@@ -55,6 +57,8 @@ const Post = ({
 
   let [user, setUser] = useState("");
 
+  const [widthSize, setWidthSize] = useState(window.innerWidth);
+
   // writeModal
   const [visible, setVisible] = useState(false);
 
@@ -74,6 +78,7 @@ const Post = ({
   const userCheck = user.uid === post_uid;
 
   const comment = useRef();
+  const textarea = useRef();
 
   // 좋아요 아이콘 토글 -> 할 때마다 firestore에 저장 되어야 함
   const onLikeToggle = async () => {
@@ -137,42 +142,6 @@ const Post = ({
     setBar(!bar);
   };
 
-  function timeNotice(time) {
-    const milliSeconds = new Date() - time;
-    const seconds = milliSeconds / 1000;
-    if (seconds < 60) {
-      setTime(`방금 전`);
-      return;
-    }
-    const minutes = seconds / 60;
-    if (minutes < 60) {
-      setTime(`${Math.floor(minutes)}분 전`);
-      return;
-    }
-    const hours = minutes / 60;
-    if (hours < 24) {
-      setTime(`${Math.floor(hours)}시간 전`);
-      return;
-    }
-    const days = hours / 24;
-    if (days < 7) {
-      setTime(`${Math.floor(days)}일 전`);
-      return;
-    }
-    const weeks = days / 7;
-    if (weeks < 5) {
-      setTime(`${Math.floor(weeks)}주 전`);
-      return;
-    }
-    const months = days / 30;
-    if (months < 12) {
-      setTime(`${Math.floor(months)}개월 전`);
-      return;
-    }
-    const years = days / 365;
-    setTime(`${Math.floor(years)}년 전`);
-  }
-
   const onContainerClick = (e) => {
     if(e.target !== e.currentTarget){
       return;
@@ -190,6 +159,14 @@ const Post = ({
     window.location.reload();
   };
 
+  const handleSize = useCallback(() => {
+    setWidthSize(window.innerWidth);
+    if(textarea.current){
+      textarea.current.style.height = `${textarea.current.scrollHeight}px`;
+    }
+  }, []);
+
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
@@ -197,8 +174,18 @@ const Post = ({
       dispatch(mypagePostMiddleware(user.uid));
     });
     dispatch(likeMiddleware(post_id, "init"));
-    timeNotice(post_date);
+    setTime(timeCalculate(post_date));
+    if(textarea.current){
+      textarea.current.style.height = `${textarea.current.scrollHeight}px`;
+    }
   }, []);
+
+  useEffect(() => {
+    window.addEventListener("resize", throttle(handleSize, 2000));
+    return () => {
+      window.removeEventListener("resize", handleSize);
+    };
+  }, [handleSize]);
 
   return (
     <S.Container onClick={e=>onContainerClick(e)}>
@@ -235,7 +222,7 @@ const Post = ({
             <span>{time}</span>
           </S.Profile>
           <S.Title>{post_title}</S.Title>
-          <S.Content>{post_content}</S.Content>
+          <S.Content><textarea disabled height="auto" ref={textarea}>{post_content}</textarea></S.Content>
           <S.Like>
             <span>
               {likePost ? (
@@ -249,13 +236,13 @@ const Post = ({
             {bookmarkPost ? (
               <S.Bookmark
                 onClick={onBookmarkToggle}
-                title={"찜 해제"}
+                title="찜 해제"
                 className="fas fa-bookmark"
               ><div>찜 목록에 추가됨</div></S.Bookmark>
             ) : (
               <i
                 onClick={onBookmarkToggle}
-                title={"찜하기"}
+                title="찜하기"
                 className="far fa-bookmark"
               ></i>
             )}

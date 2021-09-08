@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+const white = "#fff";
+const pink = "#ff73b3";
+
+
 const Header = styled.header`
   height: 100%;
   .table {
@@ -60,8 +64,8 @@ const Header = styled.header`
     text-align: center;
     margin: 0 auto;
     width: 60px;
-    color: #fff;
-    background-color: #ff73b3;
+    color: ${white};
+    background-color: ${pink};
     opacity: 1;
     transition: all 0.5s;
   }
@@ -90,7 +94,7 @@ const Header = styled.header`
     height: 320px;
     display: inline-block;
     vertical-align: top;
-    color: #fff;
+    color: ${white};
     opacity: 1;
     transition: all 0.3s;
   }
@@ -100,7 +104,7 @@ const Header = styled.header`
   }
   .container .container-forms .container-info .info-item .btn {
     background-color: transparent;
-    border: 1px solid #fff;
+    border: 1px solid ${white};
     padding: 12px 6px;
   }
   .container .container-forms .container-info .info-item .table-cell {
@@ -121,7 +125,7 @@ const Header = styled.header`
     top: -30px;
     width: 305px;
     height: 380px;
-    background-color: #fff;
+    background-color: ${white};
     box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
   }
@@ -137,7 +141,7 @@ const Header = styled.header`
   }
   .container .container-form .btn {
     position: relative;
-    box-shadow: 0 0 10px 1px #ff73b3;
+    box-shadow: 0 0 10px 1px ${pink};
     margin-top: 13px;
     width: 70%;
     border-radius: 12px;

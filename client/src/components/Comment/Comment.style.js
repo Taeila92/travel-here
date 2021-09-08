@@ -1,11 +1,15 @@
 ﻿import styled from "styled-components";
 import { flex, marginTop, hideScrollbar, cursorPointer } from "./styleConstants.js";
 
+const gray = "#e3e3e3";
+const blue = "#409BF0";
+const red = "#ED4956";
+
 const Comment = styled.li`
   width: 100%;
   ${marginTop};
   padding-top: 1rem;
-  border-top: 1px solid #e3e3e3;
+  border-top: 1px solid ${gray};
   section {
     position: relative;
     height: 3rem;
@@ -14,7 +18,7 @@ const Comment = styled.li`
       width: 100%;
       height: 3rem;
       caret-color: black;
-      border: 2px solid #e3e3e3;
+      border: 2px solid ${gray};
       border-radius: 10px;
       outline: none;
       padding: 1rem 5rem 1rem 1rem;
@@ -37,11 +41,13 @@ const Comment = styled.li`
 
 const CommentList = styled.div`
   ${flex};
+  position: relative;
   margin-top: 0.5rem;
+  /* padding-bottom: 0.8rem; */
   justify-content: flex-start;
   flex-direction: row;
   white-space: pre;
-  border-bottom: 1px solid #F2F2F2;
+  border-bottom: 1px solid #f2f2f2;
   &:last-child {
     border: none;
   }
@@ -50,14 +56,16 @@ const CommentList = styled.div`
     height: 2rem;
     object-fit: cover;
     border-radius: 50%;
-    background-color: pink;
+    margin-bottom: 0.2rem;
   }
-  p:nth-child(1) {
+  /* p:nth-child(1) {
     font-size: 0.7rem;
     color: darkgray;
     word-break: normal;
     text-align: center;
-  }
+    white-space: nowrap;
+    margin-bottom: 0.2rem;
+  } */
   span, input {
     border: none;
     resize: none;
@@ -66,6 +74,7 @@ const CommentList = styled.div`
     line-height: 1.5;
     white-space: pre-line;
     margin: 0 0.5rem;
+    margin-bottom: 0.2rem;
   }
   input {
     width: 75%;
@@ -91,6 +100,7 @@ const ProfileIcon = styled.i`
   font-size: 2rem;
   color: darkgray;
   transform: translateX(0.03rem);
+  margin-bottom: 0.2rem;
 `;
 
 const Content = styled.span`
@@ -99,6 +109,19 @@ const Content = styled.span`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
+  span:nth-child(1) {
+    ${flex};
+    align-items: flex-start;
+    margin-bottom: 0;
+  }
+  p:nth-child(1) {
+    font-size: 0.8rem;
+    color: darkgray;
+    word-break: normal;
+    text-align: center;
+    white-space: nowrap;
+    margin-bottom: 0.2rem;
+  }
 `;
 
 const EditDel = styled.section`
@@ -113,24 +136,26 @@ const Check = styled.div`
   font-size: 0.8rem;
   padding: 0.5rem 0;
   ${cursorPointer};
-  color: #409BF0;
+  color: ${blue};
+  margin-bottom: 0.2rem;
 `;
 
 const Toggle = styled.div`
   position: absolute;
   ${flex};
+  background: white;
   flex-direction: row;
-  border: 1px solid #e3e3e3;
-  box-shadow: 0 0 4px #E3E3E3;
+  border: 1px solid ${gray};
+  box-shadow: 0 0 4px ${gray};
   border-radius: 10px;
   transform: translate(-4rem, 0rem);
   div {
     font-size: 0.8rem;
   }
   div:nth-child(1){
-    padding: 0.1rem 0.5rem 0.1rem 1rem;
-    border-right: 1px solid #e3e3e3;
-    color: #409BF0;
+    padding: 0.5rem 0.5rem 0.5rem 1rem;
+    border-right: 1px solid ${gray};
+    color: ${blue};
     ${cursorPointer};
   }
   div:nth-child(2){
@@ -138,7 +163,7 @@ const Toggle = styled.div`
     z-index: 10;
     border-radius: 10px;
     background: white;
-    color: #ED4956;
+    color: ${red};
     ${cursorPointer};
   }
   div:nth-child(3){
@@ -147,12 +172,16 @@ const Toggle = styled.div`
     width: 0.5rem;
     height: 0.5rem;
     background: white;
-    border: 1px solid #e3e3e3;
-    box-shadow: 0 0 4px #E3E3E3;
+    border: 1px solid ${gray};
+    box-shadow: 0 0 4px ${gray};
     transform: translateX(0.25rem) rotate(0.125turn);
   }
 `;
 
+const Time = styled.p`
+  font-size: 0.7rem;
+  color: #d8d8d8;
+`;
 
 export {
   Comment,
@@ -162,4 +191,5 @@ export {
   EditDel,
   Toggle,
   Check,
+  Time,
 }

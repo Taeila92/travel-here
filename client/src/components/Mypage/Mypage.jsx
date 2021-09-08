@@ -166,15 +166,15 @@ const Mypage = ({ user }) => {
       <S.Container isNavOpened={isNavOpened}>
         <S.Contents check={check}>
           <S.BackImage>
-            {userDB.name ? (
-              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
-            ) : (
-              <span>닉네임을 설정해보세요!</span>
-            )}
             {userDB.user_image ? (
               <img src={userDB.user_image} alt="배경사진" />
             ) : (
               <i className="fas fa-user-circle"></i>
+            )}
+            {userDB.name ? (
+              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
+            ) : (
+              <span>닉네임을 설정해보세요!</span>
             )}
           </S.BackImage>
           <S.ListArea>

@@ -35,6 +35,13 @@ const Contents = styled.div`
   ${flex};
   overflow: hidden;
   margin-bottom: 3rem;
+  h3 {
+    margin-bottom: 16px;
+    font-size: 13px;
+  }
+  .errorMsg {
+    font-size: 0.6rem;
+  }
   h1 {
     font-size: 34px;
     color: white;

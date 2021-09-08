@@ -319,9 +319,10 @@ const Mypage = ({ user }) => {
                   className="fas fa-angle-left"
                   onClick={onDelayClose}
                   title={'뒤로가기'}
+                  user={user}
                 ></i>
               </li>
-              <Password user={user} />
+              <Password />
             </ul>
           </S.Content>
         )}

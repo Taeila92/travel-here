@@ -1,19 +1,20 @@
 ﻿import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import * as S from './Password.style';
 import firebase from 'firebase';
-import { deburr } from 'lodash';
 
 const Password = () => {
   const [password, setPassword] = useState('');
+
   const [passwordError, setPasswordError] = useState('');
-  const history = useHistory();
-  const goToMypage = () => {
-    let path = '/';
-    history.push(path);
+  const [change, setChange] = useState(false);
+
+  const clearErrors = () => {
+    setPasswordError('');
   };
 
+  // 패스워드 변경
   const passwordChange = async () => {
+    clearErrors();
     function getASecureRandomPassword() {
       return password;
     }
@@ -30,9 +31,10 @@ const Password = () => {
       })
       .catch((err) => {
         switch (err.code) {
-          case 'auth/invalid-email':
-          case 'auth/user-disabled':
-          case 'auth/user-not-found':
+          case 'auth/requires-recent-login':
+          case 'auth/weak-password':
+          case 'auth/argument-error':
+          case 'auth/wrong-password':
             setPasswordError(err.message);
             break;
           default:
@@ -41,50 +43,71 @@ const Password = () => {
       });
   };
 
-  // //사용자 재인증
+  // 재인증
+  const reAuth = () => {
+    clearErrors();
+    var user = firebase.auth().currentUser;
+    var credential = firebase.auth.EmailAuthProvider.credential(
+      user.email,
+      password
+    );
 
-  function reauthenticateWithCredential() {
-    function promptForCredentials() {
-      return {};
-    }
-
-    // [START auth_reauth_with_credential]
-    const user = firebase.auth().currentUser;
-
-    // TODO(you): prompt the user to re-provide their sign-in credentials
-    const credential = firebase.auth.EmailAuthProvider.credential(user.email);
     user
       .reauthenticateWithCredential(credential)
-      .then(() => {
-        // User re-authenticated.
+      .then(function () {
+        user.updatePassword(password).then(function () {
+          setPassword('');
+          alert('재인증 되었습니다!');
+          setChange(!change);
+        });
       })
-      .catch((error) => {
-        // An error ocurred
-        // ...
+      .catch((err) => {
+        console.log(err);
+        switch (err.code) {
+          case 'auth/wrong-password':
+          case 'auth/too-many-requests':
+            setPasswordError(err.message);
+            break;
+          default:
+            return;
+        }
       });
-    // [END auth_reauth_with_credential]
-  }
+  };
 
   return (
     <>
-      {/* <S.Container> */}
       <S.Contents>
-        <input
-          type="password"
-          required
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-        />
-        <p className="errorMsg">{passwordError}</p>
-        <button className="chageBtn" onClick={passwordChange}>
-          변경
-        </button>
-        {/* <S.BackBtn onClick={goToMypage}>
-            <i className="fas fa-times"></i>
-          </S.BackBtn> */}
+        {change ? (
+          <>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <p className="errorMsg">{passwordError}</p>
+            <button className="chageBtn" onClick={passwordChange}>
+              변경
+            </button>
+          </>
+        ) : (
+          <>
+            <h3>계속하려면 먼저 본인임을 인증하세요.</h3>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Password"
+            />
+            <p className="errorMsg">{passwordError}</p>
+            <button className="chageBtn" onClick={reAuth}>
+              재인증
+            </button>
+          </>
+        )}
       </S.Contents>
-      {/* </S.Container> */}
     </>
   );
 };

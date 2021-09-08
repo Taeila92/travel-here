@@ -7,8 +7,6 @@ function LoginHeader(props) {
   const authService = new AuthService();
   const {
     user,
-    name,
-    setName,
     email,
     setEmail,
     password,
@@ -65,15 +63,6 @@ function LoginHeader(props) {
                         type="text"
                         autoFocus
                         required
-                        value={name}
-                        placeholder="Name"
-                        onChange={(e) => setName(e.target.value)}
-                      />
-                      <input
-                        className="inputEmail"
-                        type="text"
-                        autoFocus
-                        required
                         value={email}
                         placeholder="Email Address"
                         onChange={(e) => setEmail(e.target.value)}
@@ -102,15 +91,6 @@ function LoginHeader(props) {
                 <div className="form-item sign-up">
                   <div className="table">
                     <div className="table-cell">
-                      <input
-                        className="inputEmail"
-                        type="text"
-                        autoFocus
-                        required
-                        value={name}
-                        placeholder="Name"
-                        onChange={(e) => setName(e.target.value)}
-                      />
                       <input
                         className="inputEmail"
                         type="text"

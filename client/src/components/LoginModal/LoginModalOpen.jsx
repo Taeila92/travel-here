@@ -9,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 function LoginModalOpen() {
   const authService = new AuthService();
   const [user, setUser] = useState('');
-  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -29,7 +28,6 @@ function LoginModalOpen() {
   const clearInputs = () => {
     setEmail('');
     setPassword('');
-    setName('');
   };
 
   const clearErrors = () => {
@@ -134,8 +132,6 @@ function LoginModalOpen() {
               toggleClass={toggleClass}
               goToPassword={goToPassword}
               getUserProfile={getUserProfile}
-              name={name}
-              setName={setName}
             />
           </S.Logincontainer>
         </>

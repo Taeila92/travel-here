@@ -21,7 +21,6 @@
 - 전상우(팀장)
 - 김현수
 - 박현정
-  - 이런것들 했다
 - 임상기
 
 <br>
@@ -41,8 +40,8 @@
 ## 3. 프로젝트 설치 및 실행 방법 <a id="3"></a>
 
 ```js
-$ cd client
 $ npm update
+$ yarn install
 $ yarn start
 ```
 
@@ -192,54 +191,110 @@ $ yarn start
 
 ## 5. 프로젝트 기능 설명 <a id="5"></a>
 
+<hr />
+
+### 게시판 (Board)
+
+<details>
+  <summary>상세보기</summary>
+
 #### 지역별 게시글 모아보기
+
 ![1](https://user-images.githubusercontent.com/68575268/132719758-2d850047-15f5-4ca7-aa17-906db95c3ff2.gif)
 
 #### 보고 싶은 게시글 선택하여 살펴보기
+
 ![Animation](https://user-images.githubusercontent.com/68575268/132719768-569010ba-cf96-4f05-a61d-9e9cbdbde56c.gif)
 
-#### 댓글, 좋아요, 북마크 설정 기능
+</details>
+
+<hr />
+
+### 게시글 (Post)
+
+<details>
+  <summary>상세보기</summary>
+
+#### 댓글, 좋아요, 북마크, 조회수 기능
+
 ![댓글 좋아요 북마크](https://user-images.githubusercontent.com/68575268/132719775-c3c39141-d7b4-4378-a15e-af001d826d67.gif)
 
 #### 본인일 경우에만 수정, 삭제가 가능합니다.
+
 ![userCheck](https://user-images.githubusercontent.com/76847993/132731934-c1f3b034-435e-4598-a0c3-bcc31b1a0107.gif)
 
 #### 게시글 수정, 삭제 기능
+
 ![게시글수정삭제](https://user-images.githubusercontent.com/76847993/132734801-c0b5a8ff-a8e9-48ea-85b5-ec7d9c40de0f.gif)
 
 #### 댓글, 수정 삭제 기능
+
 ![댓글수정삭제!](https://user-images.githubusercontent.com/76847993/132733887-c9871c4c-8577-4604-b872-4fb3ed654c85.gif)
 
+</details>
+
+<hr />
 
 ### 마이페이지
 
+<details>
+  <summary>상세보기</summary>
+
 #### 전체적인 디자인입니다. 왼쪽창에서 같은 목록, 또는 오른쪽 창에서 < 아이콘을 누르면 창이 닫힙니다.
+
 ![total_design](https://user-images.githubusercontent.com/76847993/132723722-3d5cf309-8c99-49fb-8d27-c646b82e1710.gif)
 
 #### 닉네임, 프로필사진 수정 기능입니다. 프로필사진은 기본사진이 아닐 때 수정할 경우 '기본사진으로 변경' 버튼이 추가됩니다.
+
 ![change2!](https://user-images.githubusercontent.com/76847993/132722552-1ce85841-1b46-4d2b-88a0-cde033609535.gif)
 
 #### 수정사항은 게시글쓰기, 게시글, 댓글에서 모두 바로 반영됩니다.
+
 ![즉시반영!](https://user-images.githubusercontent.com/76847993/132729254-6f2a93d3-24e0-4417-b5bb-00ccd9b8d19c.gif)
 
 #### 내가 쓴 글, 댓글, 찜 목록을 클릭하면 해당 게시글로 이동합니다.
+
 ![move](https://user-images.githubusercontent.com/76847993/132723763-782ae28d-3753-4055-ba72-ef37a1d46860.gif)
 
 #### 비밀번호 변경 시 현재 비밀번호로 재인증을 한 후 맞게 입력한 경우에만 변경이 가능합니다.
+
 ![password](https://user-images.githubusercontent.com/76847993/132725017-0a5abc0e-ecdc-4182-8765-101f6fed00ec.gif)
 
+</details>
+
+<hr />
+
 ### 비회원
-로그인하지않고 게시글을 클릭하면 다음과같은 창이 뜹니다.
+
+<details>
+  <summary>상세보기</summary>
+
+#### 로그인하지않고 게시글을 클릭하면 다음과같은 창이 뜹니다.
+
 ![비회원](https://user-images.githubusercontent.com/76847993/132726677-781f23d7-49e4-4a4c-a93d-2878abeb101d.gif)
 
-### not Found
-404오류 화면입니다.
+#### 또한 navBar에 mypage, 우측하단 게시글쓰기 버튼이 뜨지 않습니다.
+
+</details>
+
+<hr />
+
+### 404 not Found
+
+<details>
+  <summary>상세보기</summary>
+
+#### 404오류 화면입니다.
+
 ![notFound](https://user-images.githubusercontent.com/76847993/132727674-32ab58a5-332e-40a9-9131-af9b2c9b0750.gif)
 
+</details>
 
 <br>
 
 ## 6. 버그 <a id="6"></a>
+
+##### 마이페이지 - 내 정보 - 닉네임 변경이 간헐적으로 안되는 경우
 
 <br>
 

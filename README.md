@@ -356,7 +356,7 @@ $ yarn start
     <td>개선할 점</td>
   </tr>
   
-  <style>
+<!--   <style>
     .table {
       text-align: center;
     }
@@ -381,7 +381,7 @@ $ yarn start
     .isg {
       background: #fff1ff;    
     }
-  </style>
+  </style> -->
 </table>
 
 <!-- - ## 현정

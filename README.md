@@ -192,8 +192,6 @@ $ yarn start
 
 ## 5. 프로젝트 기능 설명 <a id="5"></a>
 
-스타일링이 모두 완성되면 gif 추가
-
 #### 지역별 게시글 모아보기
 ![1](https://user-images.githubusercontent.com/68575268/132719758-2d850047-15f5-4ca7-aa17-906db95c3ff2.gif)
 
@@ -205,6 +203,20 @@ $ yarn start
 
 #### 본인이 쓴 글 수정, 삭제 기능
 ![수정 가능](https://user-images.githubusercontent.com/68575268/132719776-a4b4e9ec-1c95-48e3-bca3-f78ec2420edf.gif)
+
+### 마이페이지
+
+#### 전체적인 디자인입니다. 왼쪽창에서 같은 목록 또는 오른쪽 창에서 < 아이콘을 누르면 창이 닫힙니다.
+![total_design](https://user-images.githubusercontent.com/76847993/132723722-3d5cf309-8c99-49fb-8d27-c646b82e1710.gif)
+
+#### 닉네임, 프로필사진 수정 기능입니다. 프로필사진은 기본사진이 아닐 때 수정할 경우 '기본사진으로 변경' 버튼이 추가됩니다.
+![change2!](https://user-images.githubusercontent.com/76847993/132722552-1ce85841-1b46-4d2b-88a0-cde033609535.gif)
+
+#### 내가 쓴 글, 댓글, 찜 목록을 클릭하면 해당 게시글로 이동합니다.
+![move](https://user-images.githubusercontent.com/76847993/132723763-782ae28d-3753-4055-ba72-ef37a1d46860.gif)
+
+#### 비밀번호 변경 시 현재 비밀번호로 재인증을 한 후 맞게 입력한 경우에만 변경이 가능합니다.
+![password](https://user-images.githubusercontent.com/76847993/132725017-0a5abc0e-ecdc-4182-8765-101f6fed00ec.gif)
 
 
 <br>

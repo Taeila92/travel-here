@@ -114,7 +114,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
             like: likePost.user_like_posts,
             bookmark: bookmark.user_bookmark_posts,
             postData,
-            check: 'check',
+            write: 'write',
           },
         });
         window.location.reload();

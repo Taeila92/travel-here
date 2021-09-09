@@ -58,6 +58,8 @@ const Post = ({
 
   let [user, setUser] = useState("");
 
+  let [check, setCheck] = useState(false);
+
   const [widthSize, setWidthSize] = useState(window.innerWidth);
 
   // writeModal
@@ -189,6 +191,15 @@ const Post = ({
     };
   }, [handleSize]);
 
+  useEffect(() => {
+    if (location.state === undefined) {
+      return;
+    }
+    if (location.state.hasOwnProperty("check")) {
+      setCheck(true);
+    }
+  }, []);
+
   return (
     <S.Container onClick={e=>onContainerClick(e)}>
       <S.Contents>
@@ -197,7 +208,7 @@ const Post = ({
             <span>
               <span>{post_title}</span>
               <p>#{post_region}</p>
-              {update ? <p>조회수 1</p> : <p>조회수 {postView}</p>}
+              {update ? <p>조회수 1</p> : (check ? <p>조회수 {location.state.postData.post_view}</p> : <p>조회수 {postView}</p>)}
             </span>
             <div>
               {userCheck && (
@@ -232,7 +243,7 @@ const Post = ({
               ) : (
                 <i onClick={onLikeToggle} className="far fa-heart"></i>
               )}
-              {update ? <span>0</span> : <span>{likeNum}</span>}
+              {update ? <span>0</span> : (check ? <span>{location.state.postData.post_like}</span> : <span>{likeNum}</span>)}
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (

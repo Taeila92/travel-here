@@ -21,6 +21,7 @@ const Post = ({user}) => {
         bookmark: user.user_bookmark_posts,
         postData: post,
         profile: user.user_image,
+        check: 'check',
       }
     });
   }

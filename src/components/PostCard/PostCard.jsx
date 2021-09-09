@@ -158,7 +158,7 @@ const PostCard = ({ postData, location, view }) => {
       onView();
       onShowPostModal(location.state.uuid);
     }
-    if(location.state.hasOwnProperty("check")) {
+    if(location.state.hasOwnProperty("write")) {
       setUpdate(true);
       onView();
     }

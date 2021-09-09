@@ -162,7 +162,7 @@ const PostCard = ({ postData, location, view }) => {
       setUpdate(true);
       onView();
     }
-    if(location.state.hasOwnProperty("write")) {
+    if(location.state.hasOwnProperty("check")) {
       onView();
     }
   }, []);

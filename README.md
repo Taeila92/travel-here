@@ -355,6 +355,33 @@ $ yarn start
     <td>아쉬운 점</td>
     <td>개선할 점</td>
   </tr>
+  
+  <style>
+    .table {
+      text-align: center;
+    }
+    .title {
+      background: #eceff1;
+    }
+    .left {
+      width: 60%;
+    }
+    .right {
+
+    }
+    .phj {
+      background: #f1f8e9;
+    }
+    .khs {
+      background: #e5ffff;
+    }
+    .jsw {
+      background: #fffffb;
+    }
+    .isg {
+      background: #fff1ff;    
+    }
+  </style>
 </table>
 
 <!-- - ## 현정
@@ -375,30 +402,3 @@ $ yarn start
 개선 : 서로간의 코드를 적극적으로 검토하고 리뷰해야겠습니다.
 
 개발 외 힘들었던 점 : 디자인 시안의 부재.. 디자이너의 필요성을 느꼈습니다. -->
-
-<style>
-  .table {
-    text-align: center;
-  }
-  .title {
-    background: #eceff1;
-  }
-  .left {
-    width: 60%;
-  }
-  .right {
-
-  }
-  .phj {
-    background: #f1f8e9;
-  }
-  .khs {
-    background: #e5ffff;
-  }
-  .jsw {
-    background: #fffffb;
-  }
-  .isg {
-    background: #fff1ff;    
-  }
-</style>

@@ -201,8 +201,14 @@ $ yarn start
 #### 댓글, 좋아요, 북마크 설정 기능
 ![댓글 좋아요 북마크](https://user-images.githubusercontent.com/68575268/132719775-c3c39141-d7b4-4378-a15e-af001d826d67.gif)
 
-#### 본인이 쓴 글 수정, 삭제 기능
+#### 본인일 경우에만 수정, 삭제가 가능합니다.
+![userCheck](https://user-images.githubusercontent.com/76847993/132731934-c1f3b034-435e-4598-a0c3-bcc31b1a0107.gif)
+
+#### 게시글 수정, 삭제 기능
 ![수정 가능](https://user-images.githubusercontent.com/68575268/132719776-a4b4e9ec-1c95-48e3-bca3-f78ec2420edf.gif)
+
+#### 댓글, 수정 삭제 기능
+![댓글수정삭제](https://user-images.githubusercontent.com/76847993/132731638-b9b49dd4-4435-4ae9-b109-fcfeaa5e36aa.gif)
 
 
 ### 마이페이지

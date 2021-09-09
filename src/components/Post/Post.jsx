@@ -30,6 +30,7 @@ const Post = ({
   setViewRender,
   viewRender,
   postView,
+  update,
 }) => {
   const {
     post_date,
@@ -178,6 +179,7 @@ const Post = ({
     if(textarea.current){
       textarea.current.style.height = `${textarea.current.scrollHeight}px`;
     }
+    console.log(update);
   }, []);
 
   useEffect(() => {
@@ -195,7 +197,7 @@ const Post = ({
             <span>
               <span>{post_title}</span>
               <p>#{post_region}</p>
-              <p>조회수 {postView}</p>
+              {update ? <p>조회수 1</p> : <p>조회수 {postView}</p>}
             </span>
             <div>
               {userCheck && (
@@ -230,7 +232,7 @@ const Post = ({
               ) : (
                 <i onClick={onLikeToggle} className="far fa-heart"></i>
               )}
-              <span>{likeNum}</span>
+              {update ? <span>0</span> : <span>{likeNum}</span>}
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (

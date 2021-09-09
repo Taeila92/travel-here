@@ -25,6 +25,8 @@ const PostCard = ({ postData, location, view }) => {
 
   let [viewRender, setViewRender] = useState(false);
 
+  let [update, setUpdate] = useState(false);
+
   // // 해당 유저가 좋아요한 post의 post_id 배열(users collection에 담김)
   let likePost = useSelector((state) => state.userLike.data);
   // // 해당 유저가 북마크한 post의 post_id 배열(users collection에 담김)
@@ -127,14 +129,6 @@ const PostCard = ({ postData, location, view }) => {
     return () => observer && observer.disconnect();
   }, [lazyTarget, isView]);
 
-  useEffect(() => {
-    if (location.state === undefined) {
-      return;
-    }
-    if (location.state.hasOwnProperty("uuid")) {
-      onShowPostModal(location.state.uuid);
-    }
-  }, []);
 
   // 1. 모달창 띄움 --> 2. 모달창 안에서 상태변화 --> 3. 모달창 닫음
   // --> 4. 페이지를 나갔다 다시 들어오거나 새로고침하지 않고 바로 또 모달창 띄움
@@ -153,6 +147,22 @@ const PostCard = ({ postData, location, view }) => {
   useEffect(() => {
     dispatch(viewMiddleware(post_id, "init"));
   }, [viewRender]);
+
+
+  useEffect(() => {
+    if (location.state === undefined) {
+      return;
+    }
+    if (location.state.hasOwnProperty("uuid")) {
+      setUpdate(true);
+      onView();
+      onShowPostModal(location.state.uuid);
+    }
+    if(location.state.hasOwnProperty("check")) {
+      setUpdate(true);
+      onView();
+    }
+  }, []);
 
   return (
     <>
@@ -188,6 +198,7 @@ const PostCard = ({ postData, location, view }) => {
             setViewRender={setViewRender}
             viewRender={viewRender}
             postView={view}
+            update={update}
           />
         ) : (
           <NoneMember setIsPostOpened={setIsPostOpened} />

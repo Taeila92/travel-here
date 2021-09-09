@@ -84,10 +84,9 @@ export const mypagePostMiddleware = (id) => async dispatch => {
 export const editUserImgThunk = (id, img) => async dispatch => {
   try{
     const response = await editMypageImgAPI(id);
-    let arr = {arr: [], img: ''};
+    let arr = {arr: [], img};
     response.forEach(doc => {
       arr.arr.push(doc.data());
-      arr.img = img;
     })
     dispatch(editImg(arr));
   }catch(error){
@@ -98,10 +97,9 @@ export const editUserImgThunk = (id, img) => async dispatch => {
 export const editUserNameThunk = (id, name) => async dispatch => {
   try{
     const response = await editMypageImgAPI(id);
-    let arr = {arr: [], name: ''};
+    let arr = {arr: [], name};
     response.forEach(doc => {
       arr.arr.push(doc.data());
-      arr.name = name;
     })
     dispatch(editName(arr));
   }catch(error){

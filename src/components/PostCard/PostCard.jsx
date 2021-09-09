@@ -166,6 +166,7 @@ const PostCard = ({ postData, location, view }) => {
       onView();
     }
   }, []);
+  
 
   return (
     <>

@@ -197,7 +197,7 @@ export default function WriteModal({ visible, isVisible, postData }) {
                   {login.photoURL || likePost.user_image ? (
                     <>
                       <img
-                        src={login.photoURL || likePost.user_image}
+                        src={likePost.user_image || login.photoURL}
                         alt="프로필 이미지입니다"
                       ></img>
                       <S.Name>{likePost.name || login.displayName}</S.Name>

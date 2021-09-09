@@ -183,7 +183,6 @@ const Post = ({
     if(textarea.current){
       textarea.current.style.height = `${textarea.current.scrollHeight}px`;
     }
-    console.log(update);
   }, []);
 
   useEffect(() => {

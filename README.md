@@ -205,10 +205,10 @@ $ yarn start
 ![userCheck](https://user-images.githubusercontent.com/76847993/132731934-c1f3b034-435e-4598-a0c3-bcc31b1a0107.gif)
 
 #### 게시글 수정, 삭제 기능
-![수정 가능](https://user-images.githubusercontent.com/68575268/132719776-a4b4e9ec-1c95-48e3-bca3-f78ec2420edf.gif)
+![게시글수정삭제](https://user-images.githubusercontent.com/76847993/132734801-c0b5a8ff-a8e9-48ea-85b5-ec7d9c40de0f.gif)
 
 #### 댓글, 수정 삭제 기능
-![댓글수정삭제](https://user-images.githubusercontent.com/76847993/132731638-b9b49dd4-4435-4ae9-b109-fcfeaa5e36aa.gif)
+![댓글수정삭제!](https://user-images.githubusercontent.com/76847993/132733887-c9871c4c-8577-4604-b872-4fb3ed654c85.gif)
 
 
 ### 마이페이지

@@ -143,6 +143,17 @@ const Mypage = ({ user }) => {
   }, []);
 
   useEffect(() => {
+    for (let i = 0; i < user.user_write_posts.length; i++) {
+      if (i === user.user_write_posts.length - 1) {
+        dispatch(
+          mypagePostMiddleware(user.uid, 'finish')
+        );
+      }
+      if (i !== user.user_write_posts.length - 1) {
+        dispatch(mypagePostMiddleware(user.uid));
+      }
+    }
+
     for (let i = 0; i < user.user_bookmark_posts.length; i++) {
       if (i === user.user_bookmark_posts.length - 1) {
         dispatch(

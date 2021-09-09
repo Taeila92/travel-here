@@ -25,7 +25,7 @@ const Comment = ({ user }) => {
       }
     });
   }
-
+  
 
   return(
     <>

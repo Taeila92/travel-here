@@ -1,3 +1,30 @@
+<style>
+  .table {
+    text-align: center;
+  }
+  .title {
+    background: #eceff1;
+  }
+  .left {
+    width: 50%;
+  }
+  .right {
+    width: 40%;
+  }
+  .phj {
+    background: #f1f8e9;
+  }
+  .khs {
+    background: #e5ffff;
+  }
+  .jsw {
+    background: #fffffb;
+  }
+  .isg {
+    background: #fff1ff;    
+  }
+</style>
+
 # Travel-here
 
 ✈ travel-here는 전 세계의 여행후기글을 볼 수 있는 여행후기 플랫폼입니다.
@@ -355,33 +382,6 @@ $ yarn start
     <td>아쉬운 점</td>
     <td>개선할 점</td>
   </tr>
-  
-<!--   <style>
-    .table {
-      text-align: center;
-    }
-    .title {
-      background: #eceff1;
-    }
-    .left {
-      width: 60%;
-    }
-    .right {
-
-    }
-    .phj {
-      background: #f1f8e9;
-    }
-    .khs {
-      background: #e5ffff;
-    }
-    .jsw {
-      background: #fffffb;
-    }
-    .isg {
-      background: #fff1ff;    
-    }
-  </style> -->
 </table>
 
 <!-- - ## 현정

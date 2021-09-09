@@ -223,6 +223,9 @@ $ yarn start
 로그인하지않고 게시글을 클릭하면 다음과같은 창이 뜹니다.
 ![비회원](https://user-images.githubusercontent.com/76847993/132726677-781f23d7-49e4-4a4c-a93d-2878abeb101d.gif)
 
+### not Found
+404오류 화면입니다.
+![notFound](https://user-images.githubusercontent.com/76847993/132727674-32ab58a5-332e-40a9-9131-af9b2c9b0750.gif)
 
 
 <br>

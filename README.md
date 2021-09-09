@@ -213,6 +213,9 @@ $ yarn start
 #### 닉네임, 프로필사진 수정 기능입니다. 프로필사진은 기본사진이 아닐 때 수정할 경우 '기본사진으로 변경' 버튼이 추가됩니다.
 ![change2!](https://user-images.githubusercontent.com/76847993/132722552-1ce85841-1b46-4d2b-88a0-cde033609535.gif)
 
+#### 수정사항은 게시글쓰기, 게시글, 댓글에서 모두 바로 반영됩니다.
+![즉시반영!](https://user-images.githubusercontent.com/76847993/132729254-6f2a93d3-24e0-4417-b5bb-00ccd9b8d19c.gif)
+
 #### 내가 쓴 글, 댓글, 찜 목록을 클릭하면 해당 게시글로 이동합니다.
 ![move](https://user-images.githubusercontent.com/76847993/132723763-782ae28d-3753-4055-ba72-ef37a1d46860.gif)
 

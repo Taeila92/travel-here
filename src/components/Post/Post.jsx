@@ -121,6 +121,9 @@ const Post = ({
   // users collection : user_write_posts, user_write_comments, user_like_posts, user_bookmark_posts
   // comment collection : comment 문서 자체
   const postDelete = async () => {
+    if(!window.confirm("정말 삭제하시겠습니까?")){
+      return;
+    }
     await dbService.collection("post").doc(post_id).delete();
     await dbService
       .collection("users")

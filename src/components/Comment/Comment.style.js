@@ -181,6 +181,7 @@ const Toggle = styled.div`
 const Time = styled.p`
   font-size: 0.7rem;
   color: #d8d8d8;
+  white-space: nowrap;
 `;
 
 export {

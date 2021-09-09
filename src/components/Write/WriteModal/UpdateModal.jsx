@@ -126,20 +126,34 @@ export default function UpdateModal({
     closeModal();
   };
 
+  const close = () => {
+    setPost(post_content);
+    setTitle(post_title);
+    setRegion(post_region);
+    setPhoto(post_photo);
+    setAttachment([]);
+    isVisible();
+  }
+
   //창 닫기
   const closeModal = () => {
     const ok = window.confirm(
       "창을 닫으면 내용이 초기화가 됩니다. 창을 닫으시겠습니까?"
     );
     if (ok) {
-      setPost(post_content);
-      setTitle(post_title);
-      setRegion(post_region);
-      setPhoto(post_photo);
-      setAttachment([]);
-      isVisible();
+      close();
     }
   };
+
+  const closeUpdateModal = () => {
+    const ok = window.confirm(
+      "게시글 수정을 취소하시겠습니까?"
+    );
+    if (ok) {
+      close();
+    }
+  }
+
 
   return (
     <>
@@ -204,7 +218,7 @@ export default function UpdateModal({
                 name="fileNames[]"
               />
             </S.ImgUpload>
-            <S.ImgWrapper photo={photo}>
+            <S.ImgWrapper photo={photo} attachment={attachment}>
               {photo &&
                 photo.map((atta, i) => (
                   <div>
@@ -230,7 +244,7 @@ export default function UpdateModal({
               <Loading width="30" height="30" />
             ) : (
               <S.BtnWrapper>
-                <input type="button" onClick={closeModal} value="취소" />
+                <input type="button" onClick={closeUpdateModal} value="취소" />
                 <input type="submit" value="수정" />
               </S.BtnWrapper>
             )}

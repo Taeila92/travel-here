@@ -174,14 +174,16 @@ const ImgWrapper = styled.div`
     if (props.photo === undefined) {
       return;
     }
-    if (props.photo.length === 0) {
-      return css`
-        display: none;
-      `;
-    } else {
-      return css`
-        display: flex;
-      `;
+    if (props.attachment.length === 0){
+      if (props.photo.length === 0) {
+        return css`
+          display: none;
+        `;
+      } else {
+        return css`
+          display: flex;
+        `;
+      }
     }
   }}
 `;

@@ -1,4 +1,5 @@
-<style type='text/css'>
+(setq markdown-xhtml-header-content
+"<style>
   .table {
     text-align: center;
   }
@@ -23,7 +24,7 @@
   .isg {
     background: #fff1ff;    
   }
-</style>
+</style>")
 
 # Travel-here
 

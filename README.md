@@ -204,6 +204,7 @@ $ yarn start
 #### 본인이 쓴 글 수정, 삭제 기능
 ![수정 가능](https://user-images.githubusercontent.com/68575268/132719776-a4b4e9ec-1c95-48e3-bca3-f78ec2420edf.gif)
 
+<hr />
 ### 마이페이지
 
 #### 전체적인 디자인입니다. 왼쪽창에서 같은 목록 또는 오른쪽 창에서 < 아이콘을 누르면 창이 닫힙니다.

@@ -195,16 +195,16 @@ $ yarn start
 스타일링이 모두 완성되면 gif 추가
 
 #### 지역별 게시글 모아보기
-
+![1](https://user-images.githubusercontent.com/68575268/132719758-2d850047-15f5-4ca7-aa17-906db95c3ff2.gif)
 
 #### 보고 싶은 게시글 선택하여 살펴보기
-![see post](https://user-images.githubusercontent.com/68575268/132713611-9d536231-9821-469a-bd9a-bfc6ef0899d1.gif)
+![Animation](https://user-images.githubusercontent.com/68575268/132719768-569010ba-cf96-4f05-a61d-9e9cbdbde56c.gif)
 
 #### 댓글, 좋아요, 북마크 설정 기능
-![댓글 좋아요 북마크](https://user-images.githubusercontent.com/68575268/132712394-be96b7bc-e061-49ad-a0a4-270dff2cfc2b.gif)
+![댓글 좋아요 북마크](https://user-images.githubusercontent.com/68575268/132719775-c3c39141-d7b4-4378-a15e-af001d826d67.gif)
 
 #### 본인이 쓴 글 수정, 삭제 기능
-![수정 삭제](https://user-images.githubusercontent.com/68575268/132712640-48ad2a62-86c0-40b5-86d9-46e53fe9df04.gif)
+![수정 가능](https://user-images.githubusercontent.com/68575268/132719776-a4b4e9ec-1c95-48e3-bca3-f78ec2420edf.gif)
 
 
 <br>

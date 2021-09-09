@@ -1,4 +1,5 @@
 ﻿import { getLikeAPI } from 'store/apis/postLike';
+import { commentDelAPI } from 'store/apis/delete';
 import { dbService } from 'firebase.js';
 const { produce } = require('immer');
 
@@ -46,6 +47,9 @@ const reducer = (prevState = initialState, action) => {
         dbService.collection('post').doc(action.payload.id).update({
           post_like: draft.likeNum,
         });
+        dbService.collection('comment').doc(action.payload.comId).update({
+          post_like: draft.likeNum,
+        });
         break;
       case LIKE_NONLIKE:
         if(draft.likeNum === 0){
@@ -53,6 +57,9 @@ const reducer = (prevState = initialState, action) => {
         }
         draft.likeNum = action.payload.num-1;
         dbService.collection('post').doc(action.payload.id).update({
+          post_like: draft.likeNum,
+        });
+        dbService.collection('comment').doc(action.payload.comId).update({
           post_like: draft.likeNum,
         });
         break;
@@ -66,10 +73,14 @@ const reducer = (prevState = initialState, action) => {
 export const likeMiddleware = (id, type) => async dispatch => {
   try{
     const response = await getLikeAPI(id);
-    let arr = {num: 0, id: ''};
+    const com = await commentDelAPI(id);
+    let arr = {num: 0, id: '', comId: ''};
     response.forEach(doc => {
       arr.num = doc.data().post_like;
       arr.id = id;
+    })
+    com.forEach(doc => {
+      arr.comId = doc.data().comment_id;
     })
     if(type === 'init'){
       dispatch(getLike(arr));

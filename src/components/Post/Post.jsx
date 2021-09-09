@@ -39,9 +39,11 @@ const Post = ({
     post_content,
     post_photo,
     post_id,
+    post_like,
     post_writer,
     post_uid,
     post_profile_img,
+    post_view,
   } = postData;
 
   const location = useLocation();
@@ -244,6 +246,7 @@ const Post = ({
                 <i onClick={onLikeToggle} className="far fa-heart"></i>
               )}
               {update ? <span>0</span> : (check ? <span>{location.state.postData.post_like}</span> : <span>{likeNum}</span>)}
+              {/* {update ? <span>0</span> : <span>{likeNum}</span>} */}
               <p>명</p>이 좋아합니다
             </span>
             {bookmarkPost ? (
@@ -260,7 +263,7 @@ const Post = ({
               ></i>
             )}
           </S.Like>
-          <Comment postId={post_id} postregion={post_region} userDB={userDB} />
+          <Comment postId={post_id} postregion={post_region} userDB={userDB} postLike={post_like} postView={post_view}/>
         </ul>
       </S.Contents>
       <WriteModal visible={visible} isVisible={postEdit} postData={postData} />

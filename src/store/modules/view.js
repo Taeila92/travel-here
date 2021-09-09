@@ -1,5 +1,6 @@
 ﻿import { getLikeAPI } from 'store/apis/postLike';
 import { dbService } from 'firebase.js';
+import { commentDelAPI } from 'store/apis/delete';
 const { produce } = require('immer');
 
 
@@ -35,10 +36,16 @@ const reducer = (prevState = initialState, action) => {
         dbService.collection('post').doc(action.payload.id).update({
           post_view: draft.view,
         });
+        dbService.collection('comment').doc(action.payload.comId).update({
+          post_view: draft.view,
+        });
         break;
       case PLUS_VIEW:
         draft.view = action.payload.num+1;
         dbService.collection('post').doc(action.payload.id).update({
+          post_view: draft.view,
+        });
+        dbService.collection('comment').doc(action.payload.comId).update({
           post_view: draft.view,
         });
         break;
@@ -52,9 +59,13 @@ const reducer = (prevState = initialState, action) => {
 export const viewMiddleware = (id, type) => async dispatch => {
   try{
     const response = await getLikeAPI(id);
-    let obj = {num: 0, id};
+    const com = await commentDelAPI(id);
+    let obj = {num: 0, id, comId: ''};
     response.forEach(doc => {
       obj.num = doc.data().post_view;
+    })
+    com.forEach(doc => {
+      obj.comId = doc.data().comment_id;
     })
     if(type === 'view'){
       dispatch(plusView(obj));
@@ -67,6 +78,7 @@ export const viewMiddleware = (id, type) => async dispatch => {
     console.log(error);
   }
 }
+
 
 export default reducer;
 

@@ -12,14 +12,14 @@ const Comment = ({ user }) => {
 
   const check = commentDB.length === 0;
 
-  const onMovePage =(post) => {
+  const onMovePage =(com) => {
     history.push({
-      pathname: `/categorylist/${post.post_region}`,
-      search: `?id=${post.post_id}`,
+      pathname: `/categorylist/${com.post_region}`,
+      search: `?id=${com.post_id}`,
       state: {
         like: user.user_like_posts,
         bookmark: user.user_bookmark_posts,
-        postData: post,
+        postData: com,
         profile: user.user_image,
         check: 'check',
       }

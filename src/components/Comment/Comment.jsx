@@ -9,7 +9,7 @@ import firebase from "firebase";
 import { v4 as uuidv4 } from "uuid";
 
 
-const Comment = memo(({ postId, postregion, userDB}) => {
+const Comment = memo(({ postId, postregion, userDB, postLike, postView}) => {
 
   const auth = firebase.auth();
 
@@ -77,6 +77,8 @@ const Comment = memo(({ postId, postregion, userDB}) => {
       user_uid: user.uid,
       user_image: userDB.user_image,
       comment_writer: user.displayName || userDB.name,
+      post_like: postLike,
+      post_view: postView,
       time,
     })
 

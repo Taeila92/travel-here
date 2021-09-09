@@ -162,6 +162,9 @@ const PostCard = ({ postData, location, view }) => {
       setUpdate(true);
       onView();
     }
+    if(location.state.hasOwnProperty("write")) {
+      onView();
+    }
   }, []);
 
   return (
@@ -169,9 +172,9 @@ const PostCard = ({ postData, location, view }) => {
       {isView ? (
         <S.Container onClick={onContainerClick} id={post_id}>
           <S.Profile>
-          {post_profile_img ? (<img src={post_profile_img} alt="" />) : <i className="fas fa-user-circle"></i>}
+          {post_profile_img ? (<img src={post_profile_img} alt="프로필 사진" />) : <i className="fas fa-user-circle"></i>}
             <div>
-              {post_writer ? <h2>{postData.post_writer}</h2> : <h2>익명</h2>}
+              {post_writer ? <h2>{post_writer}</h2> : <h2>익명</h2>}
               <h5>#{post_region}</h5>
             </div>
             <p>조회수 {post_view}</p>

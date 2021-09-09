@@ -76,7 +76,7 @@ const Comment = memo(({ postId, postregion, userDB, postLike, postView}) => {
       comment_like: 0,
       user_uid: user.uid,
       user_image: userDB.user_image,
-      comment_writer: user.displayName || userDB.name,
+      comment_writer: userDB.name || user.displayName,
       post_like: postLike,
       post_view: postView,
       time,

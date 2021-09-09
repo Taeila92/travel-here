@@ -194,6 +194,19 @@ $ yarn start
 
 스타일링이 모두 완성되면 gif 추가
 
+#### 지역별 게시글 모아보기
+
+
+#### 보고 싶은 게시글 선택하여 살펴보기
+![see post](https://user-images.githubusercontent.com/68575268/132713611-9d536231-9821-469a-bd9a-bfc6ef0899d1.gif)
+
+#### 댓글, 좋아요, 북마크 설정 기능
+![댓글 좋아요 북마크](https://user-images.githubusercontent.com/68575268/132712394-be96b7bc-e061-49ad-a0a4-270dff2cfc2b.gif)
+
+#### 본인이 쓴 글 수정, 삭제 기능
+![수정 삭제](https://user-images.githubusercontent.com/68575268/132712640-48ad2a62-86c0-40b5-86d9-46e53fe9df04.gif)
+
+
 <br>
 
 ## 6. 버그 <a id="6"></a>

@@ -122,6 +122,7 @@ const Post = ({
   // comment collection : comment 문서 자체
   const postDelete = async () => {
     if(!window.confirm("정말 삭제하시겠습니까?")){
+      onEditDelete();
       return;
     }
     await dbService.collection("post").doc(post_id).delete();

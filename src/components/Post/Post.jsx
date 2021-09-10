@@ -121,6 +121,10 @@ const Post = ({
   // users collection : user_write_posts, user_write_comments, user_like_posts, user_bookmark_posts
   // comment collection : comment 문서 자체
   const postDelete = async () => {
+    if(!window.confirm("정말 삭제하시겠습니까?")){
+      onEditDelete();
+      return;
+    }
     await dbService.collection("post").doc(post_id).delete();
     await dbService
       .collection("users")
@@ -183,7 +187,6 @@ const Post = ({
     if(textarea.current){
       textarea.current.style.height = `${textarea.current.scrollHeight}px`;
     }
-    console.log(update);
   }, []);
 
   useEffect(() => {

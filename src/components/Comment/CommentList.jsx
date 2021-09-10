@@ -48,6 +48,10 @@ const CommentList = ({ com, add, onEdit, onDelete, onScroll, render, user }) =>{
   };
 
   const onDeleteList = async(e) => {
+    if(!window.confirm("정말 삭제하시겠습니까?")){
+      setEditDelete(!editDelete);
+      return;
+    }
     const target = e.target;
     let i = target.parentElement.parentElement.parentElement.id;
 

@@ -213,7 +213,7 @@ const Post = ({
             <span>
               <span>{post_title}</span>
               <p>#{post_region}</p>
-              {update ? <p>조회수 1</p> : (check ? <p>조회수 {location.state.postData.post_view}</p> : <p>조회수 {postView}</p>)}
+              {update ? <p>조회수 1</p> : (check ? <p>조회수 {location.state.postData.post_view}</p> : <p>조회수 {postData.post_view+1}</p>)}
             </span>
             <div>
               {userCheck && (

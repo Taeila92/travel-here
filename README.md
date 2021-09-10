@@ -198,7 +198,7 @@ $ yarn start
 ### 로그인
 
 <details>
-  <summary>로그인 페이지</summary>
+  <summary>상세보기</summary>
 
 #### 이메일과 비밀번호로 회원가입
 
@@ -215,6 +215,35 @@ $ yarn start
 #### 재설정 이메일 보내기를 통해 비밀번호 변경
 
 ![비밀번호 재설정(이메일)](https://user-images.githubusercontent.com/70390705/132844253-a75dd3a3-7cf0-49e7-bb19-0205bb588232.gif)
+
+</details>
+
+<hr />
+
+### 글쓰기
+
+<details>
+  <summary>상세보기</summary>
+
+#### 글등록
+
+![글쓰기](https://user-images.githubusercontent.com/64853423/132875402-d9ff8fc1-b00f-4a33-8281-a456a025b72d.gif)
+
+#### 사진 추가
+
+![사진추가](https://user-images.githubusercontent.com/64853423/132875541-edf81368-d9b6-4963-a6fd-bed40a4e8d8b.gif)
+
+#### 사진 삭제
+
+![사진삭제](https://user-images.githubusercontent.com/64853423/132875556-faf4a801-0c25-4469-941a-cb651cd1f458.gif)
+
+#### 글등록
+
+![글등록](https://user-images.githubusercontent.com/64853423/132875577-385d9f76-ac3c-4673-9ac9-6d29ff2a50f4.gif)
+
+#### 취소
+
+![취소](https://user-images.githubusercontent.com/64853423/132875585-06c828c5-cdc6-4ffc-8761-0af2fb956f5d.gif)
 
 </details>
 
@@ -367,9 +396,17 @@ $ yarn start
     <td colspan="2">*** 개발 외 힘들었던 점 *** <br /> 디자인 시안의 부재.. 디자이너의 필요성을 느꼈습니다.</td>
   </tr>
   <tr>
-    <td class="khs">김현수</td>
-    <td>아쉬운 점</td>
-    <td>개선할 점</td>
+    <td rowspan="3" class="khs">김현수</td>
+    <td>정확한 디자인이 없었던 점</td>
+    <td>figma를 사용해서 대략적인 디자인이 있었지만 기능 및 세부사항들을 개발하면서 추가하여 프로젝트의 기간이 늘어지는 상황이 됐습니다. 시간이 좀 걸리더라도 기능별 세부사항과 디자인을 확정시켜두고 개발하는 방법이 좋을 것 같습니다.</td>
+  </tr>
+  <tr>
+    <td>대화의 부재</td>
+    <td>프로젝트를 진행할 때 서로 도움이 될 수 있는 부분이 있었지만 내꺼 하기에 바쁘다는 핑계가 있었던 것 같습니다. 개발 스케쥴을 내 작업에만 맞췄던 것 같습니다.</td>
+  </tr>
+  <tr>
+    <td>다른 사람의 코드를 확인하지 못함</td>
+    <td>흐름정도만 파악한 뒤 정확한 동작을 확인하지 않았습니다. 더 세심하게 보는 습관을 가져야 할 것 같습니다.</td>
   </tr>
   <tr>
     <td rowspan="5" class="jsw">전상우</td>

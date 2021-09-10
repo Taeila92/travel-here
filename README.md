@@ -31,6 +31,8 @@
 
 ✈ travel-here는 전 세계의 여행후기글을 볼 수 있는 여행후기 플랫폼입니다.
 
+<a href="https://www.figma.com/file/dTugkNDMoHBZrPUQvRB7hS/TravelApp" target="_blank">FIGMA 프로토타입</a>
+
 <br>
 
 ## 목차
@@ -69,7 +71,7 @@
 ## 3. 프로젝트 설치 및 실행 방법 <a id="3"></a>
 
 ```js
-$ npm update
+$ npm install
 $ yarn install
 $ yarn start
 ```
@@ -374,12 +376,26 @@ $ yarn start
     <td>아쉬운 점</td>
     <td>개선할 점</td>
   </tr>
-   <tr>
-    <td class="jsw">전상우</td>
-    <td>아쉬운 점</td>
-    <td>개선할 점</td>
+  <tr>
+    <td rowspan="5" class="jsw">전상우</td>
   </tr>
-   <tr>
+  <tr>
+    <td>코드 리뷰의 문제점</td>
+    <td>코드 리뷰 담당자를 한 명씩 정해서 이상이 있으면 연대 책임시키기</td>
+  </tr>
+  <tr>
+    <td>너무 많은 state</td>
+    <td>추적 중인 state가 15개이다. 비슷한 위치에 놓인 컴포넌트끼리는 state를 통하해도 좋지 않을까? 예를 들어 mypage, board, post 3개로.</td>
+  </tr>
+  <tr>
+    <td>너무 많은 Boilerplate</td>
+    <td>redux 자체의 문제점. redux toolkit을 사용하는 것이 좋을 듯 하다. 최근에는 비동기적인 작업을 redux-saga 대신에 react-query, swr, apollo로 대신한다고 하니 다음 프로젝트에서는 이를 활용해보는 것이 좋을 듯 하다.</td>
+  </tr>
+  <tr>
+    <td>서로 다른 코딩 방식</td>
+    <td>3가지 방법으로 이를 해결할 수 있을듯 하다. 첫 번째는 ESLint와 Prettier을 맨처음 세팅할 때 설정하는 것. 두 번째는 변수명을 좀 더 명확하게 짓는 것. 세 번째는 주석을 좀 더 명확하게 다는 것</td>
+  </tr>
+  <tr>
     <td class="isg">임상기</td>
     <td>아쉬운 점</td>
     <td>개선할 점</td>

@@ -1,5 +1,5 @@
 // react
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 // style
 import GlobalStyle from "styles/GlobalStyle";
@@ -17,7 +17,6 @@ import WriteBtn from "components/Write/WriteBtn/WriteBtn";
 import MyPage from "pages/MyPage";
 
 // firebase
-import { dbService } from "firebase.js";
 import WriteModal from "components/Write/WriteModal/WriteModal";
 import LoginFind from "pages/LoginFind";
 
@@ -27,7 +26,7 @@ import useAuth from "hooks/useAuth";
 function App() {
   const [visible, setVisible] = useState(false);
   const [active, setActive] = useState(false);
-  const [isLoggedIn, userInfo] = useAuth();
+  const [isLoggedIn] = useAuth();
 
   const isVisible = () => {
     setVisible(!visible);

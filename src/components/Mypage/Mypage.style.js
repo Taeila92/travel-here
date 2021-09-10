@@ -1,7 +1,7 @@
 ﻿import styled, { keyframes, css } from 'styled-components';
 import { flex, hideScrollbar } from './styleConstatns';
 
-const purple = "#D980FA";
+const purple = '#D980FA';
 
 const Container = styled.section`
   width: 100vw;

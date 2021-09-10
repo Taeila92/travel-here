@@ -145,9 +145,7 @@ const Mypage = ({ user }) => {
   useEffect(() => {
     for (let i = 0; i < user.user_write_posts.length; i++) {
       if (i === user.user_write_posts.length - 1) {
-        dispatch(
-          mypagePostMiddleware(user.uid, 'finish')
-        );
+        dispatch(mypagePostMiddleware(user.uid, 'finish'));
       }
       if (i !== user.user_write_posts.length - 1) {
         dispatch(mypagePostMiddleware(user.uid));
@@ -188,7 +186,13 @@ const Mypage = ({ user }) => {
               <i className="fas fa-user-circle"></i>
             )}
             {userDB.name ? (
-              <S.Title name={userDB.name}><span><b>'{userDB.name}'</b><b>님</b></span><span>반갑습니다</span></S.Title>
+              <S.Title name={userDB.name}>
+                <span>
+                  <b>'{userDB.name}'</b>
+                  <b>님</b>
+                </span>
+                <span>반갑습니다</span>
+              </S.Title>
             ) : (
               <span>닉네임을 설정해보세요!</span>
             )}

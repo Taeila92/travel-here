@@ -290,6 +290,11 @@ $ yarn start
 #### 탈퇴하기를 클릭하면 탈퇴 여부를 선택하여 탈퇴 할 수 있다.
 
 ![탈퇴하기](https://user-images.githubusercontent.com/70390705/132844265-6ac071ac-08b2-4205-a9d6-36288ac76496.gif)
+<<<<<<< HEAD
+
+=======
+
+> > > > > > > 4f0eadb483c70d3b97a8c424827c5fc5e7b39b76
 
 </details>
 

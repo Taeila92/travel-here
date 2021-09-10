@@ -21,7 +21,7 @@
   .jsw {
     background: #fffffb;
   }
-  .isg {
+  .lsg {
     background: #fff1ff;    
   }
 </style>")
@@ -224,6 +224,31 @@ $ yarn start
 
 <hr />
 
+### 로그인
+
+<details>
+  <summary>로그인 페이지</summary>
+
+#### 이메일과 비밀번호로 회원가입
+
+![회원가입(이메일)](https://user-images.githubusercontent.com/70390705/132844269-c65c4ce8-5258-4201-a793-44dc995242a9.gif)
+
+#### 이메일과 비밀번호로 로그인
+
+![로그인(이메일)](https://user-images.githubusercontent.com/70390705/132844272-6fd218f7-bd29-4ad9-b325-c94abec20b14.gif)
+
+#### SNS 로그인
+
+![SNS로그인](https://user-images.githubusercontent.com/70390705/132844271-a5940536-5faf-42c1-9fb4-593f81f5a79b.gif)
+
+#### 재설정 이메일 보내기를 통해 비밀번호 변경
+
+![비밀번호 재설정(이메일)](https://user-images.githubusercontent.com/70390705/132844253-a75dd3a3-7cf0-49e7-bb19-0205bb588232.gif)
+
+</details>
+
+<hr />
+
 ### 게시판 (Board)
 
 <details>
@@ -291,6 +316,9 @@ $ yarn start
 
 ![password](https://user-images.githubusercontent.com/76847993/132725017-0a5abc0e-ecdc-4182-8765-101f6fed00ec.gif)
 
+#### 탈퇴하기를 클릭하면 탈퇴 여부를 선택하여 탈퇴 할 수 있다.
+
+![탈퇴하기](https://user-images.githubusercontent.com/70390705/132844265-6ac071ac-08b2-4205-a9d6-36288ac76496.gif)
 </details>
 
 <hr />
@@ -396,9 +424,24 @@ $ yarn start
     <td>3가지 방법으로 이를 해결할 수 있을듯 하다. 첫 번째는 ESLint와 Prettier을 맨처음 세팅할 때 설정하는 것. 두 번째는 변수명을 좀 더 명확하게 짓는 것. 세 번째는 주석을 좀 더 명확하게 다는 것</td>
   </tr>
   <tr>
-    <td class="isg">임상기</td>
-    <td>아쉬운 점</td>
-    <td>개선할 점</td>
+    <td  rowspan="5"  class="lsg">임상기</td>
+   <td>해결되지 않는 문제를 혼자 끙끙 앓고 있던 것이 아쉽습니다.</td>
+    <td>모르는 것들은 팀원들과 상의하면서 프로젝트를 하면 좋을 거 같습니다.</td>
+  </tr>
+  <tr>
+   <td>프로젝트 기간을 정확히 정하지 않고 계속 연장했던 부분이 아쉽습니다.</td>
+    <td>프로젝트의 우선순위를 두어 필요한 기능을 먼저 구현하여 완성하고, 나머지 기능들은 그 다음에 완성을 해나가면 좋을 것 같습니다.</td>
+  </tr>
+  <tr>
+   <td>리덕스 강의는 들었으나 적용을 하지 못한 점이 아쉽습니다.</td>
+    <td>프로젝트 끝나고 개인적으로 리덕스를 적용하면서 이해를 더 높여야겠습니다.</td>
+  </tr>
+  <tr>
+   <td>영어 실력 부족. 번역기를 쓴다지만 어느 정도 영어 실력은 있으면 훨씬 수월할 것 같습니다.</td>
+    <td>영어 원문을 보고 해석하는 연습을 조금씩이라도 해야 될 것 같습니다.</td>
+  </tr>
+  <tr>
+    <td colspan="2">*** 향후 계획 *** <br />Node.js도 배워 볼 계획입니다. 파이어스토어가 아닌 Node.js를 통해서도 백엔드를 구현해볼 수 있도록 공부할 계획입니다.</td>
   </tr>
 </table>
 
